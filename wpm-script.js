@@ -11,5 +11,5 @@ jQuery(document).ready(function() {
         jQuery('#upload_image').val(imgurl);
         tb_remove();
     }
-
 });
+
