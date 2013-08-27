@@ -1,0 +1,181 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Maintenance\n"
+"POT-Creation-Date: 2013-08-27 18:59+0100\n"
+"PO-Revision-Date: 2013-08-27 18:59+0100\n"
+"Last-Translator: Florent <contact@restezconnectes.fr>\n"
+"Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
+"Language: Français\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-"
+"content/plugins/wp-maintenance\n"
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:7
+msgid "Options saved."
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:21
+msgid "General"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:22
+msgid "Colors"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:23
+msgid "Picture"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:24
+msgid "CountDown"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:25
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:35
+msgid "Settings"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:26
+msgid "About"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:40
+msgid "Enable maintenance mode :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:41
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:179
+msgid "Yes"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:42
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:180
+msgid "No"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:46
+msgid "Title and text for the maintenance page :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:47
+msgid "Title :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:48
+msgid "Texte :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:53
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:79
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:101
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:165
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:185
+msgid "Save this settings"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:66
+msgid "Choice texts colors :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:68
+msgid "Background page color :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:69
+msgid "Text color :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:70
+msgid "Choice countdown colors :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:71
+msgid "Countdown text color :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:73
+msgid "Countdown background color :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:91
+msgid "Upload a picture"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:93
+msgid "You use this picture :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:95
+msgid "Select or Upload your picture"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:96
+msgid "Enter a URL or upload an image."
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:113
+msgid "Enable a countdown ?"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:115
+msgid "Enter the launch date"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:148
+msgid "Enable seconds ?"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:149
+msgid "End message :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:149
+msgid "Font size :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:177
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:178
+msgid "Theme maintenance page :"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:200
+msgid ""
+"This plugin has been developed for you for free by <a href=\"http://www."
+"restezconnectes.fr\" target=\"_blank\">Florent Maillefaud</ a>. It is "
+"royalty free, you can take it, modify it, distribute it as you see fit. <br /"
+"> <br />It would be desirable that I can get feedback on your potential "
+"changes to improve this plugin for all."
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance-admin.php:205
+msgid ""
+"If you want Donate (French Paypal) for my current and future developments:"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:63
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:150
+msgid "This site is down for maintenance"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:250
+msgid "Days"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:250
+msgid "Hours"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:250
+msgid "Minutes"
+msgstr ""
+
+#: /Users/Florent/Sites/wordpress.local.sites.fr/www/wp-content/plugins/wp-maintenance/wp-maintenance.php:252
+msgid "Seconds"
+msgstr ""
