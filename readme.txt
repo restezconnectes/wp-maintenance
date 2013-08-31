@@ -22,6 +22,8 @@ Langues disponibles / Languages :
 * Français
 * English
 
+Fichier wp-maintenance.pot disponible / maintenance.pot file available
+
 == Installation ==
 1. Ajouter le répertoire 'wp-maintenance' dans le répertoire '/wp-content/plugins/' / Upload the full directory into your '/wp-content/plugins' directory
 2. Activer le plugin via le menu 'Plugins' dans WordPress / Activate the plugin at the plugin administration page
@@ -46,11 +48,14 @@ Oui mais merci de me soumettre les modifications souhaitées afin de mettre à j
 
 == Upgrade Notice ==
 
-= 0.4 =
-Cette version est stable. / This version is stable
+= 0.5 =
+Cette version est stable / This version is stable
 
 
 == Changelog ==
+
+= 0.4 =
+Ajout de l'édition de la feuille de Style CSS / Add editor for stylesheet
 
 = 0.4 =
 * Plugin en multilangue / Add multilanguage

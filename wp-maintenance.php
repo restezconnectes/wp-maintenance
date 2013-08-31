@@ -6,12 +6,14 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-maintenance/
 Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance. Personnalisez cette page de maintenance.
 Author: Florent Maillefaud
 Author URI: http://www.restezconnectes.fr/
-Version: 0.3
+Version: 0.5
 */
 
 
 /*
 Change Log
+30/08/2013 - CSS personnalisable
+27/08/2013 - Ajout du multilangue
 23/08/2013 - Refonte de l'admin et ajout d'un compte à rebours
 16/02/2013 - Ajout ColorPicker
 12/02/2013 - Ajout fonctionnalité et débugage
@@ -44,7 +46,7 @@ function make_wpm_multilang() {
 }
 
 /* Ajoute la version dnas les options */
-define('WPM_VERSION', '0.2');
+define('WPM_VERSION', '0.5');
 $option['wp_maintenance_version'] = WPM_VERSION;
 add_option('wp_maintenance_version',$option);
 
@@ -138,6 +140,15 @@ function maintenance_mode() {
             $timestamp = strtotime($paramMMode['date_cpt_aa'].'/'.$paramMMode['date_cpt_mm'].'/'.$paramMMode['date_cpt_jj'].' '.$paramMMode['date_cpt_hh'].':'.$paramMMode['date_cpt_mn']);
             $dateCpt = date('m/d/Y h:i A', $timestamp);
 
+            // Traitement de la feuille de style
+            $styleRemplacements = array (
+                "#_COLORTXT" => $paramMMode['color_txt'],
+                "#_COLORBG" => $paramMMode['color_bg'],
+                "#_COLORCPTBG" => $paramMMode['color_cpt_bg'],
+                "#_DATESIZE" => $paramMMode['date_cpt_size'],
+                "#_COLORCPT" => $paramMMode['color_cpt']
+            );
+            $paramMMode['styless'] = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), $paramMMode['styless']);
 
             $content = '
             <!DOCTYPE html>
@@ -148,81 +159,7 @@ function maintenance_mode() {
             $content .= '</title>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <meta name="description" content="'.__('This site is down for maintenance', 'wp-maintenance').'" />
-                <style type="text/css">
-                    h1 { margin-left:auto;margin-right:auto;width: 700px;padding: 10px;text-align:center;color:'.$paramMMode['color_txt'].'; }
-                    body {
-                        background: none repeat scroll 0 0 '.$paramMMode['color_bg'].';
-                        color: '.$paramMMode['color_txt'].';
-                        font: 12px/1.5em Arial,Helvetica,Sans-serif;
-                    }
-                    #header {
-                        clear: both;
-                        padding: 20px 0 10px;
-                        position: relative;
-                    }
-                    .full {
-                        margin: 0 auto;
-                        width: 720px;
-                    }
-                    #logo {
-                        text-align: center;
-                    }
-                    #main {
-                        padding: 0px 50px;
-                    }
-                    #main .block {
-                        font-size: 13px;
-                        margin-bottom: 30px;
-                    }
-                    #main .block h3 {
-                        line-height: 60px;
-                        margin-bottom: 40px;
-                        text-align: center;
-                    }
-                    #main #intro h3 {
-                        font-size: 40px;
-                        text-shadow: 0 10px 10px #FFFFFF;
-                    }
-                    #main #intro p {
-                        font-family: Muli,sans-serif;
-                        font-size: 16px;
-                        line-height: 22px;
-                        text-align: center;
-                    }
-
-                    #maintenance { text-align:center; margin-top:25px;}
-                    .cptR-rec_countdown {
-                        position: relative;
-                            font-family: "Ubuntu";
-                            background:'.$paramMMode['color_cpt_bg'].';
-                            display: inline-block;
-                            line-height:'.$paramMMode['date_cpt_size'].'px;
-                            min-width: 160px;
-                            min-height: 60px;
-                            padding: 30px 20px 5px 20px;
-                            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-                            text-transform: uppercase;
-                            text-align:center;
-                        }
-
-                        #cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
-                            color: '.$paramMMode['color_cpt'].';
-                            display: block;
-                            font-size: '.$paramMMode['date_cpt_size'].';
-                            height: 40px;
-                            line-height: 38px;
-                            text-align: right;
-                            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-                            float:left;
-                        }
-                        #cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
-                            color: '.$paramMMode['color_cpt'].';
-                            font-size: 10px;
-                            padding: 25px 5px 0 2px;
-                            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-                        }
-
-                </style>
+                <style type="text/css">'.$paramMMode['stylecss'].'</style>
               </head>
               <body><div id="wrapper">
               ';
