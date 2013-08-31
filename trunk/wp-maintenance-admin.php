@@ -1,5 +1,6 @@
 <?php
 
+
 /* Update des paramètres */
 if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
     update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
@@ -11,6 +12,109 @@ if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
 if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
 $paramMMode = get_option('wp_maintenance_settings');
 
+/* Si on réinitialise les feuille de styles  */
+if($_POST['wp_maintenance_settings']['initcss']==1) {
+    $paramMMode['stylecss'] = '';
+    $_POST['wp_maintenance_settings']['initcss'] = '';
+    update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
+    $options_saved = true;
+    echo '<div id="message" class="updated fade"><p><strong>Feuillez de style réinitialisée !</strong></p></div>';
+}
+
+
+/* Feuille de style par défault */
+if($paramMMode['stylecss'] == '') {
+    $paramMMode['stylecss'] = '
+h1 {
+    margin-left:auto;
+    margin-right:auto;
+    width: 700px;
+    padding: 10px;
+    text-align:center;
+    color: #_COLORTXT;
+}
+
+body {
+    background: none repeat scroll 0 0 #_COLORBG;
+    color: #_COLORTXT;
+    font: 12px/1.5em Arial,Helvetica,Sans-serif;
+}
+#header {
+    clear: both;
+    padding: 20px 0 10px;
+    position: relative;
+}
+.full {
+    margin: 0 auto;
+    width: 720px;
+}
+#logo {
+    text-align: center;
+}
+#main {
+    padding: 0px 50px;
+}
+#main .block {
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+#main .block h3 {
+    line-height: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+#main #intro h3 {
+    font-size: 40px;
+    text-shadow: 0 10px 10px #FFFFFF;
+}
+#main #intro p {
+    font-family: Muli,sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+}
+
+#maintenance {
+    text-align:center;
+    margin-top:25px;
+}
+
+.cptR-rec_countdown {
+    position: relative;
+    font-family: "Ubuntu";
+    background: #_COLORCPTBG;
+    display: inline-block;
+    line-height: #_DATESIZE px;
+    min-width: 160px;
+    min-height: 60px;
+    padding: 30px 20px 5px 20px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    text-align:center;
+}
+
+#cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
+    color: #_COLORCPT;
+    display: block;
+    font-size: #_DATESIZE;
+    height: 40px;
+    line-height: 38px;
+    text-align: right;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    float:left;
+}
+#cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
+    color: #_COLORCPT;
+    font-size: 10px;
+    padding: 25px 5px 0 2px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+    ';
+
+}
+
+echo $paramMMode['styless'];
 ?>
 <style type="text/css">.postbox h3 { cursor:pointer; }</style>
 <div class="wrap">
@@ -22,6 +126,7 @@ $paramMMode = get_option('wp_maintenance_settings');
             <a id="wpm-menu-couleurs" class="nav-tab" href="#couleurs" onfocus="this.blur();"><?php echo __('Colors', 'wp-maintenance'); ?></a>
             <a id="wpm-menu-image" class="nav-tab" href="#image" onfocus="this.blur();"><?php echo __('Picture', 'wp-maintenance'); ?></a>
             <a id="wpm-menu-compte" class="nav-tab" href="#compte" onfocus="this.blur();"><?php echo __('CountDown', 'wp-maintenance'); ?></a>
+            <a id="wpm-menu-styles" class="nav-tab" href="#styles" onfocus="this.blur();"><?php echo __('CSS Style', 'wp-maintenance'); ?></a>
             <a id="wpm-menu-options" class="nav-tab" href="#options" onfocus="this.blur();"><?php echo __('Settings', 'wp-maintenance'); ?></a>
             <a id="wpm-menu-apropos" class="nav-tab" href="#apropos" onfocus="this.blur();"><?php echo __('About', 'wp-maintenance'); ?></a>
         </h2>
@@ -146,7 +251,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                                 <input type="hidden" name=wp_maintenance_settings[date_cpt_ss]" value="<?php if($paramMMode['date_cpt_ss']!='') { echo $paramMMode['date_cpt_ss']; } else { echo date('s'); } ?>" />
                                 <br /><br />
                                 <input type= "checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if($paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>&nbsp;<?php echo __('Enable seconds ?', 'wp-maintenance'); ?><br /><br />
-                                 <?php echo __('End message :', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[message_cpt_fin]" COLS=70 ROWS=4><?php echo $paramMMode['message_cpt_fin'] ?></TEXTAREA><br /><?php echo __('Font size :', 'wp-maintenance'); ?>  <select name=wp_maintenance_settings[date_cpt_size]">
+                                 <?php echo __('End message :', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[message_cpt_fin]" COLS=70 ROWS=4><?php echo $paramMMode['message_cpt_fin']; ?></TEXTAREA><br /><?php echo __('Font size :', 'wp-maintenance'); ?>  <select name=wp_maintenance_settings[date_cpt_size]">
                                             <?php
                                                 $ctpSize = array('18', '24', '36', '48', '52', '56', '60', '64', '68', '72', '76');
                                                 foreach($ctpSize as $c) {
@@ -169,13 +274,69 @@ $paramMMode = get_option('wp_maintenance_settings');
              </div>
              <!-- fin options 4 -->
 
-             <!-- Onglet options 5 -->
+            <!-- Onglet options 5 -->
+             <div class="wpm-menu-styles wpm-menu-group" style="display: none;">
+                 <div id="wpm-opt-styles"  >
+                         <ul>
+                            <!-- UTILISER UNE FEUILLE DE STYLE PERSO -->
+                            <li><h3><?php echo __('CSS style sheet code :', 'wp-maintenance'); ?></h3>
+                                <?php echo __('Edit the CSS sheet of your maintenance page here. Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?><br /><br />
+                                <div style="float:left;width:55%;margin-right:15px;">
+                                    <TEXTAREA NAME="wp_maintenance_settings[stylecss]" COLS=70 ROWS=24 style="width:100%;"><?php echo stripslashes($paramMMode['stylecss']); ?></TEXTAREA>
+                                </div>
+                                <div style="float:left;position:relative;width:40%;">
+                                    <table class="wp-list-table widefat fixed" cellspacing="0">
+                                        <tbody id="the-list">
+                                            <tr>
+                                                <td><h3 class="hndle"><span><strong><?php echo __('Markers for colors', 'wp-maintenance'); ?></strong></span></h3></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#_COLORTXT</td>
+                                                <td><?php echo __('Use this code for text color', 'wp-maintenance'); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#_COLORBG</td>
+                                                <td><?php echo __('Use this code for background text color', 'wp-maintenance'); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#_COLORCPTBG</td>
+                                                <td><?php echo __('Use this code for background color countdown', 'wp-maintenance'); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#_DATESIZE</td>
+                                                <td><?php echo __('Use this code for size countdown', 'wp-maintenance'); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>#_COLORCPT</td>
+                                                <td><?php echo __('Use this code for countdown color', 'wp-maintenance'); ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clear"></div>
+                                <br />
+                            </li>
+                            <li>
+                                <input type= "checkbox" name="wp_maintenance_settings[initcss]" value="1" id="initcss" >&nbsp;<label for="initcss"><?php echo __('Reset default CSS stylesheet ?', 'wp-maintenance'); ?></label><br />
+                            </li>
+                            <li> &nbsp;</li>
+
+                            <li>
+                                <a href="#styles" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php echo __('Save this settings', 'wp-maintenance'); ?> </span></a>
+                            </li>
+                        </ul>
+                 </div>
+             </div>
+             <!-- fin options 5 -->
+
+             <!-- Onglet options 6 -->
              <div class="wpm-menu-options wpm-menu-group" style="display: none;">
                  <div id="wpm-opt-options"  >
                          <ul>
                             <!-- UTILISER UNE PAGE MAINTENANCE.PHP -->
                             <li><h3><?php echo __('Theme maintenance page :', 'wp-maintenance'); ?></h3>
-                                <?php echo __('Theme maintenance page :', 'wp-maintenance'); ?>&nbsp;<br /><br />
+                                <?php echo __('If you would use your maintenance.php page in your theme folder, click Yes.', 'wp-maintenance'); ?>&nbsp;<br /><br />
                                 <input type= "radio" name="wp_maintenance_settings[pageperso]" value="1" <?php if($paramMMode['pageperso']==1) { echo ' checked'; } ?>>&nbsp;<?php echo __('Yes', 'wp-maintenance'); ?>&nbsp;&nbsp;&nbsp;
                                 <input type= "radio" name="wp_maintenance_settings[pageperso]" value="0" <?php if(!$paramMMode['pageperso'] or $paramMMode['pageperso']==0) { echo ' checked'; } ?>>&nbsp;<?php echo __('No', 'wp-maintenance'); ?>
                             </li>
@@ -187,11 +348,11 @@ $paramMMode = get_option('wp_maintenance_settings');
                         </ul>
                  </div>
              </div>
-             <!-- fin options 5 -->
+             <!-- fin options 6 -->
 
          </form>
 
-          <!-- Onglet options 6 -->
+          <!-- Onglet options 7 -->
           <div class="wpm-menu-apropos wpm-menu-group" style="display: none;">
                 <div id="wpm-opt-apropos"  >
                      <ul>
@@ -216,7 +377,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </ul>
                 </div>
            </div>
-           <!-- fin options 6 -->
+           <!-- fin options 7 -->
 
      </div><!-- -->
     
