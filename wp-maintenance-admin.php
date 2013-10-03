@@ -4,6 +4,7 @@
 /* Update des paramètres */
 if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
     update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
+    update_option('wp_maintenance_style', $_POST["wp_maintenance_style"]);
     $options_saved = true;
     echo '<div id="message" class="updated fade"><p><strong>'.__('Options saved.', 'wp-maintenance').'</strong></p></div>';
 }
@@ -12,19 +13,9 @@ if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
 if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
 $paramMMode = get_option('wp_maintenance_settings');
 
-/* Si on réinitialise les feuille de styles  */
-if($_POST['wp_maintenance_settings']['initcss']==1) {
-    $paramMMode['stylecss'] = '';
-    $_POST['wp_maintenance_settings']['initcss'] = '';
-    update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
-    $options_saved = true;
-    echo '<div id="message" class="updated fade"><p><strong>Feuillez de style réinitialisée !</strong></p></div>';
-}
-
 
 /* Feuille de style par défault */
-if($paramMMode['stylecss'] == '') {
-    $paramMMode['stylecss'] = '
+$wpm_style_defaut = '
 h1 {
     margin-left:auto;
     margin-right:auto;
@@ -109,12 +100,15 @@ body {
     padding: 25px 5px 0 2px;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
+';
 
-    ';
-
+/* Si on réinitialise les feuille de styles  */
+if($_POST['wpm_initcss']==1) {
+    update_option('wp_maintenance_style', $wpm_style_defaut);
+    $options_saved = true;
+    echo '<div id="message" class="updated fade"><p><strong>Feuillez de style réinitialisée !</strong></p></div>';
 }
 
-echo $paramMMode['styless'];
 ?>
 <style type="text/css">.postbox h3 { cursor:pointer; }</style>
 <div class="wrap">
@@ -267,7 +261,7 @@ echo $paramMMode['styless'];
                             </li>
                             <li> &nbsp;</li>
                             <li>
-                                <a href="#4" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php echo __('Save this settings', 'wp-maintenance'); ?> </span></a>
+                                <a href="#compte" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php echo __('Save this settings', 'wp-maintenance'); ?> </span></a>
                             </li>
                         </ul>
                  </div>
@@ -282,7 +276,7 @@ echo $paramMMode['styless'];
                             <li><h3><?php echo __('CSS style sheet code :', 'wp-maintenance'); ?></h3>
                                 <?php echo __('Edit the CSS sheet of your maintenance page here. Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?><br /><br />
                                 <div style="float:left;width:55%;margin-right:15px;">
-                                    <TEXTAREA NAME="wp_maintenance_settings[stylecss]" COLS=70 ROWS=24 style="width:100%;"><?php echo stripslashes($paramMMode['stylecss']); ?></TEXTAREA>
+                                    <TEXTAREA NAME="wp_maintenance_style" COLS=70 ROWS=24 style="width:100%;"><?php echo stripslashes(trim(get_option('wp_maintenance_style'))); ?></TEXTAREA>
                                 </div>
                                 <div style="float:left;position:relative;width:40%;">
                                     <table class="wp-list-table widefat fixed" cellspacing="0">
@@ -318,7 +312,7 @@ echo $paramMMode['styless'];
                                 <br />
                             </li>
                             <li>
-                                <input type= "checkbox" name="wp_maintenance_settings[initcss]" value="1" id="initcss" >&nbsp;<label for="initcss"><?php echo __('Reset default CSS stylesheet ?', 'wp-maintenance'); ?></label><br />
+                                <input type= "checkbox" name="wpm_initcss" value="1" id="initcss" >&nbsp;<label for="wpm_initcss"><?php echo __('Reset default CSS stylesheet ?', 'wp-maintenance'); ?></label><br />
                             </li>
                             <li> &nbsp;</li>
 
