@@ -6,12 +6,14 @@ Plugin URI: http://wordpress.org/extend/plugins/wp-maintenance/
 Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance. Personnalisez cette page de maintenance.
 Author: Florent Maillefaud
 Author URI: http://www.restezconnectes.fr/
-Version: 0.5
+Version: 0.7
 */
 
 
 /*
 Change Log
+03/10/2013 - Bugs sur les couleurs
+11/09/2013 - Conflits javascript résolus
 30/08/2013 - CSS personnalisable
 27/08/2013 - Ajout du multilangue
 23/08/2013 - Refonte de l'admin et ajout d'un compte à rebours
@@ -31,32 +33,34 @@ if(!defined( 'WPM_BASENAME')) { define( 'WPM_BASENAME', plugin_basename(__FILE__
 $wpmaintenance_dashboard = ( is_admin() ) ? 'options-general.php?page=wp-maintenance/wp-maintenance.php' : '';
 define( 'WPM_SETTINGS', $wpmaintenance_dashboard);
 
+include("uninstall.php");
+
 // Add "Réglages" link on plugins page
-add_filter( 'plugin_action_links_' . WPM_BASENAME, 'WpMaintenancePlugin_actions' );
-function WpMaintenancePlugin_actions ( $links ) {
+add_filter( 'plugin_action_links_' . WPM_BASENAME, 'wpm_plugin_actions' );
+function wpm_plugin_actions ( $links ) {
     $settings_link = '<a href="'.WPM_SETTINGS.'">'.__('Settings', 'wp-maintenance').'</a>';
     array_unshift ( $links, $settings_link );
     return $links;
 }
 
 // multilingue
-add_action( 'init', 'make_wpm_multilang' );
-function make_wpm_multilang() {
+add_action( 'init', 'wpm_make_multilang' );
+function wpm_make_multilang() {
     load_plugin_textdomain('wp-maintenance', false, dirname( plugin_basename( __FILE__ ) ).'/languages');
 }
 
 /* Ajoute la version dnas les options */
-define('WPM_VERSION', '0.5');
+define('WPM_VERSION', '0.7');
 $option['wp_maintenance_version'] = WPM_VERSION;
 add_option('wp_maintenance_version',$option);
 
 //récupère le formulaire d'administration du plugin
-function adminWpMaintenancePanel() {
+function wpm_admin_panel() {
     include("wp-maintenance-admin.php");
 }
 
-function addWpMaintenanceAdmin() {
-    $hook = add_options_page("Options pour l'affichage de la page maintenance", "WP Maintenance",  10, __FILE__, "adminWpMaintenancePanel");
+function wpm_add_admin() {
+    $hook = add_options_page("Options pour l'affichage de la page maintenance", "WP Maintenance",  10, __FILE__, "wpm_admin_panel");
     
     $wp_maintenanceAdminOptions = array(  
         'active' => 0,  
@@ -70,15 +74,107 @@ function addWpMaintenanceAdmin() {
         foreach ($getMaintenanceSettings as $key => $option) {
             $wp_maintenanceAdminOptions[$key] = $option;
         }
-    }  
+    } 
+    
     update_option('wp_maintenance_settings', $wp_maintenanceAdminOptions);  
+    
+    $wp_maintenanceStyles = '
+h1 {
+    margin-left:auto;
+    margin-right:auto;
+    width: 700px;
+    padding: 10px;
+    text-align:center;
+    color: #_COLORTXT;
 }
 
-function WpMaintenanceAdminScripts() {
+body {
+    background: none repeat scroll 0 0 #_COLORBG;
+    color: #_COLORTXT;
+    font: 12px/1.5em Arial,Helvetica,Sans-serif;
+}
+#header {
+    clear: both;
+    padding: 20px 0 10px;
+    position: relative;
+}
+.full {
+    margin: 0 auto;
+    width: 720px;
+}
+#logo {
+    text-align: center;
+}
+#main {
+    padding: 0px 50px;
+}
+#main .block {
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+#main .block h3 {
+    line-height: 60px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+#main #intro h3 {
+    font-size: 40px;
+    text-shadow: 0 10px 10px #FFFFFF;
+}
+#main #intro p {
+    font-family: Muli,sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+}
+
+#maintenance {
+    text-align:center;
+    margin-top:25px;
+}
+
+.cptR-rec_countdown {
+    position: relative;
+    font-family: "Ubuntu";
+    background: #_COLORCPTBG;
+    display: inline-block;
+    line-height: #_DATESIZE px;
+    min-width: 160px;
+    min-height: 60px;
+    padding: 30px 20px 5px 20px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    text-align:center;
+}
+
+#cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
+    color: #_COLORCPT;
+    display: block;
+    font-size: #_DATESIZE;
+    height: 40px;
+    line-height: 38px;
+    text-align: right;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    float:left;
+}
+#cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
+    color: #_COLORCPT;
+    font-size: 10px;
+    padding: 25px 5px 0 2px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+    ';
+    update_option('wp_maintenance_style', $wp_maintenanceStyles);
+}
+
+function wpm_admin_scripts() {
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
     wp_register_script('wpm-my-upload', WP_PLUGIN_URL.'/wp-maintenance/wpm-script.js', array('jquery','media-upload','thickbox'));
     wp_enqueue_script('wpm-my-upload');
+    wp_register_script('wpm-admin-settings', WP_PLUGIN_URL.'/wp-maintenance/wpm-admin-settings.js');
+    wp_enqueue_script('wpm-admin-settings');
 }
 
 add_action( 'admin_enqueue_scripts', 'mw_enqueue_color_picker' );
@@ -88,22 +184,18 @@ function mw_enqueue_color_picker( $hook_suffix ) {
     wp_enqueue_script( 'my-script-handle', plugins_url('wpm-color-options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 }
 
-function WpMaintenanceAdminStyles() {
+function wpm_admin_styles() {
     wp_enqueue_style('thickbox');
 }
-function wpm_admin_scripts() {
-    wp_register_script('wpm-admin-settings', WP_PLUGIN_URL.'/wp-maintenance/wpm-admin-settings.js');
-    wp_enqueue_script('wpm-admin-settings');
-}
-add_action('admin_print_scripts', 'wpm_admin_scripts');
 
 if (isset($_GET['page']) && $_GET['page'] == 'wp-maintenance/wp-maintenance.php') {
-    add_action('admin_print_scripts', 'WpMaintenanceAdminScripts');
-    add_action('admin_print_styles', 'WpMaintenanceAdminStyles');
+    add_action('admin_print_scripts', 'wpm_admin_scripts');
+    add_action('admin_print_styles', 'wpm_admin_styles');
+    add_action('admin_print_scripts', 'wpm_admin_scripts');
 }
 
 /* Mode Mainteance */
-function maintenance_mode() {
+function wpm_maintenance_mode() {
 
     global $current_user;
 
@@ -148,7 +240,7 @@ function maintenance_mode() {
                 "#_DATESIZE" => $paramMMode['date_cpt_size'],
                 "#_COLORCPT" => $paramMMode['color_cpt']
             );
-            $paramMMode['styless'] = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), $paramMMode['styless']);
+            $wpmStyle = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_style'));
 
             $content = '
             <!DOCTYPE html>
@@ -159,7 +251,7 @@ function maintenance_mode() {
             $content .= '</title>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <meta name="description" content="'.__('This site is down for maintenance', 'wp-maintenance').'" />
-                <style type="text/css">'.$paramMMode['stylecss'].'</style>
+                <style type="text/css">'.$wpmStyle.'</style>
               </head>
               <body><div id="wrapper">
               ';
@@ -205,9 +297,13 @@ function maintenance_mode() {
     }
 
 }
-add_action('get_header', 'maintenance_mode');
+add_action('get_header', 'wpm_maintenance_mode');
+
+if(function_exists('register_deactivation_hook')) {
+    register_deactivation_hook(__FILE__, 'wpm_uninstall');
+}
 
 //intègre le tout aux pages Admin de Wordpress
-add_action("admin_menu", "addWpMaintenanceAdmin");
+add_action("admin_menu", "wpm_add_admin");
 
 ?>

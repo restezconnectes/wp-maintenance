@@ -4,7 +4,7 @@ Donate link:
 Tags: wordpress maintenance plugin
 Requires at least: 2.0
 Tested up to: 3.6
-Stable tag: trunk
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,14 +48,20 @@ Oui mais merci de me soumettre les modifications souhaitées afin de mettre à j
 
 == Upgrade Notice ==
 
-= 0.5 =
+= 0.7 =
 Cette version est stable / This version is stable
 
 
 == Changelog ==
 
-= 0.4 =
-Ajout de l'édition de la feuille de Style CSS / Add editor for stylesheet
+= 0.7 =
+* Bugs sur les couleurs résolus / Colors Bugs fixed 
+
+= 0.6 =
+* Conflits javascript résolus / Javascript conflicts fixed
+
+= 0.5 =
+*Ajout de l'édition de la feuille de Style CSS / Add editor for stylesheet
 
 = 0.4 =
 * Plugin en multilangue / Add multilanguage
