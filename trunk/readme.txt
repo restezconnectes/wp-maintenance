@@ -1,10 +1,10 @@
-=== Plugin Name ===
+﻿=== Plugin Name ===
 Contributors: Florent73
 Donate link: 
 Tags: wordpress maintenance plugin
-Requires at least: 2.0
-Tested up to: 3.6
-Stable tag: 0.7
+Requires at least: 3.0
+Tested up to: 3.9.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,25 @@ Créer et personnaliser votre page de maintenance !
 Create and customize your maintenance page
 
 == Description ==
-Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours.
+Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec :
 
-The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture and countdown.
+- Vos choix de couleurs de texte
+- une image pour votre logo
+- une image de fond ou un pattern
+- un compte à rebours
+- Prêt pour Google Analytics
+- Icônes des réseaux sociaux
+- Encart pour un shorcode (newletter ou contact)
+
+The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture and countdown with:
+
+- Choice texts colors
+- Upload logo picture
+- Upload background picture or pattern
+- Countdown
+- Google Analytics ready
+- Social Networks ready
+- Insert for shorcode (Newletter or Contact form)
 
 Langues disponibles / Languages :
 
@@ -31,10 +47,11 @@ Fichier wp-maintenance.pot disponible / maintenance.pot file available
 
 == Screenshots ==
 1. Vue générale / General view
-2. Vue par les visiteurs de votre site (mais pas les admins) / View by visitors to your site (but not the admins)
+2. Vue par les visiteurs de votre site / View by visitors to your site
 3. Sélection de couleur / Color selection
 4. Upload d'une image personnelle / Upload a personnal picture
 5. Paramètres du compte à rebours / Countdown settings
+6. Réglages divers / Various settings
 
 == Frequently Asked Questions ==
 
@@ -48,11 +65,50 @@ Oui mais merci de me soumettre les modifications souhaitées afin de mettre à j
 
 == Upgrade Notice ==
 
-= 0.7 =
+= 2.0 =
 Cette version est stable / This version is stable
 
 
 == Changelog ==
+
+= 2.0 =
+* Ajout des Google Fonts et style de police / Adding Google Fonts and font style 
+
+= 1.9 =
+* Correction bug auto-reset de la CSS / Fixed Bug CSS auto-reset 
+
+= 1.8 =
+* Correction bug upload du logo et du fond / Fixed bug logo and background upload
+
+= 1.7 =
+* Correction bug upload du logo et du fond / Fixed bug logo and background upload
+
+= 1.6 =
+* Correction bug date fin compte à rebours / Fixed bug end date countdown
+
+= 1.5 =
+* Correction bug drag&drop Réseaux Sociaux / Resolved drag&drop social networks bug
+
+= 1.4 =
+* Correction bug maintenance.php / Resolved bug maintenance.php file
+
+= 1.3 =
+* Correction traduction et fichier désinstallation / Resolved translation bug and uninstall file
+
+= 1.2 =
+* Ajout positionnement icônes, barre footer / Adding icons position, footer bar
+
+= 1.1 =
+* Ajout icones réseaux sociaux, code analytics, shorcodes newletter et image de fond / Adding icons social networks, analytics code, shorcodes newletter and background picture
+
+= 1.0 =
+* Ajout couleur sur les liens, option rajoutée sur le compte à rebours et l'affichage du site aux rôles de votre choix / Adding color on the links, added option on the countdown and viewing the site of your choice roles
+
+= 0.9 =
+* Bugs ajout lien dans textes / Bug add link in texts
+
+= 0.8 =
+* Bugs sur le compte à rebours / Countdown bug fixes
 
 = 0.7 =
 * Bugs sur les couleurs résolus / Colors Bugs fixed 
@@ -61,7 +117,7 @@ Cette version est stable / This version is stable
 * Conflits javascript résolus / Javascript conflicts fixed
 
 = 0.5 =
-*Ajout de l'édition de la feuille de Style CSS / Add editor for stylesheet
+* Ajout de l'édition de la feuille de Style CSS / Add editor for stylesheet
 
 = 0.4 =
 * Plugin en multilangue / Add multilanguage
@@ -70,9 +126,9 @@ Cette version est stable / This version is stable
 * Refonte de l'admin et ajout d'un compte à rebours / Upgrade the admin and added a countdown
 
 = 0.2 =
-* Ajout du ColorPicker. / Add a ColorPicker
+* Ajout du ColorPicker / Add a ColorPicker
 
 = 0.1 =
-* Première version du plugin. / First version
+* Première version du plugin / First version
 
 

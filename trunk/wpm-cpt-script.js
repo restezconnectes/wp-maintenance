@@ -29,7 +29,11 @@ function calcage(secs, num1, num2) {
 
 function CountBack(secs) {
   if (secs < 0) {
-    document.getElementById("cntdwn").innerHTML = FinishMessage;
+    if(Disable==1) {
+        document.location.replace(UrlDisable);
+    } else {
+        document.getElementById("cntdwn").innerHTML = FinishMessage;
+    }
     return;
   }
   DisplayStr = DisplayFormat.replace(/%%D%%/g, calcage(secs,86400,100000));
@@ -43,7 +47,7 @@ function CountBack(secs) {
 }
 
 function putspan(BackColor, ForeColor) {
-    document.write("<div class='cptR-rec_countdown'><span id='cntdwn' style='background-color:" + BackColor + "; color:" + ForeColor + ";font-size:" + FontSize + "px;'></span></div>");
+    document.write("<div class='cptR-rec_countdown'><span id='cntdwn' style='background-color:" + BackColor + "; color:" + ForeColor + ";'></span></div>");
 }
 
 if (typeof(BackColor)=="undefined")
@@ -64,6 +68,8 @@ if (typeof(CountStepper)!="number")
   CountStepper = -1;
 if (typeof(LeadingZero)=="undefined")
   LeadingZero = true;
+if (typeof(Disable)=="undefined")
+  Disable = "";
 
 
 CountStepper = Math.ceil(CountStepper);
