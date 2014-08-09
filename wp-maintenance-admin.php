@@ -30,6 +30,8 @@ if($paramMMode['font_text_bottom']=='') { $paramMMode['font_text_bottom'] = 'nor
 if($paramMMode['font_bottom_size']=='') { $paramMMode['font_bottom_size'] = 12; }
 if($paramMMode['font_bottom_weigth']=='') { $paramMMode['font_bottom_weigth'] = 'normal'; }
 if($paramMMode['font_bottom_style']=='') { $paramMMode['font_bottom_style'] = 'normal'; }
+if($paramMMode['font_cpt']=='') { $paramMMode['font_cpt'] = 'Acme'; }
+if($paramMMode['date_cpt_size']=='') { $paramMMode['date_cpt_size'] = 72; }
 
 // Récupère les Rôles et capabilités
 if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
@@ -144,13 +146,14 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 #wpm_footer {
     width: 100%;
     clear: both;
-    height: 45px;
+    height: 150px;
     text-align:center;
     background-color: #_COLOR_BG_BT;
     color:#_COLOR_TXT_BT;
     padding-top:10px;
+    margin-top: 40px;
     font-size: 12px;
-    position:fixed;
+    position:relative;
     bottom:0;
 }
 .wpm_copyright {
@@ -439,7 +442,7 @@ if($_POST['wpm_initcss']==1) {
                                             <td valign="top" align="left"><?php echo wpm_getFontsList('wp_maintenance_settings[font_text_bottom]', $paramMMode['font_text_bottom']); ?></td>
                                             <td>
                                                 <?php _e('Size:', 'wp-maintenance'); ?>
-                                                <input type="text" size="3" name="wp_maintenance_settings[font_bottom_size]" value="<?php echo stripslashes($paramMMode['font_text_size']); ?>" />px
+                                                <input type="text" size="3" name="wp_maintenance_settings[font_bottom_size]" value="<?php echo stripslashes($paramMMode['font_bottom_size']); ?>" />px
 
                                             </td>
                                         </tr>
