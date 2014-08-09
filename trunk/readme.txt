@@ -15,7 +15,7 @@ Create and customize your maintenance page
 == Description ==
 Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec :
 
-- Vos choix de couleurs de texte
+- Vos choix de polices et couleurs de texte
 - une image pour votre logo
 - une image de fond ou un pattern
 - un compte à rebours
@@ -25,7 +25,7 @@ Le plugin WP Maintenance vous permet de mettre votre site en attente le temps po
 
 The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture and countdown with:
 
-- Choice texts colors
+- Choice texts colors and fonts
 - Upload logo picture
 - Upload background picture or pattern
 - Countdown
