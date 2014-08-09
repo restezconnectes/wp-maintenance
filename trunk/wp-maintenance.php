@@ -542,7 +542,7 @@ function wpm_maintenance_mode() {
         <meta name="description" content="'.__('This site is down for maintenance', 'wp-maintenance').'" />
         '.$addStylesheet.'
         <style type="text/css">
-@import url(http://fonts.googleapis.com/css?family='.$paramMMode['font_title'].'|'.$paramMMode['font_text'].'|'.$paramMMode['font_text_bottom'].'|'.$paramMMode['font_cpt'].');
+@import url(http://fonts.googleapis.com/css?family='.str_replace(' ', '+', $paramMMode['font_title']).'|'.str_replace(' ', '+',$paramMMode['font_text']).'|'.str_replace(' ', '+',$paramMMode['font_text_bottom']).'|'.str_replace(' ', '+',$paramMMode['font_cpt']).');
             '.$wpmStyle.'
             '.$addBImage.'
             '.$addCSSnl.'
