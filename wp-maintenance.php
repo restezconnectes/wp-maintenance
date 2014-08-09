@@ -524,7 +524,13 @@ function wpm_maintenance_mode() {
             $addStylesheet = '';
             if($paramMMode['newletter']==1 && $paramMMode['code_newletter']!='') {
                 $nameNl = strpos($paramMMode['code_newletter'], 'wysija_form');
-                $addStylesheet = "<link rel='stylesheet' id='validate-engine-css-css'  href='".WP_PLUGIN_URL."/wysija-newsletters/css/validationEngine.jquery.css' type='text/css' media='all' />";
+                $addStylesheet = "<link rel='stylesheet' id='validate-engine-css-css'  href='".WP_PLUGIN_URL."/wysija-newsletters/css/validationEngine.jquery.css' type='text/css' media='all' />
+<style type='text/css'>
+.widget_wysija_cont .wysija-submit {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>";
             }    
                 
             $content = '
