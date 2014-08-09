@@ -212,12 +212,13 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 #wpm_footer {
     width: 100%;
     clear: both;
-    height: 45px;
+    height: 150px;
     text-align:center;
     background-color: #_COLOR_BG_BT;
     color:#_COLOR_TXT_BT;
-    padding-top:10px;
-    position:fixed;
+    padding-top: 10px;
+    margin-top: 40px;
+    position:relative;
     bottom:0;
 }
 .wpm_copyright {
@@ -520,6 +521,8 @@ function wpm_maintenance_mode() {
             if($paramMMode['font_bottom_size']=='') { $paramMMode['font_bottom_size'] = 12; }
             if($paramMMode['font_bottom_weigth']=='') { $paramMMode['font_bottom_weigth'] = 'normal'; }
             if($paramMMode['font_bottom_style']=='') { $paramMMode['font_bottom_style'] = 'normal'; }
+            if($paramMMode['font_cpt']=='') { $paramMMode['font_cpt'] = 'Acme'; }
+            if($paramMMode['date_cpt_size']=='') { $paramMMode['date_cpt_size'] = 72; }
             
             $addStylesheet = '';
             if($paramMMode['newletter']==1 && $paramMMode['code_newletter']!='') {
