@@ -20,18 +20,18 @@ if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
 if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
 $paramMMode = get_option('wp_maintenance_settings');
 
-if($paramMMode['font_title_size']=='') { $paramMMode['font_title_size'] = 40; }
-if($paramMMode['font_title_style']=='') { $paramMMode['font_title_style'] = 'normal'; }
-if($paramMMode['font_title_weigth']=='') { $paramMMode['font_title_weigth'] = 'normal'; }
-if($paramMMode['font_text_size']=='') { $paramMMode['font_text_size'] = 40; }
-if($paramMMode['font_text_style']=='') { $paramMMode['font_text_style'] = 'normal'; }
-if($paramMMode['font_text_weigth']=='') { $paramMMode['font_text_weigth'] = 'normal'; }
-if($paramMMode['font_text_bottom']=='') { $paramMMode['font_text_bottom'] = 'normal'; }
-if($paramMMode['font_bottom_size']=='') { $paramMMode['font_bottom_size'] = 12; }
-if($paramMMode['font_bottom_weigth']=='') { $paramMMode['font_bottom_weigth'] = 'normal'; }
-if($paramMMode['font_bottom_style']=='') { $paramMMode['font_bottom_style'] = 'normal'; }
-if($paramMMode['font_cpt']=='') { $paramMMode['font_cpt'] = 'Acme'; }
-if($paramMMode['date_cpt_size']=='') { $paramMMode['date_cpt_size'] = 72; }
+if( !isset($paramMMode['font_title_size']) ) { $paramMMode['font_title_size'] = 40; }
+if( !isset($paramMMode['font_title_style']) ) { $paramMMode['font_title_style'] = 'normal'; }
+if( !isset($paramMMode['font_title_weigth']) ) { $paramMMode['font_title_weigth'] = 'normal'; }
+if( !isset($paramMMode['font_text_size']) ) { $paramMMode['font_text_size'] = 40; }
+if( !isset($paramMMode['font_text_style']) ) { $paramMMode['font_text_style'] = 'normal'; }
+if( !isset($paramMMode['font_text_weigth']) ) { $paramMMode['font_text_weigth'] = 'normal'; }
+if( !isset($paramMMode['font_text_bottom']) ) { $paramMMode['font_text_bottom'] = 'normal'; }
+if( !isset($paramMMode['font_bottom_size']) ) { $paramMMode['font_bottom_size'] = 12; }
+if( !isset($paramMMode['font_bottom_weigth']) ) { $paramMMode['font_bottom_weigth'] = 'normal'; }
+if( !isset($paramMMode['font_bottom_style']) ) { $paramMMode['font_bottom_style'] = 'normal'; }
+if( !isset($paramMMode['font_cpt']) ) { $paramMMode['font_cpt'] = 'Acme'; }
+if( !isset($paramMMode['date_cpt_size']) ) { $paramMMode['date_cpt_size'] = 72; }
 
 // Récupère les Rôles et capabilités
 if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
@@ -46,174 +46,11 @@ if(get_option('wp_maintenance_social_options')) { extract(get_option('wp_mainten
 $paramSocialOption = get_option('wp_maintenance_social_options');
 
 
-/* Feuille de style par défault */
-$wpm_style_defaut = '
-h1 {
-    margin-left:auto;
-    margin-right:auto;
-    width: 700px;
-    padding: 10px;
-    text-align:center;
-    color: #_COLORTXT;
-}
-
-body {
-    background: none repeat scroll 0 0 #_COLORBG;
-    color: #_COLORTXT;
-    font: 12px/1.5em Arial,Helvetica,Sans-serif;
-    margin:0;
-    padding:0;
-}
-#header {
-    clear: both;
-    padding: 5px 0 10px;
-    position: relative;
-}
-.full {
-    margin: 0 auto;
-    width: 720px;
-}
-#logo {
-    text-align: center;
-}
-#main {
-    padding: 0px 50px;
-}
-#main .block {
-    font-size: 13px;
-    margin-bottom: 30px;
-}
-#main .block h3 {
-    line-height: 60px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-#main #intro h3 {
-    font-size: 40px;
-}
-#main #intro p {
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
-    word-wrap: break-word;
-}
-
-a:link {color: #_COLORTXT;text-decoration: underline;}
-a:visited {color: #_COLORTXT;text-decoration: underline;}
-a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
-
-#maintenance {
-    text-align:center;
-    margin-top:25px;
-}
-
-.cptR-rec_countdown {
-    position: relative;
-    background: #_COLORCPTBG;
-    display: inline-block;
-    line-height: #_DATESIZE px;
-    min-width: 160px;
-    min-height: 60px;
-    padding: 30px 20px 5px 20px;
-    text-transform: uppercase;
-    text-align:center;
-}
-
-#cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
-    color: #_COLORCPT;
-    display: block;
-    font-size: #_DATESIZE;
-    height: 40px;
-    line-height: 18px;
-    text-align: center;
-    float:left;
-}
-#cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
-    color: #_COLORCPT;
-    font-size: 10px;
-    padding: 25px 5px 0 2px;
-}
-
-.wpm_horizontal li {
-    display: inline-block;
-    list-style: none;
-    margin:5px;
-    opacity:1;
-}
-.wpm_horizontal li:hover {
-    opacity:0.5;
-}
-#wpm_footer {
-    width: 100%;
-    clear: both;
-    height: 150px;
-    text-align:center;
-    background-color: #_COLOR_BG_BT;
-    color:#_COLOR_TXT_BT;
-    padding-top:10px;
-    margin-top: 40px;
-    font-size: 12px;
-    position:relative;
-    bottom:0;
-}
-.wpm_copyright {
-    color:#_COLOR_TXT_BT;
-    font-size: 12px;
-}
-.wpm_copyright a, a:hover, a:visited {
-    color:#_COLOR_TXT_BT;
-    text-decoration:none;
-    font-size: 12px;
-}
-.wpm_social {
-    padding: 0 45px;
-    text-align: center;
-}
-.wpm_newletter {
-    text-align:center;
-}
-@media screen and (min-width: 200px) and (max-width: 480px) {
-    .full {
-        max-width:300px;
-    }
-    #header {
-        padding: 0;
-    }
-    #main {
-        padding: 0;
-    }
-    .wpm_social {
-        padding: 0 15px;
-    }
-    .cptR-rec_countdown {
-        padding:0;
-    }
-    #main .block h3 {
-        line-height: 0px;
-    }
-    #main .block {
-        margin-bottom: 0;
-    }
-    #cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
-        font-size: 8px;
-    }
-    #main #intro h3 {
-        font-size: 6vw;
-    }
-}   
-
-@media screen and (min-width: 480px) and (max-width: 767px) {
-    .full {
-        max-width:342px;
-    }
-}
-';
-
 /* Si on réinitialise les feuille de styles  */
-if($_POST['wpm_initcss']==1) {
-    update_option('wp_maintenance_style', $wpm_style_defaut);
+if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
+    update_option( 'wp_maintenance_style', wpm_print_style() );
     $options_saved = true;
-    echo '<div id="message" class="updated fade"><p><strong>Feuillez de style réinitialisée !</strong></p></div>';
+    echo '<div id="message" class="updated fade"><p><strong>'.__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
 }
 
 ?>
@@ -305,12 +142,13 @@ if($_POST['wpm_initcss']==1) {
                              <br />
                              <?php _e('Choose icons size:', 'wp-maintenance'); ?>
                              <select name="wp_maintenance_social_options[size]">
-                                 <option value="16"<?php if($paramSocialOption['size']==16) { echo ' selected'; } ?>>16</option>
-                                 <option value="24"<?php if($paramSocialOption['size']==24) { echo ' selected'; } ?>>24</option>
-                                 <option value="32"<?php if($paramSocialOption['size']==32) { echo ' selected'; } ?>>32</option>
-                                 <option value="32"<?php if($paramSocialOption['size']==48 or $paramSocialOption=='') { echo ' selected'; } ?>>48</option>
-                                 <option value="64"<?php if($paramSocialOption['size']==64) { echo ' selected'; } ?>>64</option>
-                                 <option value="128"<?php if($paramSocialOption['size']==128) { echo ' selected'; } ?>>128</option>
+                             <?php 
+                                    $wpm_tabIcon = array(16, 24, 32, 48, 64, 128);
+                                    foreach($wpm_tabIcon as $wpm_icon) {
+                                        if($paramSocialOption['size']==$wpm_icon) { $selected = ' selected'; } else { $selected = ''; }
+                                        echo '<option value="'.$wpm_icon.'" '.$selected.'>'.$wpm_icon.'</option>';
+                                    }
+                             ?>
                              </select>
                          </li>
                          <li>
@@ -457,7 +295,6 @@ if($_POST['wpm_initcss']==1) {
                                 </div>
                                 <br />
                                 <!-- FIN POLICE DU TEXTE BAS DE PAGE -->
-                                <br /><br />
                         </li>
                         <li>&nbsp;</li>
 
