@@ -1,10 +1,10 @@
-=== Plugin Name ===
+﻿=== Plugin Name ===
 Contributors: Florent73
-Donate link: 
-Tags: wordpress maintenance plugin
+Donate link: http://wpmaintenance.info/
+Tags: WordPress.com, maintenance, atttente, pause, travaux, construction, launch, coming soon
 Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 2.3
+Tested up to: 4.5
+Stable tag: 2.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,7 @@ Le plugin WP Maintenance vous permet de mettre votre site en attente le temps po
 - Vos choix de polices et couleurs de texte
 - une image pour votre logo
 - une image de fond ou un pattern
+- un slider
 - un compte à rebours
 - Prêt pour Google Analytics
 - Icônes des réseaux sociaux
@@ -28,6 +29,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Choice texts colors and fonts
 - Upload logo picture
 - Upload background picture or pattern
+- Slider
 - Countdown
 - Google Analytics ready
 - Social Networks ready
@@ -59,17 +61,87 @@ Fichier wp-maintenance.pot disponible / maintenance.pot file available
 
 Oui tout à fait. / Yes
 
+Si vous le souhaitez, vous pouvez soutenir ce projet ici / If you want, you can support this project here : https://wpmaintenance.info/a-propos/
+
 = Puis-je modifier le code du plugin ? / Can I change the plugin code? =
 
 Oui mais merci de me soumettre les modifications souhaitées afin de mettre à jour le plugin. / Yes. Thank you for submitting your changes to update the plugin.
 
 == Upgrade Notice ==
 
-= 2.3 =
+= 2.7.3 =
 Cette version est stable / This version is stable
 
-
 == Changelog ==
+
+= 2.7.3 =
+* Ajout d'un slider. Compatible version 4.5 / Add slider. Version 4.5 compatible
+
+= 2.7.2 =
+* Correction du bug du compte à rebours. Ajout sélection Google font / Fixed countdown bug. Add Google font select.
+
+= 2.7.1 =
+* Correction de bugs. Ajout d'un calendrier. Compatible version 4.4.1 / Fixed bugs. Add calendar. Version 4.4.1 compatible
+
+= 2.7.0 =
+* Correction de bugs. Compatible version 4.4 / Fixed bugs. Version 4.4 compatible
+
+= 2.6.9 =
+* Correction de bugs. Ajout de l'autorisation par IP / Fixed bugs. Add authorization by IP
+
+= 2.6.8 =
+* Correction de bugs / Fixed bugs
+
+= 2.6.7 =
+* Réactivation de l'option page perso / Enabling the personal page option
+
+= 2.6.6 =
+* Correction de bugs / Fixed bugs
+
+= 2.6.5 =
+* Correction de bugs / Fixed bugs
+
+= 2.6.4 =
+* Ajout d'un lien vers le tableau de bord en bas de page / Add a link for dashboard access in the bottom
+
+= 2.6.3 =
+* Correction des bugs responsive / Fixed responsive bugs
+
+= 2.6.2 =
+* Correction des bugs / Fixed bugs
+
+= 2.6.1 =
+* Correction des erreurs php notices / Fixed bug php notice (undefined index)
+
+= 2.6 =
+* Nouvelle version du plugin. Il sera peut-être nécessaire de désinstaller/réinstaller le plugin / New version, perhaps need uninstall/install the plugin
+
+= 2.5.7 =
+* Résolution bug fonction php / Fixed bug php function
+
+= 2.5.6 =
+* Résolution d'un bug sur le message de fin du compteur / Fixed a bug on the end of message counter
+
+= 2.5.5 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.4 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.3 =
+* Résolution de divers bugs CSS Responsive / Fixed various CSS bugs responsive mode
+
+= 2.5.2 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
+
+= 2.5.1 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
+
+= 2.5 =
+* Résolution de divers bugs CSS, ajout d'un titre encart newsletter, ajout champs code header / Fixed various CSS bugs, adding an input for newsletter title, adding a code header fields
+
+= 2.4 =
+* Résolution de divers bugs CSS / Fixed various CSS bugs
 
 = 2.3 =
 * Résolution d'un bug sur tailles des icônes sociaux et sur l'acivation de page maintenance.php du thème / Fixed a bug on sizes of social icons on the theme of maintenance.php page acivation

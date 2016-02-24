@@ -114,79 +114,30 @@ function wpm_getFontsList($name = "", $value = "") {
 function wpm_print_style() {
     
     return '
-h1 {
-    margin-left:auto;
-    margin-right:auto;
-    width: 700px;
-    padding: 10px;
-    text-align:center;
-    color: #_COLORTXT;
-}
 
-body {
-    /*background: none repeat scroll 0 0 #_COLORBG;*/
-    color: #_COLORTXT;
-    font: 12px/1.5em Arial,Helvetica,Sans-serif;
-    min-height:100%
-    margin:0;
-    padding:0;
-}
-#header {
-    clear: both;
-    padding: 5px 0 10px;
-    position: relative;
-}
-.full {
-    margin: 0 auto;
-    width: 720px;
-}
 #logo {
     text-align: center;
 }
-#main {
-    padding: 0px 50px;
-}
-#main .block {
-    font-size: 13px;
-    margin-bottom: 30px;
-}
-#main .block h3 {
-    line-height: 60px;
-    margin-bottom: 40px;
-    text-align: center;
-}
-#main #intro h3 {
-    font-size: 40px;
-}
-#main #intro p {
-    font-size: 16px;
-    line-height: 22px;
-    text-align: center;
-    word-wrap: break-word;
-}
 
-a:link {color: #_COLORTXT;text-decoration: underline;}
-a:visited {color: #_COLORTXT;text-decoration: underline;}
-a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
-
-#maintenance {
-    text-align:center;
-    margin-top:25px;
-}
+a:link {color: #_COLORTXT;text-decoration: none;}
+a:visited {color: #_COLORTXT;text-decoration: none;}
+a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: none;}
 
 .cptR-rec_countdown {
     position: relative;
     background: #_COLORCPTBG;
     display: inline-block;
-    line-height: #_DATESIZE px;
-    min-width: 160px;
+    line-height: 100%;
     min-height: 60px;
-    padding: 30px 20px 5px 20px;
     text-transform: uppercase;
     text-align:center;
+    margin: 0.5em auto;
+}
+#header {
+    background: #_COLORHEAD;
 }
 
-#cptR-day, #cptR-hours, #cptR-minutes, #cptR-seconds {
+#wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {
     color: #_COLORCPT;
     display: block;
     font-size: #_DATESIZE;
@@ -194,8 +145,10 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
     line-height: 18px;
     text-align: center;
     float:left;
+    margin:0.3em;
+    padding:0px;
 }
-#cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
+#wpm-cpt-days-span, #wpm-cpt-hours-span, #wpm-cpt-minutes-span, #wpm-cpt-seconds-span {
     color: #_COLORCPT;
     font-size: 10px;
     padding: 25px 5px 0 2px;
@@ -210,40 +163,7 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: underline;}
 .wpm_horizontal li:hover {
     opacity:0.5;
 }
-* html div#wrapper {
-        height: 100%; /* Fix IE 5.5, 6 and 7 */
-}
-div#wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-height: 100%;
-        width: 100%;
-}
-div#wpm_footer {
-    width: 100%;
-    clear: both;
-    /*height: 150px;*/
-    text-align:center;
-    background-color: #_COLOR_BG_BT;
-    color:#_COLOR_TXT_BT;
-    padding-top:10px;
-    margin-top: 40px;
-    font-size: 12px;
-    position:absolute;
-    bottom:0;
-    overflow:auto;
-    left: 0; right: 0;
-}
-.wpm_copyright {
-    color:#_COLOR_TXT_BT;
-    font-size: 12px;
-}
-.wpm_copyright a, a:hover, a:visited {
-    color:#_COLOR_TXT_BT;
-    text-decoration:none;
-    font-size: 12px;
-}
+
 .wpm_social {
     padding: 0 45px;
     text-align: center;
@@ -251,42 +171,92 @@ div#wpm_footer {
 .wpm_newletter {
     text-align:center;
 }
-@media screen and (min-width: 200px) and (max-width: 480px) {
-    .full {
-        max-width:300px;
-    }
-    #header {
-        padding: 0;
-    }
-    #main {
-        padding: 0;
-    }
-    .wpm_social {
-        padding: 0 15px;
-    }
-    .cptR-rec_countdown {
-        padding:0;
-    }
-    #main .block h3 {
-        line-height: 0px;
-    }
-    #main .block {
-        margin-bottom: 0;
-    }
-    #cptR-days-span, #cptR-hours-span, #cptR-minutes-span, #cptR-seconds-span {
-        font-size: 8px;
-    }
-    #main #intro h3 {
-        font-size: 6vw;
-    }
-}   
-
-@media screen and (min-width: 480px) and (max-width: 767px) {
-    /*.full {
-        max-width:767px;
-    }*/
+#countdown {
+    clear:both;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
 }
+
     ';   
+}
+
+/* Feuille de style pour wysija */
+function wpm_wysija_style() {
+    
+    return '
+/* FORM */
+.wpm_newletter {
+    color: #_COLORTXT
+}
+.abs-req { display: none; }
+.widget_wysija_cont .wysija-submit {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #_COLORBUTTON;
+    border: 1px solid #_COLORBUTTON;
+    cursor:hand;
+    color:#_COLORTEXTBUTTON;
+}
+.widget_wysija input {
+   border: 1px solid #_COLORBORDER;
+   background: #_COLORBG;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   color: #_COLORTXT;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   padding:8px;
+   margin-bottom:20px;
+   width:280px;
+}
+
+.wysija-submit-field {
+   border: 1px solid #_COLORBORDER;
+   background: #_COLORBUTTON;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   text-shadow: #333333 0 1px 0;
+   color: #_COLORTXT;
+   font-family: helvetica, serif;
+   padding: 8.5px 18px;
+   font-size: 14px;
+   text-decoration: none;
+   vertical-align: baseline;
+   cursor:hand;
+   margin-top:0 !important;
+}
+.wysija-submit-field:hover {
+   text-shadow: #_COLORBORDER 0 1px 0;
+   border: 1px solid #_COLORBORDER;
+   background: #_COLOR_BTN_HOVER;
+   /*color: #_COLORTXT;*/
+   cursor:hand;
+}
+.widget_wysija input:focus {
+   text-shadow: #_COLORBORDER 0 1px 0;
+   border: 1px solid #_COLOR_BTN_CLICK;
+   background: #_COLOR_BTN_CLICK;
+   color: #_COLORTXT;
+   cursor:hand;
+}
+.wysija-submit-field:active {
+   text-shadow: #_COLORBORDER 0 1px 0;
+   border: 1px solid #_COLORBORDER;
+   background: #_COLOR_BTN_CLICK;
+   color: #_COLORTXT;
+   cursor:hand;
+}
+.widget_wysija .wysija-submit, .widget_wysija .wysija-paragraph { display: inline; }
+.wysija-submit-field { margin-top:0 !important; }
+   
+    ';
 }
 
 

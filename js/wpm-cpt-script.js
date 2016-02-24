@@ -47,7 +47,7 @@ function CountBack(secs) {
 }
 
 function putspan(BackColor, ForeColor) {
-    document.write("<div class='cptR-rec_countdown'><span id='cntdwn' style='background-color:" + BackColor + "; color:" + ForeColor + ";'></span></div>");
+    document.write("<div class='cptR-rec_countdown'><span id='cntdwn' style='font-family:" + FontFamily + ";background-color:" + BackColor + "; color:" + ForeColor + ";'></span></div>");
 }
 
 if (typeof(BackColor)=="undefined")
@@ -70,6 +70,8 @@ if (typeof(LeadingZero)=="undefined")
   LeadingZero = true;
 if (typeof(Disable)=="undefined")
   Disable = "";
+if (typeof(FontFamily)=="undefined")
+  Disable = "Oxygen";
 
 
 CountStepper = Math.ceil(CountStepper);
