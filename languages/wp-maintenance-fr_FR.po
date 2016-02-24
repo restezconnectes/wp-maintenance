@@ -1,379 +1,395 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2014-12-04 09:10+0100\n"
-"PO-Revision-Date: 2014-12-04 09:35+0100\n"
+"POT-Creation-Date: 2016-01-25 10:49+0100\n"
+"PO-Revision-Date: 2016-01-25 10:50+0100\n"
 "Last-Translator: Florent Maillefaud <contact@restezconnectes.fr>\n"
 "Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-KeywordsList: _e;__\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: C:\\wamp\\www\\www\\Plugin Wordpress\\wp-maintenance"
-"\\trunk\n"
+"X-Poedit-SearchPath-0: C:/wamp/www/www/Plugin Wordpress/wp-maintenance/"
+"trunk\n"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:16
+#: wp-maintenance-admin.php:17
 msgid "Options saved."
 msgstr "Options sauvegardées."
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:53
+#: wp-maintenance-admin.php:50
 msgid "The Style Sheet has been reset!"
 msgstr "Feuille de style réinitialisée !"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:72
+#: wp-maintenance-admin.php:68
+msgid "WP Maintenance Settings"
+msgstr "Paramètres WP Maintenance"
+
+#: wp-maintenance-admin.php:73
 msgid "General"
 msgstr "Général"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:73
+#: wp-maintenance-admin.php:74
 msgid "Colors & Fonts"
 msgstr "Couleurs et Fonts"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:74
+#: wp-maintenance-admin.php:75
 msgid "Picture"
 msgstr "Image"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:75
+#: wp-maintenance-admin.php:76
 msgid "CountDown"
 msgstr "Compte à rebours"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:76
+#: wp-maintenance-admin.php:77
 msgid "CSS Style"
 msgstr "Style CSS"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:77
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:53
+#: wp-maintenance-admin.php:78 wp-maintenance.php:69
 msgid "Settings"
 msgstr "Réglages"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:78
+#: wp-maintenance-admin.php:79
 msgid "About"
 msgstr "A propos"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:92
+#: wp-maintenance-admin.php:92
 msgid "Enable maintenance mode:"
 msgstr "Activer le mode maintenance :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:93
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:107
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:117
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:175
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:378
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:500
+#: wp-maintenance-admin.php:93 wp-maintenance-admin.php:111
+#: wp-maintenance-admin.php:121 wp-maintenance-admin.php:181
+#: wp-maintenance-admin.php:445 wp-maintenance-admin.php:596
 msgid "Yes"
 msgstr "Oui"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:94
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:501
+#: wp-maintenance-admin.php:94 wp-maintenance-admin.php:597
 msgid "No"
 msgstr "Non"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:98
+#: wp-maintenance-admin.php:98
 msgid "Title and text for the maintenance page:"
 msgstr "Titre et Texte de la page maintenance :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:99
+#: wp-maintenance-admin.php:99
 msgid "Title:"
 msgstr "Titre :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:100
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:102
+#: wp-maintenance-admin.php:100 wp-maintenance-admin.php:102
 msgid "Text:"
 msgstr "Texte :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:101
+#: wp-maintenance-admin.php:101
 msgid "Text in the bottom of maintenance page:"
 msgstr "Texte du bas de page :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:106
+#: wp-maintenance-admin.php:103
+msgid "Enable login access in the bottom ?"
+msgstr "Activer l'accès au Tableau de bord en bas de page ?"
+
+#: wp-maintenance-admin.php:104
+msgid "Enter a text to go to the dashboard:"
+msgstr "Entrer une phrase pour aller au tableau de bord :"
+
+#: wp-maintenance-admin.php:106
+msgid "Eg: connect to %DASHBOARD% here!"
+msgstr "Ex : Connectez-vous au %DASHBOARD%"
+
+#: wp-maintenance-admin.php:106
+msgid ""
+"(%DASHBOARD% will be replaced with the link to the dashboard and the word "
+"\"Dashboard\")"
+msgstr ""
+"(%DASHBOARD% sera remplacé par le mot \"Tableau de bord\" et le lien vers "
+"celui-ci)"
+
+#: wp-maintenance-admin.php:110
 msgid "Enable Google Analytics:"
 msgstr "Activer Google Analytics :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:108
+#: wp-maintenance-admin.php:112
 msgid "Enter your Google analytics tracking ID here:"
 msgstr "Enter votre ID de suivi de Google Analytics ici :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:110
+#: wp-maintenance-admin.php:114
 msgid "Enter your domain URL:"
 msgstr "Entrer votre domain :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:116
+#: wp-maintenance-admin.php:120
 msgid "Enable Social Networks:"
 msgstr "Activer les icônes des réseaux sociaux :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:118
+#: wp-maintenance-admin.php:122
 msgid "Enter text for the title icons:"
 msgstr "Entrez un texte pour la balise title des icônes  :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:119
+#: wp-maintenance-admin.php:123
 msgid "Follow me on"
 msgstr "Suivez-moi sur"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:121
+#: wp-maintenance-admin.php:125
 msgid "Drad and drop the lines to put in the order you want:"
 msgstr ""
 "Cliquez et glisser les lignes pour mettre dans l'ordre que vous souhaitez :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:143
+#: wp-maintenance-admin.php:147
 msgid "Choose icons size:"
 msgstr "Choisissez la taille des icônes :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:154
+#: wp-maintenance-admin.php:159
 msgid "Position:"
 msgstr "Position :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:156
+#: wp-maintenance-admin.php:161
 msgid "Top"
 msgstr "Haut"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:157
+#: wp-maintenance-admin.php:162
 msgid "Bottom"
 msgstr "Bas"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:161
+#: wp-maintenance-admin.php:166
 msgid "Align:"
 msgstr "Alignement :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:163
+#: wp-maintenance-admin.php:168
 msgid "Left"
 msgstr "Gauche"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:164
+#: wp-maintenance-admin.php:169
 msgid "Center"
 msgstr "Centre"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:165
+#: wp-maintenance-admin.php:170
 msgid "Right"
 msgstr "Droite"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:168
+#: wp-maintenance-admin.php:173
 msgid "You have your own icons? Enter the folder name of your theme here:"
 msgstr ""
 "Vous avez vos propres icônes ? Entrez le nom du dossier de votre thème ici :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:174
+#: wp-maintenance-admin.php:180
 msgid "Enable Newletter:"
 msgstr "Activer l'encart de newletter :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:176
+#: wp-maintenance-admin.php:182
+msgid "Enter title for the newletter block:"
+msgstr "Entrez un titre pour l'encart de la newsletter"
+
+#: wp-maintenance-admin.php:184
 msgid "Enter your newletter shortcode here:"
 msgstr "Entrez le Shortcode de la newletter ici :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:182
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:302
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:364
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:430
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:486
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:524
+#: wp-maintenance-admin.php:190 wp-maintenance-admin.php:349
+#: wp-maintenance-admin.php:420 wp-maintenance-admin.php:526
+#: wp-maintenance-admin.php:582 wp-maintenance-admin.php:646
 msgid "Save this settings"
 msgstr "Sauvegarder ces paramètres"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:195
-msgid "Choice texts colors:"
-msgstr "Choix des couleurs des textes :"
+#: wp-maintenance-admin.php:204
+msgid "Choice general colors:"
+msgstr "Choix des couleurs générales :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:197
+#: wp-maintenance-admin.php:205
 msgid "Background page color:"
 msgstr "Couleur du fond de page :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:198
+#: wp-maintenance-admin.php:206
+msgid "Header color:"
+msgstr "Couleur d'entête"
+
+#: wp-maintenance-admin.php:210
+msgid "Choice texts fonts and colors:"
+msgstr "Choix des polices et couleurs des textes :"
+
+#: wp-maintenance-admin.php:211
 msgid "Text color:"
 msgstr "Couleur du texte :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:201
+#: wp-maintenance-admin.php:213
 msgid "Title font settings"
 msgstr "Paramètres de la police du titre"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:207
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:230
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:258
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:281
+#: wp-maintenance-admin.php:218 wp-maintenance-admin.php:239
+#: wp-maintenance-admin.php:268 wp-maintenance-admin.php:299
+#: wp-maintenance-admin.php:318
 msgid "Size:"
 msgstr "Taille :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:224
+#: wp-maintenance-admin.php:234 wp-maintenance-admin.php:263
 msgid "Text font settings"
 msgstr "Paramètres de la police du texte"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:246
-msgid "Choice countdown colors:"
-msgstr "Choix des couleurs du compte à rebours :"
+#: wp-maintenance-admin.php:258
+msgid "Choice fonts and colors bottom page:"
+msgstr "Choix des polices et couleurs du bas de page"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:247
-msgid "Countdown text color:"
-msgstr "Couleur du texte du compteur :"
-
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:249
-msgid "Countdown background color:"
-msgstr "Couleur du fond du compteur :"
-
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:252
-msgid "Countdown font settings"
-msgstr "Paramètres de la police du compte à rebours"
-
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:269
-msgid "Choice texts bottom colors:"
-msgstr "Choix des couleurs du bas de page :"
-
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:271
+#: wp-maintenance-admin.php:259
 msgid "Bottom color:"
 msgstr "Couleur du fond :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:272
+#: wp-maintenance-admin.php:260
 msgid "Text bottom color:"
 msgstr "Couleur du texte :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:275
-msgid "Text font on the bottom page:"
-msgstr "Paramètres de la police du texte du bas de page :"
+#: wp-maintenance-admin.php:287
+msgid "Choice countdown fonts and colors:"
+msgstr "Choix des polices et couleurs du compte à rebours :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:314
+#: wp-maintenance-admin.php:288
+msgid "Countdown text color:"
+msgstr "Couleur du texte du compteur :"
+
+#: wp-maintenance-admin.php:289
+msgid "Countdown background color:"
+msgstr "Couleur du fond du compteur :"
+
+#: wp-maintenance-admin.php:294
+msgid "Countdown font settings"
+msgstr "Paramètres de la police du compte à rebours"
+
+#: wp-maintenance-admin.php:311
+msgid "Choice form color:"
+msgstr "Choisir les couleurs du formulaire :"
+
+#: wp-maintenance-admin.php:332
+msgid "Field text color:"
+msgstr "Couleur du texte dans les champs :"
+
+#: wp-maintenance-admin.php:333
+msgid "Field border color:"
+msgstr "Couleur de bordure des champs :"
+
+#: wp-maintenance-admin.php:334
+msgid "Field background color:"
+msgstr "Couleur de fond des champs :"
+
+#: wp-maintenance-admin.php:336
+msgid "Button text color:"
+msgstr "Couleur du texte dans le bouton :"
+
+#: wp-maintenance-admin.php:338
+msgid "Button color:"
+msgstr "Couleur du bouton :"
+
+#: wp-maintenance-admin.php:340
+msgid "Button color hover:"
+msgstr "Couleur du bouton au survol :"
+
+#: wp-maintenance-admin.php:341
+msgid "Button color onclick:"
+msgstr "Couleur du bouton au click :"
+
+#: wp-maintenance-admin.php:368
 msgid "Upload a picture"
 msgstr "Uploader une image"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:316
+#: wp-maintenance-admin.php:370
 msgid "You use this picture:"
 msgstr "Image actuelle : "
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:318
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:334
+#: wp-maintenance-admin.php:372 wp-maintenance-admin.php:391
+msgid "Enter a URL or upload an image."
+msgstr "Entrez une url ou uploadez une image."
+
+#: wp-maintenance-admin.php:373 wp-maintenance-admin.php:390
 msgid "Select or Upload your picture"
 msgstr "Sélectionnez / Uploader votre image"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:319
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:335
-msgid "Enter a URL or upload an image."
-msgstr "Entrez une url ou uploader une image."
-
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:324
+#: wp-maintenance-admin.php:380
 msgid "Upload a background picture"
 msgstr "Uploader une image de fond"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:325
+#: wp-maintenance-admin.php:381
 msgid "Enable image background"
 msgstr "Activer l'image de fond"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:327
+#: wp-maintenance-admin.php:383
 msgid "You use this background picture:"
 msgstr "Image de fond actuelle : "
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:331
+#: wp-maintenance-admin.php:387
 msgid "You use this pattern:"
 msgstr "Vous utilisez ce pattern : "
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:336
+#: wp-maintenance-admin.php:392
 msgid "Or choose a pattern:"
 msgstr "Ou choisissez un pattern de fond :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:352
+#: wp-maintenance-admin.php:396
+msgid "NO PATTERN"
+msgstr "AUCUN PATTERN"
+
+#: wp-maintenance-admin.php:408
 msgid "Background picture options"
 msgstr "Options de l'image de fond"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:359
+#: wp-maintenance-admin.php:415
 msgid "Fixed"
 msgstr "Fixe"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:377
+#: wp-maintenance-admin.php:444
 msgid "Enable a countdown ?"
 msgstr "Activer le compte à rebours ?"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:379
-msgid "Enter the launch date"
-msgstr "Entrez la date de lancement"
+#: wp-maintenance-admin.php:446
+msgid "Select the launch date/time"
+msgstr "Sélectionner une date et heure de lancement"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:412
+#: wp-maintenance-admin.php:449
 msgid "Enable seconds ?"
 msgstr "Afficher les secondes ?"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:413
+#: wp-maintenance-admin.php:450
 msgid "Disable maintenance mode at the end of the countdown?"
 msgstr "Désactiver le mode maintenance à la fin du compte à rebours ?"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:414
+#: wp-maintenance-admin.php:451
 msgid "End message:"
 msgstr "Message de fin :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:414
+#: wp-maintenance-admin.php:451
 msgid "Font size:"
 msgstr "Taille de la police :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:442
+#: wp-maintenance-admin.php:479
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: wp-maintenance-admin.php:480
+msgid "Delete"
+msgstr "Supprimer"
+
+#: wp-maintenance-admin.php:481 wp-maintenance-admin.php:505
+msgid "Close"
+msgstr "Fermer"
+
+#: wp-maintenance-admin.php:484
+msgid "Next month"
+msgstr "Mois suivant"
+
+#: wp-maintenance-admin.php:485
+msgid "Previous month"
+msgstr "Mois précédent"
+
+#: wp-maintenance-admin.php:486
+msgid "Select a month"
+msgstr "Sélectionner un mois"
+
+#: wp-maintenance-admin.php:487
+msgid "Select a year"
+msgstr "Sélectionner une année"
+
+#: wp-maintenance-admin.php:538
 msgid "CSS style sheet code:"
 msgstr "Code style CSS :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:443
+#: wp-maintenance-admin.php:539
 msgid ""
 "Edit the CSS sheet of your maintenance page here. Click \"Reset\" and \"Save"
 "\" to retrieve the default style sheet."
@@ -381,80 +397,90 @@ msgstr ""
 "Editer le code CSS de votre page de maintenance ici. Cliquez sur "
 "\"Réinitialiser\" et \"Sauvegarder\" pour remettre le style par défaut."
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:451
+#: wp-maintenance-admin.php:547
 msgid "Markers for colors"
 msgstr "Marqueurs pour les couleurs"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:456
+#: wp-maintenance-admin.php:552
 msgid "Use this code for text color"
 msgstr "Utiliser ce code pour la couleur du texte"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:460
+#: wp-maintenance-admin.php:556
 msgid "Use this code for background text color"
 msgstr "Utiliser ce code pour la couleur de fond du texte"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:464
+#: wp-maintenance-admin.php:560
 msgid "Use this code for background color countdown"
 msgstr "Utiliser ce code pour la couleur du fond du compte à rebours"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:468
+#: wp-maintenance-admin.php:564
 msgid "Use this code for size countdown"
 msgstr "Utiliser ce code pour la taille du compte à rebours"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:472
+#: wp-maintenance-admin.php:568
 msgid "Use this code for countdown color"
 msgstr "Utiliser ce code pour la couleur du texte du compte à rebours"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:481
+#: wp-maintenance-admin.php:577
 msgid "Reset default CSS stylesheet ?"
 msgstr "Réinitialiser la feuille de style ?"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:498
+#: wp-maintenance-admin.php:594
 msgid "Theme maintenance page:"
 msgstr "Page maintenance du thème :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:499
+#: wp-maintenance-admin.php:595
 msgid ""
 "If you would use your maintenance.php page in your theme folder, click Yes."
 msgstr ""
 "Si vous souhaitez utiliser votre page maintenance.php dans le dossier de "
 "votre thème, cliquez sur Oui."
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:502
+#: wp-maintenance-admin.php:598
 msgid "You can use this shortcode to include Google Analytics code:"
 msgstr ""
 "Vous pouvez utiliser ce Shortcode pour include le code Google Analytics sur "
 "votre page :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:502
+#: wp-maintenance-admin.php:598
 msgid "You can use this shortcode to include Social Networks icons:"
 msgstr ""
 "Vous pouvez utiliser ce Shortcode pour include les icons des réseaux sociaux "
 "sur votre page :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:506
+#: wp-maintenance-admin.php:607
 msgid "Roles and Capabilities:"
 msgstr "Rôles et capacités :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:507
+#: wp-maintenance-admin.php:608
 msgid "Allow the site to display these roles:"
 msgstr "Autoriser l'affichage du site à ces rôles :"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:540
+#: wp-maintenance-admin.php:625
+msgid "IP autorized:"
+msgstr "IP autorisées :"
+
+#: wp-maintenance-admin.php:626
+msgid ""
+"Allow the site to display these IP addresses. Please, enter one IP address "
+"by line:"
+msgstr ""
+"Autoriser l'affichage du site à ces adresses IP. Merci d'entrer 1 adresse IP "
+"par ligne : "
+
+#: wp-maintenance-admin.php:631
+msgid "Header Code:"
+msgstr "Code pour le header"
+
+#: wp-maintenance-admin.php:632
+msgid ""
+"The following code will add to the <head> tag. Useful if you need to add "
+"additional scripts such as CSS or JS."
+msgstr ""
+"Le code suivant va être ajouter à la balise <head>. Très utile si vous avez "
+"besoin d'ajouter des scripts supplémentaires tels que CSS ou JS."
+
+#: wp-maintenance-admin.php:662
 msgid ""
 "This plugin has been developed for you for free by <a href=\"http://www."
 "restezconnectes.fr\" target=\"_blank\">Florent Maillefaud</ a>. It is "
@@ -469,47 +495,118 @@ msgstr ""
 "retours sur vos éventuelles modifications afin d'améliorer ce plugin pour "
 "tous."
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance-admin.php:545
+#: wp-maintenance-admin.php:666
+msgid "Visit"
+msgstr "Visitez le site web de"
+
+#: wp-maintenance-admin.php:666
+msgid ""
+"try the demo of the plugin, talk about this plugin to your surroundings!"
+msgstr "essayez la démo du plugin et parlez de ce plugin à votre entourage !"
+
+#: wp-maintenance-admin.php:671
 msgid ""
 "If you want Donate (French Paypal) for my current and future developments:"
 msgstr ""
 "Si vous souhaitez me soutenir pour mes développements actuels et futurs :"
 
-#: C:\wamp\www\www\Plugin Wordpress\wp-maintenance\trunk/wp-maintenance.php:95
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:384
+#: wp-maintenance-admin.php:691
+msgid "WP Maintenance is brought to you by"
+msgstr "WP Maintenance est un plugin proposé par"
+
+#: wp-maintenance-admin.php:691
+msgid "If you found this plugin useful"
+msgstr "Si vous avez trouvé ce plugin utile,"
+
+#: wp-maintenance-admin.php:691
+msgid "give it 5 &#9733; on WordPress.org"
+msgstr "donnez-lui 5 &#9733; sur WordPress.org"
+
+#: wp-maintenance.php:118
+msgid "Maintenance mode activated!"
+msgstr "Maintenance activée !"
+
+#: wp-maintenance.php:155
 msgid "This site is down for maintenance"
 msgstr "Ce site est en maintenance"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:131
+#: wp-maintenance.php:156
+msgid "Come back quickly !"
+msgstr "Revenez vite nous voir !"
+
+#: wp-maintenance.php:206 wp-maintenance.php:208
+msgid "Options for the maintenance page"
+msgstr "Options pour la page maintenance"
+
+#: wp-maintenance.php:234
 msgid "Choose This Image"
 msgstr "Choisir cette image"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:132
+#: wp-maintenance.php:235
 msgid "Choose Image"
 msgstr "Choisissez une image"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:491
+#: wp-maintenance.php:526
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: wp-maintenance.php:602
 msgid "Days"
 msgstr "Jours"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:491
+#: wp-maintenance.php:602
 msgid "Hours"
 msgstr "Heures"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:491
+#: wp-maintenance.php:602
 msgid "Minutes"
 msgstr "Minutes"
 
-#: C:\wamp\www\www\Plugin
-#: Wordpress\wp-maintenance\trunk/wp-maintenance.php:493
+#: wp-maintenance.php:604
 msgid "Seconds"
 msgstr "Secondes"
+
+#~ msgid "Enter the launch date"
+#~ msgstr "Entrez la date de lancement"
+
+#~ msgid "Please, enter one IP address by line:"
+#~ msgstr "Merci d'entrer 1 adresse IP par ligne : "
+
+#~ msgid "Enter title for the admin access login block:"
+#~ msgstr "Entrer une phrase pour aller au tableau de bord"
+
+#~ msgid ""
+#~ "website, try the demo of the plugin, speak what this plugin to your "
+#~ "surroundings!"
+#~ msgstr ""
+#~ ", essayer la démonstration du plugin, parlez ce ce plugin à votre "
+#~ "entourage !"
+
+#~ msgid "Demo mode:"
+#~ msgstr "Mode démo :"
+
+#~ msgid "Be careful, in demo mode, the plugin can be modified by all users"
+#~ msgstr ""
+#~ "Attention, en mode démo, le plugin peut-être modifié par tous les "
+#~ "utilisateurs"
+
+#~ msgid "Active this plugin in demo mode?"
+#~ msgstr "Activer ce plugin en mode démo ?"
+
+#~ msgid "Choice texts colors:"
+#~ msgstr "Choix des couleurs des textes :"
+
+#~ msgid "Choice countdown colors:"
+#~ msgstr "Choix des couleurs du compte à rebours :"
+
+#~ msgid "Choice texts bottom colors:"
+#~ msgstr "Choix des couleurs du bas de page :"
+
+#~ msgid "Text font on the bottom page:"
+#~ msgstr "Paramètres de la police du texte du bas de page :"
+
+#~ msgid "Go to Admin Panel"
+#~ msgstr "Aller au panneau d'admin"
 
 #~ msgid "Choose those that do not display the maintenance page."
 #~ msgstr "Choisissez ceux qui n'auront pas la page de maintenance"

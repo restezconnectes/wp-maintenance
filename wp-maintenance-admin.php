@@ -5,10 +5,11 @@ if(!defined('WPM_PLUGIN_URL')) { define('WPM_PLUGIN_URL', WP_CONTENT_URL.'/plugi
 if(!defined('WPM_ICONS_URL')) { define('WPM_ICONS_URL', WP_CONTENT_URL.'/plugins/wp-maintenance/socialicons/'); }
 
 /* Update des paramètres */
-if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
+if( isset($_POST['action']) && $_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
     update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
     update_option('wp_maintenance_style', $_POST["wp_maintenance_style"]);
     update_option('wp_maintenance_limit', $_POST["wp_maintenance_limit"]);
+    update_option('wp_maintenance_ipaddresses', $_POST["wp_maintenance_ipaddresses"]);
     update_option('wp_maintenance_active', $_POST["wp_maintenance_active"]);
     update_option('wp_maintenance_social', $_POST["wp_maintenance_social"]);
     update_option('wp_maintenance_social_options', $_POST["wp_maintenance_social_options"]);
@@ -20,22 +21,18 @@ if($_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
 if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
 $paramMMode = get_option('wp_maintenance_settings');
 
-if( !isset($paramMMode['font_title_size']) ) { $paramMMode['font_title_size'] = 40; }
-if( !isset($paramMMode['font_title_style']) ) { $paramMMode['font_title_style'] = 'normal'; }
-if( !isset($paramMMode['font_title_weigth']) ) { $paramMMode['font_title_weigth'] = 'normal'; }
-if( !isset($paramMMode['font_text_size']) ) { $paramMMode['font_text_size'] = 40; }
-if( !isset($paramMMode['font_text_style']) ) { $paramMMode['font_text_style'] = 'normal'; }
-if( !isset($paramMMode['font_text_weigth']) ) { $paramMMode['font_text_weigth'] = 'normal'; }
-if( !isset($paramMMode['font_text_bottom']) ) { $paramMMode['font_text_bottom'] = 'normal'; }
-if( !isset($paramMMode['font_bottom_size']) ) { $paramMMode['font_bottom_size'] = 12; }
-if( !isset($paramMMode['font_bottom_weigth']) ) { $paramMMode['font_bottom_weigth'] = 'normal'; }
-if( !isset($paramMMode['font_bottom_style']) ) { $paramMMode['font_bottom_style'] = 'normal'; }
-if( !isset($paramMMode['font_cpt']) ) { $paramMMode['font_cpt'] = 'Acme'; }
-if( !isset($paramMMode['date_cpt_size']) ) { $paramMMode['date_cpt_size'] = 72; }
-
+if( isset($paramMMode) && !empty($paramMMode) ) {
+    foreach($paramMMode as $variable=>$value) {
+        if( !isset($paramMMode[$variable]) ) { $paramMMode[$variable] = $value; }
+    }
+}  
+    
 // Récupère les Rôles et capabilités
 if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
 $paramLimit = get_option('wp_maintenance_limit');
+
+// Récupère les ip autorisee
+$paramIpAddress = get_option('wp_maintenance_ipaddresses');
 
 // Récupère si le status est actif ou non 
 $statusActive = get_option('wp_maintenance_active');
@@ -55,7 +52,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
 ?>
 <style>
-    .sortable { list-style-type: none; margin: 0; padding: 0; width: 35%; }
+    .sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
     .sortable li { padding: 0.4em; padding-left: 1.5em; height: 30px;cursor: pointer; cursor: move;  }
     .sortable li span { font-size: 15px;margin-right: 0.8em;cursor: move; }
     .sortable li:hover { background-color: #d2d2d2; }
@@ -64,22 +61,35 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     #pattern li.current { background: #66CC00; color: #fff; }
 </style>
 <style type="text/css">.postbox h3 { cursor:pointer; }</style>
+<!--<script src="<?php echo WP_PLUGIN_URL; ?>/wp-maintenance/js/jquery-ui-timepicker-addon.js"></script>-->
+<script>
+    jQuery(document).ready(function() {
+        jQuery('#font_title').fontselect();
+        jQuery('#font_text').fontselect();
+        jQuery('#font_text_bottom').fontselect();
+        jQuery('#font_text_cpt').fontselect();
+        jQuery('newletter_font_text').fontselect();
+    });
+    
+</script>
 <div class="wrap">
-
+    
+    <h2 style="font-size: 23px;font-weight: 400;padding: 9px 15px 4px 0px;line-height: 29px;">
+        <?php echo __('WP Maintenance Settings', 'wp-maintenance'); ?>
+    </h2>
+    
     <!-- TABS OPTIONS -->
-    <div id="icon-options-general" class="icon32"><br></div>
-        <h2 class="nav-tab-wrapper">
-            <a id="wpm-menu-general" class="nav-tab nav-tab-active" href="#general" onfocus="this.blur();"><?php _e('General', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-couleurs" class="nav-tab" href="#couleurs" onfocus="this.blur();"><?php _e('Colors & Fonts', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-image" class="nav-tab" href="#image" onfocus="this.blur();"><?php _e('Picture', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-compte" class="nav-tab" href="#compte" onfocus="this.blur();"><?php _e('CountDown', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-styles" class="nav-tab" href="#styles" onfocus="this.blur();"><?php _e('CSS Style', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-options" class="nav-tab" href="#options" onfocus="this.blur();"><?php _e('Settings', 'wp-maintenance'); ?></a>
-            <a id="wpm-menu-apropos" class="nav-tab" href="#apropos" onfocus="this.blur();"><?php _e('About', 'wp-maintenance'); ?></a>
-        </h2>
+    <h2 class="nav-tab-wrapper">
+        <a id="wpm-menu-general" class="nav-tab nav-tab-active" href="#general" onfocus="this.blur();"><?php _e('General', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-couleurs" class="nav-tab" href="#couleurs" onfocus="this.blur();"><?php _e('Colors & Fonts', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-image" class="nav-tab" href="#image" onfocus="this.blur();"><?php _e('Picture', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-compte" class="nav-tab" href="#compte" onfocus="this.blur();"><?php _e('CountDown', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-styles" class="nav-tab" href="#styles" onfocus="this.blur();"><?php _e('CSS Style', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-options" class="nav-tab" href="#options" onfocus="this.blur();"><?php _e('Settings', 'wp-maintenance'); ?></a>
+        <a id="wpm-menu-apropos" class="nav-tab" href="#apropos" onfocus="this.blur();"><?php _e('About', 'wp-maintenance'); ?></a>
+    </h2>
  
- 
-    <div style="margin-left:25px;margin-top: 15px;">
+    <div style="margin-left: 0px;margin-top: 5px;background-color: #ffffff;border: 1px solid #cccccc;padding: 10px;">
         <form method="post" action="" name="valide_maintenance">
             <input type="hidden" name="action" value="update" />
 
@@ -96,25 +106,29 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                         <!-- TEXTE PERSONNEL POUR LA PAGE -->
                         <li>
                             <h3><?php _e('Title and text for the maintenance page:', 'wp-maintenance'); ?></h3>
-                            <?php _e('Title:', 'wp-maintenance'); ?><br /><input type="text" name="wp_maintenance_settings[titre_maintenance]" value="<?php echo stripslashes($paramMMode['titre_maintenance']); ?>" /><br />
+                            <?php _e('Title:', 'wp-maintenance'); ?><br /><input type="text" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) ) { echo stripslashes($paramMMode['titre_maintenance']); } ?>" size="70" /><br />
                             <?php _e('Text:', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[text_maintenance]" COLS=70 ROWS=4><?php echo stripslashes($paramMMode['text_maintenance']); ?></TEXTAREA>
                             <h3><?php _e('Text in the bottom of maintenance page:', 'wp-maintenance'); ?></h3>
-                            <?php _e('Text:', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[text_bt_maintenance]" COLS=70 ROWS=4><?php echo stripslashes($paramMMode['text_bt_maintenance']); ?></TEXTAREA>
+                            <?php _e('Text:', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[text_bt_maintenance]" COLS=70 ROWS=4><?php if( isset($paramMMode['text_bt_maintenance']) ) { echo stripslashes($paramMMode['text_bt_maintenance']); } ?></TEXTAREA><br /><br />
+                            <input type= "checkbox" name="wp_maintenance_settings[add_wplogin]" value="1" <?php if( isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==1 ) { echo ' checked'; } ?>> <?php _e('Enable login access in the bottom ?', 'wp-maintenance'); ?><br /><br />
+                            <?php _e('Enter a text to go to the dashboard:', 'wp-maintenance'); ?><br />
+                            <input type="text" name="wp_maintenance_settings[add_wplogin_title]" size="60" value="<?php echo stripslashes(trim($paramMMode['add_wplogin_title'])); ?>" /><br />
+                            <small><?php _e('Eg: connect to %DASHBOARD% here!', 'wp-maintenance'); ?> <?php _e('(%DASHBOARD% will be replaced with the link to the dashboard and the word "Dashboard")', 'wp-maintenance'); ?></small>
                         </li>
                          
                          <li>
-                             <h3><?php _e('Enable Google Analytics:', 'wp-maintenance'); ?></h3>
-                                <input type= "checkbox" name="wp_maintenance_settings[analytics]" value="1" <?php if($paramMMode['analytics']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
-                                <?php _e('Enter your Google analytics tracking ID here:', 'wp-maintenance'); ?><br />
-                                <input type="text" name="wp_maintenance_settings[code_analytics]" value="<?php echo stripslashes(trim($paramMMode['code_analytics'])); ?>"><br />
-                             <?php _e('Enter your domain URL:', 'wp-maintenance'); ?><br />
-                             <input type="text" name="wp_maintenance_settings[domain_analytics]" value="<?php if($paramMMode['domain_analytics']=='') { echo $_SERVER['SERVER_NAME']; } else { echo stripslashes(trim($paramMMode['domain_analytics'])); } ?>">
+                            <h3><?php _e('Enable Google Analytics:', 'wp-maintenance'); ?></h3>
+                            <input type= "checkbox" name="wp_maintenance_settings[analytics]" value="1" <?php if( isset($paramMMode['analytics']) && $paramMMode['analytics'] ==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
+                            <?php _e('Enter your Google analytics tracking ID here:', 'wp-maintenance'); ?><br />
+                            <input type="text" name="wp_maintenance_settings[code_analytics]" value="<?php echo stripslashes(trim($paramMMode['code_analytics'])); ?>"><br />
+                         <?php _e('Enter your domain URL:', 'wp-maintenance'); ?><br />
+                         <input type="text" size="40" name="wp_maintenance_settings[domain_analytics]" value="<?php echo stripslashes(trim($paramMMode['domain_analytics'])); ?>">
                         </li>
                         <li>&nbsp;</li>
 
                          <li>
                              <h3><?php _e('Enable Social Networks:', 'wp-maintenance'); ?></h3>
-                             <input type= "checkbox" name="wp_maintenance_social_options[enable]" value="1" <?php if($paramSocialOption['enable']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
+                             <input type= "checkbox" name="wp_maintenance_social_options[enable]" value="1" <?php if( isset($paramSocialOption['enable']) && $paramSocialOption['enable']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
                              <?php _e('Enter text for the title icons:', 'wp-maintenance'); ?>
                              <input type="text" name="wp_maintenance_social_options[texte]" value="<?php if($paramSocialOption['texte']=='') { _e('Follow me on', 'wp-maintenance'); } else { echo stripslashes(trim($paramSocialOption['texte'])); } ?>" /><br /><br />
                              <!-- Liste des réseaux sociaux -->
@@ -124,18 +138,18 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                                     if($paramSocial) { 
                                             foreach($paramSocial as $socialName=>$socialUrl) {
                                          ?>
-                                      <li><span>::</span><img src="<?php echo WPM_ICONS_URL; ?>24x24/<?php echo $socialName; ?>.png" hspace="3" valign="middle" /><?php echo ucfirst($socialName); ?> <input type= "text" name="wp_maintenance_social[<?php echo $socialName; ?>]" value="<?php echo $socialUrl; ?>" onclick="select()" /></li>
+                                      <li><span>::</span><img src="<?php echo WPM_ICONS_URL; ?>24x24/<?php echo $socialName; ?>.png" hspace="3" valign="middle" /><?php echo ucfirst($socialName); ?> <input type= "text" name="wp_maintenance_social[<?php echo $socialName; ?>]" value="<?php echo $socialUrl; ?>" size="50" onclick="select()" /></li>
                                          <?php } ?>
                              <?php 
                                     } else { 
                                         $arr = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'google_plus', 'about_me');
                                         foreach ($arr as &$value) {
-                                            echo '<li><span>::</span><img src="'.WPM_ICONS_URL.'24x24/'.$value.'.png" valign="middle" hspace="3"/>'.ucfirst($value).' <input type= "text" name="wp_maintenance_social['.$value.']" value="'.$paramSocial[$value].'" onclick="select()" ><br />';
+                                            echo '<li><span>::</span><img src="'.WPM_ICONS_URL.'24x24/'.$value.'.png" valign="middle" hspace="3"/>'.ucfirst($value).' <input type="text" size="50" name="wp_maintenance_social['.$value.']" value="'.$paramSocial[$value].'" onclick="select()" ><br />';
                                         }
                                     }
                              ?>
                              </ul>
-                             <script src="<?php echo WPM_PLUGIN_URL; ?>jquery.sortable.js"></script>
+                             <script src="<?php echo WPM_PLUGIN_URL; ?>js/jquery.sortable.js"></script>
                              <script>
                                  jQuery('.sortable').sortable();
                              </script>
@@ -171,16 +185,21 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                         </li>
                         <li>&nbsp;</li>
 
-                         <li>
-                             <h3><?php _e('Enable Newletter:', 'wp-maintenance'); ?></h3>
-                                <input type= "checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if($paramMMode['newletter']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
-                                <?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><br />
-                                <input type="text" name="wp_maintenance_settings[code_newletter]" value='<?php echo stripslashes(trim($paramMMode['code_newletter'])); ?>' onclick="select()" />
-                            </li>
-                        <li>&nbsp;</li>
-
+                        <!-- Encart Newletter -->
                         <li>
-                            <a href="#general" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
+                            <h3><?php _e('Enable Newletter:', 'wp-maintenance'); ?></h3>
+                            <input type= "checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if($paramMMode['newletter']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
+                            <?php _e('Enter title for the newletter block:', 'wp-maintenance'); ?><br />
+                            <input type="text" name="wp_maintenance_settings[title_newletter]" size="60" value="<?php echo stripslashes(trim($paramMMode['title_newletter'])); ?>" /><br />
+                            <?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><br />
+                            <input type="text" name="wp_maintenance_settings[code_newletter]" value='<?php echo stripslashes(trim($paramMMode['code_newletter'])); ?>' onclick="select()" />
+                        </li>
+                        <li>&nbsp;</li>
+                         
+                        <li>
+                            <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                            </p>
                         </li>
                     </ul>
                 </div>
@@ -190,117 +209,169 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
             <!-- Couleurs -->
             <div class="wpm-menu-couleurs wpm-menu-group" style="display: none;">
-                <div id="wpm-opt-couleurs"  >
-                     <ul>
+                <div id="wpm-opt-couleurs">
+                    <ul> 
                         <!-- COULEUR DU FOND DE PAGE -->
-                        <li><h3><?php _e('Choice texts colors:', 'wp-maintenance'); ?></h3>
-                        <div id="pmColor" style="position: relative;">
-                               <em><?php _e('Background page color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_bg']; ?>" name="wp_maintenance_settings[color_bg]" class="wpm-color-field" data-default-color="#f1f1f1" /> <br />
-                               <em><?php _e('Text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_txt']; ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#888888" /> <br /> <br />
-                                
-                                <!-- POLICE DU TITRE -->
-                                <em><stong><?php _e('Title font settings', 'wp-maintenance'); ?></stong></em>
-                                <div>
-                                    <table cellspacing="10">
-                                        <tr>
-                                            <td valign="top" align="left"><?php echo wpm_getFontsList('wp_maintenance_settings[font_title]', $paramMMode['font_title']); ?></td>
-                                            <td>
-                                                <?php _e('Size:', 'wp-maintenance'); ?>
-                                                <input type="text" size="3" name="wp_maintenance_settings[font_title_size]" value="<?php echo stripslashes($paramMMode['font_title_size']); ?>" />px
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="normal" <?php if($paramMMode['font_title_weigth']=='normal') { echo 'checked'; } ?> >Normal
-                                                <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="bold" <?php if($paramMMode['font_title_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                                                <input type="checkbox" name="wp_maintenance_settings[font_title_style]" value="italic" <?php if($paramMMode['font_title_style']=='italic') { echo 'checked'; } ?>>Italic
-                                            </td>
-                                        </tr>
-                                    </table>   
-                                </div><br />
-                                <!-- FIN POLICE DU TITRE-->
-                            
-                                <!-- POLICE DU TEXTE -->
-                                <em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
-                                <div>
-                                    <table cellspacing="10">
-                                        <tr>
-                                            <td valign="top" align="left"><?php echo wpm_getFontsList('wp_maintenance_settings[font_text]', $paramMMode['font_text']); ?></td>
-                                            <td>
-                                                <?php _e('Size:', 'wp-maintenance'); ?>
-                                                <input type="text" size="3" name="wp_maintenance_settings[font_text_size]" value="<?php echo stripslashes($paramMMode['font_text_size']); ?>" />px
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="normal" <?php if($paramMMode['font_text_weigth']=='normal') { echo 'checked'; } ?> >Normal
-                                                <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="bold" <?php if($paramMMode['font_text_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                                                <input type="checkbox" name="wp_maintenance_settings[font_text_style]" value="italic" <?php if($paramMMode['font_text_style']=='italic') { echo 'checked'; } ?>>Italic
-                                            </td>
-                                        </tr>
-                                    </table>   
-                                </div>
-                                <!-- FIN POLICE DU TEXTE -->
-                                
-                           <h3><?php _e('Choice countdown colors:', 'wp-maintenance'); ?></h3>
-                           <em><?php _e('Countdown text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_cpt']; ?>" name="wp_maintenance_settings[color_cpt]" class="wpm-color-field" data-default-color="#FFFFFF" />
-                           <br />
-                           <em><?php _e('Countdown background color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_cpt_bg']; ?>" name="wp_maintenance_settings[color_cpt_bg]" class="wpm-color-field" data-default-color="#888888" /><br /><br />
-                                
-                                <!-- POLICE DU COMPTEUR -->
-                                <em><?php _e('Countdown font settings', 'wp-maintenance'); ?></em>
-                                <div>
-                                    <table cellspacing="10">
-                                        <tr>
-                                            <td valign="top" align="left"><?php echo wpm_getFontsList('wp_maintenance_settings[font_cpt]', $paramMMode['font_cpt']); ?></td>
-                                            <td>
-                                                <?php _e('Size:', 'wp-maintenance'); ?>
-                                                <input type="text" size="3" name="wp_maintenance_settings[date_cpt_size]" value="<?php echo stripslashes($paramMMode['date_cpt_size']); ?>" />px
-
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <!-- FIN POLICE DU COMPTEUR -->
-                                <br />
-                            
-                            </div>
-                            <h3><?php _e('Choice texts bottom colors:', 'wp-maintenance'); ?></h3>
-                            <div id="pmColor" style="position: relative;">
-                                   <em><?php _e('Bottom color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_bg_bottom']; ?>" name="wp_maintenance_settings[color_bg_bottom]" class="wpm-color-field" data-default-color="#333333" /> <br />
-                                   <em><?php _e('Text bottom color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_text_bottom']; ?>" name="wp_maintenance_settings[color_text_bottom]" class="wpm-color-field" data-default-color="#ffffff" /> <br /> <br />                                
-
-                                <!-- POLICE DU TEXTE BAS DE PAGE -->
-                                <em><?php _e('Text font on the bottom page:', 'wp-maintenance'); ?></em>
-                                <div>
-                                    <table cellspacing="10">
-                                        <tr>
-                                            <td valign="top" align="left"><?php echo wpm_getFontsList('wp_maintenance_settings[font_text_bottom]', $paramMMode['font_text_bottom']); ?></td>
-                                            <td>
-                                                <?php _e('Size:', 'wp-maintenance'); ?>
-                                                <input type="text" size="3" name="wp_maintenance_settings[font_bottom_size]" value="<?php echo stripslashes($paramMMode['font_bottom_size']); ?>" />px
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2">
-                                                <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="normal" <?php if($paramMMode['font_bottom_weigth']=='normal') { echo 'checked'; } ?> >Normal
-                                                <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="bold" <?php if($paramMMode['font_bottom_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                                                <input type="checkbox" name="wp_maintenance_settings[font_bottom_style]" value="italic" <?php if($paramMMode['font_bottom_style']=='italic') { echo 'checked'; } ?>>Italic
-                                            </td>
-                                        </tr>
-                                    </table>   
-                                </div>
-                                <br />
-                                <!-- FIN POLICE DU TEXTE BAS DE PAGE -->
-                        </li>
-                        <li>&nbsp;</li>
-
                         <li>
-                            <a href="#couleurs" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
+                            <h3><?php _e('Choice general colors:', 'wp-maintenance'); ?></h3>
+                            <em><?php _e('Background page color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_bg']; ?>" name="wp_maintenance_settings[color_bg]" class="wpm-color-field" data-default-color="#f1f1f1" /> <br />
+                            <em><?php _e('Header color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_bg_header']; ?>" name="wp_maintenance_settings[color_bg_header]" class="wpm-color-field" data-default-color="#333333" />
                         </li>
+                        
+                        <li>
+                            <h3><?php _e('Choice texts fonts and colors:', 'wp-maintenance'); ?></h3>
+                            <em><?php _e('Text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_txt']; ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#888888" /><br /><br />
+                            <!-- POLICE DU TITRE -->
+                            <em><stong><?php _e('Title font settings', 'wp-maintenance'); ?></stong></em>
+                            <table cellspacing="10">
+                                <tr>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[font_title]" id="font_title" type="text" value="<?php echo $paramMMode['font_title']; ?>" />
+                                    
+                                    <div id="fontSelect" class="fontSelect">
+                                        <div class="arrow-down"></div>
+                                    </div>
+
+                                    <div id="fontSelect2" class="fontSelect">
+                                        <div class="arrow-down"></div>
+                                    </div>
+                                    </td>
+                                    <td>
+                                        <?php _e('Size:', 'wp-maintenance'); ?>
+                                        <input type="text" size="3" name="wp_maintenance_settings[font_title_size]" value="<?php echo stripslashes($paramMMode['font_title_size']); ?>" />px
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">
+                                        <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="normal" <?php if( isset($paramMMode['font_title_weigth']) && $paramMMode['font_title_weigth']=='normal') { echo 'checked'; } ?> >Normal
+                                        <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="bold" <?php if( isset($paramMMode['font_title_weigth']) && $paramMMode['font_title_weigth']=='bold') { echo 'checked'; } ?>>Bold
+                                        <input type="checkbox" name="wp_maintenance_settings[font_title_style]" value="italic" <?php if( isset($paramMMode['font_title_style']) && $paramMMode['font_title_style']=='italic') { echo 'checked'; } ?>>Italic
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- FIN POLICE DU TITRE-->
+                            
+                            <!-- POLICE DU TEXTE -->
+                            <br /><em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
+                            <table cellspacing="10">
+                                <tr>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[font_text]" id="font_text" type="text" value="<?php echo $paramMMode['font_text']; ?>" /></td>
+                                    <td>
+                                        <?php _e('Size:', 'wp-maintenance'); ?>
+                                        <input type="text" size="3" name="wp_maintenance_settings[font_text_size]" value="<?php echo stripslashes($paramMMode['font_text_size']); ?>" />px
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">
+                                        <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="normal" <?php if( isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='normal') { echo 'checked'; } ?> >Normal
+                                        <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="bold" <?php if( isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='bold') { echo 'checked'; } ?>>Bold
+                                        <input type="checkbox" name="wp_maintenance_settings[font_text_style]" value="italic" <?php if( isset($paramMMode['font_text_style']) && $paramMMode['font_text_style']=='italic') { echo 'checked'; } ?>>Italic
+                                    </td>
+                                </tr>
+                            </table>   
+                            <!-- FIN POLICE DU TEXTE -->
+                            
+                        </li>
+                        
+                        <!-- BOTTOM PAGE -->
+                        <li>
+                            <h3><?php _e('Choice fonts and colors bottom page:', 'wp-maintenance'); ?></h3>
+                            <em><?php _e('Bottom color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_bg_bottom']; ?>" name="wp_maintenance_settings[color_bg_bottom]" class="wpm-color-field" data-default-color="#333333" /> <br />
+                            <em><?php _e('Text bottom color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_text_bottom']; ?>" name="wp_maintenance_settings[color_text_bottom]" class="wpm-color-field" data-default-color="#ffffff" /><br /><br />
+                            
+                            <!-- POLICE DU TEXTE BAS DE PAGE -->
+                            <em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
+                            <table cellspacing="10">
+                                <tr>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[font_text_bottom]" id="font_text_bottom" type="text" value="<?php echo $paramMMode['font_text_bottom']; ?>" /></td>
+                                    <td>
+                                        <?php _e('Size:', 'wp-maintenance'); ?>
+                                        <input type="text" size="3" name="wp_maintenance_settings[font_bottom_size]" value="<?php echo stripslashes($paramMMode['font_bottom_size']); ?>" />px
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">
+                                        <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="normal" <?php if( isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='normal') { echo 'checked'; } ?> >Normal
+                                        <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="bold" <?php if( isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='bold') { echo 'checked'; } ?>>Bold
+                                        <input type="checkbox" name="wp_maintenance_settings[font_bottom_style]" value="italic" <?php if( isset($paramMMode['font_bottom_style']) && $paramMMode['font_bottom_style']=='italic') { echo 'checked'; } ?>>Italic
+                                    </td>
+                                </tr>
+                            </table>   
+                            <br />
+                            <!-- FIN POLICE DU TEXTE BAS DE PAGE -->
+                        
+                        </li>
+                        
+                        <li>
+                            <h3><?php _e('Choice countdown fonts and colors:', 'wp-maintenance'); ?></h3>
+                            <em><?php _e('Countdown text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_cpt']; ?>" name="wp_maintenance_settings[color_cpt]" class="wpm-color-field" data-default-color="#888888" /><br />
+                            <em><?php _e('Countdown background color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_cpt_bg']; ?>" name="wp_maintenance_settings[color_cpt_bg]" class="wpm-color-field" data-default-color="#888888" /><br /><br />
+                        </li>
+                        
+                        <li>
+                            <!-- POLICE DU COMPTEUR -->
+                            <em><?php _e('Countdown font settings', 'wp-maintenance'); ?></em>
+                            <table cellspacing="10">
+                                <tr>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[font_cpt]" id="font_text_cpt" type="text" value="<?php echo $paramMMode['font_cpt']; ?>" /></td>
+                                    <td>
+                                        <?php _e('Size:', 'wp-maintenance'); ?>
+                                        <input type="text" size="3" id="date_cpt_size" name="wp_maintenance_settings[date_cpt_size]" value="<?php echo trim($paramMMode['date_cpt_size']); ?>" />px
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- FIN POLICE DU COMPTEUR -->
+                        </li>
+                        <?php 
+                            if(strpos($paramMMode['code_newletter'], 'wysija_form')!=false && is_plugin_active( 'wysija-newsletters/index.php' ) ) { 
+                        ?>
+                        <li>
+                            <h3><?php _e('Choice form color:', 'wp-maintenance'); ?></h3>
+                            
+                            <!-- COULEUR WYJIYA -->
+                            <table cellspacing="10">
+                                <tr>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[newletter_font_text]" id="font_text_bottom" type="text" value="<?php echo $paramMMode['newletter_font_text']; ?>" /></td>
+                                    <td>
+                                        <?php _e('Size:', 'wp-maintenance'); ?>
+                                        <input type="text" size="3" name="wp_maintenance_settings[newletter_size]" value="<?php if( isset($paramMMode['newletter_size']) && $paramMMode['newletter_size']) { echo stripslashes($paramMMode['newletter_size']); } else { echo 14; } ?>" />px
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">
+                                        <input type="radio" name="wp_maintenance_settings[newletter_font_weigth]" value="normal" <?php if( isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='normal') { echo 'checked'; } ?> >Normal
+                                        <input type="radio" name="wp_maintenance_settings[newletter_font_weigth]" value="bold" <?php if( isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='bold') { echo 'checked'; } ?>>Bold
+                                        <input type="checkbox" name="wp_maintenance_settings[newletter_font_style]" value="italic" <?php if( isset($paramMMode['newletter_font_style']) && $paramMMode['newletter_font_style']=='italic') { echo 'checked'; } ?>>Italic
+                                    </td>
+                                </tr>
+                            </table>  
+                            <br />
+                             <em><?php _e('Field text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_text']; ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                            <em><?php _e('Field border color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_border']; ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                            <em><?php _e('Field background color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_background']; ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <br />
+                            <em><?php _e('Button text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_text_button']; ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <br />
+                            <em><?php _e('Button color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button']; ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <br />
+                            <em><?php _e('Button color hover:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button_hover']; ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                            <em><?php _e('Button color onclick:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button_onclick']; ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+                            
+                        </li>
+                        <?php } ?>
+                        
+                        <li>&nbsp;</li>
+                         
+                         <li>
+                            <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                            </p>
+                        </li>
+                         
                     </ul>
                  </div>
             </div>
@@ -308,64 +379,73 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
              <!-- Onglet options 3 -->
              <div class="wpm-menu-image wpm-menu-group" style="display: none;">
-                 <div id="wpm-opt-image"  >
-                         <ul>
-                            <!-- UPLOADER UNE IMAGE -->
-                            <li><h3><?php _e('Upload a picture', 'wp-maintenance'); ?></h3>
+                <div id="wpm-opt-image"  >
+                    <ul>
+                        <!-- UPLOADER UNE IMAGE -->
+                        <?php 
+                            if($paramMMode['image']!='') {
+                                list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($paramMMode['image']);
+                            }
+                        ?>
+                        <li>
+                            <h3><?php _e('Upload a picture', 'wp-maintenance'); ?></h3>
                             <?php if($paramMMode['image']) { ?>
-                            <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="300" style="border:1px solid #333;padding:3px;" /><br />
+                            <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="<?php echo $logoWidth; ?>" height="<?php echo $logoHeight; ?>" id="image_visuel" style="border:1px solid #333;padding:3px;" /><br />
                             <?php } ?>
-                            <input id="upload_image" size="36" name="wp_maintenance_settings[image]" value="<?php echo $paramMMode['image']; ?>" type="text" /> <a href="#" id="upload_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a>
-                            <br /><small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small>
-                            </li>
-                            <li>&nbsp;</li>
-                             
-                            <!-- UPLOADER UNE IMAGE DE FOND -->
-                            <li><h3><?php _e('Upload a background picture', 'wp-maintenance'); ?></h3>
-                                <input type= "checkbox" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if($paramMMode['b_enable_image']==1) { echo ' checked'; } ?>> <?php _e('Enable image background', 'wp-maintenance'); ?><br /><br />
-                            <?php if($paramMMode['b_image']!='' && (!$paramMMode['b_pattern'] or $paramMMode['b_pattern']==0) ) { ?>
-                                <?php _e('You use this background picture:', 'wp-maintenance'); ?><br />
-                                <img src="<?php echo $paramMMode['b_image']; ?>" width="300" style="border:1px solid #333;padding:3px;background: url('<?php echo $paramMMode['b_image']; ?>');" /><br />
-                            <?php } ?>
-                            <?php if($paramMMode['b_pattern']>0) { ?>
-                                <?php _e('You use this pattern:', 'wp-maintenance'); ?><br />
-                                <div style="background: url('<?php echo WP_PLUGIN_URL ?>/wp-maintenance/images/pattern<?php echo $paramMMode['b_pattern']; ?>.png');width:250px;height:250px;border:1px solid #333;"></div>
-                            <?php } ?>
-                            <input id="upload_b_image" size="36" name="wp_maintenance_settings[b_image]" value="<?php echo $paramMMode['b_image']; ?>" type="text" /> <a href="#" id="upload_b_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a>
-                            <br /><small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br /><br />
-                                <?php _e('Or choose a pattern:', 'wp-maintenance'); ?>
-                                
-                                    <ul id="pattern">
-                                        <li>
-                                            <div style="width:50px;height:50px;border:1px solid #333;background-color:#ffffff;"></div>
-                                            <input type="radio" value="0" <?php if(!$paramMMode['b_pattern'] or $paramMMode['b_pattern']==0) { echo 'checked'; } ?> name="wp_maintenance_settings[b_pattern]" />
-                                        </li>
-                                    <?php for ($p = 1; $p <= 12; $p++) { ?>
-                                        <li>
-                                            <div style="width:50px;height:50px;border:1px solid #333;background:url('<?php echo WP_PLUGIN_URL ?>/wp-maintenance/images/pattern<?php echo $p ?>.png');"></div>
-                                            <input type="radio" value="<?php echo $p; ?>" <?php if($paramMMode['b_pattern']==$p) { echo 'checked'; } ?> name="wp_maintenance_settings[b_pattern]" />
-                                        </li>
-                                    <?php } ?>
-                                    </ul>
-                            </li>
-                             
-                            <li><h3><?php _e('Background picture options', 'wp-maintenance'); ?></h3>
-                            <select name="wp_maintenance_settings[b_repeat_image]" >
-                                <option value="repeat"<?php if($paramMMode['b_repeat_image']=='repeat' or $paramMMode['b_repeat_image']=='') { echo ' selected'; } ?>>repeat</option>
-                                <option value="no-repeat"<?php if($paramMMode['b_repeat_image']=='no-repeat') { echo ' selected'; } ?>>no-repeat</option>
-                                <option value="repeat-x"<?php if($paramMMode['b_repeat_image']=='repeat-x') { echo ' selected'; } ?>>repeat-x</option>
-                                <option value="repeat-y"<?php if($paramMMode['b_repeat_image']=='repeat-y') { echo ' selected'; } ?>>repeat-y</option>
-                            </select><br /><br />
-                             <input type= "checkbox" name="wp_maintenance_settings[b_fixed_image]" value="1" <?php if($paramMMode['b_fixed_image']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Fixed', 'wp-maintenance'); ?><br />
-                            </li>
-                            <li>&nbsp;</li>
+                            <br /><small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
+                            <input id="upload_image" size="36" name="wp_maintenance_settings[image]" value="<?php echo $paramMMode['image']; ?>" type="text" /> <a href="#" id="upload_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a>                            
+                        </li>
+                        <li>&nbsp;</li>
 
-                            <li>
-                                <a href="#image" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
-                            </li>
-                             
-                        </ul>
-                 </div>
+                        <!-- UPLOADER UNE IMAGE DE FOND -->
+                        <li>
+                            <h3><?php _e('Upload a background picture', 'wp-maintenance'); ?></h3>
+                            <input type= "checkbox" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) { echo ' checked'; } ?>> <?php _e('Enable image background', 'wp-maintenance'); ?><br /><br />
+                        <?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' && (!$paramMMode['b_pattern'] or $paramMMode['b_pattern']==0) ) { ?>
+                            <?php _e('You use this background picture:', 'wp-maintenance'); ?><br />
+                            <img src="<?php echo $paramMMode['b_image']; ?>" width="300" style="border:1px solid #333;padding:3px;background: url('<?php echo $paramMMode['b_image']; ?>');" /><br />
+                        <?php } ?>
+                        <?php if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']>0) { ?>
+                            <?php _e('You use this pattern:', 'wp-maintenance'); ?><br />
+                            <div style="background: url('<?php echo WP_PLUGIN_URL ?>/wp-maintenance/images/pattern<?php echo $paramMMode['b_pattern']; ?>.png');width:250px;height:250px;border:1px solid #333;"></div>
+                        <?php } ?>
+                        <input id="upload_b_image" size="36" name="wp_maintenance_settings[b_image]" value="<?php if( isset($paramMMode['b_image']) && !empty($paramMMode['b_image']) ) { echo $paramMMode['b_image']; } ?>" type="text" /> <a href="#" id="upload_b_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a>
+                        <br /><small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br /><br />
+                            <?php _e('Or choose a pattern:', 'wp-maintenance'); ?>
+
+                                <ul id="pattern">
+                                    <li>
+                                        <div style="width:50px;height:50px;border:1px solid #333;background-color:#ffffff;font-size:0.8em;"><?php _e('NO PATTERN', 'wp-maintenance'); ?></div>
+                                        <input type="radio" value="0" <?php if( empty($paramMMode['b_pattern']) or $paramMMode['b_pattern']==0) { echo 'checked'; } ?> name="wp_maintenance_settings[b_pattern]" />
+                                    </li>
+                                <?php for ($p = 1; $p <= 12; $p++) { ?>
+                                    <li>
+                                        <div style="width:50px;height:50px;border:1px solid #333;background:url('<?php echo WP_PLUGIN_URL ?>/wp-maintenance/images/pattern<?php echo $p ?>.png');"></div>
+                                        <input type="radio" value="<?php echo $p; ?>" <?php if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']==$p) { echo 'checked'; } ?> name="wp_maintenance_settings[b_pattern]" />
+                                    </li>
+                                <?php } ?>
+                                </ul>
+                        </li>
+
+                        <li><h3><?php _e('Background picture options', 'wp-maintenance'); ?></h3>
+                        <select name="wp_maintenance_settings[b_repeat_image]" >
+                            <option value="repeat"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat' or $paramMMode['b_repeat_image']=='') { echo ' selected'; } ?>>repeat</option>
+                            <option value="no-repeat"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='no-repeat') { echo ' selected'; } ?>>no-repeat</option>
+                            <option value="repeat-x"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat-x') { echo ' selected'; } ?>>repeat-x</option>
+                            <option value="repeat-y"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat-y') { echo ' selected'; } ?>>repeat-y</option>
+                        </select><br /><br />
+                         <input type= "checkbox" name="wp_maintenance_settings[b_fixed_image]" value="1" <?php if( isset($paramMMode['b_fixed_image']) && $paramMMode['b_fixed_image']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Fixed', 'wp-maintenance'); ?><br />
+                        </li>
+                        <li>&nbsp;</li>
+
+                        <li>
+                            <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                            </p>
+                        </li>
+
+                    </ul>
+                </div>
              </div>
              <!-- fin options 3 -->
 
@@ -374,60 +454,85 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                  <div id="wpm-opt-compte"  >
                          <ul>
                             <!-- ACTIVER COMPTEUR -->
+                            <?php
+                             
+                                 // Old version compte à rebours
+                                if( isset($paramMMode['date_cpt_jj']) && empty($paramMMode['cptdate']) ) {
+                                    $paramMMode['cptdate'] = $paramMMode['date_cpt_aa'].'/'.$paramMMode['date_cpt_mm'].'/'.$paramMMode['date_cpt_jj'];
+                                } else if ( empty($paramMMode['cptdate']) ) {
+                                    $paramMMode['cptdate'] = date('d').'/'.date('m').'/'.date('Y');
+                                }
+                                
+                                if( isset($paramMMode['date_cpt_hh']) && empty($paramMMode['cpttime']) ) {
+                                    $paramMMode['cpttime'] = $paramMMode['date_cpt_hh'].':'.$paramMMode['date_cpt_mn'];
+                                } else if ( empty($paramMMode['cpttime']) ) {
+                                    $paramMMode['cpttime'] = date( 'H:i', (time()+3600) );                                    
+                                }
+                                
+                            ?>
                             <li><h3><?php _e('Enable a countdown ?', 'wp-maintenance'); ?></h3>
-                                <input type= "checkbox" name="wp_maintenance_settings[active_cpt]" value="1" <?php if($paramMMode['active_cpt']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Yes', 'wp-maintenance'); ?><br /><br />
-                                <small><?php _e('Enter the launch date', 'wp-maintenance'); ?></small><br /> <input type="text" name="wp_maintenance_settings[date_cpt_jj]" value="<?php if($paramMMode['date_cpt_jj']!='') { echo $paramMMode['date_cpt_jj']; } else { echo date('d'); } ?>" size="2" maxlength="2" autocomplete="off" />&nbsp;
-                                <select name="wp_maintenance_settings[date_cpt_mm]">
-                                    <?php
-                                            $ctpDate = array(
-                                                '01'=> 'jan',
-                                                '02' => 'fév',
-                                                '03' => 'mar',
-                                                '04' => 'avr',
-                                                '05' => 'mai',
-                                                '06' => 'juin',
-                                                '07' => 'juil',
-                                                '08' => 'août',
-                                                '09' => 'sept',
-                                                '10' => 'oct',
-                                                '11' => 'nov',
-                                                '12' => 'déc'
-                                            );
-                                            foreach($ctpDate as $a => $b) {
-                                                if($paramMMode['date_cpt_mm']=='' && $a==date('m')) {
-                                                    $addSelected = 'selected';
-                                                } elseif($paramMMode['date_cpt_mm']!='' && $paramMMode['date_cpt_mm']==$a) {
-                                                    $addSelected = 'selected';
-                                                } else {
-                                                    $addSelected = '';
-                                                }
-                                                echo '<option value="'.$a.'" '.$addSelected.'>'.$a.' - '.$b.'</option>';
-                                            }
-                                    ?>
-                                </select>&nbsp;
-                                <input type="text" name="wp_maintenance_settings[date_cpt_aa]" value="<?php if($paramMMode['date_cpt_aa']!='') { echo $paramMMode['date_cpt_aa']; } else { echo date('Y'); } ?>" size="4" maxlength="4" autocomplete="off" />&nbsp;à&nbsp;
-                                <input type="text" name="wp_maintenance_settings[date_cpt_hh]" value="<?php if($paramMMode['date_cpt_hh']!='') { echo $paramMMode['date_cpt_hh']; } else { echo date('H'); } ?>" size="2" maxlength="2" autocomplete="off" />&nbsp;h&nbsp;<input type="text" name="wp_maintenance_settings[date_cpt_mn]" value="<?php if($paramMMode['date_cpt_mn']!='') { echo $paramMMode['date_cpt_mn']; } else { echo date('i'); } ?>" size="2" maxlength="2" autocomplete="off" />&nbsp;min&nbsp;
-                                <input type="hidden" name="wp_maintenance_settings[date_cpt_ss]" value="00" />
+                                <input type= "checkbox" name="wp_maintenance_settings[active_cpt]" value="1" <?php if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1 ) { echo ' checked'; } ?>>&nbsp;<?php _e('Yes', 'wp-maintenance'); ?><br /><br />
+                                <small><?php _e('Select the launch date/time', 'wp-maintenance'); ?></small><br /><img src="<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/schedule_clock.png'; ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wp_maintenance_settings[cptdate]" type="text" autofocuss data-value="<?php if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) { echo $paramMMode['cptdate']; } ?>"> à <input id="cpttime" class="timepicker" type="time" name="wp_maintenance_settings[cpttime]" value="<?php if( isset($paramMMode['cpttime']) && !empty($paramMMode['cpttime']) ) { echo $paramMMode['cpttime']; } ?>" size="4" autofocuss>                                
+                                <div id="wpmdatecontainer"></div>
                                 <br /><br />
-                                <input type= "checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if($paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Enable seconds ?', 'wp-maintenance'); ?><br /><br />
-                                 <input type= "checkbox" name="wp_maintenance_settings[disable]" value="1" <?php if($paramMMode['disable']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?><br /><br />
-                                 <?php _e('End message:', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[message_cpt_fin]" COLS=70 ROWS=4><?php echo stripslashes($paramMMode['message_cpt_fin']); ?></TEXTAREA><br /><?php _e('Font size:', 'wp-maintenance'); ?>  <select name="wp_maintenance_settings[date_cpt_size]">
-                                            <?php
-                                                $ctpSize = array('18', '24', '36', '48', '52', '56', '60', '64', '68', '72', '76');
-                                                foreach($ctpSize as $c) {
-                                                    if($paramMMode['date_cpt_size']==$c) {
-                                                        $addsizeSelected = 'selected';
-                                                    } else {
-                                                        $addsizeSelected = '';
-                                                    }
-                                                    echo '<option value="'.$c.'" '.$addsizeSelected.'>'.$c.'px</option>';
-                                                }
-                                            ?>
-                                      </select>
+                                <input type= "checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Enable seconds ?', 'wp-maintenance'); ?><br /><br />
+                                 <input type= "checkbox" name="wp_maintenance_settings[disable]" value="1" <?php if( isset($paramMMode['disable']) && $paramMMode['disable']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?><br /><br />
+                                 <?php _e('End message:', 'wp-maintenance'); ?><br /><TEXTAREA NAME="wp_maintenance_settings[message_cpt_fin]" COLS=70 ROWS=4><?php echo stripslashes($paramMMode['message_cpt_fin']); ?></TEXTAREA><br />
+   
+                                <script type="text/javascript">                                    
+
+                                    jQuery(document).ready(function() {
+                                        
+                                        var $input = jQuery( '.datepicker' ).pickadate({
+                                            formatSubmit: 'yyyy/mm/dd',
+                                            container: '#wpmdatecontainer',
+                                            closeOnSelect: true,
+                                            closeOnClear: false,
+                                            firstDay: 1,
+                                            min: new Date(<?php echo date('Y').','.(date('m')-1).','.date('d'); ?>),
+                                            monthsFull: [ 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ],
+                                            monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec' ],
+                                            weekdaysShort: [ 'Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam' ],
+                                            today: "<?php _e('Today', 'wp-maintenance'); ?>",
+                                            clear: '<?php _e('Delete', 'wp-maintenance'); ?>',
+                                            close: '<?php _e('Close', 'wp-maintenance'); ?>',
+                                            
+                                            // Accessibility labels
+                                            labelMonthNext: '<?php _e('Next month', 'wp-maintenance'); ?>',
+                                            labelMonthPrev: '<?php _e('Previous month', 'wp-maintenance'); ?>',
+                                            labelMonthSelect: '<?php _e('Select a month', 'wp-maintenance'); ?>',
+                                            labelYearSelect: '<?php _e('Select a year', 'wp-maintenance'); ?>',
+                                            
+                                            selectMonths: true,
+                                            selectYears: true,
+                                            
+                                            
+                                        })
+
+                                        var picker = $input.pickadate('picker')
+
+                                        
+                                        var $input = jQuery( '.timepicker' ).pickatime({
+                                            //container: '#wpmtimecontainer',
+                                            clear: '<?php _e('Close', 'wp-maintenance'); ?>',
+                                            interval: 5,
+                                            editable: undefined,
+                                            format: 'HH:i', // retour ce format dans le input
+                                            formatSubmit: 'HH:i', // return ce format en post
+                                            formatLabel: '<b>HH</b>:i', // Affichage
+
+                                        })
+                                        var picker = $input.pickatime('picker')
+                                    
+                                    });
+
+                                </script>
                             </li>
                             <li>&nbsp;</li>
                             <li>
-                                <a href="#compte" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
+                                <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                </p>
                             </li>
                         </ul>
                  </div>
@@ -483,7 +588,9 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             <li>&nbsp;</li>
 
                             <li>
-                                <a href="#styles" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
+                                <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                </p>
                             </li>
                         </ul>
                  </div>
@@ -494,34 +601,62 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
              <div class="wpm-menu-options wpm-menu-group" style="display: none;">
                  <div id="wpm-opt-options"  >
                          <ul>
-                            <!-- UTILISER UNE PAGE MAINTENANCE.PHP -->
-                            <li><h3><?php _e('Theme maintenance page:', 'wp-maintenance'); ?></h3>
+                             <!-- UTILISER UNE PAGE MAINTENANCE.PHP -->
+                             <li><h3><?php _e('Theme maintenance page:', 'wp-maintenance'); ?></h3>
                                 <?php _e('If you would use your maintenance.php page in your theme folder, click Yes.', 'wp-maintenance'); ?>&nbsp;<br /><br />
                                 <input type= "radio" name="wp_maintenance_settings[pageperso]" value="1" <?php if($paramMMode['pageperso']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Yes', 'wp-maintenance'); ?>&nbsp;&nbsp;&nbsp;
                                 <input type= "radio" name="wp_maintenance_settings[pageperso]" value="0" <?php if(!$paramMMode['pageperso'] or $paramMMode['pageperso']==0) { echo ' checked'; } ?>>&nbsp;<?php _e('No', 'wp-maintenance'); ?><br /><br />
                                 <?php _e('You can use this shortcode to include Google Analytics code:', 'wp-maintenance'); ?> <input type="text" value="do_shortcode('[wpm_analytics']);" onclick="select()" style="width:250px;" /><br /><?php _e('You can use this shortcode to include Social Networks icons:', 'wp-maintenance'); ?> <input type="text" value="do_shortcode('[wpm_social]');" onclick="select()" style="width:250px;" /><br />
                             </li>
                             <li>&nbsp;</li>
-
-                            <li><h3><?php _e('Roles and Capabilities:', 'wp-maintenance'); ?></h3>
+                             
+                             <?php 
+                                /* Secure for demo mode */
+                                if ( current_user_can( 'manage_options' ) ) { 
+                             ?>
+                            <li>
+                                <h3><?php _e('Roles and Capabilities:', 'wp-maintenance'); ?></h3>
                                     <?php _e('Allow the site to display these roles:', 'wp-maintenance'); ?>&nbsp;<br /><br />
                                     <input type="hidden" name="wp_maintenance_limit[administrator]" value="administrator" />
                                     <?php
                                         $roles = wpm_get_roles();
                                         foreach($roles as $role=>$name) {
                                             $limitCheck = '';
-                                            if($paramLimit[$role]==$role) { $limitCheck = ' checked'; }
-                                            if($role=='administrator') {
+                                            if( isset($paramLimit[$role]) && $paramLimit[$role]==$role) { $limitCheck = ' checked'; }
+                                            if( $role=='administrator') {
                                                 $limitCheck = 'checked disabled="disabled"';
                                             }
                                     ?>
                                         <input type="checkbox" name="wp_maintenance_limit[<?php echo $role; ?>]" value="<?php echo $role; ?>"<?php echo $limitCheck; ?> /><?php echo $name; ?>&nbsp;
                                     <?php }//end foreach ?>
-                                </li>
+                            </li>
                             <li>&nbsp;</li>
                              
                             <li>
-                                <a href="#options" id="submitbutton" OnClick="document.forms['valide_maintenance'].submit();this.blur();" name="Save" class="button-primary"><span> <?php _e('Save this settings', 'wp-maintenance'); ?> </span></a>
+                                <h3><?php _e('IP autorized:', 'wp-maintenance'); ?></h3>
+                                <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><br />
+                                <textarea name="wp_maintenance_ipaddresses" ROWS="5" style="width:80%;"><?php if( isset($paramIpAddress) ) { echo $paramIpAddress; } ?></textarea>
+                            </li>
+                            <li>&nbsp;</li>
+                             
+                            <li><h3><?php _e('Header Code:', 'wp-maintenance'); ?></h3>
+                                    <?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS.', 'wp-maintenance'); ?>&nbsp;<br /><br />
+                                    <TEXTAREA NAME="wp_maintenance_settings[headercode]" COLS=70 ROWS=14 style="width:80%;"><?php if( isset($paramMMode['headercode']) ) { echo stripslashes($paramMMode['headercode']); }  ?></TEXTAREA>
+                                </li>
+                            <li>&nbsp;</li>
+                            
+                             <!--<li><h3><?php //_e('Demo mode:', 'wp-maintenance'); ?></h3>
+                                 <p><?php //_e('Be careful, in demo mode, the plugin can be modified by all users', 'wp-maintenance'); ?></p>
+                                    <input type= "checkbox" name="wp_maintenance_settings[enable_demo]" value="1" <?php //if($paramMMode['enable_demo']==1) { echo ' checked'; } ?>> <?php //_e('Active this plugin in demo mode?', 'wp-maintenance'); ?>&nbsp;<br />
+                                    
+                                </li>
+                            <li>&nbsp;</li>-->
+                            <?php } // End secure for demo mode ?>
+                             
+                            <li>
+                                <p>
+                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                </p>
                             </li>
                              
                         </ul>
@@ -538,6 +673,10 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
                         <li>
                             <?php _e('This plugin has been developed for you for free by <a href="http://www.restezconnectes.fr" target="_blank">Florent Maillefaud</ a>. It is royalty free, you can take it, modify it, distribute it as you see fit. <br /> <br />It would be desirable that I can get feedback on your potential changes to improve this plugin for all.', 'wp-maintenance'); ?>
+                        </li>
+                        <li>&nbsp;</li>
+                        <li>
+                            <?php _e('Visit', 'wp-maintenance'); ?> <a href="https://wpmaintenance.shost.ca" target="_blank">WP Maintenance</a>, <?php _e('try the demo of the plugin, talk about this plugin to your surroundings!', 'wp-maintenance'); ?>
                         </li>
                         <li>&nbsp;</li>
                         <li>
@@ -560,5 +699,10 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
      </div><!-- -->
     
-</div><!-- wrap -->
+    <div style="margin-top:40px;">
 
+        <?php _e('WP Maintenance is brought to you by','wp-maintenance'); ?> <a href="http://www.restezconnectes.fr/" target="_blank">Restez Connectés</a> - <?php _e('If you found this plugin useful','wp-maintenance'); ?> <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank"><?php _e('give it 5 &#9733; on WordPress.org','wp-maintenance'); ?></a>
+
+    </div>
+    
+</div><!-- wrap -->
