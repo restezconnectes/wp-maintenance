@@ -6,7 +6,7 @@
  * Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours, etc... / The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
  * Author: Florent Maillefaud
  * Author URI: http://wpmaintenance.info
- * Version: 2.7.3
+ * Version: 2.7.7
  * Text Domain: wp-maintenance
  * Domain Path: /languages/
  */
@@ -14,6 +14,10 @@
 
 /*
 Change Log
+24/06/2016 - Bug HTTPS résolu
+01/06/2016 - Bug sur les Google Fonts résolu
+02/05/2016 - Retrait du template html et file_get_content
+28/04/2016 - Prêt pour WordPress 4.5.1 / Ajout d'un icon de réseaux sociaux.
 07/04/2016 - ajout d'un slider
 27/01/2016 - Corrige le bug compteur, ajout selection google font
 11/12/2015 - Corrige le bug couleur de fond. Ajout DatePicker pour compteur
@@ -77,11 +81,8 @@ function wpm_plugin_actions ( $links ) {
 add_action( 'init', 'wpm_date_picker' );
 function wpm_date_picker() {
     wp_enqueue_script( 'jquery' );
-    //wp_enqueue_script( 'jquery-ui-core' );
     wp_enqueue_script('jquery-ui-datepicker');
-    //wp_enqueue_script( 'jquery-datepicker', WP_PLUGIN_URL.'/'.WPSPO_NAME_DIR.'/wpspo-js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core' ) );
-    //wp_enqueue_script('jquery-ui-fr-datepicker', WP_PLUGIN_URL.'/'.WPSPO_NAME_DIR.'/wpspo-js/jquery.ui.datepicker-fr.js', array('jquery-ui-datepicker'));
-    wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+    wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
     
 }
 
@@ -92,7 +93,7 @@ function wpm_make_multilang() {
 }
 
 /* Ajoute la version dans les options */
-define('WPM_VERSION', '2.7.3');
+define('WPM_VERSION', '2.7.7');
 $option['wp_maintenance_version'] = WPM_VERSION;
 if( !get_option('wp_maintenance_version') ) {
     add_option('wp_maintenance_version', $option);
@@ -268,10 +269,6 @@ function wpm_print_footer_scripts() {
     wp_enqueue_script('wpm-timepicker');
     wp_register_script('wpm-legacy', WP_PLUGIN_URL.'/wp-maintenance/js/lib/legacy.js');
     wp_enqueue_script('wpm-legacy');
-    //wp_register_script('wpm-footerscripts', WP_PLUGIN_URL.'/wp-maintenance/js/wpm-footer-scripts.js');
-    //wp_enqueue_script('wpm-footerscripts');
-    //$url = WP_PLUGIN_URL.'/wp-maintenance/js/wpm-footer-scripts.js';
-    //echo '"<script type="text/javascript" src="'. $url . '"></script>"';
 }
 
 add_action( 'admin_enqueue_scripts', 'wpm_enqueue_color_picker' );
@@ -283,14 +280,13 @@ function wpm_enqueue_color_picker( $hook_suffix ) {
 
 function wpm_admin_styles() {
     wp_enqueue_style('thickbox');
-    wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+    wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 }
 
 if (isset($_GET['page']) && $_GET['page'] == 'wp-maintenance/wp-maintenance.php') {
     add_action('admin_print_scripts', 'wpm_admin_scripts');
     add_action('admin_print_styles', 'wpm_admin_styles');
     add_action('admin_print_scripts', 'wpm_admin_scripts');
-    //add_action('admin_footer', 'wpm_print_scripts');
 }
 
 function wpm_change_active($value = 0) {
@@ -348,7 +344,7 @@ function wpm_social_shortcode( $atts ) {
     $paramSocial = get_option('wp_maintenance_social');
     $paramSocialOption = get_option('wp_maintenance_social_options');
     $countSocial = wpm_array_value_count($paramSocial);
-    $content = '';
+    $contentSocial = '';
     // Si on est en mobile on réduit les icones
     if ( wp_is_mobile() ) {
         $paramSocialOption['size'] = 24;
@@ -369,20 +365,152 @@ function wpm_social_shortcode( $atts ) {
         $iconSize = '';
     }
     if( isset($paramSocialOption['enable']) && $paramSocialOption['enable']==1 && $countSocial>=1) {
-         $content .= '<div id="wpm-social-footer" class="wpm_social"><ul class="wpm_horizontal">';
+         $contentSocial .= '<div id="wpm-social-footer" class="wpm_social"><ul class="wpm_horizontal">';
             foreach($paramSocial as $socialName=>$socialUrl) {
                 if($socialUrl!='') {
-                    $content .= '<li><a href="'.$socialUrl.'" target="_blank"><img src="'.$srcIcon.$socialName.'.png" alt="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" '.$iconSize.' title="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" /></a></li>';
+                    $contentSocial .= '<li><a href="'.$socialUrl.'" target="_blank"><img src="'.$srcIcon.$socialName.'.png" alt="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" '.$iconSize.' title="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" /></a></li>';
                 }
             }
-         $content .='</ul></div>';
-        return $content;
+         $contentSocial .='</ul></div>';
+        return $contentSocial;
      } else {
         // Code
         return '';
     }
 }
 add_shortcode( 'wpm_social', 'wpm_social_shortcode' );
+
+function wpm_get_template() {
+    
+    return '
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+	<title>%TITLE%</title>
+	
+	<style type=\'text/css\'>
+        /* VERSION %VERSION% */
+        %ADDFONTS%
+        html,
+        body {
+            margin:0;
+            padding:0;
+            height:100%;
+            font-size:100%;
+        }
+        #wrapper {
+            min-height:100%;
+            position:relative;
+        }
+        #header {
+            padding:10px;
+        }
+        #content {
+            padding-bottom:100px; /* Height of the footer element */
+        }
+        #footer {
+            width:100%;
+            height:60px;
+            line-height:60px;
+            position:absolute;
+            bottom:0;
+            left:0;
+            text-align: center;
+        }
+        #logo {
+            max-width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        img, object, embed, canvas, video, audio, picture {
+            max-width: 100%;
+            height: auto;
+        } 
+        div.bloc {
+            width:80%; /* largeur du bloc */
+            padding:10px; /* aération interne du bloc */
+            vertical-align:middle;
+            display:inline-block;
+            line-height:1.2; /* on rétablit le line-height */
+            text-align:center; /* ... et l\'alignement du texte */ 
+        }
+        .wpm_social {
+            padding: 0 45px;
+            text-align: center;
+        }
+        @media (max-width: 640px) {
+          body {
+            font-size:1.2rem;
+          }
+        }
+        @media (min-width: 640px) {
+          body {
+            font-size:1rem;
+          }
+        }
+        @media (min-width:960px) {
+          body {
+            font-size:1.2rem;
+          }
+        }
+        @media (min-width:1100px) {
+          body {
+            font-size:1.5rem;
+          }
+        }
+        /* On ajoute les styles */
+        %ADDSTYLE%
+        %ADDSTYLEWYSIJA%
+    </style>
+
+	<!--[if lt IE 7]>
+		<style type="text/css">
+			#wrapper { height:100%; }
+            div.bloc { display:inline; /* correctif inline-block*/ }
+            div.conteneur > span { zoom:1; /* layout */ }
+		</style>
+	<![endif]-->
+	%ANALYTICS%
+    %HEADERCODE%
+    %CSSSLIDER%
+    %SCRIPTSLIDER%
+    %SCRIPTSLIDESHOW%
+</head>
+
+<body>
+
+	<div id="wrapper">
+		
+        %TOPSOCIALICON%
+        <!-- #header -->
+		
+		<div id="content">
+            %SLIDESHOWAL%
+            %LOGOIMAGE%
+            %SLIDESHOWBL%
+            <h3>%TITRE%</h3>
+            <p>%TEXTE%</p>
+            %SLIDESHOWBT%
+            %COUNTER%
+            %NEWSLETTER%
+            %BOTTOMSOCIALICON%
+		</div><!-- #content -->
+		
+		<div id="footer">
+            <div class="bloc">%COPYRIGHT%</div>
+            <span></span>
+		</div><!-- #footer -->
+		
+	</div><!-- #wrapper -->
+	
+</body>
+
+</html>
+';
+    
+}
 
 /* Mode Maintenance */
 function wpm_maintenance_mode() {
@@ -392,7 +520,7 @@ function wpm_maintenance_mode() {
     if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
     $paramMMode = get_option('wp_maintenance_settings');
     
-    if( isset($paramMMode) ) {
+    if( isset($paramMMode) && !empty($paramMMode)  ) {
         foreach($paramMMode as $var =>$value) {
             $paramMMode[$var] = ''.$value.'';
         }
@@ -502,7 +630,7 @@ function wpm_maintenance_mode() {
             if($paramMMode['message_cpt_fin']=='') { $paramMMode['message_cpt_fin'] = '&nbsp;'; }
 
   
-            $template_page = file_get_contents( WP_PLUGIN_URL.'/wp-maintenance/template/index.html' );
+            $template_page = wpm_get_template();
             
             $Counter = '';
             $addFormLogin = '';
@@ -529,7 +657,13 @@ function wpm_maintenance_mode() {
                 $BottomSocialIcons = '';
             }
             if( isset($paramMMode['image']) && $paramMMode['image'] ) { 
-                list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($paramMMode['image']);
+                if( ini_get('allow_url_fopen')==1) {
+                    $image_path = str_replace(get_bloginfo('url'), ABSPATH, $paramMMode['image']);
+                    list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($image_path);
+                } else {
+                    $width = 150;
+                    $height = 80;
+                }
                 $LogoImage = '<div id="logo"><img src="'.$paramMMode['image'].'" width="'.$logoWidth.'" height="'.$logoHeight.'" alt="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" title="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" /></div>';
             } else {
                 $LogoImage = '';
@@ -664,12 +798,12 @@ $wpmStyle .= '
     if( isset($paramMMode['newletter_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['newletter_size'].'px;'; }
     if( isset($paramMMode['newletter_font_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['newletter_font_style'].';'; }
     if( isset($paramMMode['newletter_font_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['newletter_font_weigth'].';'; }
-    if( isset($paramMMode['newletter_font_text']) ) { $wpmStyle .= 'font-family: '.$paramMMode['newletter_font_text'].', serif;'; }
+    if( isset($paramMMode['newletter_font_text']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['newletter_font_text']).', serif;'; }
 $wpmStyle .= '}';
 
 $wpmStyle .= '
 h3 {';
-    if( isset($paramMMode['font_title']) ) { $wpmStyle .= 'font-family: '.$paramMMode['font_title'].', serif;'; }
+    if( isset($paramMMode['font_title']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_title']).', serif;'; }
     if( isset($paramMMode['font_title_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_title_size'].'px;'; }
     if( isset($paramMMode['font_title_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_title_style'].';'; }
     if( isset($paramMMode['font_title_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_title_weigth'].';'; }
@@ -680,7 +814,7 @@ $wpmStyle .= '
     margin:0.5em auto;
 }
 p {';        
-    if( isset($paramMMode['font_text']) ) { $wpmStyle .= 'font-family: '.$paramMMode['font_text'].', serif;'; }
+    if( isset($paramMMode['font_text']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_text']).', serif;'; }
     if( isset($paramMMode['font_text_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_text_size'].'px;'; }
     if( isset($paramMMode['font_text_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_text_style'].';'; }
     if( isset($paramMMode['font_text_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_text_weigth'].';'; }
@@ -700,7 +834,7 @@ $wpmStyle .= '}';
 }
 $wpmStyle .= '            
 div.bloc {';
-    if( isset($paramMMode['font_text_bottom']) ) { $wpmStyle .= 'font-family: '.$paramMMode['font_text_bottom'].', serif;'; }
+    if( isset($paramMMode['font_text_bottom']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_text_bottom']).', serif;'; }
     if( isset($paramMMode['font_bottom_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_bottom_style'].';'; }
     if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_bottom_size'].'px;'; }
     if( isset($paramMMode['font_bottom_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_bottom_weigth'].';'; }
@@ -728,7 +862,7 @@ $wpmStyle .= '
 #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {}
 .cptR-rec_countdown {';
 if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.$paramMMode['date_cpt_size'].'px;'; }
-if( isset($paramMMode['font_cpt']) ) { $wpmStyle .= 'font-family: '.$paramMMode['font_cpt'].', serif;'; }
+if( isset($paramMMode['font_cpt']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_cpt']).', serif;'; }
 $wpmStyle .= '
 }
 
@@ -800,7 +934,7 @@ $wpmStyle .= '
 
 ';
                 $addScriptSlider = '
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-responsiveslides.min.js"></script>';
                 $addScriptSlideshow = '
 <script>

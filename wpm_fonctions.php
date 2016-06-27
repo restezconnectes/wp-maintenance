@@ -109,6 +109,10 @@ function wpm_getFontsList($name = "", $value = "") {
 
     return $tab_fonts;
 }
+/* Formatte la police sélectionnée */
+function wpm_format_font($font) {
+    return str_replace('+', ' ', $font);
+}
 
 /* Feuille de style par défault */
 function wpm_print_style() {

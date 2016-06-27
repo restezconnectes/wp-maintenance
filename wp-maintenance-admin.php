@@ -17,6 +17,9 @@ if( isset($_POST['action']) && $_POST['action'] == 'update' && $_POST["wp_mainte
             }
         }
     }
+    if( isset($_POST["wp_maintenance_social_options"]['reset']) && $_POST["wp_maintenance_social_options"]['reset'] ==1 ) {
+        unset($_POST["wp_maintenance_social"]);
+    }
     
     update_option('wp_maintenance_slider', $_POST["wp_maintenance_slider"]);    
     update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
@@ -155,17 +158,22 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                              <?php _e('Drad and drop the lines to put in the order you want:', 'wp-maintenance'); ?><br /><br />
                              <ul class="sortable">
                              <?php 
-                                    if($paramSocial) { 
-                                            foreach($paramSocial as $socialName=>$socialUrl) {
-                                         ?>
-                                      <li><span>::</span><img src="<?php echo WPM_ICONS_URL; ?>24x24/<?php echo $socialName; ?>.png" hspace="3" valign="middle" /><?php echo ucfirst($socialName); ?> <input type= "text" name="wp_maintenance_social[<?php echo $socialName; ?>]" value="<?php echo $socialUrl; ?>" size="50" onclick="select()" /></li>
-                                         <?php } ?>
+                                    if( isset($paramSocial) && !empty($paramSocial) ) {
+                                        
+                                        foreach($paramSocial as $socialName=>$socialUrl) {
+                             ?>
+                                            <li><span>::</span><img src="<?php echo WPM_ICONS_URL; ?>24x24/<?php echo $socialName; ?>.png" hspace="3" valign="middle" /><?php echo ucfirst($socialName); ?> <input type= "text" name="wp_maintenance_social[<?php echo $socialName; ?>]" value="<?php echo $socialUrl; ?>" size="50" onclick="select()" /></li>
                              <?php 
-                                    } else { 
-                                        $arr = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'google_plus', 'about_me');
-                                        foreach ($arr as &$value) {
-                                            echo '<li><span>::</span><img src="'.WPM_ICONS_URL.'24x24/'.$value.'.png" valign="middle" hspace="3"/>'.ucfirst($value).' <input type="text" size="50" name="wp_maintenance_social['.$value.']" value="'.$paramSocial[$value].'" onclick="select()" ><br />';
                                         }
+                                        
+                                    } else { 
+                                        
+                                        $wpmTabSocial = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'google_plus', 'about_me', 'soundcloud');
+                                        
+                                        foreach ($wpmTabSocial as &$iconSocial) {
+                                            echo '<li><span>::</span><img src="'.WPM_ICONS_URL.'24x24/'.$iconSocial.'.png" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_social['.$iconSocial.']" value="" onclick="select()" ><br />';
+                                        }
+                                        
                                     }
                              ?>
                              </ul>
@@ -200,8 +208,10 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                                  <option value="right"<?php if($paramSocialOption['align']=='right') { echo ' selected'; } ?>><?php _e('Right', 'wp-maintenance'); ?></option>
                              </select>
                              <br /><br />
-                             <?php _e('You have your own icons? Enter the folder name of your theme here:', 'wp-maintenance'); ?><br /><strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input type="text" value="<?php echo stripslashes(trim($paramSocialOption['theme'])); ?>" name="wp_maintenance_social_options[theme]" />
-
+                             <?php _e('You have your own icons? Enter the folder name of your theme here:', 'wp-maintenance'); ?><br /><strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input type="text" value="<?php echo stripslashes(trim($paramSocialOption['theme'])); ?>" name="wp_maintenance_social_options[theme]" /><br /><br />
+                        </li>
+                        <li>
+                            <input type="checkbox" name="wp_maintenance_social_options[reset]" value="1" /> <i><?php _e('Reset Social Icon?', 'wp-maintenance'); ?></i>
                         </li>
                         <li>&nbsp;</li>
 
@@ -218,7 +228,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                          
                         <li>
                             <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                             </p>
                         </li>
                     </ul>
@@ -388,7 +398,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                          
                          <li>
                             <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                             </p>
                         </li>
                          
@@ -548,7 +558,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
                         <li>
                             <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                             </p>
                         </li>
 
@@ -639,7 +649,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             <li>&nbsp;</li>
                             <li>
                                 <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                                 </p>
                             </li>
                         </ul>
@@ -697,7 +707,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 
                             <li>
                                 <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                                 </p>
                             </li>
                         </ul>
@@ -763,7 +773,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                              
                             <li>
                                 <p>
-                                <input type="submit" name="wpm_update_settings" class="button-primary" value="<?php _e('Save this settings', 'wp-maintenance'); ?>"/>
+                                <?php submit_button(); ?>
                                 </p>
                             </li>
                              
@@ -780,11 +790,11 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                      <ul>
 
                         <li>
-                            <?php _e('This plugin has been developed for you for free by <a href="http://www.restezconnectes.fr" target="_blank">Florent Maillefaud</ a>. It is royalty free, you can take it, modify it, distribute it as you see fit. <br /> <br />It would be desirable that I can get feedback on your potential changes to improve this plugin for all.', 'wp-maintenance'); ?>
+                            <?php _e('This plugin has been developed for you for free by <a href="http://www.restezconnectes.fr" target="_blank">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.<br /><br />It would be desirable that I can get feedback on your potential changes to improve this plugin for all.', 'wp-maintenance'); ?>
                         </li>
                         <li>&nbsp;</li>
                         <li>
-                            <?php _e('Visit', 'wp-maintenance'); ?> <a href="https://wpmaintenance.shost.ca" target="_blank">WP Maintenance</a>, <?php _e('try the demo of the plugin, talk about this plugin to your surroundings!', 'wp-maintenance'); ?>
+                            <?php _e('Visit', 'wp-maintenance'); ?> <a href="https://wpmaintenance.info" target="_blank">WP Maintenance</a>, <?php _e('try the demo of the plugin, talk about this plugin to your surroundings!', 'wp-maintenance'); ?>
                         </li>
                         <li>&nbsp;</li>
                         <li>

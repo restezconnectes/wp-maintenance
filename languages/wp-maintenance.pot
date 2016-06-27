@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2016-04-18 19:39+0200\n"
+"POT-Creation-Date: 2016-04-28 10:20+0200\n"
 "PO-Revision-Date: 2015-03-19 11:19+0100\n"
 "Last-Translator: Florent Maillefaud <contact@restezconnectes.fr>\n"
 "Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
@@ -17,498 +17,502 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: wp-maintenance-admin.php:31
+#: wp-maintenance-admin.php:34
 msgid "Options saved."
 msgstr ""
 
-#: wp-maintenance-admin.php:70
+#: wp-maintenance-admin.php:73
 msgid "The Style Sheet has been reset!"
 msgstr ""
 
-#: wp-maintenance-admin.php:98
+#: wp-maintenance-admin.php:101
 msgid "WP Maintenance Settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:103
+#: wp-maintenance-admin.php:106
 msgid "General"
 msgstr ""
 
-#: wp-maintenance-admin.php:104
+#: wp-maintenance-admin.php:107
 msgid "Colors & Fonts"
 msgstr ""
 
-#: wp-maintenance-admin.php:105
+#: wp-maintenance-admin.php:108
 msgid "Picture"
 msgstr ""
 
-#: wp-maintenance-admin.php:106
+#: wp-maintenance-admin.php:109
 msgid "CountDown"
 msgstr ""
 
-#: wp-maintenance-admin.php:107
+#: wp-maintenance-admin.php:110
 msgid "CSS Style"
 msgstr ""
 
-#: wp-maintenance-admin.php:108 wp-maintenance.php:71
+#: wp-maintenance-admin.php:111 wp-maintenance.php:71
 msgid "Settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:109
+#: wp-maintenance-admin.php:112
 msgid "About"
 msgstr ""
 
-#: wp-maintenance-admin.php:122
+#: wp-maintenance-admin.php:125
 msgid "Enable maintenance mode:"
 msgstr ""
 
-#: wp-maintenance-admin.php:123 wp-maintenance-admin.php:141
-#: wp-maintenance-admin.php:151 wp-maintenance-admin.php:211
-#: wp-maintenance-admin.php:480 wp-maintenance-admin.php:484
-#: wp-maintenance-admin.php:577 wp-maintenance-admin.php:710
+#: wp-maintenance-admin.php:126 wp-maintenance-admin.php:144
+#: wp-maintenance-admin.php:154 wp-maintenance-admin.php:221
+#: wp-maintenance-admin.php:494 wp-maintenance-admin.php:498
+#: wp-maintenance-admin.php:592 wp-maintenance-admin.php:725
 msgid "Yes"
 msgstr ""
 
-#: wp-maintenance-admin.php:124 wp-maintenance-admin.php:481
-#: wp-maintenance-admin.php:485 wp-maintenance-admin.php:711
+#: wp-maintenance-admin.php:127 wp-maintenance-admin.php:495
+#: wp-maintenance-admin.php:499 wp-maintenance-admin.php:726
 msgid "No"
 msgstr ""
 
-#: wp-maintenance-admin.php:128
+#: wp-maintenance-admin.php:131
 msgid "Title and text for the maintenance page:"
 msgstr ""
 
-#: wp-maintenance-admin.php:129
+#: wp-maintenance-admin.php:132
 msgid "Title:"
 msgstr ""
 
-#: wp-maintenance-admin.php:130 wp-maintenance-admin.php:132
-#: wp-maintenance-admin.php:527
+#: wp-maintenance-admin.php:133 wp-maintenance-admin.php:135
+#: wp-maintenance-admin.php:541
 msgid "Text:"
 msgstr ""
 
-#: wp-maintenance-admin.php:131
+#: wp-maintenance-admin.php:134
 msgid "Text in the bottom of maintenance page:"
 msgstr ""
 
-#: wp-maintenance-admin.php:133
+#: wp-maintenance-admin.php:136
 msgid "Enable login access in the bottom ?"
 msgstr ""
 
-#: wp-maintenance-admin.php:134
+#: wp-maintenance-admin.php:137
 msgid "Enter a text to go to the dashboard:"
 msgstr ""
 
-#: wp-maintenance-admin.php:136
+#: wp-maintenance-admin.php:139
 msgid "Eg: connect to %DASHBOARD% here!"
 msgstr ""
 
-#: wp-maintenance-admin.php:136
+#: wp-maintenance-admin.php:139
 msgid ""
 "(%DASHBOARD% will be replaced with the link to the dashboard and the word "
 "\"Dashboard\")"
 msgstr ""
 
-#: wp-maintenance-admin.php:140
+#: wp-maintenance-admin.php:143
 msgid "Enable Google Analytics:"
 msgstr ""
 
-#: wp-maintenance-admin.php:142
+#: wp-maintenance-admin.php:145
 msgid "Enter your Google analytics tracking ID here:"
 msgstr ""
 
-#: wp-maintenance-admin.php:144
+#: wp-maintenance-admin.php:147
 msgid "Enter your domain URL:"
 msgstr ""
 
-#: wp-maintenance-admin.php:150
+#: wp-maintenance-admin.php:153
 msgid "Enable Social Networks:"
 msgstr ""
 
-#: wp-maintenance-admin.php:152
+#: wp-maintenance-admin.php:155
 msgid "Enter text for the title icons:"
 msgstr ""
 
-#: wp-maintenance-admin.php:153
+#: wp-maintenance-admin.php:156
 msgid "Follow me on"
 msgstr ""
 
-#: wp-maintenance-admin.php:155
+#: wp-maintenance-admin.php:158
 msgid "Drad and drop the lines to put in the order you want:"
 msgstr ""
 
-#: wp-maintenance-admin.php:177
+#: wp-maintenance-admin.php:185
 msgid "Choose icons size:"
 msgstr ""
 
-#: wp-maintenance-admin.php:189 wp-maintenance-admin.php:488
+#: wp-maintenance-admin.php:197 wp-maintenance-admin.php:502
 msgid "Position:"
 msgstr ""
 
-#: wp-maintenance-admin.php:191
+#: wp-maintenance-admin.php:199
 msgid "Top"
 msgstr ""
 
-#: wp-maintenance-admin.php:192
+#: wp-maintenance-admin.php:200
 msgid "Bottom"
 msgstr ""
 
-#: wp-maintenance-admin.php:196
+#: wp-maintenance-admin.php:204
 msgid "Align:"
 msgstr ""
 
-#: wp-maintenance-admin.php:198
+#: wp-maintenance-admin.php:206
 msgid "Left"
 msgstr ""
 
-#: wp-maintenance-admin.php:199
+#: wp-maintenance-admin.php:207
 msgid "Center"
 msgstr ""
 
-#: wp-maintenance-admin.php:200
+#: wp-maintenance-admin.php:208
 msgid "Right"
 msgstr ""
 
-#: wp-maintenance-admin.php:203
+#: wp-maintenance-admin.php:211
 msgid "You have your own icons? Enter the folder name of your theme here:"
 msgstr ""
 
-#: wp-maintenance-admin.php:210
+#: wp-maintenance-admin.php:214
+msgid "Reset Social Icon?"
+msgstr ""
+
+#: wp-maintenance-admin.php:220
 msgid "Enable Newletter:"
 msgstr ""
 
-#: wp-maintenance-admin.php:212
+#: wp-maintenance-admin.php:222
 msgid "Enter title for the newletter block:"
 msgstr ""
 
-#: wp-maintenance-admin.php:214
+#: wp-maintenance-admin.php:224
 msgid "Enter your newletter shortcode here:"
 msgstr ""
 
-#: wp-maintenance-admin.php:221 wp-maintenance-admin.php:391
-#: wp-maintenance-admin.php:546 wp-maintenance-admin.php:637
-#: wp-maintenance-admin.php:695 wp-maintenance-admin.php:761
+#: wp-maintenance-admin.php:231 wp-maintenance-admin.php:401
+#: wp-maintenance-admin.php:561 wp-maintenance-admin.php:652
+#: wp-maintenance-admin.php:710 wp-maintenance-admin.php:776
 msgid "Save this settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:236
+#: wp-maintenance-admin.php:246
 msgid "Choice general colors:"
 msgstr ""
 
-#: wp-maintenance-admin.php:237
+#: wp-maintenance-admin.php:247
 msgid "Background page color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:238
+#: wp-maintenance-admin.php:248
 msgid "Header color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:242
+#: wp-maintenance-admin.php:252
 msgid "Choice texts fonts and colors:"
 msgstr ""
 
-#: wp-maintenance-admin.php:243
+#: wp-maintenance-admin.php:253
 msgid "Text color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:245
+#: wp-maintenance-admin.php:255
 msgid "Title font settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:259 wp-maintenance-admin.php:280
-#: wp-maintenance-admin.php:309 wp-maintenance-admin.php:340
-#: wp-maintenance-admin.php:359
+#: wp-maintenance-admin.php:269 wp-maintenance-admin.php:290
+#: wp-maintenance-admin.php:319 wp-maintenance-admin.php:350
+#: wp-maintenance-admin.php:369
 msgid "Size:"
 msgstr ""
 
-#: wp-maintenance-admin.php:275 wp-maintenance-admin.php:304
+#: wp-maintenance-admin.php:285 wp-maintenance-admin.php:314
 msgid "Text font settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:299
+#: wp-maintenance-admin.php:309
 msgid "Choice fonts and colors bottom page:"
 msgstr ""
 
-#: wp-maintenance-admin.php:300
+#: wp-maintenance-admin.php:310
 msgid "Bottom color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:301
+#: wp-maintenance-admin.php:311
 msgid "Text bottom color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:328
+#: wp-maintenance-admin.php:338
 msgid "Choice countdown fonts and colors:"
 msgstr ""
 
-#: wp-maintenance-admin.php:329
+#: wp-maintenance-admin.php:339
 msgid "Countdown text color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:330
+#: wp-maintenance-admin.php:340
 msgid "Countdown background color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:335
+#: wp-maintenance-admin.php:345
 msgid "Countdown font settings"
 msgstr ""
 
-#: wp-maintenance-admin.php:352
+#: wp-maintenance-admin.php:362
 msgid "Choice form color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:373
+#: wp-maintenance-admin.php:383
 msgid "Field text color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:374
+#: wp-maintenance-admin.php:384
 msgid "Field border color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:375
+#: wp-maintenance-admin.php:385
 msgid "Field background color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:377
+#: wp-maintenance-admin.php:387
 msgid "Button text color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:379
+#: wp-maintenance-admin.php:389
 msgid "Button color:"
 msgstr ""
 
-#: wp-maintenance-admin.php:381
+#: wp-maintenance-admin.php:391
 msgid "Button color hover:"
 msgstr ""
 
-#: wp-maintenance-admin.php:382
+#: wp-maintenance-admin.php:392
 msgid "Button color onclick:"
 msgstr ""
 
-#: wp-maintenance-admin.php:411
+#: wp-maintenance-admin.php:421
 msgid "Upload a picture"
 msgstr ""
 
-#: wp-maintenance-admin.php:413
+#: wp-maintenance-admin.php:423
 msgid "You use this picture:"
 msgstr ""
 
-#: wp-maintenance-admin.php:415 wp-maintenance-admin.php:433
+#: wp-maintenance-admin.php:425 wp-maintenance-admin.php:443
 msgid "Enter a URL or upload an image."
 msgstr ""
 
-#: wp-maintenance-admin.php:416 wp-maintenance-admin.php:432
-#: wp-maintenance-admin.php:498
+#: wp-maintenance-admin.php:426 wp-maintenance-admin.php:442
+#: wp-maintenance-admin.php:512
 msgid "Select or Upload your picture"
 msgstr ""
 
-#: wp-maintenance-admin.php:422
+#: wp-maintenance-admin.php:432
 msgid "Upload a background picture"
 msgstr ""
 
-#: wp-maintenance-admin.php:423
+#: wp-maintenance-admin.php:433
 msgid "Enable image background"
 msgstr ""
 
-#: wp-maintenance-admin.php:425
+#: wp-maintenance-admin.php:435
 msgid "You use this background picture:"
 msgstr ""
 
-#: wp-maintenance-admin.php:429
+#: wp-maintenance-admin.php:439
 msgid "You use this pattern:"
 msgstr ""
 
-#: wp-maintenance-admin.php:434
+#: wp-maintenance-admin.php:444
 msgid "Or choose a pattern:"
 msgstr ""
 
-#: wp-maintenance-admin.php:438
+#: wp-maintenance-admin.php:448
 msgid "NO PATTERN"
 msgstr ""
 
-#: wp-maintenance-admin.php:451
+#: wp-maintenance-admin.php:461
 msgid "Background picture options"
 msgstr ""
 
-#: wp-maintenance-admin.php:458
+#: wp-maintenance-admin.php:468
 msgid "Fixed"
 msgstr ""
 
-#: wp-maintenance-admin.php:463
+#: wp-maintenance-admin.php:473
 msgid "Slider image options"
 msgstr ""
 
-#: wp-maintenance-admin.php:464
+#: wp-maintenance-admin.php:474
 msgid "Enable Slider"
 msgstr ""
 
-#: wp-maintenance-admin.php:475
+#: wp-maintenance-admin.php:489
 msgid "Speed:"
 msgstr ""
 
-#: wp-maintenance-admin.php:476
+#: wp-maintenance-admin.php:490
 msgid "Width:"
 msgstr ""
 
-#: wp-maintenance-admin.php:479
+#: wp-maintenance-admin.php:493
 msgid "Display Auto Slider:"
 msgstr ""
 
-#: wp-maintenance-admin.php:483
+#: wp-maintenance-admin.php:497
 msgid "Display button navigation:"
 msgstr ""
 
-#: wp-maintenance-admin.php:490
+#: wp-maintenance-admin.php:504
 msgid "Above logo"
 msgstr ""
 
-#: wp-maintenance-admin.php:491
+#: wp-maintenance-admin.php:505
 msgid "Below logo"
 msgstr ""
 
-#: wp-maintenance-admin.php:492
+#: wp-maintenance-admin.php:506
 msgid "Below title & text"
 msgstr ""
 
-#: wp-maintenance-admin.php:528
+#: wp-maintenance-admin.php:542
 msgid "Link:"
 msgstr ""
 
-#: wp-maintenance-admin.php:531
+#: wp-maintenance-admin.php:545
 msgid "Delete this slide"
 msgstr ""
 
-#: wp-maintenance-admin.php:576
+#: wp-maintenance-admin.php:591
 msgid "Enable a countdown ?"
 msgstr ""
 
-#: wp-maintenance-admin.php:578
+#: wp-maintenance-admin.php:593
 msgid "Select the launch date/time"
 msgstr ""
 
-#: wp-maintenance-admin.php:581
+#: wp-maintenance-admin.php:596
 msgid "Enable seconds ?"
 msgstr ""
 
-#: wp-maintenance-admin.php:582
+#: wp-maintenance-admin.php:597
 msgid "Disable maintenance mode at the end of the countdown?"
 msgstr ""
 
-#: wp-maintenance-admin.php:583
+#: wp-maintenance-admin.php:598
 msgid "End message:"
 msgstr ""
 
-#: wp-maintenance-admin.php:599
+#: wp-maintenance-admin.php:614
 msgid "Today"
 msgstr ""
 
-#: wp-maintenance-admin.php:600
+#: wp-maintenance-admin.php:615
 msgid "Delete"
 msgstr ""
 
-#: wp-maintenance-admin.php:601 wp-maintenance-admin.php:620
+#: wp-maintenance-admin.php:616 wp-maintenance-admin.php:635
 msgid "Close"
 msgstr ""
 
-#: wp-maintenance-admin.php:604
+#: wp-maintenance-admin.php:619
 msgid "Next month"
 msgstr ""
 
-#: wp-maintenance-admin.php:605
+#: wp-maintenance-admin.php:620
 msgid "Previous month"
 msgstr ""
 
-#: wp-maintenance-admin.php:606
+#: wp-maintenance-admin.php:621
 msgid "Select a month"
 msgstr ""
 
-#: wp-maintenance-admin.php:607
+#: wp-maintenance-admin.php:622
 msgid "Select a year"
 msgstr ""
 
-#: wp-maintenance-admin.php:650
+#: wp-maintenance-admin.php:665
 msgid "CSS style sheet code:"
 msgstr ""
 
-#: wp-maintenance-admin.php:651
+#: wp-maintenance-admin.php:666
 msgid ""
 "Edit the CSS sheet of your maintenance page here. Click \"Reset\" and \"Save"
 "\" to retrieve the default style sheet."
 msgstr ""
 
-#: wp-maintenance-admin.php:659
+#: wp-maintenance-admin.php:674
 msgid "Markers for colors"
 msgstr ""
 
-#: wp-maintenance-admin.php:664
+#: wp-maintenance-admin.php:679
 msgid "Use this code for text color"
 msgstr ""
 
-#: wp-maintenance-admin.php:668
+#: wp-maintenance-admin.php:683
 msgid "Use this code for background text color"
 msgstr ""
 
-#: wp-maintenance-admin.php:672
+#: wp-maintenance-admin.php:687
 msgid "Use this code for background color countdown"
 msgstr ""
 
-#: wp-maintenance-admin.php:676
+#: wp-maintenance-admin.php:691
 msgid "Use this code for size countdown"
 msgstr ""
 
-#: wp-maintenance-admin.php:680
+#: wp-maintenance-admin.php:695
 msgid "Use this code for countdown color"
 msgstr ""
 
-#: wp-maintenance-admin.php:689
+#: wp-maintenance-admin.php:704
 msgid "Reset default CSS stylesheet ?"
 msgstr ""
 
-#: wp-maintenance-admin.php:708
+#: wp-maintenance-admin.php:723
 msgid "Theme maintenance page:"
 msgstr ""
 
-#: wp-maintenance-admin.php:709
+#: wp-maintenance-admin.php:724
 msgid ""
 "If you would use your maintenance.php page in your theme folder, click Yes."
 msgstr ""
 
-#: wp-maintenance-admin.php:712
+#: wp-maintenance-admin.php:727
 msgid "You can use this shortcode to include Google Analytics code:"
 msgstr ""
 
-#: wp-maintenance-admin.php:712
+#: wp-maintenance-admin.php:727
 msgid "You can use this shortcode to include Social Networks icons:"
 msgstr ""
 
-#: wp-maintenance-admin.php:721
+#: wp-maintenance-admin.php:736
 msgid "Roles and Capabilities:"
 msgstr ""
 
-#: wp-maintenance-admin.php:722
+#: wp-maintenance-admin.php:737
 msgid "Allow the site to display these roles:"
 msgstr ""
 
-#: wp-maintenance-admin.php:739
+#: wp-maintenance-admin.php:754
 msgid "IP autorized:"
 msgstr ""
 
-#: wp-maintenance-admin.php:740
+#: wp-maintenance-admin.php:755
 msgid ""
 "Allow the site to display these IP addresses. Please, enter one IP address "
 "by line:"
 msgstr ""
 
-#: wp-maintenance-admin.php:745
+#: wp-maintenance-admin.php:760
 msgid "Header Code:"
 msgstr ""
 
-#: wp-maintenance-admin.php:746
+#: wp-maintenance-admin.php:761
 msgid ""
 "The following code will add to the <head> tag. Useful if you need to add "
 "additional scripts such as CSS or JS."
 msgstr ""
 
-#: wp-maintenance-admin.php:778
+#: wp-maintenance-admin.php:793
 msgid ""
 "This plugin has been developed for you for free by <a href=\"http://www."
 "restezconnectes.fr\" target=\"_blank\">Florent Maillefaud</ a>. It is "
@@ -517,33 +521,33 @@ msgid ""
 "changes to improve this plugin for all."
 msgstr ""
 
-#: wp-maintenance-admin.php:782
+#: wp-maintenance-admin.php:797
 msgid "Visit"
 msgstr ""
 
-#: wp-maintenance-admin.php:782
+#: wp-maintenance-admin.php:797
 msgid ""
 "try the demo of the plugin, talk about this plugin to your surroundings!"
 msgstr ""
 
-#: wp-maintenance-admin.php:787
+#: wp-maintenance-admin.php:802
 msgid ""
 "If you want Donate (French Paypal) for my current and future developments:"
 msgstr ""
 
-#: wp-maintenance-admin.php:807
+#: wp-maintenance-admin.php:822
 msgid "WP Maintenance"
 msgstr ""
 
-#: wp-maintenance-admin.php:807
+#: wp-maintenance-admin.php:822
 msgid "is brought to you by"
 msgstr ""
 
-#: wp-maintenance-admin.php:807
+#: wp-maintenance-admin.php:822
 msgid "If you found this plugin useful"
 msgstr ""
 
-#: wp-maintenance-admin.php:807
+#: wp-maintenance-admin.php:822
 msgid "give it 5 &#9733; on WordPress.org"
 msgstr ""
 
@@ -571,23 +575,23 @@ msgstr ""
 msgid "Choose Image"
 msgstr ""
 
-#: wp-maintenance.php:546
+#: wp-maintenance.php:544
 msgid "Dashboard"
 msgstr ""
 
-#: wp-maintenance.php:624
+#: wp-maintenance.php:622
 msgid "Days"
 msgstr ""
 
-#: wp-maintenance.php:624
+#: wp-maintenance.php:622
 msgid "Hours"
 msgstr ""
 
-#: wp-maintenance.php:624
+#: wp-maintenance.php:622
 msgid "Minutes"
 msgstr ""
 
-#: wp-maintenance.php:626
+#: wp-maintenance.php:624
 msgid "Seconds"
 msgstr ""
 
