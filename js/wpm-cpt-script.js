@@ -71,7 +71,7 @@ if (typeof(LeadingZero)=="undefined")
 if (typeof(Disable)=="undefined")
   Disable = "";
 if (typeof(FontFamily)=="undefined")
-  Disable = "Oxygen";
+  FontFamily = "Pacifico";
 
 
 CountStepper = Math.ceil(CountStepper);

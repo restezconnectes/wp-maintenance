@@ -1,12 +1,13 @@
 <?php
 
+defined( 'ABSPATH' )
+	or die( 'No direct load ! ' );
     
 if(!defined('WPM_PLUGIN_URL')) { define('WPM_PLUGIN_URL', WP_CONTENT_URL.'/plugins/wp-maintenance/'); }
 if(!defined('WPM_ICONS_URL')) { define('WPM_ICONS_URL', WP_CONTENT_URL.'/plugins/wp-maintenance/socialicons/'); }
 
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update' && $_POST["wp_maintenance_settings"]!='') {
-    
     
     if( isset($_POST["wpm_maintenance_detete"]) && is_array($_POST["wpm_maintenance_detete"]) ) {
         foreach($_POST["wpm_maintenance_detete"] as $delSlideId=>$delSlideTrue) {
@@ -24,7 +25,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update' && $_POST["wp_mainte
     update_option('wp_maintenance_slider', $_POST["wp_maintenance_slider"]);    
     update_option('wp_maintenance_settings', $_POST["wp_maintenance_settings"]);
     update_option('wp_maintenance_slider_options', $_POST["wp_maintenance_slider_options"]);
-    update_option('wp_maintenance_style', $_POST["wp_maintenance_style"]);
+    update_option('wp_maintenance_style', stripslashes($_POST["wp_maintenance_style"]));
     update_option('wp_maintenance_limit', $_POST["wp_maintenance_limit"]);
     update_option('wp_maintenance_ipaddresses', $_POST["wp_maintenance_ipaddresses"]);
     update_option('wp_maintenance_active', $_POST["wp_maintenance_active"]);
@@ -84,16 +85,29 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     #pattern li.current { background: #66CC00; color: #fff; }
 </style>
 <style type="text/css">.postbox h3 { cursor:pointer; }</style>
-<!--<script src="<?php echo WP_PLUGIN_URL; ?>/wp-maintenance/js/jquery-ui-timepicker-addon.js"></script>-->
-<script>
+<!--<script src="<?php //echo WP_PLUGIN_URL; ?>/wp-maintenance/js/jquery-ui-timepicker-addon.js"></script>-->
+<script type="text/javascript">
     jQuery(document).ready(function() {
         jQuery('#font_title').fontselect();
         jQuery('#font_text').fontselect();
         jQuery('#font_text_bottom').fontselect();
         jQuery('#font_text_cpt').fontselect();
-        jQuery('newletter_font_text').fontselect();
+        jQuery('#font_text_newletter').fontselect();
     });
-    
+
+    function AfficherCacher(texte) {
+        var test = document.getElementById(texte).style.display;
+        if (test == "block") 
+        {
+            document.getElementById(texte).style.display = "none";
+        }
+        else 
+        {
+            document.getElementById(texte).style.display = "block";
+        }
+    }
+		
+	
 </script>
 <div class="wrap">
     
@@ -218,11 +232,13 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                         <!-- Encart Newletter -->
                         <li>
                             <h3><?php _e('Enable Newletter:', 'wp-maintenance'); ?></h3>
-                            <input type= "checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if($paramMMode['newletter']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
+                            <input type= "checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1) { echo ' checked'; } ?>><?php _e('Yes', 'wp-maintenance'); ?><br /><br />
                             <?php _e('Enter title for the newletter block:', 'wp-maintenance'); ?><br />
-                            <input type="text" name="wp_maintenance_settings[title_newletter]" size="60" value="<?php echo stripslashes(trim($paramMMode['title_newletter'])); ?>" /><br />
-                            <?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><br />
-                            <input type="text" name="wp_maintenance_settings[code_newletter]" value='<?php echo stripslashes(trim($paramMMode['code_newletter'])); ?>' onclick="select()" />
+                            <input type="text" name="wp_maintenance_settings[title_newletter]" size="60" value="<?php echo stripslashes(trim($paramMMode['title_newletter'])); ?>" /><br /><br />
+                            <input type="radio" name="wp_maintenance_settings[type_newletter]" value="shortcode" <?php if( isset($paramMMode['type_newletter']) && $paramMMode['type_newletter']=='shortcode' ) { echo 'checked'; } if( empty($paramMMode['type_newletter']) ) { echo 'checked'; } ?>  /><?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><br />
+                            <input type="text" name="wp_maintenance_settings[code_newletter]" value='<?php echo stripslashes(trim($paramMMode['code_newletter'])); ?>' onclick="select()" /><br /><br />
+                            <input type="radio" name="wp_maintenance_settings[type_newletter]" value="iframe" <?php if( isset($paramMMode['type_newletter']) && $paramMMode['type_newletter']=='iframe' ) { echo 'checked'; } ?>/> <?php _e('Or enter your newletter iframe code here:', 'wp-maintenance'); ?><br />
+                            <textarea cols="60" rows="10" name="wp_maintenance_settings[iframe_newletter]"><?php if( isset($paramMMode['iframe_newletter'])) { echo stripslashes(trim($paramMMode['iframe_newletter'])); } ?></textarea> 
                         </li>
                         <li>&nbsp;</li>
                          
@@ -302,6 +318,16 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             </table>   
                             <!-- FIN POLICE DU TEXTE -->
                             
+                            <!-- CADRE -->
+                            <br /><em><?php _e('Frame settings', 'wp-maintenance'); ?></em><br /><br />
+                            
+                            <input type="checkbox" name="wp_maintenance_settings[container_active]" value="1" <?php if( isset($paramMMode['container_active']) && $paramMMode['container_active']==1) { echo 'checked'; } ?>> <?php _e('Activate', 'wp-maintenance'); ?><br /><br /><?php _e('Color:', 'wp-maintenance'); ?><br /> <input type="text" value="<?php if( isset($paramMMode['container_color'])) { echo $paramMMode['container_color']; } else { echo '#ffffff'; }?>" name="wp_maintenance_settings[container_color]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                            <?php _e('Opacity:', 'wp-maintenance'); ?>
+                            <input type="text" size="3" name="wp_maintenance_settings[container_opacity]" value="<?php if( isset($paramMMode['container_opacity']) ) { echo $paramMMode['container_opacity']; } else { echo '0.5'; } ?>" />
+                           <?php _e('Width:', 'wp-maintenance'); ?>
+                            <input type="text" size="2" name="wp_maintenance_settings[container_width]" value="<?php if( isset($paramMMode['container_width']) ) { echo $paramMMode['container_width']; } else { echo '80'; } ?>" />%  
+                            <!-- FIN CADRE -->
+                            
                         </li>
                         
                         <!-- BOTTOM PAGE -->
@@ -356,7 +382,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             <!-- FIN POLICE DU COMPTEUR -->
                         </li>
                         <?php 
-                            if(strpos($paramMMode['code_newletter'], 'wysija_form')!=false && is_plugin_active( 'wysija-newsletters/index.php' ) ) { 
+                            if( (strpos($paramMMode['code_newletter'], 'wysija_form')!=false || strpos($paramMMode['code_newletter'], 'mc4wp_form')!=false ) && (is_plugin_active( 'wysija-newsletters/index.php' ) || is_plugin_active( 'mailchimp-for-wp/mailchimp-for-wp.php' ) ) ) { 
                         ?>
                         <li>
                             <h3><?php _e('Choice form color:', 'wp-maintenance'); ?></h3>
@@ -364,7 +390,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             <!-- COULEUR WYJIYA -->
                             <table cellspacing="10">
                                 <tr>
-                                    <td valign="top" align="left"><input name="wp_maintenance_settings[newletter_font_text]" id="font_text_bottom" type="text" value="<?php echo $paramMMode['newletter_font_text']; ?>" /></td>
+                                    <td valign="top" align="left"><input name="wp_maintenance_settings[newletter_font_text]" id="font_text_newletter" type="text" value="<?php if( isset($paramMMode['newletter_font_text']) ) { echo $paramMMode['newletter_font_text']; } ?>" /></td>
                                     <td>
                                         <?php _e('Size:', 'wp-maintenance'); ?>
                                         <input type="text" size="3" name="wp_maintenance_settings[newletter_size]" value="<?php if( isset($paramMMode['newletter_size']) && $paramMMode['newletter_size']) { echo stripslashes($paramMMode['newletter_size']); } else { echo 14; } ?>" />px
@@ -380,16 +406,23 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                                 </tr>
                             </table>  
                             <br />
-                             <em><?php _e('Field text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_text']; ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#ffffff" /><br />
-                            <em><?php _e('Field border color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_border']; ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#ffffff" /><br />
-                            <em><?php _e('Field background color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_field_background']; ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#ffffff" />
+                             <em><?php _e('Field text color:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_field_text']) ) { echo $paramMMode['color_field_text']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
+                            <em><?php _e('Field border color:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_field_border']) ) { echo $paramMMode['color_field_border']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
+                            <em><?php _e('Field background color:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_field_background']) ) { echo $paramMMode['color_field_background']; } else { echo '#cccccc'; } ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" />
                             <br />
-                            <em><?php _e('Button text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_text_button']; ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <em><?php _e('Button text color:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_text_button']) ) { echo $paramMMode['color_text_button'];} else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
                             <br />
-                            <em><?php _e('Button color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button']; ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <em><?php _e('Button color:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_button']) ) { echo $paramMMode['color_button']; } else { echo '#1e73be'; } ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
                             <br />
-                            <em><?php _e('Button color hover:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button_hover']; ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
-                            <em><?php _e('Button color onclick:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php echo $paramMMode['color_button_onclick']; ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+                            <em><?php _e('Button color hover:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_button_hover']) ) { echo $paramMMode['color_button_hover']; } else { echo '#ffffff'; }  ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                            <em><?php _e('Button color onclick:', 'wp-maintenance'); ?></em> <br />
+                            <input type="text" value="<?php if( isset($paramMMode['color_button_onclick']) ) { echo $paramMMode['color_button_onclick']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
                             
                         </li>
                         <?php } ?>
@@ -413,8 +446,10 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     <ul>
                         <!-- UPLOADER UNE IMAGE -->
                         <?php 
-                            if($paramMMode['image']!='') {
+                            if( isset($paramMMode['image']) && $paramMMode['image']!='' && ini_get('allow_url_fopen')==1 ) {
                                 list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($paramMMode['image']);
+                            } else {
+                                $logoWidth = 250;                              
                             }
                         ?>
                         <li>
@@ -590,7 +625,24 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             ?>
                             <li><h3><?php _e('Enable a countdown ?', 'wp-maintenance'); ?></h3>
                                 <input type= "checkbox" name="wp_maintenance_settings[active_cpt]" value="1" <?php if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1 ) { echo ' checked'; } ?>>&nbsp;<?php _e('Yes', 'wp-maintenance'); ?><br /><br />
-                                <small><?php _e('Select the launch date/time', 'wp-maintenance'); ?></small><br /><img src="<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/schedule_clock.png'; ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wp_maintenance_settings[cptdate]" type="text" autofocuss data-value="<?php if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) { echo $paramMMode['cptdate']; } ?>"> à <input id="cpttime" class="timepicker" type="time" name="wp_maintenance_settings[cpttime]" value="<?php if( isset($paramMMode['cpttime']) && !empty($paramMMode['cpttime']) ) { echo $paramMMode['cpttime']; } ?>" size="4" autofocuss>                                
+                                <?php 
+                                    if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) { 
+                                        $startDate = $paramMMode['cptdate']; 
+                                    }
+                                    if( isset($paramMMode['cpttime']) && !empty($paramMMode['cpttime']) ) { 
+                                        $startHour = $paramMMode['cpttime'];
+                                    }
+                                    if( (isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==0) || empty($paramMMode['active_cpt']) ) {
+                                        $startDate = date_i18n( date("Y").'/'.date("m").'/'.date("d") );
+                                        $timeFormats = array_unique( apply_filters( 'time_formats', array( 'H:i' ) ) );
+                                        foreach ( $timeFormats as $format ) {
+                                            $startHour = date_i18n( $format );
+                                        }
+                                        $newMin = explode(':', $startHour);
+                                        $startHour = $newMin[0].':'.ceil($newMin[1]/5)*5;
+                                    }                                
+                                ?>
+                                <small><?php _e('Select the launch date/time', 'wp-maintenance'); ?></small><br /><img src="<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/schedule_clock.png'; ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wp_maintenance_settings[cptdate]" type="text" autofocuss data-value="<?php echo $startDate; ?>"> à <input id="cpttime" class="timepicker" type="time" name="wp_maintenance_settings[cpttime]" value="<?php echo $startHour; ?>" size="4" autofocuss>                                
                                 <div id="wpmdatecontainer"></div>
                                 <br /><br />
                                 <input type= "checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>&nbsp;<?php _e('Enable seconds ?', 'wp-maintenance'); ?><br /><br />
@@ -696,7 +748,40 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <br />
+                                    <a href="" onclick="AfficherCacher('divcss'); return false" ><?php _e('Need CSS code for MailPoet plugin?', 'wp-maintenance'); ?></a>
+                                    <div id="divcss" style="display:none;"><i><?php _e('Click for select all', 'wp-maintenance'); ?></i>
+                                        <textarea onclick="select()" rows="15" cols="50%">
+.abs-req { display: none; }
+.widget_wysija_cont .wysija-submit { }
+.widget_wysija input { }
+.wysija-submit-field { }
+.wysija-submit-field:hover { }
+.widget_wysija input:focus { }
+.wysija-submit-field:active { }
+.widget_wysija .wysija-submit, .widget_wysija .wysija-paragraph { }
+.wysija-submit-field { }
+                                        </textarea>
+                                    </div>
+                                    <br />
+                                    <a href="" onclick="AfficherCacher('divcss2'); return false" ><?php _e('Need CSS code for MailChimp plugin?', 'wp-maintenance'); ?></a>
+                                    <div id="divcss2" style="display:none;"><i><?php _e('Click for select all', 'wp-maintenance'); ?></i>
+                                        <textarea onclick="select()" rows="15" cols="50%">
+.mc4wp-form {  } /* the form element */
+.mc4wp-form p { } /* form paragraphs */
+.mc4wp-form label {  } /* labels */
+.mc4wp-form input { } /* input fields */
+.mc4wp-form input[type="checkbox"] {  } /* checkboxes */
+.mc4wp-form input[type="submit"] { } /* submit button */
+.mc4wp-form input[type="submit"]:hover { } 
+.mc4wp-form input[type="submit"]:active { }
+.mc4wp-alert {  } /* success & error messages */
+.mc4wp-success {  } /* success message */
+.mc4wp-error {  } /* error messages */
+                                        </textarea>
+                                    </div>
                                 </div>
+                                
                                 <div class="clear"></div>
                                 <br />
                             </li>
@@ -757,6 +842,13 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                             </li>
                             <li>&nbsp;</li>
                              
+                            <li>
+                                <h3><?php _e('ID pages autorized:', 'wp-maintenance'); ?></h3>
+                                <?php _e('Allow the site to display these ID pages. Please, enter the ID pages separate with comma :', 'wp-maintenance'); ?>&nbsp;<br /><br />
+                                <input name="wp_maintenance_settings[id_pages]" size="70" value="<?php if( isset($paramMMode['id_pages']) ) { echo $paramMMode['id_pages']; } ?>" />
+                            </li>
+                            <li>&nbsp;</li>
+                             
                             <li><h3><?php _e('Header Code:', 'wp-maintenance'); ?></h3>
                                     <?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS.', 'wp-maintenance'); ?>&nbsp;<br /><br />
                                     <TEXTAREA NAME="wp_maintenance_settings[headercode]" COLS=70 ROWS=14 style="width:80%;"><?php if( isset($paramMMode['headercode']) ) { echo stripslashes($paramMMode['headercode']); }  ?></TEXTAREA>
@@ -790,7 +882,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                      <ul>
 
                         <li>
-                            <?php _e('This plugin has been developed for you for free by <a href="http://www.restezconnectes.fr" target="_blank">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.<br /><br />It would be desirable that I can get feedback on your potential changes to improve this plugin for all.', 'wp-maintenance'); ?>
+                            <?php _e('This plugin has been developed for you for free by <a href="https://restezconnectes.fr" target="_blank">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.<br /><br />It would be desirable that I can get feedback on your potential changes to improve this plugin for all.', 'wp-maintenance'); ?>
                         </li>
                         <li>&nbsp;</li>
                         <li>
@@ -799,13 +891,12 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                         <li>&nbsp;</li>
                         <li>
                             <!-- FAIRE UN DON SUR PAYPAL -->
-                            <div><?php _e('If you want Donate (French Paypal) for my current and future developments:', 'wp-maintenance'); ?><br />
-                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="ABGJLUXM5VP58">
-                                <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-                                </form>
+                            <div><?php _e('If you want Donate (French Paypal) for my current and future developments:', 'wp-maintenance'); ?><br /><br />
+                                <div style="width:350px;margin-left:auto;margin-right:auto;padding:5px;">
+                                    <a href="https://paypal.me/RestezConnectes/10" target="_blank" class="wpmclassname">
+                                        <img src="<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/donate.png'; ?>" valign="bottom" width="64" /> Donate now!
+                                    </a>
+                                </div>
                             </div>
                             <!-- FIN FAIRE UN DON -->
                         </li>
@@ -819,7 +910,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     
     <div style="margin-top:40px;">
 
-        <a href="http://wpmaintenance.info/" target="_blank"><?php _e('WP Maintenance','wp-maintenance'); ?></a> <?php _e('is brought to you by','wp-maintenance'); ?> <a href="http://www.restezconnectes.fr/" target="_blank">Restez Connectés</a> - <?php _e('If you found this plugin useful','wp-maintenance'); ?> <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank"><?php _e('give it 5 &#9733; on WordPress.org','wp-maintenance'); ?></a>
+        <a href="https://wpmaintenance.info/" target="_blank"><?php _e('WP Maintenance','wp-maintenance'); ?></a> <?php _e('is brought to you by','wp-maintenance'); ?> <a href="https://restezconnectes.fr/" target="_blank">Restez Connectés</a> - <?php _e('If you found this plugin useful','wp-maintenance'); ?> <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank"><?php _e('give it 5 &#9733; on WordPress.org','wp-maintenance'); ?></a>
 
     </div>
     

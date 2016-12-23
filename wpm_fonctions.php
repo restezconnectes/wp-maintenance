@@ -1,5 +1,8 @@
 <?php
 
+defined( 'ABSPATH' )
+	or die( 'No direct load ! ' );
+
 function wpm_getFontsTab() {
     return array("Abel", "Abril Fatface", "Aclonica", "Acme", "Actor", "Adamina", "Advent Pro",
 			"Aguafina Script", "Aladin", "Aldrich", "Alegreya", "Alegreya SC", "Alex Brush", "Alfa Slab One", "Alice",
@@ -199,7 +202,7 @@ function wpm_wysija_style() {
     margin-right: auto;
     background-color: #_COLORBUTTON;
     border: 1px solid #_COLORBUTTON;
-    cursor:hand;
+    cursor:pointer;
     color:#_COLORTEXTBUTTON;
 }
 .widget_wysija input {
@@ -226,14 +229,14 @@ function wpm_wysija_style() {
    -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
    -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
    box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
-   text-shadow: #333333 0 1px 0;
+   text-shadow: none;
    color: #_COLORTXT;
    font-family: helvetica, serif;
    padding: 8.5px 18px;
    font-size: 14px;
    text-decoration: none;
    vertical-align: baseline;
-   cursor:hand;
+   cursor:pointer;
    margin-top:0 !important;
 }
 .wysija-submit-field:hover {
@@ -241,21 +244,21 @@ function wpm_wysija_style() {
    border: 1px solid #_COLORBORDER;
    background: #_COLOR_BTN_HOVER;
    /*color: #_COLORTXT;*/
-   cursor:hand;
+   cursor:pointer;
 }
 .widget_wysija input:focus {
-   text-shadow: #_COLORBORDER 0 1px 0;
-   border: 1px solid #_COLOR_BTN_CLICK;
-   background: #_COLOR_BTN_CLICK;
+   text-shadow: none;
+   border: 1px solid #_COLORBORDER;
+   background: #_COLORBG;
    color: #_COLORTXT;
-   cursor:hand;
+   cursor:pointer;
 }
 .wysija-submit-field:active {
    text-shadow: #_COLORBORDER 0 1px 0;
    border: 1px solid #_COLORBORDER;
    background: #_COLOR_BTN_CLICK;
    color: #_COLORTXT;
-   cursor:hand;
+   cursor:pointer;
 }
 .widget_wysija .wysija-submit, .widget_wysija .wysija-paragraph { display: inline; }
 .wysija-submit-field { margin-top:0 !important; }
@@ -263,4 +266,93 @@ function wpm_wysija_style() {
     ';
 }
 
+/* Feuille de style pour MailChimp for WP */
+function wpm_mc4wp_style() {
+return '
+/* FORM */
+.mc4wp-form {  } /* the form element */
+.mc4wp-form p {  display: inline;padding-left:0;padding-right:0; } /* form paragraphs */
+.mc4wp-form label {  } /* labels */
+
+/* input fields */
+.mc4wp-form input { 
+   border: 1px solid #_COLORBORDER;
+   background: #_COLORBG;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   text-shadow: none;
+   color: #_COLORTXT;
+   font-family: helvetica, serif;
+   padding: 8.5px 18px;
+   font-size: 14px;
+   text-decoration: none;
+   vertical-align: baseline;
+   cursor:pointer;
+   margin-top:0 !important;
+} 
+/* checkboxes */
+.mc4wp-form input[type="checkbox"] {  
+
+} 
+/* submit button */
+.mc4wp-form input[type="submit"] { 
+    background-color: #_COLORBUTTON;
+    border: 1px solid #_COLORBUTTON;
+    cursor:pointer;
+    color:#_COLORTEXTBUTTON;
+} 
+.mc4wp-form input[type="submit"]:hover { 
+   text-shadow: #_COLORBORDER 0 1px 0;
+   border: 1px solid #_COLORBORDER;
+   background: #_COLOR_BTN_HOVER;
+   /*color: #_COLORTXT;*/
+   cursor:pointer;
+} 
+.mc4wp-form input[type="submit"]:active {
+   text-shadow: #_COLORBORDER 0 1px 0;
+   border: 1px solid #_COLORBORDER;
+   background: #_COLOR_BTN_CLICK;
+   color: #_COLORTXT;
+   cursor:pointer;
+}
+.mc4wp-alert {  } /* success & error messages */
+.mc4wp-success {  } /* success message */
+.mc4wp-error {  background: #cc0000; } /* error messages */
+';
+
+}
+
+function wpm_hex2rgb($color) {
+    
+    
+	if(strlen($color) > 1)
+		if($color[0] == '#')
+			$color = substr($color, 1);
+ 
+	if(strlen($color) == 6)
+		list($r, $g, $b) = array(
+					$color[0].$color[1],
+					$color[2].$color[3],
+					$color[4].$color[5]
+					);
+	elseif(strlen($color) == 3)
+		list($r, $g, $b) = array(
+					$color[0].$color[0],
+					$color[1].$color[1],
+					$color[2].$color[2]
+					);
+	else
+		return false;
+ 
+	return array(
+		'rouge' => hexdec($r),
+		'vert' => hexdec($g),
+		'bleu' => hexdec($b)
+		);
+    
+}
 

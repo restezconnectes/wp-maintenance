@@ -2,59 +2,35 @@
 
 /*
  * Plugin Name: WP Maintenance
- * Plugin URI: http://wordpress.org/extend/plugins/wp-maintenance/
+ * Plugin URI: https://fr.wordpress.org/plugins/wp-maintenance/
  * Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours, etc... / The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
  * Author: Florent Maillefaud
- * Author URI: http://wpmaintenance.info
- * Version: 2.7.7
+ * Author URI: https://wpmaintenance.info
+ * Version: 2.8.3
  * Text Domain: wp-maintenance
  * Domain Path: /languages/
  */
 
+/*  Copyright 2007-2015 Florent Maillefaud (email: contact at restezconnectes.fr)
 
-/*
-Change Log
-24/06/2016 - Bug HTTPS résolu
-01/06/2016 - Bug sur les Google Fonts résolu
-02/05/2016 - Retrait du template html et file_get_content
-28/04/2016 - Prêt pour WordPress 4.5.1 / Ajout d'un icon de réseaux sociaux.
-07/04/2016 - ajout d'un slider
-27/01/2016 - Corrige le bug compteur, ajout selection google font
-11/12/2015 - Corrige le bug couleur de fond. Ajout DatePicker pour compteur
-06/12/2015 - Autorise certaines IP
-04/12/2015 - Correction notice php (undefined index)
-17/09/2015 - Ajout accès au tableau de bord
-11/09/2015 - Correction bug CSS Responsive
-02/09/2015 - Correction notice php (undefined index)
-07/08/2015 - Nouvelle version du plugin
-18/04/2015 - Fixed a bug on the end of message counter
-16/04/2015 - Résolution de divers bug CSS
-28/03/2015 - Résolution de divers bug CSS Responsive
-25/03/2015 - Résolution de divers bug CSS
-19/03/2015 - Résolution de divers bugs CSS, ajout d'un titre encart newsletter, ajout champs code header
-07/03/2015 - Résolution de divers bug CSS
-04/12/2014 - Ajout d'une notification dans la barre d'admin / Résolution de divers bug CSS
-03/12/2014 - Correction d'une notice sur un argument déprécié
-09/08/2014 - Ajout de Fonts et Styles
-17/07/2014 - Correction bug feuille de style
-20/05/2014 - Correction bug upload d'image
-04/05/2014 - Correction bug date fin compte à rebours
-03/05/2014 - Correction bug drag&drop Réseaux Sociaux
-01/05/2014 - Modifs countdown et icones réseaux sociaux..
-30/04/2014 - Ajout code analytics, icones réseaux sociaux, newletter, image de fond...
-31/12/2013 - Ajout des couleurs des liens et d'options supplémentaires
-24/12/2013 - Bugs ajout de lien dans les textes
-06/11/2013 - Bugs sur le compte à rebours
-03/10/2013 - Bugs sur les couleurs
-11/09/2013 - Conflits javascript résolus
-30/08/2013 - CSS personnalisable
-27/08/2013 - Ajout du multilangue
-23/08/2013 - Refonte de l'admin et ajout d'un compte à rebours
-16/02/2013 - Ajout ColorPicker
-12/02/2013 - Ajout fonctionnalité et débugage
-11/02/2013 - Modification nom de fonctions
-24/01/2013 - Création du Plugin
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+
+
+defined( 'ABSPATH' )
+	or die( 'No direct load ! ' );
 
 if(!defined('WP_CONTENT_URL')) { define('WP_CONTENT_URL', get_option( 'siteurl') . '/wp-content'); }
 if(!defined('WP_CONTENT_DIR')) { define('WP_CONTENT_DIR', ABSPATH . 'wp-content'); }
@@ -93,7 +69,7 @@ function wpm_make_multilang() {
 }
 
 /* Ajoute la version dans les options */
-define('WPM_VERSION', '2.7.7');
+define('WPM_VERSION', '2.8.3');
 $option['wp_maintenance_version'] = WPM_VERSION;
 if( !get_option('wp_maintenance_version') ) {
     add_option('wp_maintenance_version', $option);
@@ -174,7 +150,12 @@ function wpm_add_admin() {
         'font_cpt' => 'Pacifico',
         'color_cpt' => '#333333',
         'enable_demo' => 0,
-        'color_text_button' => '#FFFFFF',
+        'color_field_text' => '#333333',
+        'color_text_button' => '#ffffff',
+        'color_field_background' => '#F1F1F1',
+        'color_field_border' => '#333333',
+        'color_button_onclick' => '#333333',
+        'color_button_hover' => '#cccccc',
         'color_button' => '#1e73be',
         'image_width' => 250,
         'image_height' => 100,
@@ -184,6 +165,7 @@ function wpm_add_admin() {
         'newletter_size' => 18,
         'newletter_font_style' => '',
         'newletter_font_weigth' => 'normal',
+        'type_newletter' => 'shortcode',
         'title_newletter' => '',
         'code_newletter' => '',
         'code_analytics' => '',
@@ -200,7 +182,12 @@ function wpm_add_admin() {
         'message_cpt_fin' => '',
         'b_repeat_image' => '',
         'color_cpt_bg' => '',
-        'enable_slider' => 0
+        'enable_slider' => 0,
+        'container_active' => 0,
+        'container_color' => '#ffffff',
+        'container_opacity' => '0.5',
+        'container_width' => 80
+        
     );
     $getMaintenanceSettings = get_option('wp_maintenance_settings');
     if (!empty($getMaintenanceSettings)) {
@@ -290,8 +277,11 @@ if (isset($_GET['page']) && $_GET['page'] == 'wp-maintenance/wp-maintenance.php'
 }
 
 function wpm_change_active($value = 0) {
-    if($value>=0) {
-        update_option('wp_maintenance_active', $value);
+
+    update_option('wp_maintenance_active', $value);
+    $statusActive = get_option('wp_maintenance_active');
+    if( isset($statusActive)  ) {
+        return $statusActive;
     }
 }
 
@@ -389,7 +379,7 @@ function wpm_get_template() {
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=yes" />
 	<title>%TITLE%</title>
-	
+    
 	<style type=\'text/css\'>
         /* VERSION %VERSION% */
         %ADDFONTS%
@@ -461,8 +451,9 @@ function wpm_get_template() {
           }
         }
         /* On ajoute les styles */
-        %ADDSTYLE%
         %ADDSTYLEWYSIJA%
+        %ADDSTYLE%
+        
     </style>
 
 	<!--[if lt IE 7]>
@@ -490,11 +481,13 @@ function wpm_get_template() {
             %SLIDESHOWAL%
             %LOGOIMAGE%
             %SLIDESHOWBL%
-            <h3>%TITRE%</h3>
-            <p>%TEXTE%</p>
-            %SLIDESHOWBT%
-            %COUNTER%
-            %NEWSLETTER%
+            <div id="sscontent">
+                <h3>%TITRE%</h3>
+                <p>%TEXTE%</p>
+                %SLIDESHOWBT%
+                %COUNTER%
+                %NEWSLETTER%
+            </div>
             %BOTTOMSOCIALICON%
 		</div><!-- #content -->
 		
@@ -562,6 +555,17 @@ function wpm_maintenance_mode() {
         }
     }
 
+    /* Désactive le mode maintenance pour les PAGE ID définies */
+    if( isset($paramMMode['id_pages']) ) { 
+        $listPageId = explode(',', $paramMMode['id_pages']);
+        foreach($listPageId as $keyPageId => $valPageId) {
+            if( $valPageId == get_the_ID() ) {
+                $statusActive = 0; 
+            } 
+            //echo 'Status: '.$statusActive.' - Page: '.$valPageId.' - ID:'.get_the_ID().'<br />';
+        } 
+    }
+    
     /* On désactive le mode maintenance pour les admins */
     if( current_user_can('administrator') == true ) {
         $statusActive = 0;
@@ -582,13 +586,6 @@ function wpm_maintenance_mode() {
         if( $dateNow > $dateFinCpt ) {
             $ChangeStatus = wpm_change_active();
             $statusActive = 0;
-            $paramMMode['disable'] = 0;
-
-            $wpm_options = array(
-                'active_cpt' => 0,
-                'disable' => 0,
-            );
-            update_option('wp_maintenance_settings', $wpm_options);
         }
         
     }
@@ -608,9 +605,32 @@ function wpm_maintenance_mode() {
             
         } else {
 
+            $wpmStyle = '';
+            
             $site_title = get_bloginfo( 'name', 'display' );
             $site_description = get_bloginfo( 'description', 'display' );
 
+            /* Si container activé */
+            if( isset($paramMMode['container_active']) && $paramMMode['container_active'] == 1 ) {
+                
+                if( empty($paramMMode['container_opacity']) ) { $paramMMode['container_opacity'] = 0.5; }
+                if( empty($paramMMode['container_width']) ) { $paramMMode['container_width'] = 80; }
+                if( empty($paramMMode['container_color']) ) { $paramMMode['container_color'] = '#ffffff'; }
+                if( isset($paramMMode['container_color']) ) { 
+                    $paramRGBColor = wpm_hex2rgb($paramMMode['container_color']); 
+                }
+
+                $wpmStyle .= '
+#sscontent {
+    background-color: rgba('.$paramRGBColor['rouge'].','.$paramRGBColor['vert'].','.$paramRGBColor['bleu'].', '.$paramMMode['container_opacity'].');
+    padding:0.8em;
+    margin-left:auto;
+    margin-right:auto;
+    width:'.$paramMMode['container_width'].'%;
+}
+';
+            }
+            
             /* Défninition des couleurs par défault */
             if( !isset($paramMMode['color_bg']) || $paramMMode['color_bg']=="") { $paramMMode['color_bg'] = "#f1f1f1"; }
             if( !isset($paramMMode['color_txt']) || $paramMMode['color_txt']=="") { $paramMMode['color_txt'] = "#888888"; }        
@@ -626,7 +646,7 @@ function wpm_maintenance_mode() {
                 "#_COLOR_TXT_BT" => $paramMMode['color_text_bottom'],
                 "#_COLORHEAD" => $paramMMode['color_bg_header'],
             );
-            $wpmStyle = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_style'));
+            $wpmStyle .= str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_style'));
             if($paramMMode['message_cpt_fin']=='') { $paramMMode['message_cpt_fin'] = '&nbsp;'; }
 
   
@@ -689,11 +709,17 @@ function wpm_maintenance_mode() {
             } else {
                 $Texte = '';
             }
-            $wysijaStyle = '/* no WYSIJA Style */';
+            $wysijaStyle = '/* no NEWLETTER Style */';
             if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 && isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' ) {
-                $nameNl = strpos($paramMMode['code_newletter'], 'wysija_form');
-                if($nameNl==1) {
-                    //$wysijaStyle = 'STYLEOK';
+                
+                if( empty($paramMMode['color_field_text']) ) { $paramMMode['color_field_text'] = '#333333'; }
+                    if( empty($paramMMode['color_text_button']) ) { $paramMMode['color_text_button']= '#ffffff'; }
+                    if( empty($paramMMode['color_field_background']) ) { $paramMMode['color_field_background']= '#F1F1F1'; }
+                    if( empty($paramMMode['color_field_border']) ) { $paramMMode['color_field_border']= '#333333'; }
+                    if( empty($paramMMode['color_button_onclick']) ) { $paramMMode['color_button_onclick']= '#333333'; }
+                    if( empty($paramMMode['color_button_hover']) ) { $paramMMode['color_button_hover']= '#cccccc'; }
+                    if( empty($paramMMode['color_button']) ) { $paramMMode['color_button']= '#1e73be'; }
+                    
                     $wysijaRemplacements = array (
                         "#_COLORTXT" => $paramMMode['color_field_text'],
                         "#_COLORBG" => $paramMMode['color_field_background'],
@@ -703,9 +729,24 @@ function wpm_maintenance_mode() {
                         "#_COLOR_BTN_HOVER" => $paramMMode['color_button_hover'],
                         "#_COLOR_BTN_CLICK" => $paramMMode['color_button_onclick']
                     );
+                
+                if( strpos($paramMMode['code_newletter'], 'wysija_form') == 1 ) {
+                    
                     $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_wysija_style() );
+                    
+                } else if( strpos($paramMMode['code_newletter'], 'mc4wp_form') == 1 ) {
+                    
+                    $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_mc4wp_style() );
+                    
                 }
-                $newLetter = '<div class="wpm_newletter">'.stripslashes($paramMMode['title_newletter']).''.do_shortcode(stripslashes($paramMMode['code_newletter'])).'</div>';
+                $newLetter = '<div class="wpm_newletter">'.stripslashes($paramMMode['title_newletter']);
+                if( isset($paramMMode['type_newletter']) && isset($paramMMode['iframe_newletter']) && $paramMMode['iframe_newletter']!='' && $paramMMode['type_newletter']=='iframe' ) {
+                    $newLetter .= stripslashes($paramMMode['iframe_newletter']);                    
+                }
+                if( isset($paramMMode['type_newletter']) && isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' && $paramMMode['type_newletter']=='shortcode'  ) {
+                    $newLetter .= do_shortcode(stripslashes($paramMMode['code_newletter']));
+                }
+                $newLetter .= '</div>';
             }
                
             $optionBackground = '';
@@ -759,7 +800,7 @@ body {
                 }
                 $Counter .= "';";
                 $Counter .= '
-                    FinishMessage = "'.trim( stripslashes($paramMMode['message_cpt_fin']) ).'";
+                    FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramMMode['message_cpt_fin']) ) ).'";
                     </script>';
                 $Counter .= '
                 <script language="JavaScript" src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-cpt-script.js"></script>

@@ -1,5 +1,7 @@
 <?php
 
+defined( 'ABSPATH' )
+	or die( 'No direct load ! ' );
 /**
  * Désinstallation du plugin WP Maintenance
  */
