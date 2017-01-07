@@ -4,7 +4,7 @@ Donate link: https://wpmaintenance.info/a-propos/
 Tags: WordPress.com, maintenance, atttente, pause, travaux, construction, launch, coming soon
 Requires at least: 3.0
 Tested up to: 4.7
-Stable tag: 2.8.3
+Stable tag: 2.8.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,10 +49,13 @@ Yes. Thank you for submitting your changes to update the plugin.
 
 == Upgrade Notice ==
 
-= 2.8.3 =
+= 2.8.4 =
 This version is stable
 
 == Changelog ==
+
+= 2.8.4 =
+* Fixed bug with Divi theme
 
 = 2.8.3 =
 * Allow the site to display pages by ID

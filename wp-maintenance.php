@@ -6,7 +6,7 @@
  * Description: Le plugin WP Maintenance vous permet de mettre votre site en attente le temps pour vous de faire une maintenance ou du lancement de votre site. Personnalisez cette page de maintenance avec une image, un compte à rebours, etc... / The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
  * Author: Florent Maillefaud
  * Author URI: https://wpmaintenance.info
- * Version: 2.8.3
+ * Version: 2.8.4
  * Text Domain: wp-maintenance
  * Domain Path: /languages/
  */
@@ -56,9 +56,11 @@ function wpm_plugin_actions ( $links ) {
 /* DATEPICKER */
 add_action( 'init', 'wpm_date_picker' );
 function wpm_date_picker() {
-    wp_enqueue_script( 'jquery' );
-    wp_enqueue_script('jquery-ui-datepicker');
-    wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+    if (isset($_GET['page']) && $_GET['page'] == 'wp-maintenance') {
+        wp_enqueue_script( 'jquery' );
+        wp_enqueue_script('jquery-ui-datepicker');
+        wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+    }
     
 }
 
@@ -69,7 +71,7 @@ function wpm_make_multilang() {
 }
 
 /* Ajoute la version dans les options */
-define('WPM_VERSION', '2.8.3');
+define('WPM_VERSION', '2.8.4');
 $option['wp_maintenance_version'] = WPM_VERSION;
 if( !get_option('wp_maintenance_version') ) {
     add_option('wp_maintenance_version', $option);
@@ -246,7 +248,6 @@ function wpm_admin_scripts() {
 }
 
 //}
-add_action('admin_footer', 'wpm_print_footer_scripts');
 function wpm_print_footer_scripts() {
     wp_register_script('wpm-picker', WP_PLUGIN_URL.'/wp-maintenance/js/lib/picker.js');
     wp_enqueue_script('wpm-picker');
@@ -271,6 +272,7 @@ function wpm_admin_styles() {
 }
 
 if (isset($_GET['page']) && $_GET['page'] == 'wp-maintenance/wp-maintenance.php') {
+    add_action('admin_footer', 'wpm_print_footer_scripts');
     add_action('admin_print_scripts', 'wpm_admin_scripts');
     add_action('admin_print_styles', 'wpm_admin_styles');
     add_action('admin_print_scripts', 'wpm_admin_scripts');
