@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== WP Maintenance ===
 Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 4.8.1
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,10 +57,15 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 3.0.2 =
+= 3.0.3 =
 This version is stable
 
 == Changelog ==
+
+= 3.0.3 =
+* Bugs fixed load scripts & CSS in HTTPS
+* Bug fixed for Select Google Fonts
+* Minify CSS & JS
 
 = 3.0.2 =
 * Bugs fixed load scripts & CSS in HTTPS
