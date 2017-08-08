@@ -967,7 +967,7 @@ $wpmStyle .= '
         }
         header('HTTP/1.1 503 Service Temporarily Unavailable');
         header('Status: 503 Service Temporarily Unavailable');
-        header('Retry-After: 3600');//300 seconds*/
+        //header('Retry-After: 3600');//300 seconds*/
         echo $content;
         die();
     }
