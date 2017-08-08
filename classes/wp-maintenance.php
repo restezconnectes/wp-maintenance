@@ -136,9 +136,12 @@ class WP_maintenance {
             delete_option('wp_maintenance_social');
             delete_option('wp_maintenance_slider_options');
             delete_option('wp_maintenance_slider');
+            delete_option('wp_maintenance_ipaddresses');
+            
         }
 
     }
+
 
     // Add "Réglages" link on plugins page
     function wpm_plugin_actions( $links, $file ) {
@@ -481,28 +484,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         }
     }
 
-    function wpm_uninstall() {
-
-        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-        $paramMMode = get_option('wp_maintenance_settings');
-
-        if(get_option('wp_maintenance_active')) {  delete_option('wp_maintenance_active'); }
-
-        if( isset($paramMMode['dashboard_delete_db']) && $paramMMode['dashboard_delete_db'] == 'Yes' ) {
-            if(get_option('wp_maintenance_settings')) { delete_option('wp_maintenance_settings'); }
-            if(get_option('wp_maintenance_ipaddresses')) {  delete_option('wp_maintenance_ipaddresses'); }
-            if(get_option('wp_maintenance_version')) { delete_option('wp_maintenance_version'); }
-            if(get_option('wp_maintenance_style')) {  delete_option('wp_maintenance_style'); }
-            if(get_option('wp_maintenance_limit')) {  delete_option('wp_maintenance_limit'); }
-            if(get_option('wp_maintenance_active')) {  delete_option('wp_maintenance_active'); }
-            if(get_option('wp_maintenance_social')) {  delete_option('wp_maintenance_social'); }
-            if(get_option('wp_maintenance_social_options')) {  delete_option('wp_maintenance_social_options'); }
-            
-            
-        }
-
-    }
-        /**
+    /**
      * Process a settings export that generates a .json file of the erident settings
      */
     function wpm_process_settings_export() {
