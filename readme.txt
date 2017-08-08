@@ -22,7 +22,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Social Networks ready
 - Insert for shorcode (Newletter or Contact form)
 
-maintenance.pot file available
+wp-maintenance.pot file available
 
 == Installation ==
 1. Upload the full directory into your '/wp-content/plugins' directory
