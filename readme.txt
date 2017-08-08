@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
-Tags: WordPress.com, maintenance, atttente, pause, travaux, construction, launch, coming soon
+Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.7
-Stable tag: 2.8.4
+Tested up to: 4.8.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,35 +27,57 @@ maintenance.pot file available
 == Installation ==
 1. Upload the full directory into your '/wp-content/plugins' directory
 2. Activate the plugin at the plugin administration page
-3. Open the plugin configuration page, which is located under 'Option -> WP Maintenance'
+
+You will find 'WP Maintenance' menu in your WordPress admin panel
 
 == Screenshots ==
 1. General view
 2. View by visitors to your site
-3. Color selection
-4. Upload a personnal picture
+3. Colors and fonts settings
+4. Upload a personal header, background and slides picture
 5. Countdown settings
-6. Various settings
+6. CSS settings
+7. Others settings
 
 == Frequently Asked Questions ==
 
-= This plugin is free ? =
+= WP Maintenance Needs Your Support =
 
-Yes. If you want, you can support this project here : https://wpmaintenance.info/a-propos/
+It is hard to continue development and support for this free plugin without contributions from users like you. If you enjoy using WP Maintenance and find it useful, please consider <a href="https://www.paypal.me/RestezConnectes/25">making a donation</a>. Your donation will help encourage and support the plugin's continued development and better user support.
 
 = Can I change the plugin code? =
 
 Yes. Thank you for submitting your changes to update the plugin.
 
+= Translations =
+
+
+
+You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
+
 == Upgrade Notice ==
 
-= 2.8.4 =
+= 3.0.2 =
 This version is stable
 
 == Changelog ==
 
-= 2.8.4 =
-* Fixed bug with Divi theme
+= 3.0.2 =
+* Bugs fixed load scripts & CSS in HTTPS
+* Bug fixed for Select Google Fonts
+* Minify CSS & JS
+
+= 3.0.1 =
+* Bug fixed on desactivate/uninstall plugin
+* Bug fatal error function is_rtl()
+* Added export/import settings
+
+= 3.0 =
+* Rebuilt plugin core from the ground up
+* Add CodeMirror for codes options
+* Add WordPress editor for texts and titles options
+* Add new options
+* Add new design
 
 = 2.8.3 =
 * Allow the site to display pages by ID
