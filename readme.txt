@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== WP Maintenance ===
 Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 4.7
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,7 @@ Create and customize your maintenance page
 == Description ==
 The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture and countdown with:
 
+== Features ==
 - Choice texts colors and fonts
 - Upload logo picture
 - Upload background picture or pattern
@@ -21,8 +22,12 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Google Analytics ready
 - Social Networks ready
 - Insert for shorcode (Newletter or Contact form)
+- Enable "503 Service temporarily unavailable"
+- Choose access by Roles and Capabilities
+- Choose access by IP address
+- Choose access by ID Pages
 
-maintenance.pot file available
+wp-maintenance.pot file available
 
 == Installation ==
 1. Upload the full directory into your '/wp-content/plugins' directory
@@ -45,6 +50,13 @@ You will find 'WP Maintenance' menu in your WordPress admin panel
 
 It is hard to continue development and support for this free plugin without contributions from users like you. If you enjoy using WP Maintenance and find it useful, please consider <a href="https://www.paypal.me/RestezConnectes/25">making a donation</a>. Your donation will help encourage and support the plugin's continued development and better user support.
 
+= I have activated plugin and don’t see any changes, looks like plugin is not working. =
+This is normal because you are logged in as an administrator. Try a different browser. If you have registered as a wordpress user, you see the site in normal mode.
+
+= Where can I find out the login page to get to the site? =
+You can use your administrator access or create new user in wordpress dashboard
+http://yousite.com/wp-login.php
+
 = Can I change the plugin code? =
 
 Yes. Thank you for submitting your changes to update the plugin.
@@ -57,10 +69,13 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 3.0.2 =
+= 3.0.3 =
 This version is stable
 
 == Changelog ==
+
+= 3.0.3 =
+* Add Error 503 in settings page
 
 = 3.0.2 =
 * Bugs fixed load scripts & CSS in HTTPS
@@ -245,6 +260,3 @@ This version is stable
 
 = 0.1 =
 * First version
-
-
-   
