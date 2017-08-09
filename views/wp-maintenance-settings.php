@@ -80,6 +80,7 @@ jQuery(document).ready(function() {
             
                 <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
             
+                <!-- DELETE OPTION IF DEACTIVATED -->
                 <div>
                     <div style="float:left; width:70%;"><h3><?php _e('Delete custom settings upon plugin deactivation?', 'wp-maintenance'); ?></h3><span class="description"><?php _e( 'If you set "Yes" all custom settings will be deleted from database upon plugin deactivation', 'wp-maintenance' ); ?></span></div>
                     <div style="float:left; width:30%;margin-top:25px;text-align:right;">
@@ -88,6 +89,21 @@ jQuery(document).ready(function() {
                             <label for="switch_deletedb"><?php _e('Yes', 'wp-maintenance'); ?></label>
                             <input class="switch_right" type="radio" id="switch_deletedb_no" name="wp_maintenance_settings[dashboard_delete_db]" value="No" <?php if( empty($paramMMode['dashboard_delete_db']) || (isset($paramMMode['dashboard_delete_db']) && $paramMMode['dashboard_delete_db']=='No') ) { echo ' checked'; } ?> />
                             <label for="switch_deletedb_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
+            
+                <!-- DISPLAY 503 ERROR? -->
+                <div>
+                    <div style="float:left; width:70%;"><h3><?php _e('Display code HTTP Error 503?', 'wp-maintenance'); ?></h3><span class="description"><?php _e( 'If you set "Yes", this returns the error page "503 Service Unavailable Error"', 'wp-maintenance' ); ?></span></div>
+                    <div style="float:left; width:30%;margin-top:25px;text-align:right;">
+                        <div class="switch-field">
+                            <input class="switch_left" type="radio" id="switch_error" name="wp_maintenance_settings[error_503]" value="Yes" <?php if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) { echo ' checked'; } ?>/>
+                            <label for="switch_error"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_error_no" name="wp_maintenance_settings[error_503]" value="No" <?php if( empty($paramMMode['error_503']) || (isset($paramMMode['error_503']) && $paramMMode['error_503']=='No') ) { echo ' checked'; } ?> />
+                            <label for="switch_error_no"><?php _e('No', 'wp-maintenance'); ?></label>
                         </div>
                     </div>
                     <div class="clear"></div>

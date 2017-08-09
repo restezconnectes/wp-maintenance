@@ -1,10 +1,10 @@
-=== WP Maintenance ===
+=== Plugin Name ===
 Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.8.1
-Stable tag: 3.0.3
+Tested up to: 4.7
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,7 +22,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Social Networks ready
 - Insert for shorcode (Newletter or Contact form)
 
-wp-maintenance.pot file available
+maintenance.pot file available
 
 == Installation ==
 1. Upload the full directory into your '/wp-content/plugins' directory
@@ -57,19 +57,13 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 3.0.3 =
+= 3.0.2 =
 This version is stable
 
 == Changelog ==
 
-= 3.0.3 =
-* Bugs fixed load scripts & CSS in HTTPS
-* Bug fixed for Select Google Fonts
-* Minify CSS & JS
-
 = 3.0.2 =
 * Bugs fixed load scripts & CSS in HTTPS
-* Bug fixed for Select Google Fonts
 * Minify CSS & JS
 
 = 3.0.1 =

@@ -98,7 +98,8 @@ class WP_maintenance {
             'container_color' => '#ffffff',
             'container_opacity' => '0.5',
             'container_width' => 80,
-            'dashboard_delete_db' => 'Yes'
+            'dashboard_delete_db' => 'Yes',
+            'error_503' => 'Yes'
 
         );
         $getMaintenanceSettings = get_option('wp_maintenance_settings');
@@ -965,9 +966,11 @@ $wpmStyle .= '
 
             $content = $template_page;
         }
-        header('HTTP/1.1 503 Service Temporarily Unavailable');
-        header('Status: 503 Service Temporarily Unavailable');
-        //header('Retry-After: 3600');//300 seconds*/
+        if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
+            header('HTTP/1.1 503 Service Temporarily Unavailable');
+            header('Status: 503 Service Temporarily Unavailable');
+            //header('Retry-After: 3600');//300 seconds*/
+        }
         echo $content;
         die();
     }
