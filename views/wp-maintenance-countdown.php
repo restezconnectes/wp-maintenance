@@ -24,9 +24,9 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( __('Countdown', 'wp-maintenance'), 'dashicons-clock', $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 40px;">
         
-        <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
+        <div id="wpm-column1">
             
                 <!-- ACTIVER COMPTEUR -->
                 <?php

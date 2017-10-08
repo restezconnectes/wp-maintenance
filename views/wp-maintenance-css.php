@@ -36,10 +36,9 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     <?php echo wpm_get_header( __('CSS Style', 'wp-maintenance'), 'dashicons-media-code', $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 40px;">
     
-        <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
-            
+        <div id="wpm-column1">
                 
                     <!-- UTILISER UNE FEUILLE DE STYLE PERSO -->
                     <?php _e('Edit the CSS sheet of your maintenance page here. Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?><br /><br />

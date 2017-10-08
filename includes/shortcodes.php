@@ -18,7 +18,7 @@ function wpm_analytics_shortcode( $atts ) {
     );
 
     if( isset($enable) && $enable==1 && $code!='') {
-        return "<script>
+        /*return "<script>
                   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -27,7 +27,16 @@ function wpm_analytics_shortcode( $atts ) {
                   ga('create', '".$code."', '".$domain."');
                   ga('send', 'pageview');
 
-                </script>";
+                </script>";*/
+        return "
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=".$code."\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', ".$code.");
+</script>";
     } else {
         // Code
         return '';
@@ -44,13 +53,13 @@ function wpm_social_shortcode( $atts ) {
     $contentSocial = '';
     // Si on est en mobile on réduit les icones
     if ( wp_is_mobile() ) {
-        $paramSocialOption['size'] = 24;
+        $paramSocialOption['size'] = 32;
     }
         
 	// Attributes
 	extract( shortcode_atts(
 		array(
-			'size' => 48,
+			'size' => 64,
             'enable' => 0
 		), $atts )
 	);
@@ -58,7 +67,7 @@ function wpm_social_shortcode( $atts ) {
         $srcIcon = get_stylesheet_directory_uri().'/'.$paramSocialOption['theme'].'/';
         $iconSize = 'width='.$paramSocialOption['size'];
     } else {
-        $srcIcon = WP_CONTENT_URL.'/plugins/wp-maintenance/socialicons/'.$paramSocialOption['size'].'x'.$paramSocialOption['size'].'/';
+        $srcIcon = WP_CONTENT_URL.'/plugins/wp-maintenance/socialicons/'.$paramSocialOption['style'].'/'.$paramSocialOption['size'].'/';
         $iconSize = '';
     }
     if( isset($paramSocialOption['enable']) && $paramSocialOption['enable']==1 && $countSocial>=1) {

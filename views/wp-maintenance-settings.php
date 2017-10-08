@@ -57,9 +57,9 @@ jQuery(document).ready(function() {
     <?php echo wpm_get_header( __('Settings', 'wp-maintenance'), 'dashicons-admin-generic', $messageUpdate ) ?>
     <!-- END HEADER -->
         
-    <div style="margin-top:80px;">
+    <div style="margin-top:40px;">
         
-        <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
+        <div id="wpm-column1">
             
                 <div>
                     <div style="float:left; width:70%;"><h3><?php _e('Theme maintenance page', 'wp-maintenance'); ?></h3><p><?php _e('If you would use your maintenance.php page in your theme folder, click Yes.', 'wp-maintenance'); ?></p></div>

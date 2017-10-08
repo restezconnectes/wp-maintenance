@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.7
-Stable tag: 3.0.3
+Tested up to: 4.8.2
+Stable tag: 3.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -63,16 +63,22 @@ Yes. Thank you for submitting your changes to update the plugin.
 
 = Translations =
 
-
-
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Upgrade Notice ==
 
-= 3.0.3 =
+= 3.0.5 =
 This version is stable
 
 == Changelog ==
+
+= 3.0.5 =
+* Adding Admin Responsive CSS
+* Bugs minors fixed
+
+= 3.0.4 =
+* Bug italic font
+* Adding socials icons styles
 
 = 3.0.3 =
 * Add Error 503 in settings page

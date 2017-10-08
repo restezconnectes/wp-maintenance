@@ -9,18 +9,17 @@ function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settin
     global $_wp_admin_css_colors;
     
     $getHeader = '
-     <div id="wpmcontainer" role="navigation" class="stickywrapper">
-        <div id="divwpmcontainer">
-            <div style="float:left;width:67%;margin-left: 20px;">
-                <div style="float:left;width:35%;">
+     <div id="wpm-container">
+            <div id="wpm-navtitle">
+                <div id="wpm-navtext">
                     <h2 style="font-size: 23px;font-weight: 400;line-height: 29px;margin-bottom:15px;">
                         <span class="dashicons '.$dashicon.'" style="font-size:35px;margin-right:10px;"></span> '.$text.'
                     </h2>
                 </div>';
-    $getHeader .= '<div style="float:left;width: 20%;padding-top: 8px;">
+    $getHeader .= '<div id="wpm-navdashicons">
         <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().'</div>
     </div>';
-    $getHeader .= '<div style="float:left;width: 45%;text-align: center;padding-top: 10px;">';
+    $getHeader .= '<div id="wpm-navmessage">';
     if( $update == 1 ) {
     $getHeader .= '<div id="wpmNotifications"><strong>'.__('Options saved.', 'wp-maintenance').'</strong></div>';
     $getHeader .= '<script>
@@ -30,9 +29,8 @@ function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settin
         
         </script>';
     }
-    $getHeader .= '</div>';
     $getHeader .= '</div>
-            <div style="float:left;width:18%;text-align: right;margin-top: 25px;">
+            <div id="wpm-navsave">
                 '.get_submit_button( '', 'primary', 'valide_settings', false ).'
             </div><div class="clear"></div>
         </div>
@@ -130,7 +128,7 @@ function wpm_update_settings($tabPost) {
 
 function wpm_sidebar() {
     
-    $wpmSidebar = '<div style="float:left;width:24%;">';
+    $wpmSidebar = '<div id="wpm-column2">';
     
     /* ABOUT */
     $wpmSidebar .= '<div style="border: 1px solid #ddd;background-color:#fff;padding:10px;text-align:center;margin-bottom:5px;">'.__('ABOUT', 'wp-maintenance').'</div>';
@@ -246,7 +244,7 @@ function wpm_get_template() {
         }
         #footer {
             width:100%;
-            height:60px;
+            /*height:60px;*/
             line-height:60px;
             position:absolute;
             bottom:0;

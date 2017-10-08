@@ -52,9 +52,9 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
     <!-- HEADER -->
     <?php echo wpm_get_header( __('General', 'wp-maintenance'), 'dashicons-admin-settings', $messageUpdate ) ?>
     <!-- END HEADER -->
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 40px;">
         
-        <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
+        <div id="wpm-column1">
 
             <div>
                 <div style="float:left; width:70%;"><h3><?php _e('Enable maintenance mode:', 'wp-maintenance'); ?></h3></div>
@@ -184,23 +184,25 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                 <?php _e('Drad and drop the lines to put in the order you want:', 'wp-maintenance'); ?><br /><br />
                 <ul class="sortable">
                 <?php 
-                    if( isset($paramSocial) && !empty($paramSocial) ) {
-
-                        foreach($paramSocial as $socialName=>$socialUrl) {
-                ?>
-                            <li><span>::</span><img src="<?php echo WPM_ICONS_URL; ?>24x24/<?php echo $socialName; ?>.png" hspace="3" valign="middle" /><?php echo ucfirst($socialName); ?> <input type= "text" class="wpm-form-field" name="wp_maintenance_social[<?php echo $socialName; ?>]" value="<?php echo $socialUrl; ?>" size="50" onclick="select()" /></li>
-                <?php 
+                        $wpmTabSocial = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'google_plus', 'about_me', 'soundcloud', 'skype', 'tumblr', 'blogger', 'paypal');
+                        if( isset($paramSocialOption['style']) ) {
+                            $styleIcons = $paramSocialOption['style'];
+                        } else {
+                            $styleIcons = 'style1';
                         }
-
-                    } else { 
-
-                        $wpmTabSocial = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'google_plus', 'about_me', 'soundcloud');
-
+                    
                         foreach ($wpmTabSocial as &$iconSocial) {
-                            echo '<li><span>::</span><img src="'.WPM_ICONS_URL.'24x24/'.$iconSocial.'.png" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" class="wpm-form-field" size="50" name="wp_maintenance_social['.$iconSocial.']" value="" onclick="select()" ><br />';
+                            
+                            $linkIcon = WPM_ICONS_URL.'not-found.png';
+                            if( file_exists(WPM_DIR.'socialicons/'.$styleIcons.'/32/'.$iconSocial.'.png') ) {
+                                $linkIcon = WPM_ICONS_URL.''.$styleIcons.'/32/'.$iconSocial.'.png';
+                            }
+                        
+                            $entryValue = '';
+                            if( isset($paramSocial[$iconSocial]) ) { $entryValue = $paramSocial[$iconSocial]; }
+                            echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" class="wpm-form-field" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.$entryValue.'" onclick="select()" ><br />';
                         }
 
-                    }
                 ?>
                 </ul>
                 <script src="<?php echo WPM_PLUGIN_URL; ?>js/jquery.sortable.js"></script>
@@ -211,12 +213,24 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                 <?php _e('Choose icons size:', 'wp-maintenance'); ?>
                 <select name="wp_maintenance_social_options[size]" class="wpm-form-field" >
                 <?php 
-                    $wpm_tabIcon = array(16, 24, 32, 48, 64, 128);
+                    $wpm_tabIcon = array(32, 64, 128, 256, 512);
                     foreach($wpm_tabIcon as $wpm_icon) {
                         if($paramSocialOption['size']==$wpm_icon) { $selected = ' selected'; } else { $selected = ''; }
                         echo '<option value="'.$wpm_icon.'" '.$selected.'>'.$wpm_icon.'</option>';
                     }
                 ?>
+                </select>
+                <br />
+                <?php _e('Choose icons style:', 'wp-maintenance'); ?>
+                <select name="wp_maintenance_social_options[style]" class="image-picker show-html">
+                  <option value=""></option>
+                    <?php 
+                        $styleSocialIcon = array( 'style1' => 'facebook.png', 'style2' => 'twitter.png', 'style3' => 'google_plus.png', 'style4' => 'youtube.png', 'style5' => 'linkedin.png', 'style6' => 'flickr.png');
+                        foreach($styleSocialIcon as $stylesi => $pngIcon) {
+                            if($stylesi==$styleIcons) { $selected = ' selected'; } else { $selected = ''; }
+                            echo '<option data-img-src="'.WPM_ICONS_URL.''.$stylesi.'/64/'.$pngIcon.'" value="'.$stylesi.'" '.$selected.'>'.ucfirst($stylesi).'</option>';
+                        } 
+                    ?>
                 </select>
                 
                  <?php _e('Position:', 'wp-maintenance'); ?>
@@ -290,3 +304,10 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
     <?php echo wpm_footer(); ?>
 
 </div>
+<script type="text/javascript">
+
+    jQuery("select.image-picker").imagepicker({
+      hide_select:  false,
+    });
+
+</script>

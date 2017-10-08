@@ -130,8 +130,7 @@ class WP_maintenance {
             delete_option('wp_maintenance_settings');
             delete_option('wp_maintenance_version');
             delete_option('wp_maintenance_style');
-            delete_option('wp_maintenance_limit');
-            delete_option('wp_maintenance_active');
+            delete_option('wp_maintenance_limit');            
             delete_option('wp_maintenance_social');
             delete_option('wp_maintenance_social_options');
             delete_option('wp_maintenance_social');
@@ -199,7 +198,11 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     background-color: '.$colors[0].'!important;
     color:#e4e4e4!important;
 }
-
+.switch-field-mini input:checked + label { background-color: '.$colors[2].'; }
+.switch-field-mini input:checked + label:last-of-type {
+    background-color: '.$colors[0].'!important;
+    color:#e4e4e4!important;
+}
 
 </style>';
         }
@@ -368,6 +371,13 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
             wp_enqueue_style('thickbox');
             wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+            
+            /* Image picker */
+            wp_enqueue_style('imagepicker');
+            wp_enqueue_style('imagepicker', WPM_PLUGIN_URL.'css/image-picker.css');
+            
+            wp_register_script('imagepickerjs', WPM_PLUGIN_URL.'js/image-picker.min.js', 'jquery', '1.0');
+            wp_enqueue_script('imagepickerjs');
 
             //wp_enqueue_script('nomikos_my_plugin_js_comment', site_url('wp-admin/js/comment.js'));
 
@@ -752,8 +762,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 $TextCopyright = '';
             }
             if( (isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==1) && (isset($paramMMode['add_wplogin_title']) && $paramMMode['add_wplogin_title']!='') ) {
-                $textLogin = str_replace('%DASHBOARD%', '<a href="'.get_admin_url().'">'.__('Dashboard', 'wp-maintenance').'</a>', $paramMMode['add_wplogin_title']);
-                $TextCopyright .= '<br />'.$textLogin;
+                $TextCopyright .= '<br /><br />'.str_replace('%DASHBOARD%', '<a href="'.get_admin_url().'">'.__('Dashboard', 'wp-maintenance').'</a>', $paramMMode['add_wplogin_title']).'';
 
             }
             if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) {
@@ -762,7 +771,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 $Titre = '';
             }
             if( isset($paramMMode['text_maintenance']) && $paramMMode['text_maintenance']!='' ) {
-                $Texte = stripslashes($paramMMode['text_maintenance']);
+                $Texte = stripslashes(wpautop($paramMMode['text_maintenance']));
             } else {
                 $Texte = '';
             }

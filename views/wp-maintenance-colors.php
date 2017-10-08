@@ -41,12 +41,10 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( __('Colors & Fonts', 'wp-maintenance'), 'dashicons-art', $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 40px;">
         
-        <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
+        <div id="wpm-column1">
             
-            
-                
             <!-- COULEUR DU FOND DE PAGE -->
             <h3><?php _e('Choice general colors:', 'wp-maintenance'); ?></h3>
             <em><?php _e('Background page color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php if( isset($paramMMode['color_bg']) && $paramMMode['color_bg']!='' ) { echo $paramMMode['color_bg']; } ?>" name="wp_maintenance_settings[color_bg]" class="wpm-color-field" data-default-color="#f1f1f1" /> <br />
@@ -59,7 +57,7 @@ $paramMMode = get_option('wp_maintenance_settings');
             <em><stong><?php _e('Title font settings', 'wp-maintenance'); ?></stong></em>
             <table cellspacing="10">
                 <tr>
-                    <td valign="top" align="left">
+                    <td valign="middle" align="left">
                         <input name="wp_maintenance_settings[font_title]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_title']) && $paramMMode['font_title']!='' ) { echo str_replace(' ', '+', $paramMMode['font_title']); } else { echo 'Anton'; } ?>" />
                     </td>
                     <td>
@@ -68,21 +66,36 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     </td>
                 </tr>
+            </table> 
+            <table>
                 <tr>
-                    <td rowspan="2">
-                        <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="normal" <?php if( (isset($paramMMode['font_title_weigth']) && $paramMMode['font_title_weigth']=='normal') || empty($paramMMode['font_title_weigth']) ) { echo 'checked'; } ?> >Normal
-                        <input type="radio" name="wp_maintenance_settings[font_title_weigth]" value="bold" <?php if( isset($paramMMode['font_title_weigth']) && $paramMMode['font_title_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                        <input type="checkbox" name="wp_maintenance_settings[font_title_style]" value="italic" <?php if( isset($paramMMode['font_title_style']) && $paramMMode['font_title_style']=='italic') { echo 'checked'; } ?>>Italic
+                    <td><strong>Bold</strong></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_title_weigth" name="wp_maintenance_settings[font_title_weigth]" value="bold" <?php if( isset($paramMMode['font_title_weigth']) && $paramMMode['font_title_weigth']=='bold') { echo ' checked'; } ?>/>
+                            <label for="switch_title_weigth"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_title_weigth_no" name="wp_maintenance_settings[font_title_weigth]" value="normal" <?php if( empty($paramMMode['font_title_weigth']) || isset($paramMMode['font_title_style']) && $paramMMode['font_title_weigth']=='normal') { echo ' checked'; } ?> />
+                            <label for="switch_title_weigth_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
+                    </td>
+                    <td><i>Italic</i></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_title_style" name="wp_maintenance_settings[font_title_style]" value="italic" <?php if( isset($paramMMode['font_title_style']) && $paramMMode['font_title_style']=='italic') { echo ' checked'; } ?>/>
+                            <label for="switch_title_style"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_title_style_no" name="wp_maintenance_settings[font_title_style]" value="" <?php if( empty($paramMMode['font_title_style']) || isset($paramMMode['font_title_style']) && $paramMMode['font_title_style']=='') { echo ' checked'; } ?> />
+                            <label for="switch_title_style_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
                     </td>
                 </tr>
-            </table>                    
+            </table>       
             <!-- FIN POLICE DU TITRE-->
                     
             <!-- POLICE DU TEXTE -->
             <br /><em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
             <table cellspacing="10">
                 <tr>
-                    <td valign="top" align="left">
+                    <td valign="middle" align="left">
                         <input name="wp_maintenance_settings[font_text]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_text']) && $paramMMode['font_text']!='' ) { echo str_replace(' ', '+', $paramMMode['font_text']); } else { echo 'PT+Sans'; } ?>" />
                     </td>
                     <td>
@@ -91,14 +104,29 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     </td>
                 </tr>
+            </table>
+            <table>
                 <tr>
-                    <td rowspan="2">
-                        <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="normal" <?php if( (isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='normal') || empty($paramMMode['font_text_weigth']) ) { echo 'checked'; } ?> >Normal
-                        <input type="radio" name="wp_maintenance_settings[font_text_weigth]" value="bold" <?php if( isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                        <input type="checkbox" name="wp_maintenance_settings[font_text_style]" value="italic" <?php if( isset($paramMMode['font_text_style']) && $paramMMode['font_text_style']=='italic') { echo 'checked'; } ?>>Italic
+                    <td><strong>Bold</strong></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_text_weigth" name="wp_maintenance_settings[font_text_weigth]" value="bold" <?php if( isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='bold') { echo ' checked'; } ?>/>
+                            <label for="switch_text_weigth"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_text_weigth_no" name="wp_maintenance_settings[font_text_weigth]" value="normal" <?php if( empty($paramMMode['font_text_weigth']) || isset($paramMMode['font_text_weigth']) && $paramMMode['font_text_weigth']=='normal') { echo ' checked'; } ?> />
+                            <label for="switch_text_weigth_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
+                    </td>
+                    <td><i>Italic</i></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_text_style" name="wp_maintenance_settings[font_text_style]" value="italic" <?php if( isset($paramMMode['font_text_style']) && $paramMMode['font_text_style']=='italic') { echo ' checked'; } ?>/>
+                            <label for="switch_text_style"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_text_style_no" name="wp_maintenance_settings[font_text_style]" value="" <?php if( empty($paramMMode['font_text_style']) || isset($paramMMode['font_text_style']) && $paramMMode['font_text_style']=='') { echo ' checked'; } ?> />
+                            <label for="switch_text_style_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
                     </td>
                 </tr>
-            </table>   
+            </table>
             <!-- FIN POLICE DU TEXTE -->
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
                 
@@ -136,7 +164,7 @@ $paramMMode = get_option('wp_maintenance_settings');
             <em><?php _e('Countdown font settings', 'wp-maintenance'); ?></em>
             <table cellspacing="10">
                 <tr>
-                    <td valign="top" align="left">
+                    <td valign="middle" align="left">
                         <input name="wp_maintenance_settings[font_cpt]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_cpt']) &&  $paramMMode['font_cpt']!='' ) { echo str_replace(' ', '+', $paramMMode['font_cpt']); } else { echo 'Pacifico'; } ?>" />
                     </td>
                     <td>
@@ -157,7 +185,7 @@ $paramMMode = get_option('wp_maintenance_settings');
             <em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
             <table cellspacing="10">
                 <tr>
-                    <td valign="top" align="left">
+                    <td valign="middle" align="left">
                         <input name="wp_maintenance_settings[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_text_bottom']) && $paramMMode['font_text_bottom']!='' ) { echo str_replace(' ', '+', $paramMMode['font_text_bottom']); } else { echo 'PT+Sans'; } ?>" />
                     </td>
                     <td>
@@ -166,11 +194,26 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     </td>
                 </tr>
+            </table>
+            <table>
                 <tr>
-                    <td rowspan="2">
-                        <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="normal" <?php if( (isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='normal') || empty($paramMMode['font_bottom_weigth']) ) { echo 'checked'; } ?> >Normal
-                        <input type="radio" name="wp_maintenance_settings[font_bottom_weigth]" value="bold" <?php if( isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                        <input type="checkbox" name="wp_maintenance_settings[font_bottom_style]" value="italic" <?php if( isset($paramMMode['font_bottom_style']) && $paramMMode['font_bottom_style']=='italic') { echo 'checked'; } ?>>Italic
+                    <td><strong>Bold</strong></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_bottom_weigth" name="wp_maintenance_settings[font_bottom_weigth]" value="bold" <?php if( isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='bold') { echo ' checked'; } ?>/>
+                            <label for="switch_bottom_weigth"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_bottom_weigth_no" name="wp_maintenance_settings[font_bottom_weigth]" value="normal" <?php if( empty($paramMMode['font_bottom_weigth']) || isset($paramMMode['font_bottom_weigth']) && $paramMMode['font_bottom_weigth']=='normal') { echo ' checked'; } ?> />
+                            <label for="switch_bottom_weigth_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
+                    </td>
+                    <td><i>Italic</i></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_bottom_style" name="wp_maintenance_settings[font_bottom_style]" value="italic" <?php if( isset($paramMMode['font_bottom_style']) && $paramMMode['font_bottom_style']=='italic') { echo ' checked'; } ?>/>
+                            <label for="switch_bottom_style"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_bottom_style_no" name="wp_maintenance_settings[font_bottom_style]" value="" <?php if( empty($paramMMode['font_bottom_style']) || isset($paramMMode['font_bottom_style']) && $paramMMode['font_bottom_style']=='') { echo ' checked'; } ?> />
+                            <label for="switch_bottom_style_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -180,8 +223,10 @@ $paramMMode = get_option('wp_maintenance_settings');
                 
             <h3><?php _e('Choice form color:', 'wp-maintenance'); ?></h3>
             <?php 
+            
+                if( is_admin() ) {
                 if ( 
-                    is_plugin_active( 'wysija-newsletters/index.php' ) || is_plugin_active( 'mailchimp-for-wp/mailchimp-for-wp.php' )  
+                    is_plugin_active( 'wysija-newsletters/index.php' ) || is_plugin_active( 'mailpoet/mailpoet.php' ) || is_plugin_active( 'mailchimp-for-wp/mailchimp-for-wp.php' )  
                     
                 ) {
                     
@@ -191,7 +236,7 @@ $paramMMode = get_option('wp_maintenance_settings');
             <!-- COULEUR WYJIYA -->
             <table cellspacing="10">
                 <tr>
-                    <td valign="top" align="left">
+                    <td valign="middle" align="left">
                         <input name="wp_maintenance_settings[newletter_font_text]" class="selectfont" type="text" value="<?php if( isset($paramMMode['newletter_font_text']) && $paramMMode['newletter_font_text']!='' ) { echo str_replace(' ', '+', $paramMMode['newletter_font_text']); } else { echo 'PT+Sans'; } ?>" />
                     </td>
                     <td>
@@ -200,32 +245,52 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     </td>
                 </tr>
+            </table>  
+            <table>
                 <tr>
-                    <td rowspan="2">
-                        <input type="radio" name="wp_maintenance_settings[newletter_font_weigth]" value="normal" <?php if( (isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='normal') || empty($paramMMode['newletter_font_weigth']) ) { echo 'checked'; } ?> >Normal
-                        <input type="radio" name="wp_maintenance_settings[newletter_font_weigth]" value="bold" <?php if( isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='bold') { echo 'checked'; } ?>>Bold
-                        <input type="checkbox" name="wp_maintenance_settings[newletter_font_style]" value="italic" <?php if( isset($paramMMode['newletter_font_style']) && $paramMMode['newletter_font_style']=='italic') { echo 'checked'; } ?>>Italic
+                    <td><strong>Bold</strong></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_newletter_weigth" name="wp_maintenance_settings[newletter_font_weigth]" value="bold" <?php if( isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='bold') { echo ' checked'; } ?>/>
+                            <label for="switch_newletter_weigth"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_newletter_weigth_no" name="wp_maintenance_settings[newletter_font_weigth]" value="normal" <?php if( empty($paramMMode['newletter_font_weigth']) || isset($paramMMode['newletter_font_weigth']) && $paramMMode['newletter_font_weigth']=='normal') { echo ' checked'; } ?> />
+                            <label for="switch_newletter_weigth_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
+                    </td>
+                    <td><i>Italic</i></td>
+                    <td>
+                        <div class="switch-field-mini">
+                            <input class="switch_left" type="radio" id="switch_newletter_style" name="wp_maintenance_settings[newletter_font_style]" value="italic" <?php if( isset($paramMMode['newletter_font_style']) && $paramMMode['newletter_font_style']=='italic') { echo ' checked'; } ?>/>
+                            <label for="switch_newletter_style"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                            <input class="switch_right" type="radio" id="switch_newletter_style_no" name="wp_maintenance_settings[newletter_font_style]" value="" <?php if( empty($paramMMode['newletter_font_style']) || isset($paramMMode['font_bottom_style']) && $paramMMode['newletter_font_style']=='') { echo ' checked'; } ?> />
+                            <label for="switch_newletter_style_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        </div>
                     </td>
                 </tr>
-            </table>  
+            </table>
             <br />
-            <em><?php _e('Field text color:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_field_text']) && $paramMMode['color_field_text']!='' ) { echo $paramMMode['color_field_text']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
-            <em><?php _e('Field border color:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_field_border']) && $paramMMode['color_field_border']!='' ) { echo $paramMMode['color_field_border']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
-            <em><?php _e('Field background color:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_field_background']) && $paramMMode['color_field_background']!='' ) { echo $paramMMode['color_field_background']; } else { echo '#cccccc'; } ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" />
-            <br />
-            <em><?php _e('Button text color:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_text_button']) && $paramMMode['color_text_button']!='' ) { echo $paramMMode['color_text_button']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
-            <br />
-            <em><?php _e('Button color:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_button']) && $paramMMode['color_button']!='' ) { echo $paramMMode['color_button']; } else { echo '#1e73be'; } ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
-            <br />
-            <em><?php _e('Button color hover:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_button_hover']) && $paramMMode['color_button_hover']!='' ) { echo $paramMMode['color_button_hover']; } else { echo '#ffffff'; }  ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
-            <em><?php _e('Button color onclick:', 'wp-maintenance'); ?></em> <br />
-            <input type="text" value="<?php if( isset($paramMMode['color_button_onclick']) && $paramMMode['color_button_onclick']!=''  ) { echo $paramMMode['color_button_onclick']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+            <table width="80%">
+                <tr>
+                    <td width="40%">
+                        <em><?php _e('Field text color:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_field_text']) && $paramMMode['color_field_text']!='' ) { echo $paramMMode['color_field_text']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
+                        <em><?php _e('Field border color:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_field_border']) && $paramMMode['color_field_border']!='' ) { echo $paramMMode['color_field_border']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
+                        <em><?php _e('Field background color:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_field_background']) && $paramMMode['color_field_background']!='' ) { echo $paramMMode['color_field_background']; } else { echo '#cccccc'; } ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" /><br /><em><?php _e('Button text color:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_text_button']) && $paramMMode['color_text_button']!='' ) { echo $paramMMode['color_text_button']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                    <td>
+                    <td style="vertical-align:top;">                       
+                        <em><?php _e('Button color:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_button']) && $paramMMode['color_button']!='' ) { echo $paramMMode['color_button']; } else { echo '#1e73be'; } ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
+                        <br />
+                        <em><?php _e('Button color hover:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_button_hover']) && $paramMMode['color_button_hover']!='' ) { echo $paramMMode['color_button_hover']; } else { echo '#ffffff'; }  ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                        <em><?php _e('Button color onclick:', 'wp-maintenance'); ?></em> <br />
+                        <input type="text" value="<?php if( isset($paramMMode['color_button_onclick']) && $paramMMode['color_button_onclick']!=''  ) { echo $paramMMode['color_button_onclick']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+                    </td>
+                </tr>
+            </table>
             <?php
                     } else {
                         printf( __('Enable %s to customize the forms', 'wp-maintenance'), '<a href="'.admin_url().'?page=wp-maintenance#newsletter">'.__('newsletter option', 'wp-maintenance').'</a>' ); 
@@ -234,7 +299,9 @@ $paramMMode = get_option('wp_maintenance_settings');
                 } else {
                     _e('Enable Mailpoet or MailChimp extensions to customize the forms', 'wp-maintenance'); 
                 
-                } ?>
+                } 
+                }
+            ?>
                 
             <p>
                 <?php submit_button(); ?>

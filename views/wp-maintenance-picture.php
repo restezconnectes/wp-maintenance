@@ -60,8 +60,8 @@ function toggleTable(texte) {
     <?php echo wpm_get_header( __('Picture', 'wp-maintenance'), 'dashicons-format-gallery', $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div style="margin-top: 80px;">
-    <div style="float:left;width:73%;margin-right:1%;border: 1px solid #ddd;background-color:#fff;padding:10px;">
+    <div style="margin-top: 40px;">
+    <div id="wpm-column1">
             
             <div style="float:left;width:68%;margin-right:10px;">
                 <?php 
