@@ -12,10 +12,11 @@ class WPM_Slider extends WP_maintenance {
     public static function slider_css() {
         
         // Récupère les paramètres sauvegardés
-        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-        $paramMMode = get_option('wp_maintenance_settings');
+        $paramMMode = wp_maintenance::wpm_get_options();
         
         if( isset($paramSliderOptions['slider_width']) ) { $wpmSliderWidth = $paramSliderOptions['slider_width']; } else { $wpmSliderWidth = 50; }
+        $addCssSlider = '';
+        if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1 ) {
         $addCssSlider = '
 <link rel="stylesheet" href="'.WP_PLUGIN_URL.'/wp-maintenance/css/wpm-slideshow.css">
 <link rel="stylesheet" href="'.WP_PLUGIN_URL.'/wp-maintenance/css/wpm-responsiveslides.css">
@@ -35,15 +36,20 @@ class WPM_Slider extends WP_maintenance {
 </style>
 
         ';
-        
+        }
         return $addCssSlider;
     }
     
     public static function slider_scripts() {
     
-        $addScriptSlider = '
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-        <script src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-responsiveslides.min.js"></script>';
+        // Récupère les paramètres sauvegardés
+        $paramMMode = wp_maintenance::wpm_get_options();
+        $addScriptSlider = '';
+        if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1 ) {
+            $addScriptSlider = '
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-responsiveslides.min.js"></script>';
+        }
         return $addScriptSlider;
         
     }
@@ -51,30 +57,33 @@ class WPM_Slider extends WP_maintenance {
         
         // Récupère les paramètres sauvegardés
         $paramMMode = wp_maintenance::wpm_get_options();
+        $addScriptSlideshow = '';
         
-        if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
-        $paramSlider = get_option('wp_maintenance_slider');
+        if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1 ) {
+            
+            if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
+            $paramSlider = get_option('wp_maintenance_slider');
 
-        if(get_option('wp_maintenance_slider_options')) { extract(get_option('wp_maintenance_slider_options')); }
-        $paramSliderOptions = get_option('wp_maintenance_slider_options');
-        
-        if( isset($paramSlider['slider_image']) && !empty($paramSlider['slider_image']) ) { 
-        $lastKeySlide = key($paramSlider['slider_image']);
-        }
+            if(get_option('wp_maintenance_slider_options')) { extract(get_option('wp_maintenance_slider_options')); }
+            $paramSliderOptions = get_option('wp_maintenance_slider_options');
 
-        $wpmSliderAuto = 'true';
-        if( isset( $paramSliderOptions['slider_auto'] ) && $paramSliderOptions['slider_auto']!='' ) { 
-            $wpmSliderAuto = $paramSliderOptions['slider_auto'];
-        }
-        $wpmSliderSpeed = 500;
-        if( isset( $paramSliderOptions['slider_speed'] ) && $paramSliderOptions['slider_speed']!='' ) { 
-            $wpmSliderSpeed = $paramSliderOptions['slider_speed'];
-        }
-        $wpmSliderNav = 'false';
-        if( isset( $paramSliderOptions['slider_nav'] ) && $paramSliderOptions['slider_nav']!='' ) { 
-            $wpmSliderNav = $paramSliderOptions['slider_nav'];
-        }
-        
+            if( isset($paramSlider['slider_image']) && !empty($paramSlider['slider_image']) ) { 
+            $lastKeySlide = key($paramSlider['slider_image']);
+            }
+
+            $wpmSliderAuto = 'true';
+            if( isset( $paramSliderOptions['slider_auto'] ) && $paramSliderOptions['slider_auto']!='' ) { 
+                $wpmSliderAuto = $paramSliderOptions['slider_auto'];
+            }
+            $wpmSliderSpeed = 500;
+            if( isset( $paramSliderOptions['slider_speed'] ) && $paramSliderOptions['slider_speed']!='' ) { 
+                $wpmSliderSpeed = $paramSliderOptions['slider_speed'];
+            }
+            $wpmSliderNav = 'false';
+            if( isset( $paramSliderOptions['slider_nav'] ) && $paramSliderOptions['slider_nav']!='' ) { 
+                $wpmSliderNav = $paramSliderOptions['slider_nav'];
+            }
+
         
         $addScriptSlideshow = '
 <script>
@@ -102,7 +111,7 @@ class WPM_Slider extends WP_maintenance {
         $addScriptSlideshow .= '
     });
 </script>';
-        
+        }
         return $addScriptSlideshow;
     }
     
@@ -112,7 +121,7 @@ class WPM_Slider extends WP_maintenance {
         $paramMMode = wp_maintenance::wpm_get_options();
         $positionSlider = '';
         
-        if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1 ) {       
+        if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1 ) {
                           
             if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
             $paramSlider = get_option('wp_maintenance_slider');

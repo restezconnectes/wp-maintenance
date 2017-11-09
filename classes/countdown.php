@@ -11,6 +11,7 @@ class WPM_Countdown extends WP_maintenance {
         // Récupère les paramètres sauvegardés
         $paramMMode = wp_maintenance::wpm_get_options();
         $Counter = '';
+        
         /*********** AJOUT COMPTEUR SUIVANT LES PARAMETRES *********/
         if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1 && !empty($date) ) {
 
@@ -55,8 +56,9 @@ class WPM_Countdown extends WP_maintenance {
 
         // Récupère les paramètres sauvegardés
         $paramMMode = wp_maintenance::wpm_get_options();
-
-        return '
+        $wpmStyle = '';
+        if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1) {
+        $wpmStyle .= '
 #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {}
 .cptR-rec_countdown {';
 if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.$paramMMode['date_cpt_size'].'px;'; }
@@ -72,22 +74,18 @@ $wpmStyle .= '
     div.bloc {';
         if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.($paramMMode['font_bottom_size']*0.8).'px;'; }
     $wpmStyle .= '}
-    #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {
-        /*width:20%;*/
-    }
+    #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds { }
 
 }
 @media (max-width: 640px) {
     .cptR-rec_countdown {';
         if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.($paramMMode['date_cpt_size']*0.5).'px;'; }
-    $wpmStyle .= '
-        text-align:center;
-    }
-    #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {
-        /*width:20%;*/
-        text-align:center;
-    }
+    $wpmStyle .= 'text-align:center;}
+    #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {text-align:center;}
 }';
+        }
+        return $wpmStyle;
     }
+    
 
 }

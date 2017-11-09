@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.8.2
-Stable tag: 3.0.6
+Tested up to: 4.3
+Stable tag: 3.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,14 +67,21 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 3.0.5 =
-This version is stable
+= 3.0.8 =
+* Adding menu admin bar
 
 == Changelog ==
 
+= 3.0.7 =
+* Bugs minors resolved
+* Bug upload pictures fixed
+
+= 3.0.6 =
+* Bugs minors resolved
+
 = 3.0.5 =
-* Adding Admin Responsive CSS
-* Bugs minors fixed
+* Bugs minors resolved
+* Bugs uploads fixed
 
 = 3.0.4 =
 * Bug italic font

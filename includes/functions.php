@@ -169,7 +169,7 @@ function wpm_footer() {
     
     $wpmFooter = '
     <div style="margin-top:40px;">
-        <a href="https://wpmaintenance.info/" target="_blank">'.__('WP Maintenance','wp-maintenance').'</a> '.__('is brought to you by','wp-maintenance').' <a href="https://restezconnectes.fr/" target="_blank">Restez Connectés</a> - '.__('If you found this plugin useful','wp-maintenance').' <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank">'.__('give it 5 &#9733; on WordPress.org','wp-maintenance').'</a>
+        <a href="https://wpmaintenance.info/" target="_blank">'.__('WP Maintenance','wp-maintenance').' (v.'.WPM_VERSION.')</a> '.__('is brought to you by','wp-maintenance').' <a href="https://restezconnectes.fr/" target="_blank">Restez Connectés</a> - '.__('If you found this plugin useful','wp-maintenance').' <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank">'.__('give it 5 &#9733; on WordPress.org','wp-maintenance').'</a>
     </div>
     ';
     
@@ -214,8 +214,7 @@ function wpm_array_value_count ($array) {
 
 function wpm_get_template() {
     
-    return '
-<!DOCTYPE html>
+    return '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -226,72 +225,19 @@ function wpm_get_template() {
         /* VERSION %VERSION% */
         %ADDFONTS%
         html,
-        body {
-            margin:0;
-            padding:0;
-            height:100%;
-            font-size:100%;
-        }
-        #wrapper {
-            min-height:100%;
-            position:relative;
-        }
-        #header {
-            padding:10px;
-        }
-        #content {
-            padding-bottom:100px; /* Height of the footer element */
-        }
-        #footer {
-            width:100%;
-            /*height:60px;*/
-            line-height:60px;
-            position:absolute;
-            bottom:0;
-            left:0;
-            text-align: center;
-        }
-        #logo {
-            max-width: 100%;
-            height: auto;
-            text-align: center;
-        }
-        img, object, embed, canvas, video, audio, picture {
-            max-width: 100%;
-            height: auto;
-        } 
-        div.bloc {
-            width:80%; /* largeur du bloc */
-            padding:10px; /* aération interne du bloc */
-            vertical-align:middle;
-            display:inline-block;
-            line-height:1.2; /* on rétablit le line-height */
-            text-align:center; /* ... et l\'alignement du texte */ 
-        }
-        .wpm_social {
-            padding: 0 45px;
-            text-align: center;
-        }
-        @media (max-width: 640px) {
-          body {
-            font-size:1.2rem;
-          }
-        }
-        @media (min-width: 640px) {
-          body {
-            font-size:1rem;
-          }
-        }
-        @media (min-width:960px) {
-          body {
-            font-size:1.2rem;
-          }
-        }
-        @media (min-width:1100px) {
-          body {
-            font-size:1.5rem;
-          }
-        }
+        body {margin:0;padding:0;height:100%;font-size:100%;}
+        #wrapper {min-height:100%;position:relative;}
+        #header {padding:10px;}
+        #content {padding-bottom:100px; /* Height of the footer element */}
+        #footer {width:100%;line-height:60px;position:absolute;bottom:0;left:0;text-align: center;}
+        #logo {max-width: 100%;height: auto;text-align: center;}
+        img, object, embed, canvas, video, audio, picture {max-width: 100%;height: auto;} 
+        div.bloc {width:80%;padding:10px;vertical-align:middle;display:inline-block;line-height:1.2;text-align:center;}
+        .wpm_social {padding: 0 45px;text-align: center;}
+        @media (max-width: 640px) {body {font-size:1.2rem;}}
+        @media (min-width: 640px) {body {font-size:1rem;}}
+        @media (min-width:960px) {body {font-size:1.2rem;}}
+        @media (min-width:1100px) {body {font-size:1.5rem;}}
         /* On ajoute les styles */
         %ADDSTYLEWYSIJA%
         %ADDSTYLE%
@@ -299,11 +245,11 @@ function wpm_get_template() {
     </style>
 
 	<!--[if lt IE 7]>
-		<style type="text/css">
-			#wrapper { height:100%; }
-            div.bloc { display:inline; /* correctif inline-block*/ }
-            div.conteneur > span { zoom:1; /* layout */ }
-		</style>
+    <style type="text/css">
+        #wrapper { height:100%; }
+        div.bloc { display:inline; /* correctif inline-block*/ }
+        div.conteneur > span { zoom:1; /* layout */ }
+    </style>
 	<![endif]-->
 	%ANALYTICS%
     %HEADERCODE%

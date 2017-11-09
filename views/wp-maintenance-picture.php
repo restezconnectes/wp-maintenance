@@ -198,7 +198,7 @@ function toggleTable(texte) {
                     <div style="width:30%;float:left;padding-left:5px;">
                         <?php _e('Position:', 'wp-maintenance'); ?>
                         <select name="wp_maintenance_slider_options[slider_position]" class="wpm-form-field" >
-                            <option value="abovelogo" <?php if( isset($paramSliderOptions['slider_position']) && $paramSliderOptions['slider_position']=='abovelogo' ) { echo 'selected'; } ?>>+<?php _e('Above logo', 'wp-maintenance'); ?></option>
+                            <option value="abovelogo" <?php if( isset($paramSliderOptions['slider_position']) && $paramSliderOptions['slider_position']=='abovelogo' ) { echo 'selected'; } ?>><?php _e('Above logo', 'wp-maintenance'); ?></option>
                             <option value="belowlogo" <?php if( isset($paramSliderOptions['slider_position']) && $paramSliderOptions['slider_position']=='belowlogo' ) { echo 'selected'; } ?>><?php _e('Below logo', 'wp-maintenance'); ?></option>
                             <option value="belowtext" <?php if( ( isset($paramSliderOptions['slider_position']) && $paramSliderOptions['slider_position']=='belowtext' ) || empty($paramSliderOptions['slider_position']) ) { echo 'selected'; } ?>><?php _e('Below title & text', 'wp-maintenance'); ?></option>
                         </select>

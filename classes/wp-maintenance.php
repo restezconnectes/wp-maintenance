@@ -36,6 +36,11 @@ class WP_maintenance {
     }
     public static function wpm_dashboard_install() {
 
+        $nameServer = '';
+        if( isset($_SERVER['SERVER_NAME']) ) {
+            $nameServer = $_SERVER['SERVER_NAME'];
+        }
+        
         $wpMaintenanceAdminOptions = array(
             'enable' => 0,
             'color_bg' => "#f1f1f1",
@@ -80,7 +85,7 @@ class WP_maintenance {
             'title_newletter' => '',
             'code_newletter' => '',
             'code_analytics' => '',
-            'domain_analytics' => $_SERVER['SERVER_NAME'],
+            'domain_analytics' => $nameServer,
             'text_bt_maintenance' => '',
             'add_wplogin' => '',
             'b_enable_image' => 0,
@@ -203,7 +208,8 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     background-color: '.$colors[0].'!important;
     color:#e4e4e4!important;
 }
-
+#wpadminbar .wpmbackground { background-color: '.$colors[2].'!important; }
+.infoLock { -webkit-animation-name:blinker;-webkit-animation-duration:5s;-webkit-animation-timing-function:linear;-webkit-animation-iteration-count:infinite;-moz-animation-name:blinker;-moz-animation-duration:5s;-moz-animation-timing-function:linear;-moz-animation-iteration-count:infinite;animation-name:blinker;animation-duration:5s;animation-timing-function:linear;animation-iteration-count:infinite; }
 </style>';
         }
     }
@@ -211,10 +217,13 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     function wpm_add_menu_admin_bar( $wp_admin_bar ) {
 
         $checkActive = get_option('wp_maintenance_active');
-        if( isset($checkActive) && $checkActive==1 && !is_network_admin() ) {
-
-            $textAdmin = '<img src="'.WPM_PLUGIN_URL.'images/lock.png" style="padding: 6px 0;float:left;margin-right: 6px;">'.__('Maintenance mode activated!', 'wp-maintenance');
-
+        if( isset($checkActive) && !is_network_admin() ) {
+            
+            $textAdmin = '<img src="'.WPM_PLUGIN_URL.'images/unlock.png" class="infoLock" style="padding: 6px 0;float:left;margin-right: 6px;">'.__('Maintenance mode disable!', 'wp-maintenance');
+            
+            if( $checkActive==1 ) {
+                $textAdmin = '<img src="'.WPM_PLUGIN_URL.'images/lock.png" class="infoLock" style="padding: 6px 0;float:left;margin-right: 6px;">'.__('Maintenance mode activated!', 'wp-maintenance');
+            }
             $args = array(
                 'id'     => 'wpm-info',     // id of the existing child node (New > Post)
                 'title'  => $textAdmin, // alter the title of existing node
@@ -225,6 +234,57 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 )
             );
             $wp_admin_bar->add_node( $args );
+            
+            // add a child item to our parent item 
+            $args = array(
+                'parent' => 'wpm-info',
+                'id'     => 'wp-maintenance-colors',
+                'title'  => __('Colors', 'wp-maintenance'),
+                'href'   => admin_url().'admin.php?page=wp-maintenance-colors',
+                'meta'   => false        
+            );
+            $wp_admin_bar->add_node( $args );
+             
+            // add a child item to our parent item 
+            $args = array(
+                'parent' => 'wpm-info',
+                'id'     => 'wp-maintenance-picture',
+                'title'  => __('Pictures', 'wp-maintenance'),
+                'href'   =>  admin_url().'admin.php?page=wp-maintenance-picture',
+                'meta'   => false        
+            );
+            $wp_admin_bar->add_node( $args );
+            
+            // add a child item to our parent item 
+            $args = array(
+                'parent' => 'wpm-info',
+                'id'     => 'wp-maintenance-countdown',
+                'title'  => __('Countdown', 'wp-maintenance'),
+                'href'   =>  admin_url().'admin.php?page=wp-maintenance-countdown',
+                'meta'   => false        
+            );
+            $wp_admin_bar->add_node( $args );  
+            
+            // add a child item to our parent item 
+            $args = array(
+                'parent' => 'wpm-info',
+                'id'     => 'wp-maintenance-css',
+                'title'  => __('CSS', 'wp-maintenance'),
+                'href'   =>  admin_url().'admin.php?page=wp-maintenance-css',
+                'meta'   => false        
+            );
+            $wp_admin_bar->add_node( $args );
+            
+             // add a child item to our parent item 
+            $args = array(
+                'parent' => 'wpm-info',
+                'id'     => 'wp-maintenance-settings',
+                'title'  => __('Settings', 'wp-maintenance'),
+                'href'   =>  admin_url().'admin.php?page=wp-maintenance-settings',
+                'meta'   => false        
+            );
+            $wp_admin_bar->add_node( $args );  
+            
         }
     }
 
@@ -274,6 +334,11 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
         /*add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('About', 'wp-maintenance'), __('About', 'wp-maintenance'), 'manage_options', 'wp-maintenance-about', array( $this, 'wpm_about_page') );*/
 
+        $nameServer = '';
+        if( isset($_SERVER['SERVER_NAME']) ) {
+            $nameServer = $_SERVER['SERVER_NAME'];
+        }
+        
         $wp_maintenanceAdminOptions = array(
             'enable' => 0,
             'color_bg' => "#f1f1f1",
@@ -318,7 +383,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             'title_newletter' => '',
             'code_newletter' => '',
             'code_analytics' => '',
-            'domain_analytics' => $_SERVER['SERVER_NAME'],
+            'domain_analytics' => $nameServer,
             'text_bt_maintenance' => '',
             'add_wplogin' => '',
             'b_enable_image' => 0,
