@@ -208,8 +208,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     background-color: '.$colors[0].'!important;
     color:#e4e4e4!important;
 }
-#wpadminbar .wpmbackground { background-color: '.$colors[2].'!important; }
-.infoLock { -webkit-animation-name:blinker;-webkit-animation-duration:5s;-webkit-animation-timing-function:linear;-webkit-animation-iteration-count:infinite;-moz-animation-name:blinker;-moz-animation-duration:5s;-moz-animation-timing-function:linear;-moz-animation-iteration-count:infinite;animation-name:blinker;animation-duration:5s;animation-timing-function:linear;animation-iteration-count:infinite; }
+#wpadminbar .wpmbackground { }
 </style>';
         }
     }
@@ -217,12 +216,12 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     function wpm_add_menu_admin_bar( $wp_admin_bar ) {
 
         $checkActive = get_option('wp_maintenance_active');
+        $textAdmin = '<div id="maintenance-off"></div>'.__('WP Maintenance', 'wp-maintenance');
+        
         if( isset($checkActive) && !is_network_admin() ) {
             
-            $textAdmin = '<img src="'.WPM_PLUGIN_URL.'images/unlock.png" class="infoLock" style="padding: 6px 0;float:left;margin-right: 6px;">'.__('Maintenance mode disable!', 'wp-maintenance');
-            
             if( $checkActive==1 ) {
-                $textAdmin = '<img src="'.WPM_PLUGIN_URL.'images/lock.png" class="infoLock" style="padding: 6px 0;float:left;margin-right: 6px;">'.__('Maintenance mode activated!', 'wp-maintenance');
+                $textAdmin = '<div id="maintenance-on"></div>>'.__('WP Maintenance', 'wp-maintenance');
             }
             $args = array(
                 'id'     => 'wpm-info',     // id of the existing child node (New > Post)

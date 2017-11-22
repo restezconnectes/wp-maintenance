@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.3
-Stable tag: 3.0.8
+Tested up to: 4.9
+Stable tag: 3.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,14 +67,21 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 3.0.8 =
-* Adding menu admin bar
+= 3.0.9 =
+* Bugs fixed error 500
 
 == Changelog ==
+
+= 3.0.8 =
+* Adding menu admin bar
+* Ready for 4.9 version
+* Bugs fixed for image logo size
+* Replace image path
 
 = 3.0.7 =
 * Bugs minors resolved
 * Bug upload pictures fixed
+* Optimisation CSS / JS
 
 = 3.0.6 =
 * Bugs minors resolved
