@@ -61,28 +61,27 @@ function toggleTable(texte) {
     <!-- END HEADER -->
 
     <div style="margin-top: 40px;">
-    <div id="wpm-column1">
-            
-            <div style="float:left;width:68%;margin-right:10px;">
-                <?php 
-                if( isset($paramMMode['image']) && $paramMMode['image']!='' && ini_get('allow_url_fopen')==1 ) {
-                    list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($paramMMode['image']);
-                } else {
-                    $logoWidth = 200;                              
-                }
-                ?>
-                <h3><?php _e('Header picture', 'wp-maintenance'); ?></h3>                
-                <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
-                <input id="upload_image" size="80%" name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo $paramMMode['image']; } ?>" type="text" class="wpm-form-field" /><br /><a href="#" id="upload_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a>
-            </div>
-            <div style="float:left;width:30%;text-align:center;">
-                <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
-                <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="200" id="image_visuel" style="padding:3px;" />
-                <?php } ?>
+        <div id="wpm-column1">
+
+            <div id="encart-option-logo">
+                <div style="float:left;width:68%;margin-right:10px;">
+
+                    <h3><?php _e('Header picture', 'wp-maintenance'); ?></h3>                
+                    <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
+                    <input id="upload_image" size="80%" name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo $paramMMode['image']; } ?>" type="text" class="wpm-form-field" /><br /><a href="#" id="upload_image_button" class="button" OnClick="this.blur();"><span> <?php _e('Select or Upload your picture', 'wp-maintenance'); ?> </span></a><br />
+                    <span class="description"><?php _e( 'URL path to image to replace default WordPress Logo. (You can upload your image with the WordPress media uploader)', 'wp-maintenance' ); ?></span><br /><br />
+                        <span class="description"><?php _e( 'Your Logo width (Enter in pixels). Default: 310px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo $paramMMode['image_width']; } ?>" name="wp_maintenance_settings[image_width]" /> <br />
+                        <span class="description"><?php _e( 'Your Logo Height (Enter in pixels). Default: 185px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo $paramMMode['image_height']; } ?>" name="wp_maintenance_settings[image_height]" /><br />
+
+                </div>
+                <div style="float:left;width:30%;text-align:center;">
+                    <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
+                    <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" />
+                    <?php } ?>
+                </div>
+                <div class="clear"></div>
             </div>
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
-            
-
             <div id="encart-option-background">
                 <div style="float:left; width:70%;"><h3><?php _e('Background picture or pattern', 'wp-maintenance'); ?></h3></div>
                 <div style="float:left; width:30%;text-align:right;">
@@ -142,7 +141,7 @@ function toggleTable(texte) {
                 </div>
                 <div class="clear"></div>
             </div>
-            <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
+            <div style="margin-top:15px;margin-bottom:15px;"><hr></div>
         
             <div>
                 <div style="float:left; width:70%;"><h3><?php _e('Enable Slider', 'wp-maintenance'); ?></h3></div>

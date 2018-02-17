@@ -181,7 +181,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 .wpmadashicons { color: '.$colors[0].'!important; }
 .wpmadashicons:hover { color: '.$colors[2].'!important; }
 .switch-field input:checked + label { background-color: '.$colors[2].'; }
-#wpadminbar .wpmbackground { background-color: '.$colors[1].'; }
 .wpm-form-field {
     border: 1px solid '.$colors[2].'!important;
     background: #fff;
@@ -208,8 +207,11 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     background-color: '.$colors[0].'!important;
     color:#e4e4e4!important;
 }
-#wpadminbar .wpmbackground { }
 </style>';
+        } else {
+            echo '<style>
+        #maintenance-on{background:#0ed74c;border-radius:50%;width:14px;height:14px;float: left;margin-right: 5px;margin-top: 9px;}#maintenance-off{background:#d70e25;border-radius:50%;width:14px;height:14px;float: left;margin-right: 5px;margin-top: 9px;}
+        </style>';
         }
     }
     /* Ajout Notification admin barre */
@@ -221,7 +223,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if( isset($checkActive) && !is_network_admin() ) {
             
             if( $checkActive==1 ) {
-                $textAdmin = '<div id="maintenance-on"></div>>'.__('WP Maintenance', 'wp-maintenance');
+                $textAdmin = '<div id="maintenance-on"></div>'.__('WP Maintenance', 'wp-maintenance');
             }
             $args = array(
                 'id'     => 'wpm-info',     // id of the existing child node (New > Post)
@@ -348,6 +350,8 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             'text_maintenance' => __('Come back quickly!', 'wp-maintenance'),
             'userlimit' => 'administrator',
             'image' => WP_PLUGIN_URL.'/wp-maintenance/images/default.png',
+            'image_width' => 310,
+            'image_height' => 185,
             'font_title' => 'PT Sans',
             'font_title_size' => 40,
             'font_title_weigth' => 'normal',
@@ -370,8 +374,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             'color_button_onclick' => '#333333',
             'color_button_hover' => '#cccccc',
             'color_button' => '#1e73be',
-            'image_width' => 250,
-            'image_height' => 100,
             'newletter' => 0,
             'active_cpt' => 0,
             'newletter_font_text' => 'PT Sans',
@@ -808,14 +810,10 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 $BottomSocialIcons = '';
             }
             if( isset($paramMMode['image']) && $paramMMode['image'] ) {
-                if( ini_get('allow_url_fopen')==1) {
-                    $image_path = str_replace(get_bloginfo('url'), ABSPATH, $paramMMode['image']);
-                    list($logoWidth, $logoHeight, $logoType, $logoAttr) = getimagesize($image_path);
-                } else {
-                    $width = 150;
-                    $height = 80;
-                }
-                $LogoImage = '<div id="logo"><img src="'.$paramMMode['image'].'" width="'.$logoWidth.'" height="'.$logoHeight.'" alt="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" title="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" /></div>';
+                if( empty($paramMMode['image_width']) ) { $paramMMode['image_width'] = 310; }
+                if( empty($paramMMode['image_height']) ) { $paramMMode['image_height'] = 185; }
+                $LogoImage = '<div id="logo"><img src="'.$paramMMode['image'].'" width="'.$paramMMode['image_width'].'" height="'.$paramMMode['image_height'].'" alt="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" title="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" /></div>';
+                
             } else {
                 $LogoImage = '';
             }
