@@ -23,6 +23,7 @@ class WP_maintenance {
         add_filter( 'plugin_action_links', array( $this, 'wpm_plugin_actions'), 10, 2 );
         add_action( 'admin_head', array( $this, 'wpm_admin_head') );
         add_action( 'init', array( $this, 'wpm_date_picker') );
+        add_action( 'init', array( $this, 'wpm_install') );
         add_action( 'admin_bar_menu', array( $this, 'wpm_add_menu_admin_bar'), 999 );
         add_action( 'admin_footer', array( $this, 'wpm_print_footer_scripts') );
         add_action( 'template_redirect', array( $this, 'wpm_maintenance_mode') );
@@ -34,7 +35,7 @@ class WP_maintenance {
     function wpm_theme_add_editor_styles() {
         add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
     }
-    public static function wpm_dashboard_install() {
+    public static function wpm_install() {
 
         $nameServer = '';
         if( isset($_SERVER['SERVER_NAME']) ) {
@@ -42,7 +43,6 @@ class WP_maintenance {
         }
         
         $wpMaintenanceAdminOptions = array(
-            'enable' => 0,
             'color_bg' => "#f1f1f1",
             'color_txt' => '#888888',
             'color_bg_bottom' => '#333333',
@@ -335,89 +335,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
         /*add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('About', 'wp-maintenance'), __('About', 'wp-maintenance'), 'manage_options', 'wp-maintenance-about', array( $this, 'wpm_about_page') );*/
 
-        $nameServer = '';
-        if( isset($_SERVER['SERVER_NAME']) ) {
-            $nameServer = $_SERVER['SERVER_NAME'];
-        }
-        
-        $wp_maintenanceAdminOptions = array(
-            'enable' => 0,
-            'color_bg' => "#f1f1f1",
-            'color_txt' => '#888888',
-            'color_bg_bottom' => '#333333',
-            'color_text_bottom' => '#FFFFFF',
-            'titre_maintenance' => __('This site is down for maintenance', 'wp-maintenance'),
-            'text_maintenance' => __('Come back quickly!', 'wp-maintenance'),
-            'userlimit' => 'administrator',
-            'image' => WP_PLUGIN_URL.'/wp-maintenance/images/default.png',
-            'image_width' => 310,
-            'image_height' => 185,
-            'font_title' => 'PT Sans',
-            'font_title_size' => 40,
-            'font_title_weigth' => 'normal',
-            'font_title_style' => '',
-            'font_text_style' => '',
-            'font_text' => 'Metrophobic',
-            'font_text_size' => 18,
-            'font_text_bottom' => 'PT Sans',
-            'font_text_weigth' => 'normal',
-            'font_bottom_size' => 12,
-            'font_bottom_weigth' => 'normal',
-            'font_bottom_style' => '',
-            'font_cpt' => 'PT Sans',
-            'color_cpt' => '#333333',
-            'enable_demo' => 0,
-            'color_field_text' => '#333333',
-            'color_text_button' => '#ffffff',
-            'color_field_background' => '#F1F1F1',
-            'color_field_border' => '#333333',
-            'color_button_onclick' => '#333333',
-            'color_button_hover' => '#cccccc',
-            'color_button' => '#1e73be',
-            'newletter' => 0,
-            'active_cpt' => 0,
-            'newletter_font_text' => 'PT Sans',
-            'newletter_size' => 18,
-            'newletter_font_style' => '',
-            'newletter_font_weigth' => 'normal',
-            'type_newletter' => 'shortcode',
-            'title_newletter' => '',
-            'code_newletter' => '',
-            'code_analytics' => '',
-            'domain_analytics' => $nameServer,
-            'text_bt_maintenance' => '',
-            'add_wplogin' => '',
-            'b_enable_image' => 0,
-            'disable' => 0,
-            'pageperso' => 0,
-            'date_cpt_size' => 40,
-            'color_bg_header' => '#f1f1f1',
-            'add_wplogin_title' => '',
-            'headercode' => '',
-            'message_cpt_fin' => '',
-            'b_repeat_image' => '',
-            'color_cpt_bg' => '',
-            'enable_slider' => 0,
-            'container_active' => 0,
-            'container_color' => '#ffffff',
-            'container_opacity' => '0.5',
-            'container_width' => 80
-
-        );
-        $getMaintenanceSettings = get_option('wp_maintenance_settings');
-        if ( empty($getMaintenanceSettings) ) {
-            foreach ($wp_maintenanceAdminOptions as $key => $option) {
-                $wp_maintenanceAdminOptions[$key] = $option;
-            }
-            update_option('wp_maintenance_settings', $wp_maintenanceAdminOptions);
-        }
-
-        if(!get_option('wp_maintenance_active')) { update_option('wp_maintenance_active', 0); }
-
-        if(!get_option('wp_maintenance_style') or get_option('wp_maintenance_style')=='') {
-            update_option('wp_maintenance_style', wpm_print_style());
-        }
-
         // If you're not including an image upload then you can leave this function call out
         if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
 
@@ -644,44 +561,38 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
         $paramMMode = get_option('wp_maintenance_settings');
 
-        if( isset($paramMMode) && !empty($paramMMode)  ) {
-            foreach($paramMMode as $var =>$value) {
-                $paramMMode[$var] = ''.$value.'';
-            }
-        }
-
         if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
         $paramSlider = get_option('wp_maintenance_slider');
 
         if(get_option('wp_maintenance_slider_options')) { extract(get_option('wp_maintenance_slider_options')); }
         $paramSliderOptions = get_option('wp_maintenance_slider_options');
 
-        if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
-        $paramLimit = get_option('wp_maintenance_limit');
+        /* Récupère le status */
         $statusActive = get_option('wp_maintenance_active');
-
-        // Récupère les ip autorisee
-        $paramIpAddress = get_option('wp_maintenance_ipaddresses');
-
-        if( !isset($paramMMode['active']) ) { $paramMMode['active'] = 0 ; }
-        if( !isset($statusActive) ) { update_option('wp_maintenance_active', $paramMMode['active']); }
 
         $paramSocialOption = get_option('wp_maintenance_social_options');
 
-
+        // Récupère les ip autorisee
+        $paramIpAddress = get_option('wp_maintenance_ipaddresses');
         /* Désactive le mode maintenance pour les IP définies */
         if( isset($paramIpAddress) ) {
-            //$paramIpAddress = explode("\n", $paramIpAddress);
-            if( strpos($paramIpAddress, wpm_get_ip())!== false ) {
-                $statusActive = 0;
+            $lienIpAddress = explode("\n", $paramIpAddress);
+            foreach($lienIpAddress as $ipAutorized) {
+                if( strpos($ipAutorized, wpm_get_ip())!== false ) {
+                    $statusActive = 1;
+                }
             }
+            
         }
-
+        
         /* Désactive le mode maintenance pour les Roles définis */
+        if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
+        $paramLimit = get_option('wp_maintenance_limit');
+
         if( isset($paramLimit) && count($paramLimit)>1 ) {
             foreach($paramLimit as $limitrole) {
                 if( current_user_can($limitrole) == true ) {
-                    $statusActive = 0;
+                    $statusActive = 1;
                 }
             }
         }
@@ -691,7 +602,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( $valPageId == get_the_ID() ) {
-                    $statusActive = 0;
+                    $statusActive = 1;
                 }
                 //echo 'Status: '.$statusActive.' - Page: '.$valPageId.' - ID:'.get_the_ID().'<br />';
             }
@@ -723,7 +634,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
         }
 
-        if ($statusActive == 1) {
+        if ( isset($statusActive) && $statusActive == 1) {
 
             if ( file_exists( get_stylesheet_directory() ) ) {
                 $urlTpl = get_stylesheet_directory();
@@ -838,7 +749,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 $Texte = '';
             }
             $wysijaStyle = '/* no NEWLETTER Style */';
-            if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 && isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' ) {
+            if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 ) {
 
                 if( empty($paramMMode['color_field_text']) ) { $paramMMode['color_field_text'] = '#333333'; }
                     if( empty($paramMMode['color_text_button']) ) { $paramMMode['color_text_button']= '#ffffff'; }
@@ -858,7 +769,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                         "#_COLOR_BTN_CLICK" => $paramMMode['color_button_onclick']
                     );
 
-                if( strpos($paramMMode['code_newletter'], 'wysija_form') == 1 ) {
+                if( isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' && strpos($paramMMode['code_newletter'], 'wysija_form') == 1 ) {
 
                     $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_wysija_style() );
 
@@ -867,7 +778,10 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                     $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_mc4wp_style() );
 
                 }
-                $newLetter = '<div class="wpm_newletter">'.stripslashes($paramMMode['title_newletter']);
+                $newLetter = '<div class="wpm_newletter">';
+                if( isset($paramMMode['title_newletter']) && $paramMMode['title_newletter']!='') {
+                    $newLetter .= '<div>'.stripslashes($paramMMode['title_newletter']).'</div>';
+                }
                 if( isset($paramMMode['type_newletter']) && isset($paramMMode['iframe_newletter']) && $paramMMode['iframe_newletter']!='' && $paramMMode['type_newletter']=='iframe' ) {
                     $newLetter .= stripslashes($paramMMode['iframe_newletter']);
                 }

@@ -3,15 +3,15 @@ Contributors: Florent73
 Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 4.9.1
-Stable tag: 4.0
+Tested up to: 4.9
+Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Create and customize your maintenance page
 
 == Description ==
-The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture and countdown with:
+The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page, pictures and countdown with:
 
 == Features ==
 - Choice texts colors and fonts
@@ -67,11 +67,14 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
-= 4.0 =
-* Remove getimagesize() function
-* Adding input for logo size
+= 4.0.2 =
+* Bug IP addresses fixed
+* Clean code
 
 == Changelog ==
+
+= 4.0.1 =
+* Bug iframe fixed
 
 = 4.0 =
 * Remove getimagesize() function

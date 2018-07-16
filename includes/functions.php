@@ -189,7 +189,20 @@ function wpm_get_roles() {
 
 /* Retourne la vraie adresse IP */
 function wpm_get_ip() {
-    return (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+
+	// IP si internet partagé
+	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+		return $_SERVER['HTTP_CLIENT_IP'];
+	}
+	// IP derrière un proxy
+	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		return $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
+	// Sinon : IP normale
+	else {
+		return (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '');
+	}
+
 }
 
 function wpm_change_active($value = 0) {
