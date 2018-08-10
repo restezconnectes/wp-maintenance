@@ -2,15 +2,17 @@
 
 class WP_maintenance {
 
-  protected static $instance;
+    protected static $instance;
 
-  public static function init() {
-      is_null( self::$instance ) AND self::$instance = new self;
-      return self::$instance;
-  }
+	public function __construct() {
 
-	public function hooks() {
-
+        /* Récupère le status */
+        $statusActive = $this->wpm_check_active();
+        //exit('Status'.$statusActive);
+        if ( isset($statusActive) && $statusActive == 1) {
+            add_action( 'template_redirect', array( &$this, 'wpm_maintenance_mode'), 2 );
+        }
+        
         /* Version du plugin */
         $option['wp_maintenance_version'] = WPM_VERSION;
         if( !get_option('wp_maintenance_version') ) {
@@ -18,24 +20,25 @@ class WP_maintenance {
         } else if ( get_option('wp_maintenance_version') != WPM_VERSION ) {
             update_option('wp_maintenance_version', WPM_VERSION);
         }
-
-        add_action( 'admin_menu', array( $this, 'wpm_add_admin') );
-        add_filter( 'plugin_action_links', array( $this, 'wpm_plugin_actions'), 10, 2 );
-        add_action( 'admin_head', array( $this, 'wpm_admin_head') );
-        add_action( 'init', array( $this, 'wpm_date_picker') );
-        add_action( 'init', array( $this, 'wpm_install') );
-        add_action( 'admin_bar_menu', array( $this, 'wpm_add_menu_admin_bar'), 999 );
-        add_action( 'admin_footer', array( $this, 'wpm_print_footer_scripts') );
-        add_action( 'template_redirect', array( $this, 'wpm_maintenance_mode') );
-        add_action( 'admin_init', array( $this, 'wpm_process_settings_import') );
-        add_action( 'admin_init', array( $this, 'wpm_process_settings_export') );
-        add_action( 'after_setup_theme', array( $this, 'wpm_theme_add_editor_styles') );
+        add_action( 'init', array( &$this, 'wpm_dashboard_install') );
+        
+         if( is_admin() ) {
+            add_action( 'admin_menu', array( &$this, 'wpm_add_admin') );
+            add_filter( 'plugin_action_links', array( &$this, 'wpm_plugin_actions'), 10, 2 );
+            add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
+            add_action( 'init', array( &$this, 'wpm_date_picker') );
+            add_action( 'admin_bar_menu', array( &$this, 'wpm_add_menu_admin_bar'), 999 );
+            add_action( 'admin_footer', array( &$this, 'wpm_print_footer_scripts') );        
+            add_action( 'admin_init', array( &$this, 'wpm_process_settings_import') );
+            add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );
+            add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
+        }
     }
 
     function wpm_theme_add_editor_styles() {
         add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
     }
-    public static function wpm_install() {
+    public static function wpm_dashboard_install() {
 
         $nameServer = '';
         if( isset($_SERVER['SERVER_NAME']) ) {
@@ -455,15 +458,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         include(WPM_DIR."/views/wp-maintenance-settings.php");
     }
 
-    /*function wpm_about_page() {
-
-        //must check that the user has the required capability
-        if (!current_user_can('manage_options')) {
-          wp_die( __("You do not have sufficient privileges to access this page.", 'sponsorpress') );
-        }
-        include(WPM_DIR."/views/wp-maintenance-about.php");
-    }*/
-
     function wpm_print_footer_scripts() {
 
        if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
@@ -553,24 +547,14 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
     }
 
-    /* Mode Maintenance */
-    function wpm_maintenance_mode() {
-
-        global $current_user;
+    /* Check le Mode Maintenance si on doit l'activer ou non */
+    function wpm_check_active() {
 
         if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
         $paramMMode = get_option('wp_maintenance_settings');
 
-        if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
-        $paramSlider = get_option('wp_maintenance_slider');
-
-        if(get_option('wp_maintenance_slider_options')) { extract(get_option('wp_maintenance_slider_options')); }
-        $paramSliderOptions = get_option('wp_maintenance_slider_options');
-
         /* Récupère le status */
         $statusActive = get_option('wp_maintenance_active');
-
-        $paramSocialOption = get_option('wp_maintenance_social_options');
 
         // Récupère les ip autorisee
         $paramIpAddress = get_option('wp_maintenance_ipaddresses');
@@ -579,7 +563,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             $lienIpAddress = explode("\n", $paramIpAddress);
             foreach($lienIpAddress as $ipAutorized) {
                 if( strpos($ipAutorized, wpm_get_ip())!== false ) {
-                    $statusActive = 1;
+                    $statusActive = 0;
                 }
             }
             
@@ -591,20 +575,24 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
         if( isset($paramLimit) && count($paramLimit)>1 ) {
             foreach($paramLimit as $limitrole) {
-                if( current_user_can($limitrole) == true ) {
-                    $statusActive = 1;
+                if( is_user_logged_in() ) {
+                    $user_id = get_current_user_id(); 
+                    $user_info = get_userdata($user_id);
+                    $user_role = implode(', ', $user_info->roles);
+                    if( $limitrole == $user_role ) {
+                        $statusActive = 0;
+                    }
                 }
             }
         }
-
+        
         /* Désactive le mode maintenance pour les PAGE ID définies */
-        if( isset($paramMMode['id_pages']) ) {
+        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( $valPageId == get_the_ID() ) {
-                    $statusActive = 1;
+                    $statusActive = 'page'.$valPageId;
                 }
-                //echo 'Status: '.$statusActive.' - Page: '.$valPageId.' - ID:'.get_the_ID().'<br />';
             }
         }
 
@@ -612,6 +600,23 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if( current_user_can('administrator') == true ) {
             $statusActive = 0;
         }
+        
+        return $statusActive;
+    }
+
+    /* Mode Maintenance */
+    function wpm_maintenance_mode() {
+
+        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
+        $paramMMode = get_option('wp_maintenance_settings');
+
+        if(get_option('wp_maintenance_slider')) { extract(get_option('wp_maintenance_slider')); }
+        $paramSlider = get_option('wp_maintenance_slider');
+
+        if(get_option('wp_maintenance_slider_options')) { extract(get_option('wp_maintenance_slider_options')); }
+        $paramSliderOptions = get_option('wp_maintenance_slider_options');
+
+        $paramSocialOption = get_option('wp_maintenance_social_options');
 
         /* on doit retourner 12/31/2020 5:00 AM */
         $dateNow = strtotime(date("Y-m-d H:i:s")) + 3600 * get_option('gmt_offset');
@@ -629,12 +634,10 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
             if( $dateNow > $dateFinCpt ) {
                 $ChangeStatus = wpm_change_active();
-                $statusActive = 0;
             }
-
         }
 
-        if ( isset($statusActive) && $statusActive == 1) {
+     
 
             if ( file_exists( get_stylesheet_directory() ) ) {
                 $urlTpl = get_stylesheet_directory();
@@ -950,7 +953,7 @@ $wpmStyle .= '
             $template_page = str_replace(array_keys($tplRemplacements), array_values($tplRemplacements), $template_page );
 
             $content = $template_page;
-        }
+        
         if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');

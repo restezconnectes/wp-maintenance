@@ -30,7 +30,7 @@ $statusActive = get_option('wp_maintenance_active');
 $paramSocial = get_option('wp_maintenance_social');
 if(get_option('wp_maintenance_social_options')) { extract(get_option('wp_maintenance_social_options')); }
 $paramSocialOption = get_option('wp_maintenance_social_options');
-
+echo 'Status: getoption -->'.$statusActive.'  // Check: '.WP_maintenance::wpm_check_active();
 ?>
 <style>
     .sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }

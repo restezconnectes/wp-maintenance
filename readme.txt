@@ -4,7 +4,7 @@ Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 4.0.2
+Stable tag: 4.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,11 +67,17 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
+= 4.0.4 =
+* Bug for roles and capacities fixed
+
+== Changelog ==
+
+= 4.0.3 =
+* Bug for roles and capacities fixed
+
 = 4.0.2 =
 * Bug IP addresses fixed
 * Clean code
-
-== Changelog ==
 
 = 4.0.1 =
 * Bug iframe fixed
