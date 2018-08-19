@@ -52,7 +52,8 @@ $paramMMode = get_option('wp_maintenance_settings');
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
 
             <h3><?php _e('Choice texts fonts and colors:', 'wp-maintenance'); ?></h3>
-            <em><?php _e('Text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php if( isset($paramMMode['color_txt']) && $paramMMode['color_txt']!='' ) { echo $paramMMode['color_txt']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#333333" /><br /><br />
+            <em><?php _e('Title color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php if( isset($paramMMode['color_title']) && $paramMMode['color_title']!='' ) { echo $paramMMode['color_title']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_title]" class="wpm-color-field" data-default-color="#333333" /><br />
+            
             <!-- POLICE DU TITRE -->
             <em><stong><?php _e('Title font settings', 'wp-maintenance'); ?></stong></em>
             <table cellspacing="10">
@@ -92,6 +93,8 @@ $paramMMode = get_option('wp_maintenance_settings');
             <!-- FIN POLICE DU TITRE-->
                     
             <!-- POLICE DU TEXTE -->
+            <br /><br />
+            <em><?php _e('Text color:', 'wp-maintenance'); ?></em> <br /><input type="text" value="<?php if( isset($paramMMode['color_txt']) && $paramMMode['color_txt']!='' ) { echo $paramMMode['color_txt']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#333333" />
             <br /><em><?php _e('Text font settings', 'wp-maintenance'); ?></em>
             <table cellspacing="10">
                 <tr>

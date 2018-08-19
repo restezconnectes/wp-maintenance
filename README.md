@@ -24,10 +24,10 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 
 ### Some screenshots:
 
-![General view](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-1.png)
-![View by visitors to your site](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-2.png)
-![Colors and fonts settings](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-3.png)
-![Upload a personal header, background and slides picture](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-4.png)
-![Countdown settings](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-5.png)
-![CSS settings](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-6.png)
-![Others settings](https://restezconnectes.fr/plugins/images/wp-maintenance/screenshot-7.png)
+![General view](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-1.png)
+![View by visitors to your site](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-2.png)
+![Colors and fonts settings](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-3.png)
+![Upload a personal header, background and slides picture](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-4.png)
+![Countdown settings](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-5.png)
+![CSS settings](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-6.png)
+![Others settings](https://wpmaintenance.info/plugins/images/wp-maintenance/screenshot-7.png)

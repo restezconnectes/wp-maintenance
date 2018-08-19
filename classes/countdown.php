@@ -10,6 +10,8 @@ class WPM_Countdown extends WP_maintenance {
 
         // Récupère les paramètres sauvegardés
         $paramMMode = wp_maintenance::wpm_get_options();
+        // Récupère si le status est actif ou non 
+        $statusActive = get_option('wp_maintenance_active');
         $Counter = '';
         
         /*********** AJOUT COMPTEUR SUIVANT LES PARAMETRES *********/
@@ -17,35 +19,39 @@ class WPM_Countdown extends WP_maintenance {
 
             if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) {
 
-                if( !isset($paramMMode['disable']) ) { $paramMMode['disable'] = 0; }
-            $Counter = '
-            <div id="countdown">
-                <script language="JavaScript">
-                    TargetDate = "'.$date.'";
-                    BackColor = "'.$paramMMode['color_cpt_bg'].'";
-                    FontSize = "'.$paramMMode['date_cpt_size'].'";
-                    ForeColor = "'.$paramMMode['color_cpt'].'";
-                    Disable = "'.$paramMMode['disable'].'";
-                    UrlDisable = "'.get_option( 'siteurl').'";
-                    FontFamily = "'.$paramMMode['font_cpt'].'";
-                    CountActive = true;
-                    CountStepper = -1;
-                    LeadingZero = true;
-            ';
-            $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
-            if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1 ) {
-                $Counter .= '<div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
-            }
-            $Counter .= "';";
-            if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) {
-            $Counter .= '
-                FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramMMode['message_cpt_fin']) ) ).'";';
-            }
-            $Counter .= '
-                </script>';
-            $Counter .= '
-            <script language="JavaScript" src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-cpt-script.js"></script>
-            </div>';
+                if( !isset($paramMMode['disable']) || $statusActive==0 ) { $paramMMode['disable'] = 0; }
+                
+                $Counter = '
+                <div id="countdown">
+                    <script language="JavaScript">
+                        TargetDate = "'.$date.'";
+                        BackColor = "'.$paramMMode['color_cpt_bg'].'";
+                        FontSize = "'.$paramMMode['date_cpt_size'].'";
+                        ForeColor = "'.$paramMMode['color_cpt'].'";
+                        Disable = "'.$paramMMode['disable'].'";
+                        UrlDisable = "'.get_option( 'siteurl').'";
+                        FontFamily = "'.wpm_format_font($paramMMode['font_cpt']).'";
+                        CountActive = true;
+                        CountStepper = -1;
+                        LeadingZero = true;
+                ';
+                $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
+                if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1 ) {
+                    $Counter .= '<div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
+                }
+                $Counter .= "';";
+                if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) {
+                    $Counter .= '
+                    FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramMMode['message_cpt_fin']) ) ).'";';
+                } else {
+                    $Counter .= '
+                    FinishMessage = "&nbsp;";';
+                }
+                $Counter .= '
+                    </script>';
+                $Counter .= '
+                <script language="JavaScript" src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-cpt-script.js"></script>
+                </div>';
             }
         }
 

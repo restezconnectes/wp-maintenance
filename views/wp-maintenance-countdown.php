@@ -86,31 +86,32 @@ $paramMMode = get_option('wp_maintenance_settings');
                             //$startHour = $newMin[0].':'.ceil($newMin[1]/5)*5;
                         }                                
                     ?>
-                    <small><?php _e('Select the launch date/time', 'wp-maintenance'); ?></small><br /><img src="<?php echo WPM_PLUGIN_URL.'images/schedule_clock.png'; ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wp_maintenance_settings[cptdate]" type="text" autofocuss data-value="<?php echo $startDate; ?>"> <?php _e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wp_maintenance_settings[cpttime]" value="<?php echo $startHour; ?>" size="4" autofocuss>                                
+                    <small><?php _e('Select the launch date/time', 'wp-maintenance'); ?></small><br /><img src="<?php echo WPM_PLUGIN_URL.'images/schedule_clock.png'; ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wp_maintenance_settings[cptdate]" type="text" autofocuss data-value="<?php echo $startDate; ?>"> <?php _e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wp_maintenance_settings[cpttime]" value="<?php echo $startHour; ?>" size="6" autofocuss>                                
                     <div id="wpmdatecontainer"></div>
                     <br /><br />
                     <div>
-                        <div style="float:left;width:190px;">
-                            <div class="switch-field" style="margin-left:0px!important;">
+                        <div style="float:left;">
+                            <div class="switch-field-mini" style="margin-left:0px!important;">
                                 <input class="switch_left" type="radio" id="switch_left" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>/>
                                 <label for="switch_left"><?php _e('Yes', 'wp-maintenance'); ?></label>
                                 <input class="switch_right" type="radio" id="switch_right" name="wp_maintenance_settings[active_cpt_s]" value="0" <?php if( empty($paramMMode['active_cpt_s']) || isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==0) { echo ' checked'; } ?> />
                                 <label for="switch_right"><?php _e('No', 'wp-maintenance'); ?></label>
                             </div>
                         </div>
-                        <div style="float:left;margin-top:12px;"><?php _e('Enable seconds ?', 'wp-maintenance'); ?></div>
+                        <div style="float:left;margin-left:12px;"><?php _e('Enable seconds ?', 'wp-maintenance'); ?></div>
                         <div class="clear"></div>
                     </div>
+                    <div class="clear">&nbsp;</div>
                     <div>
-                        <div style="float:left;width:190px;">
-                            <div class="switch-field" style="margin-left:0px!important;">
+                        <div style="float:left;">
+                            <div class="switch-field-mini" style="margin-left:0px!important;">
                                 <input class="switch_left" type="radio" id="switch_disable" name="wp_maintenance_settings[disable]" value="1" <?php if( isset($paramMMode['disable']) && $paramMMode['disable']==1) { echo ' checked'; } ?>/>
                                 <label for="switch_disable"><?php _e('Yes', 'wp-maintenance'); ?></label>
                                 <input class="switch_right" type="radio" id="switch_disable_no" name="wp_maintenance_settings[disable]" value="0" <?php if( empty($paramMMode['disable']) || isset($paramMMode['disable']) && $paramMMode['disable']==0) { echo ' checked'; } ?> />
                                 <label for="switch_disable_no"><?php _e('No', 'wp-maintenance'); ?></label>
                             </div>
                         </div>
-                        <div style="float:left;margin-top:12px;"><?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?></div>
+                        <div style="float:left;margin-left:12px;"><?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?></div>
                         <div class="clear"></div>
                     </div>
                     <br />

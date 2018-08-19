@@ -4,15 +4,20 @@ class WP_maintenance {
 
     protected static $instance;
 
+    public static function init() {
+        is_null( self::$instance ) AND self::$instance = new self;
+        return self::$instance;
+    }
+
 	public function __construct() {
 
         /* Récupère le status */
         $statusActive = $this->wpm_check_active();
-        //exit('Status'.$statusActive);
         if ( isset($statusActive) && $statusActive == 1) {
             add_action( 'template_redirect', array( &$this, 'wpm_maintenance_mode'), 2 );
         }
-        
+        add_action( 'init', array( &$this, 'wpm_dashboard_install') );
+
         /* Version du plugin */
         $option['wp_maintenance_version'] = WPM_VERSION;
         if( !get_option('wp_maintenance_version') ) {
@@ -20,9 +25,8 @@ class WP_maintenance {
         } else if ( get_option('wp_maintenance_version') != WPM_VERSION ) {
             update_option('wp_maintenance_version', WPM_VERSION);
         }
-        add_action( 'init', array( &$this, 'wpm_dashboard_install') );
-        
-         if( is_admin() ) {
+
+        if( is_admin() ) {
             add_action( 'admin_menu', array( &$this, 'wpm_add_admin') );
             add_filter( 'plugin_action_links', array( &$this, 'wpm_plugin_actions'), 10, 2 );
             add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
@@ -33,11 +37,22 @@ class WP_maintenance {
             add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );
             add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
+        
+        
     }
 
     function wpm_theme_add_editor_styles() {
         add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
     }
+    
+    /**
+     * Display the default template
+     */
+    function wpm_get_default_template() {
+        $file = file_get_contents(WPM_DIR.'/themes/default/index.php');
+        return $file;
+    }
+
     public static function wpm_dashboard_install() {
 
         $nameServer = '';
@@ -92,13 +107,14 @@ class WP_maintenance {
             'text_bt_maintenance' => '',
             'add_wplogin' => '',
             'b_enable_image' => 0,
+            'b_opacity_image' => '0.2',
             'disable' => 0,
             'pageperso' => 0,
             'date_cpt_size' => 40,
             'color_bg_header' => '#f1f1f1',
             'add_wplogin_title' => '',
             'headercode' => '',
-            'message_cpt_fin' => '',
+            'message_cpt_fin' => '&nbsp;',
             'b_repeat_image' => '',
             'color_cpt_bg' => '',
             'enable_slider' => 0,
@@ -197,19 +213,10 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     padding:8px;
     /*margin-bottom:20px;*/
 }
-.wpm-form-field:focus {
-    background: #fff!important;
-    color: '.$colors[0].'!important;
-}
-.switch-field input:checked + label:last-of-type {
-    background-color: '.$colors[0].'!important;
-    color:#e4e4e4!important;
-}
+.wpm-form-field:focus {background: #fff!important;color: '.$colors[0].'!important;}
+.switch-field input:checked + label:last-of-type {background-color: '.$colors[0].'!important;color:#e4e4e4!important;}
 .switch-field-mini input:checked + label { background-color: '.$colors[2].'; }
-.switch-field-mini input:checked + label:last-of-type {
-    background-color: '.$colors[0].'!important;
-    color:#e4e4e4!important;
-}
+.switch-field-mini input:checked + label:last-of-type {background-color: '.$colors[0].'!important;color:#e4e4e4!important;}
 </style>';
         } else {
             echo '<style>
@@ -399,8 +406,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
             wp_register_script('wpm-admin-fontselect', WPM_PLUGIN_URL.'js/fontselect/jquery.fontselect.min.js' );
             wp_enqueue_script('wpm-admin-fontselect');
-            
-            
 
         }
         
@@ -585,13 +590,13 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 }
             }
         }
-        
+
         /* Désactive le mode maintenance pour les PAGE ID définies */
-        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
+        if( isset($paramMMode['id_pages']) ) {
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( $valPageId == get_the_ID() ) {
-                    $statusActive = 'page'.$valPageId;
+                    $statusActive = 0;
                 }
             }
         }
@@ -600,7 +605,11 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if( current_user_can('administrator') == true ) {
             $statusActive = 0;
         }
-        
+        /* Mode Preview */
+        if( isset($_GET['preview']) && $_GET['preview']=='true' ) { 
+            $statusActive = 1;
+        }
+
         return $statusActive;
     }
 
@@ -630,339 +639,75 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         }
 
         /* Si on désactive le mode maintenance en fin de compte à rebours */
-        if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $statusActive == 1 ) {
+        if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $this->wpm_check_active() == 1 ) {
 
             if( $dateNow > $dateFinCpt ) {
                 $ChangeStatus = wpm_change_active();
+                $disableCounter = wpm_update_settings( array('disable'=> 0) );
             }
         }
 
-     
+        // Prevetn Plugins from caching
+        // Disable caching plugins. This should take care of:
+        //   - W3 Total Cache
+        //   - WP Super Cache
+        //   - ZenCache (Previously QuickCache)
+        if(!defined('DONOTCACHEPAGE')) {
+            define('DONOTCACHEPAGE', true);
+        }
+        if(!defined('DONOTCDN')) {
+            define('DONOTCDN', true);
+        }
+        if(!defined('DONOTCACHEDB')) {
+            define('DONOTCACHEDB', true);
+        }
+        if(!defined('DONOTMINIFY')) {
+            define('DONOTMINIFY', true);
+        }
+        if(!defined('DONOTCACHEOBJECT')) {
+            define('DONOTCACHEOBJECT', true);
+        }
+        nocache_headers();
 
-            if ( file_exists( get_stylesheet_directory() ) ) {
-                $urlTpl = get_stylesheet_directory();
-            } else {
-                $urlTpl = get_template_directory();
-            }
-
-            if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') ) {
-
-                include_once( $urlTpl.'/maintenance.php' );
-                die();
-
-            } else {
-
-                $wpmStyle = '';
-
-                $site_title = get_bloginfo( 'name', 'display' );
-                $site_description = get_bloginfo( 'description', 'display' );
-
-                /* Si container activé */
-                if( isset($paramMMode['container_active']) && $paramMMode['container_active'] == 1 ) {
-
-                    if( empty($paramMMode['container_opacity']) ) { $paramMMode['container_opacity'] = 0.5; }
-                    if( empty($paramMMode['container_width']) ) { $paramMMode['container_width'] = 80; }
-                    if( empty($paramMMode['container_color']) ) { $paramMMode['container_color'] = '#ffffff'; }
-                    if( isset($paramMMode['container_color']) ) {
-                        $paramRGBColor = wpm_hex2rgb($paramMMode['container_color']);
-                    }
-
-                $wpmStyle .= '
-#sscontent {
-    background-color: rgba('.$paramRGBColor['rouge'].','.$paramRGBColor['vert'].','.$paramRGBColor['bleu'].', '.$paramMMode['container_opacity'].');
-    padding:0.8em;
-    margin-left:auto;
-    margin-right:auto;
-    width:'.$paramMMode['container_width'].'%;
-}
-';
-            }
-
-            /* Défninition des couleurs par défault */
-            if( !isset($paramMMode['color_bg']) || $paramMMode['color_bg']=="") { $paramMMode['color_bg'] = "#f1f1f1"; }
-            if( !isset($paramMMode['color_txt']) || $paramMMode['color_txt']=="") { $paramMMode['color_txt'] = "#888888"; }
-
-            /* Traitement de la feuille de style */
-            $styleRemplacements = array (
-                "#_COLORTXT" => $paramMMode['color_txt'],
-                "#_COLORBG" => $paramMMode['color_bg'],
-                "#_COLORCPTBG" => $paramMMode['color_cpt_bg'],
-                "#_DATESIZE" => $paramMMode['date_cpt_size'],
-                "#_COLORCPT" => $paramMMode['color_cpt'],
-                "#_COLOR_BG_BT" => $paramMMode['color_bg_bottom'],
-                "#_COLOR_TXT_BT" => $paramMMode['color_text_bottom'],
-                "#_COLORHEAD" => $paramMMode['color_bg_header'],
-            );
-            $wpmStyle .= str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_style'));
-            if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']=='') { $paramMMode['message_cpt_fin'] = '&nbsp;'; }
-
-
-            $template_page = wpm_get_template();
-
-            $Counter = '';
-            $addFormLogin = '';
-            $newLetter = '';
-
-            if( isset($paramMMode['analytics']) && $paramMMode['analytics']!='') {
-                $CodeAnalytics = do_shortcode('[wpm_analytics enable="'.$paramMMode['analytics'].'"]');
-            } else {
-                $CodeAnalytics = '';
-            }
-            if( isset($paramMMode['headercode']) && $paramMMode['headercode']!='') {
-                $HeaderCode = stripslashes($paramMMode['headercode']);
-            } else {
-                $HeaderCode = '';
-            }
-            if( isset($paramSocialOption['position']) && $paramSocialOption['position']=='top') {
-                $TopSocialIcons = '<div id="header">'.do_shortcode('[wpm_social]').'</div>';
-            } else {
-                $TopSocialIcons = '';
-            }
-            if( isset($paramSocialOption['position']) && $paramSocialOption['position']=='bottom') {
-                $BottomSocialIcons = do_shortcode('[wpm_social]');
-            } else {
-                $BottomSocialIcons = '';
-            }
-            if( isset($paramMMode['image']) && $paramMMode['image'] ) {
-                if( empty($paramMMode['image_width']) ) { $paramMMode['image_width'] = 310; }
-                if( empty($paramMMode['image_height']) ) { $paramMMode['image_height'] = 185; }
-                $LogoImage = '<div id="logo"><img src="'.$paramMMode['image'].'" width="'.$paramMMode['image_width'].'" height="'.$paramMMode['image_height'].'" alt="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" title="'.get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ).'" /></div>';
-                
-            } else {
-                $LogoImage = '';
-            }
-
-            if( isset($paramMMode['text_bt_maintenance']) && $paramMMode['text_bt_maintenance']!='' ) {
-                $TextCopyright = stripslashes($paramMMode['text_bt_maintenance']);
-            } else {
-                $TextCopyright = '';
-            }
-            if( (isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==1) && (isset($paramMMode['add_wplogin_title']) && $paramMMode['add_wplogin_title']!='') ) {
-                $TextCopyright .= '<br /><br />'.str_replace('%DASHBOARD%', '<a href="'.get_admin_url().'">'.__('Dashboard', 'wp-maintenance').'</a>', $paramMMode['add_wplogin_title']).'';
-
-            }
-            if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) {
-                $Titre = stripslashes($paramMMode['titre_maintenance']);
-            } else {
-                $Titre = '';
-            }
-            if( isset($paramMMode['text_maintenance']) && $paramMMode['text_maintenance']!='' ) {
-                $Texte = stripslashes(wpautop($paramMMode['text_maintenance']));
-            } else {
-                $Texte = '';
-            }
-            $wysijaStyle = '/* no NEWLETTER Style */';
-            if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 ) {
-
-                if( empty($paramMMode['color_field_text']) ) { $paramMMode['color_field_text'] = '#333333'; }
-                    if( empty($paramMMode['color_text_button']) ) { $paramMMode['color_text_button']= '#ffffff'; }
-                    if( empty($paramMMode['color_field_background']) ) { $paramMMode['color_field_background']= '#F1F1F1'; }
-                    if( empty($paramMMode['color_field_border']) ) { $paramMMode['color_field_border']= '#333333'; }
-                    if( empty($paramMMode['color_button_onclick']) ) { $paramMMode['color_button_onclick']= '#333333'; }
-                    if( empty($paramMMode['color_button_hover']) ) { $paramMMode['color_button_hover']= '#cccccc'; }
-                    if( empty($paramMMode['color_button']) ) { $paramMMode['color_button']= '#1e73be'; }
-
-                    $wysijaRemplacements = array (
-                        "#_COLORTXT" => $paramMMode['color_field_text'],
-                        "#_COLORBG" => $paramMMode['color_field_background'],
-                        "#_COLORBORDER" => $paramMMode['color_field_border'],
-                        "#_COLORBUTTON" => $paramMMode['color_button'],
-                        "#_COLORTEXTBUTTON" => $paramMMode['color_text_button'],
-                        "#_COLOR_BTN_HOVER" => $paramMMode['color_button_hover'],
-                        "#_COLOR_BTN_CLICK" => $paramMMode['color_button_onclick']
-                    );
-
-                if( isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' && strpos($paramMMode['code_newletter'], 'wysija_form') == 1 ) {
-
-                    $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_wysija_style() );
-
-                } else if( strpos($paramMMode['code_newletter'], 'mc4wp_form') == 1 ) {
-
-                    $wysijaStyle = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_mc4wp_style() );
-
-                }
-                $newLetter = '<div class="wpm_newletter">';
-                if( isset($paramMMode['title_newletter']) && $paramMMode['title_newletter']!='') {
-                    $newLetter .= '<div>'.stripslashes($paramMMode['title_newletter']).'</div>';
-                }
-                if( isset($paramMMode['type_newletter']) && isset($paramMMode['iframe_newletter']) && $paramMMode['iframe_newletter']!='' && $paramMMode['type_newletter']=='iframe' ) {
-                    $newLetter .= stripslashes($paramMMode['iframe_newletter']);
-                }
-                if( isset($paramMMode['type_newletter']) && isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' && $paramMMode['type_newletter']=='shortcode'  ) {
-                    $newLetter .= do_shortcode(stripslashes($paramMMode['code_newletter']));
-                }
-                $newLetter .= '</div>';
-            }
-
-            $optionBackground = '';
-            $addBImage = '';
-            if( (isset($paramMMode['b_image']) && $paramMMode['b_image']) && (isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) ) {
-                if( isset($paramMMode['b_repeat_image']) || $paramMMode['b_repeat_image']=='') { $paramMMode['b_repeat_image'] = 'repeat'; }
-                if( isset($paramMMode['b_fixed_image']) && $paramMMode['b_fixed_image']==1 ) {
-                    $optionBackground = 'background-attachment:fixed;';
-                }
-            $addBImage = '
-body {
-    background-image:url('.$paramMMode['b_image'].');
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-repeat: '.$paramMMode['b_repeat_image'].';
-    '.$optionBackground.'
-}';
-            }
-            if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']>0 && $paramMMode['b_enable_image']==1) {
-            $addBImage = '
-body {
-	background-image: url('.WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$paramMMode['b_pattern'].'.png);
-    background-repeat: '.$paramMMode['b_repeat_image'].';
-    '.$optionBackground.'
-}';        }
-
-
-
-            /*********** AJOUT DU STYLE SUIVANT LES PARAMETRES *********/
-            $wpmFonts = '
-            @import url(https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $paramMMode['font_title']).'|'.str_replace(' ', '+',$paramMMode['font_text']).'|'.str_replace(' ', '+',$paramMMode['font_text_bottom']).'|'.str_replace(' ', '+',$paramMMode['font_cpt']);
-            if( isset($paramMMode['newletter_font_text']) && $paramMMode['newletter_font_text'] != '') {
-                $wpmFonts .= '|'.str_replace(' ', '+',$paramMMode['newletter_font_text']);
-            }
-            $wpmFonts .= ');';
-
-            /* Si on a une couleur de fond */
-            if( isset($paramMMode['color_bg'])  && $paramMMode['color_bg']!='' ) {
-                $wpmStyle .= 'body { background-color: '.$paramMMode['color_bg'].'; }';
-            }
-
-            $wpmStyle .= ''.$addBImage.'
-.wpm_social_icon {
-    float:left;
-    width:'.$paramSocialOption['size'].'px;
-    margin:0px 5px auto;
-}
-.wpm_social ul {
-    margin: 10px 0;
-    max-width: 100%;
-    padding: 0;
-    text-align: '.$paramSocialOption['align'].';
-}
-';
-$wpmStyle .= '
-.wpm_newletter {';
-    if( isset($paramMMode['newletter_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['newletter_size'].'px;'; }
-    if( isset($paramMMode['newletter_font_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['newletter_font_style'].';'; }
-    if( isset($paramMMode['newletter_font_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['newletter_font_weigth'].';'; }
-    if( isset($paramMMode['newletter_font_text']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['newletter_font_text']).', serif;'; }
-$wpmStyle .= '}';
-
-$wpmStyle .= '
-h3 {';
-    if( isset($paramMMode['font_title']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_title']).', serif;'; }
-    if( isset($paramMMode['font_title_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_title_size'].'px;'; }
-    if( isset($paramMMode['font_title_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_title_style'].';'; }
-    if( isset($paramMMode['font_title_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_title_weigth'].';'; }
-    if( isset($paramMMode['color_txt']) ) { $wpmStyle .= 'color:'.$paramMMode['color_txt'].';'; }
-$wpmStyle .= '
-    line-height: 100%;
-    text-align:center;
-    margin:0.5em auto;
-}
-p {';
-    if( isset($paramMMode['font_text']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_text']).', serif;'; }
-    if( isset($paramMMode['font_text_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_text_size'].'px;'; }
-    if( isset($paramMMode['font_text_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_text_style'].';'; }
-    if( isset($paramMMode['font_text_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_text_weigth'].';'; }
-    if( isset($paramMMode['color_txt']) ) { $wpmStyle .= 'color:'.$paramMMode['color_txt'].';'; }
-$wpmStyle .= '
-    line-height: 100%;
-    text-align:center;
-    margin:0.5em auto;
-    padding-left:2%;
-    padding-right:2%;
-
-}';
-if( (isset($paramMMode['text_bt_maintenance']) && $paramMMode['text_bt_maintenance']!='') or ( (isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==1) && (isset($paramMMode['add_wplogin_title']) && $paramMMode['add_wplogin_title']!='') ) ) {
-$wpmStyle .= '#footer {';
-    if( isset($paramMMode['color_bg_bottom']) ) { $wpmStyle .= 'background:'.$paramMMode['color_bg_bottom'].';'; }
-$wpmStyle .= '}';
-}
-$wpmStyle .= '
-div.bloc {';
-    if( isset($paramMMode['font_text_bottom']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_text_bottom']).', serif;'; }
-    if( isset($paramMMode['font_bottom_style']) ) { $wpmStyle .= 'font-style: '.$paramMMode['font_bottom_style'].';'; }
-    if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_bottom_size'].'px;'; }
-    if( isset($paramMMode['font_bottom_weigth']) ) { $wpmStyle .= 'font-weight: '.$paramMMode['font_bottom_weigth'].';'; }
-    if( isset($paramMMode['color_text_bottom']) ) { $wpmStyle .= 'color: '.$paramMMode['color_text_bottom'].';'; }
-$wpmStyle .= '
-    text-decoration:none;
-}
-div.bloc a:link {';
-    if( isset($paramMMode['color_text_bottom']) ) { $wpmStyle .= 'color:'.$paramMMode['color_text_bottom'].';'; }
-    if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_bottom_size'].'px;'; }
- $wpmStyle .= '
-    text-decoration:none;
-}
-div.bloc a:visited {';
-    if( isset($paramMMode['color_text_bottom']) ) { $wpmStyle .= 'color:'.$paramMMode['color_text_bottom'].';'; }
-    if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_bottom_size'].'px;'; }
- $wpmStyle .= '
-    text-decoration:none;
-}
-div.bloc a:hover {
-    text-decoration:underline;';
-    if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.$paramMMode['font_bottom_size'].'px;'; }
-$wpmStyle .= '
-}
-
-
-
-            ';
-
-            $addCssSlider = WPM_Slider::slider_css();
-            $addScriptSlider = WPM_Slider::slider_scripts();
-            $addScriptSlideshow = WPM_Slider::slider_functions();
-            $Counter = WPM_Countdown::display($dateCpt);
-
-            $wpmStyle = $wpmStyle.WPM_Countdown::css();
-
-            $tplRemplacements = array (
-                "%TITLE%" => get_bloginfo( 'name', 'display' ).' '.get_bloginfo( 'description', 'display' ),
-                "%ANALYTICS%" => $CodeAnalytics,
-                "%HEADERCODE%" => $HeaderCode,
-                "%ADDSTYLE%" => $wpmStyle,
-                "%ADDSTYLEWYSIJA%" => $wysijaStyle,
-                "%ADDFONTS%" => $wpmFonts,
-                "%TOPSOCIALICON%" => $TopSocialIcons,
-                "%BOTTOMSOCIALICON%" => $BottomSocialIcons,
-                "%LOGOIMAGE%" => $LogoImage,
-                "%COPYRIGHT%" => $TextCopyright,
-                "%COUNTER%" =>$Counter,
-                "%VERSION%" => WPM_VERSION,
-                "%TITRE%" => $Titre,
-                "%TEXTE%" => $Texte,
-                "%LOGINFORM%" => $addFormLogin,
-                "%NEWSLETTER%" => $newLetter,
-                "%CSSSLIDER%" => $addCssSlider,
-                "%SCRIPTSLIDER%" => $addScriptSlider,
-                "%SCRIPTSLIDESHOW%" => $addScriptSlideshow,
-                "%SLIDESHOWAL%" => WPM_Slider::slidershow('abovelogo'),
-                "%SLIDESHOWBL%" => WPM_Slider::slidershow('belowlogo'),
-                "%SLIDESHOWBT%" => WPM_Slider::slidershow('belowtext')
-            );
-            $template_page = str_replace(array_keys($tplRemplacements), array_values($tplRemplacements), $template_page );
-
-            $content = $template_page;
-        
         if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
             header('HTTP/1.1 503 Service Temporarily Unavailable');
             header('Status: 503 Service Temporarily Unavailable');
-            //header('Retry-After: 3600');//300 seconds*/
+            header('Retry-After: 86400'); // retry in a day
         }
-        echo $content;
-        die();
-    }
+        
+        $template = $this->wpm_get_default_template();
+        require_once( WPM_DIR.'/themes/default/functions.php' );
 
+        $template_tags = array (
+            "{TitleSEO}" => wpm_title_seo(),
+            "{MetaDescription}" => wpm_metadescription(),
+            "{HeaderCode}" => wpm_headercode(),
+            "{Head}" => wpm_head(),
+            "{Logo}" => wpm_logo(),
+            "{Version}" => WPM_VERSION,
+            "{Title}" => wpm_title(),
+            "{Text}" => wpm_text(),
+            "{Favicon}" => wpm_favicon(), 
+            "{CustomCSS}" => wpm_customcss(),
+            "{Analytics}" => wpm_analytics(),
+            "{TopSocialIcon}" => wpm_social_position("top"),
+            "{BottomSocialIcon}" => wpm_social_position("bottom"),
+            "{Copyrights}" => wpm_copyrights(),
+            "{AddStyleWysija}" => wpm_stylenewsletter(),
+            "{Newsletter}" => wpm_newsletter(),
+            "{SliderCSS}" => WPM_Slider::slider_css(),
+            "{ScriptSlider}" => WPM_Slider::slider_scripts(),
+            "{ScriptSlideshow}" => WPM_Slider::slider_functions(),
+            "{Counter}" => WPM_Countdown::display($dateCpt),
+            "{SlideshowAL}" => WPM_Slider::slidershow('abovelogo'),
+            "{SlideshowBL}" => WPM_Slider::slidershow('belowlogo'),
+            "{SlideshowBT}" => WPM_Slider::slidershow('belowtext'),
+
+
+        );
+        
+        echo strtr($template, $template_tags);
+        exit();
     }
 
 }

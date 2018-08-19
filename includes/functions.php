@@ -3,10 +3,14 @@
 defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
+
 function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settings', $update = 0 ) {
     
     global $current_user;
     global $_wp_admin_css_colors;
+
+    $admin_color = get_user_option( 'admin_color', get_current_user_id() );
+    $colors      = $_wp_admin_css_colors[$admin_color]->colors;
     
     $getHeader = '
      <div id="wpm-container">
@@ -17,7 +21,7 @@ function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settin
                     </h2>
                 </div>';
     $getHeader .= '<div id="wpm-navdashicons">
-        <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().'</div>
+        <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().' <a href="'.site_url().'/?preview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()"><span class="dashicons dashicons-external" style="font-size:25px;margin-right:15px;color:'.$colors[2].'" ></span></a></div>
     </div>';
     $getHeader .= '<div id="wpm-navmessage">';
     if( $update == 1 ) {
@@ -31,7 +35,7 @@ function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settin
     }
     $getHeader .= '</div>
             <div id="wpm-navsave">
-                '.get_submit_button( '', 'primary', 'valide_settings', false ).'
+            '.get_submit_button( '', 'primary', 'valide_settings', false ).'
             </div><div class="clear"></div>
         </div>
     </div><div class="clear"></div>';
@@ -104,6 +108,8 @@ function wpm_update_settings($tabPost) {
     // Je recupère le tableau temporaire des données
     if( isset($paramTemp) && !empty($paramTemp) ) {
         foreach($paramTemp as $variable=>$value) {
+            //var_dump($variable.' =====> '.$value.'<br />');
+            
             // pour chaque clé du tableau de regarde si elle existe déjà
             if ( array_key_exists($variable, $paramTemp) ) {
                 // Si la clé est la même que venant du post je la change
@@ -224,87 +230,6 @@ function wpm_array_value_count ($array) {
    
     return $count;
 } 
-
-function wpm_get_template() {
-    
-    return '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=yes" />
-	<title>%TITLE%</title>
-    
-	<style type=\'text/css\'>
-        /* VERSION %VERSION% */
-        %ADDFONTS%
-        html,
-        body {margin:0;padding:0;height:100%;font-size:100%;}
-        #wrapper {min-height:100%;position:relative;}
-        #header {padding:10px;}
-        #content {padding-bottom:100px; /* Height of the footer element */}
-        #footer {width:100%;line-height:60px;position:absolute;bottom:0;left:0;text-align: center;}
-        #logo {max-width: 100%;height: auto;text-align: center;}
-        img, object, embed, canvas, video, audio, picture {max-width: 100%;height: auto;} 
-        div.bloc {width:80%;padding:10px;vertical-align:middle;display:inline-block;line-height:1.2;text-align:center;}
-        .wpm_social {padding: 0 45px;text-align: center;}
-        @media (max-width: 640px) {body {font-size:1.2rem;}}
-        @media (min-width: 640px) {body {font-size:1rem;}}
-        @media (min-width:960px) {body {font-size:1.2rem;}}
-        @media (min-width:1100px) {body {font-size:1.5rem;}}
-        /* On ajoute les styles */
-        %ADDSTYLEWYSIJA%
-        %ADDSTYLE%
-        
-    </style>
-
-	<!--[if lt IE 7]>
-    <style type="text/css">
-        #wrapper { height:100%; }
-        div.bloc { display:inline; /* correctif inline-block*/ }
-        div.conteneur > span { zoom:1; /* layout */ }
-    </style>
-	<![endif]-->
-	%ANALYTICS%
-    %HEADERCODE%
-    %CSSSLIDER%
-    %SCRIPTSLIDER%
-    %SCRIPTSLIDESHOW%
-</head>
-
-<body>
-
-	<div id="wrapper">
-		
-        %TOPSOCIALICON%
-        <!-- #header -->
-		
-		<div id="content">
-            %SLIDESHOWAL%
-            %LOGOIMAGE%
-            %SLIDESHOWBL%
-            <div id="sscontent">
-                <h3>%TITRE%</h3>
-                <p>%TEXTE%</p>
-                %SLIDESHOWBT%
-                %COUNTER%
-                %NEWSLETTER%
-            </div>
-            %BOTTOMSOCIALICON%
-		</div><!-- #content -->
-		
-		<div id="footer">
-            <div class="bloc">%COPYRIGHT%</div>
-            <span></span>
-		</div><!-- #footer -->
-		
-	</div><!-- #wrapper -->
-	
-</body>
-
-</html>
-';
-    
-}
 
 function wpm_getFontsTab() {
     return array("Abel", "Abril Fatface", "Aclonica", "Acme", "Actor", "Adamina", "Advent Pro",

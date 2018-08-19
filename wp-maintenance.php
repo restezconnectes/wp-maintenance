@@ -5,7 +5,7 @@
  * Description: The WP Maintenance plugin allows you to put your website on the waiting time for you to do maintenance or launch your website. Personalize this page with picture, countdown...
  * Author: Florent Maillefaud
  * Author URI: https://wpmaintenance.info
- * Version: 4.0.4
+ * Version: 5.0.0
  * Text Domain: wp-maintenance
  * Domain Path: /languages/
  */
@@ -36,7 +36,7 @@ define( 'WPM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPM_PLUGIN_URL', plugins_url().'/'.strtolower('wp-maintenance').'/');
 define( 'WPM_ICONS_URL', plugins_url().'/'.strtolower('wp-maintenance').'/socialicons/');
 
-if( !defined( 'WPM_VERSION' )) { define( 'WPM_VERSION', '4.0.4' ); }
+if( !defined( 'WPM_VERSION' )) { define( 'WPM_VERSION', '5.0.0' ); }
 
 require WPM_DIR . 'classes/wp-maintenance.php';
 require WPM_DIR . 'classes/slider.php';
@@ -59,5 +59,3 @@ function _wpm_load_translation() {
 register_activation_hook( __FILE__, array( 'WP_maintenance', 'wpm_dashboard_install' ) );
 register_deactivation_hook( __FILE__, array( 'WP_maintenance', 'wpm_dashboard_remove' ) );
 register_uninstall_hook( __FILE__, array( 'WP_maintenance', 'wpm_dashboard_remove' ) );
-
-//add_action( 'plugins_loaded', array( 'WP_maintenance', 'init' ) );

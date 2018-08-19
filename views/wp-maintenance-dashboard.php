@@ -30,7 +30,7 @@ $statusActive = get_option('wp_maintenance_active');
 $paramSocial = get_option('wp_maintenance_social');
 if(get_option('wp_maintenance_social_options')) { extract(get_option('wp_maintenance_social_options')); }
 $paramSocialOption = get_option('wp_maintenance_social_options');
-echo 'Status: getoption -->'.$statusActive.'  // Check: '.WP_maintenance::wpm_check_active();
+
 ?>
 <style>
     .sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
@@ -139,29 +139,57 @@ echo 'Status: getoption -->'.$statusActive.'  // Check: '.WP_maintenance::wpm_ch
             
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
             
-            <!-- GOOGLE ANALYTICS -->
+            <!-- SEO -->
             <div>
-                <div style="float:left; width:70%;"><h3><?php _e('Enable Google Analytics:', 'wp-maintenance'); ?></h3></div>
+                <div style="float:left; width:70%;"><h3><?php _e('Enable SEO:', 'wp-maintenance'); ?></h3></div>
                 <div style="float:left; width:30%;text-align:right;">
                     <div class="switch-field">
-                        <input class="switch_left" type="radio" onclick="AfficherTexte('option-analytics');" id="switch_analytics" name="wp_maintenance_settings[analytics]" value="1" <?php if( isset($paramMMode['analytics']) && $paramMMode['analytics']==1) { echo ' checked'; } ?>/>
-                        <label for="switch_analytics"><?php _e('Yes', 'wp-maintenance'); ?></label>
-                        <input class="switch_right" type="radio" onclick="CacherTexte('option-analytics');" id="switch_analytics_no" name="wp_maintenance_settings[analytics]" value="0" <?php if( empty($paramMMode['analytics']) || isset($paramMMode['analytics']) && $paramMMode['analytics']==0) { echo ' checked'; } ?> />
-                        <label for="switch_analytics_no"><?php _e('No', 'wp-maintenance'); ?></label>
+                        <input class="switch_left" type="radio" onclick="AfficherTexte('option-seo');" id="switch_seo" name="wp_maintenance_settings[enable_seo]" value="1" <?php if( isset($paramMMode['enable_seo']) && $paramMMode['enable_seo']==1) { echo ' checked'; } ?>/>
+                        <label for="switch_seo"><?php _e('Yes', 'wp-maintenance'); ?></label>
+                        <input class="switch_right" type="radio" onclick="CacherTexte('option-seo');" id="switch_seo_no" name="wp_maintenance_settings[enable_seo]" value="0" <?php if( empty($paramMMode['enable_seo']) || isset($paramMMode['seo']) && $paramMMode['enable_seo']==0) { echo ' checked'; } ?> />
+                        <label for="switch_seo_no"><?php _e('No', 'wp-maintenance'); ?></label>
                     </div>
                 </div>
                 <div class="clear"></div>
             </div>
                         
-            <div id="option-analytics" style="<?php if( empty($paramMMode['analytics']) || isset($paramMMode['analytics']) && $paramMMode['analytics']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
+            <div id="option-seo" style="<?php if( empty($paramMMode['enable_seo']) || isset($paramMMode['enable_seo']) && $paramMMode['enable_seo']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
 
-                <?php _e('Enter your Google analytics tracking ID here:', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_analytics]" value="<?php if( isset($paramMMode['code_analytics']) && $paramMMode['code_analytics']!='' ) { echo stripslashes(trim($paramMMode['code_analytics'])); } ?>"><br />
-                <?php _e('Enter your domain URL:', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[domain_analytics]" value="<?php if( isset($paramMMode['domain_analytics']) && $paramMMode['domain_analytics']!='' ) { echo stripslashes(trim($paramMMode['domain_analytics'])); } else { echo $_SERVER['SERVER_NAME']; } ?>">
+                <?php _e('SEO Title', 'wp-maintenance'); ?><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[seo_title]" value="<?php if( isset($paramMMode['seo_title']) && $paramMMode['seo_title']!='' ) { echo stripslashes(trim($paramMMode['seo_title'])); } ?>"><br />
+                <?php _e('SEO Meta Description', 'wp-maintenance'); ?><br />
+                <input type="text" class="wpm-form-field" size="80%" name="wp_maintenance_settings[seo_description]" value="<?php if( isset($paramMMode['seo_description']) && $paramMMode['seo_description']!='' ) { echo stripslashes(trim($paramMMode['seo_description'])); } ?>"><br />
+                <br />
+
+                <!-- UPLOADER UN FAVICON -->
+                <strong><?php _e('Add a favicon', 'wp-maintenance'); ?></strong>
+                <div id="option-favicon">
+                        <div style="float:left;width:68%;margin-right:10px;">
+                            <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
+                            <input id="upload_favicon" class="wpm-form-field" size="65%" name="wp_maintenance_settings[favicon]" value="<?php if( isset($paramMMode['favicon']) && $paramMMode['favicon']!='' ) { echo $paramMMode['favicon']; } ?>" type="text" /> <a href="#" id="upload_favicon_button" class="button button-primary" style="padding-top: 0.2em;padding-bottom: 2.2em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
+                            <small><?php _e('Favicons are displayed in a browser tab. Need Help <a href="https://realfavicongenerator.net/" target="_blank">creating a favicon</a>?', 'wp-maintenance'); ?></small>
+                        </div>
+                        <div style="float:left;width:30%;text-align:center;">
+                            <?php if( isset($paramMMode['favicon']) && $paramMMode['favicon']!='' ) { ?>
+                            <?php _e('You use this favicon:', 'wp-maintenance'); ?><br />
+                            <img src="<?php echo $paramMMode['favicon']; ?>" width="100" /><br />
+                            <?php } ?>
+                        </div>                        
+                        <div class="clear"></div>
+                </div>
+                <div class="clear">&nbsp;</div>
+                <!-- GOOGLE ANALYTICS -->
+                <strong><?php _e('Analytics Code', 'wp-maintenance'); ?></strong>
+                <div id="option-analytics">
+                    <?php _e('Enter your Google analytics tracking ID here:', 'wp-maintenance'); ?><br />
+                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_analytics]" value="<?php if( isset($paramMMode['code_analytics']) && $paramMMode['code_analytics']!='' ) { echo stripslashes(trim($paramMMode['code_analytics'])); } ?>"><br />
+                    <?php _e('Enter your domain URL:', 'wp-maintenance'); ?><br />
+                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[domain_analytics]" value="<?php if( isset($paramMMode['domain_analytics']) && $paramMMode['domain_analytics']!='' ) { echo stripslashes(trim($paramMMode['domain_analytics'])); } else { echo $_SERVER['SERVER_NAME']; } ?>">
+                </div>
             </div>
             
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
+
             <!-- ICONS RESEAUX SOCIAUX -->
             <div>
                 <div style="float:left; width:70%;"><h3><?php _e('Enable Social Networks:', 'wp-maintenance'); ?></h3></div>
