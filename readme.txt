@@ -69,8 +69,7 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 = 5.0.0 =
 * Adding SEO settings
-* Fixed bug : 
-* adding preview page
+* Adding preview page
 * Adding opacity for background image
 * Fixed bug : auto slide & navigation button for slider
 * Fixed bug : disable the maintenance mode at the end of the countdown
