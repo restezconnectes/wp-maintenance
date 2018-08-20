@@ -4,7 +4,7 @@ Donate link: https://wpmaintenance.info/a-propos/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 4.9
-Stable tag: 5.0.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,14 +67,17 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Upgrade Notice ==
 
+= 5.0.1 =
+* Fixed bug : mode preview page
+
+== Changelog ==
+
 = 5.0.0 =
 * Adding SEO settings
 * Adding preview page
 * Adding opacity for background image
 * Fixed bug : auto slide & navigation button for slider
 * Fixed bug : disable the maintenance mode at the end of the countdown
-
-== Changelog ==
 
 = 4.0.4 =
 * Bug for roles and capacities fixed
