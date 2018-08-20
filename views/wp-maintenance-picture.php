@@ -85,6 +85,7 @@ function toggleTable(texte) {
                         <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
                         <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" />
                         <?php } ?>
+                        <?php if( isset($paramMMode['image']) && $paramMMode['image'] == WP_PLUGIN_URL.'/wp-maintenance/images/default.png' ) { ?><a href="https://fr.pngtree.com/freepng/cartoon-three---dimensional-square-cone-roadblock-vector-png_3258591.html" target="_blank" style="color:#ccc;text-decoration:none;"><small>Graphiques de pngtree.com</small></a><?php } ?>
                     </div>
                     <div class="clear"></div>
                 </div>

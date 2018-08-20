@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
 "POT-Creation-Date: 2018-08-18 20:19+0200\n"
-"PO-Revision-Date: 2018-08-18 20:22+0200\n"
+"PO-Revision-Date: 2018-08-20 22:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -86,7 +86,7 @@ msgstr "Général"
 
 #: classes/wp-maintenance.php:336 views/wp-maintenance-colors.php:41
 msgid "Colors & Fonts"
-msgstr "Coleurs & Polices"
+msgstr "Couleurs & Polices"
 
 #: classes/wp-maintenance.php:340
 msgid "CountDown"

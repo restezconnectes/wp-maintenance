@@ -182,7 +182,7 @@ jQuery(document).ready(function() {
                 </p>
                 <p>
                     <?php wp_nonce_field( 'wpm_export_nonce', 'wpm_export_nonce' ); ?>
-                    <?php submit_button( __( 'Export', 'wp-maintenance' ), 'secondary', 'submit', false ); ?>
+                    <?php submit_button( __( 'Export', 'wp-maintenance' ), 'button button-primary', 'submit', false ); ?>
                 </p>
             </form>
         </div>
@@ -199,7 +199,7 @@ jQuery(document).ready(function() {
               <p>
                   <input type="hidden" name="wpm_action" value="import_settings" />
                   <?php wp_nonce_field( 'wpm_import_nonce', 'wpm_import_nonce' ); ?>
-                  <?php submit_button( __( 'Import', 'wp-maintenance' ), 'secondary', 'submit', false ); ?>
+                  <?php submit_button( __( 'Import', 'wp-maintenance' ), 'button button-primary', 'submit', false ); ?>
               </p>
           </form>
         </div>

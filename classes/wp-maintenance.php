@@ -573,7 +573,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             }
             
         }
-        
+
         /* Désactive le mode maintenance pour les Roles définis */
         if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
         $paramLimit = get_option('wp_maintenance_limit');
@@ -592,7 +592,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         }
 
         /* Désactive le mode maintenance pour les PAGE ID définies */
-        if( isset($paramMMode['id_pages']) ) {
+        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( $valPageId == get_the_ID() ) {
@@ -600,7 +600,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
                 }
             }
         }
-
+  
         /* On désactive le mode maintenance pour les admins */
         if( current_user_can('administrator') == true ) {
             $statusActive = 0;
