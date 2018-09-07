@@ -21,7 +21,7 @@ function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settin
                     </h2>
                 </div>';
     $getHeader .= '<div id="wpm-navdashicons">
-        <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().' <a href="'.site_url().'/?preview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()"><span class="dashicons dashicons-external" style="font-size:25px;margin-right:15px;color:'.$colors[2].'" ></span></a></div>
+        <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().' <a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()"><span class="dashicons dashicons-external" style="font-size:25px;margin-right:15px;color:'.$colors[2].'" ></span></a></div>
     </div>';
     $getHeader .= '<div id="wpm-navmessage">';
     if( $update == 1 ) {

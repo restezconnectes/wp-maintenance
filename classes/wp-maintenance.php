@@ -578,7 +578,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
         $paramLimit = get_option('wp_maintenance_limit');
 
-        if( isset($paramLimit) && count($paramLimit)>1 ) {
+        if( isset($paramLimit) && !empty($paramLimit) ) {
             foreach($paramLimit as $limitrole) {
                 if( is_user_logged_in() ) {
                     $user_id = get_current_user_id(); 
@@ -606,7 +606,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             $statusActive = 0;
         }
         /* Mode Preview */
-        if( isset($_GET['preview']) && $_GET['preview']=='true' ) { 
+        if( isset($_GET['wpmpreview']) && $_GET['wpmpreview']=='true' ) { 
             $statusActive = 1;
         }
 
@@ -638,6 +638,20 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             $dateCpt = '';
         }
 
+        /* Si on a un epage maintenance.php dans le theme */
+        if ( file_exists( get_stylesheet_directory() ) ) {
+            $urlTpl = get_stylesheet_directory();
+        } else {
+            $urlTpl = get_template_directory();
+        }
+
+        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') ) {
+
+            include_once( $urlTpl.'/maintenance.php' );
+            die();
+
+        } 
+        
         /* Si on désactive le mode maintenance en fin de compte à rebours */
         if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $this->wpm_check_active() == 1 ) {
 
