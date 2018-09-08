@@ -69,6 +69,8 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 = 5.0.3 =
 * Fixed bug : Warning in count function for 7.2 php version
+* Fixed bug : Background color
+* Design : Changing position of WP Maintenance menu
 
 == Changelog ==
 

@@ -195,6 +195,11 @@ class WP_maintenance {
             $colors      = $_wp_admin_css_colors[$admin_color]->colors;
 
             echo '<style>
+#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }
+#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }
+#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }
+#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }
+#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }
 a.wpmadashicons:link { text-decoration:none;color: '.$colors[0].'!important; }
 a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 .wpmadashicons { color: '.$colors[0].'!important; }
@@ -228,20 +233,21 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
     function wpm_add_menu_admin_bar( $wp_admin_bar ) {
 
         $checkActive = get_option('wp_maintenance_active');
-        $textAdmin = '<div id="maintenance-off"></div>'.__('WP Maintenance', 'wp-maintenance');
+        $textAdmin = '<span class="ab-icon"></span> '.__('WP Maintenance', 'wp-maintenance');
+        $classAdminBar = 'off';
         
         if( isset($checkActive) && !is_network_admin() ) {
             
             if( $checkActive==1 ) {
-                $textAdmin = '<div id="maintenance-on"></div>'.__('WP Maintenance', 'wp-maintenance');
+                $classAdminBar = 'on';
             }
             $args = array(
-                'id'     => 'wpm-info',     // id of the existing child node (New > Post)
+                'id'     => 'wpm-info', // id of the existing child node (New > Post)
                 'title'  => $textAdmin, // alter the title of existing node
                 'href' => 'admin.php?page=wp-maintenance', // Lien du menu
-                'parent' => false,          // set parent to false to make it a top level (parent) node
+                'parent' => 'top-secondary', // set parent to false to make it a top level (parent) node
                 'meta' => array(
-                    'class' => 'wpmbackground'
+                    'class' => 'wpmbackground-'.$classAdminBar
                 )
             );
             $wp_admin_bar->add_node( $args );

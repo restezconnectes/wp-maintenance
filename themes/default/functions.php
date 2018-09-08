@@ -184,6 +184,7 @@ function wpm_customcss() {
 body {
 background-image: url(<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$o['b_pattern']; ?>.png);
 background-repeat: repeat;
+background-color: <?php echo $o['color_bg']; ?>
 <?php echo $optionBackground; ?>   
 }
 <?php 
@@ -204,6 +205,7 @@ background-size: cover;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
+background-color: <?php echo $o['color_bg']; ?>
 }
 <?php 	
 			if( isset($o['b_opacity_image']) ) {
@@ -211,12 +213,7 @@ background-size: cover;
 				#wrapper { background-color: rgba(0,0,0,<?php echo $o['b_opacity_image']; ?>); }
 <?php 
 			} 
-		/* Sinon on garde une couleur de fond */
-		} else {
-?>
-body { background-color: <?php echo $o['color_bg']; ?> }
-<?php	}
-
+		}
 	}
 	?>
 
