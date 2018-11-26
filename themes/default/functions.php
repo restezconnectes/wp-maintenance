@@ -200,12 +200,14 @@ background-color: <?php echo $o['color_bg']; ?>
 			}
 ?>
 body {
+display: grid!important;
 background:url(<?php echo $o['b_image']; ?>) <?php echo $o['b_repeat_image']; ?> <?php echo $o['b_fixed_image']; ?>top center;
 background-size: cover;
 -webkit-background-size: cover;
 -moz-background-size: cover;
 -o-background-size: cover;
-background-color: <?php echo $o['color_bg']; ?>
+background-color: <?php echo $o['color_bg']; ?>;
+background-position: center;
 }
 <?php 	
 			if( isset($o['b_opacity_image']) ) {

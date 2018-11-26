@@ -187,7 +187,10 @@ class WP_maintenance {
 
         global $current_user;
         global $_wp_admin_css_colors;
-
+        // Add Style for all admin
+        echo '
+<style>#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }</style>        
+        ';
         if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
             echo '<link rel="stylesheet" type="text/css" media="all" href="' .WPM_PLUGIN_URL.'css/wpm-admin.css">';
 
@@ -195,11 +198,6 @@ class WP_maintenance {
             $colors      = $_wp_admin_css_colors[$admin_color]->colors;
 
             echo '<style>
-#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }
-#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }
-#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }
-#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }
-#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f308";top: 2px;color:#fff !important; }
 a.wpmadashicons:link { text-decoration:none;color: '.$colors[0].'!important; }
 a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 .wpmadashicons { color: '.$colors[0].'!important; }
