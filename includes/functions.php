@@ -203,12 +203,12 @@ function wpm_get_ip() {
     
     // IP V4 ?
     else if(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {    
-        return $_SERVER['REMOTE_ADDR'];
+        return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
     } 
     
     // IP V6 ?
-    else if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-        echo $_SERVER['REMOTE_ADDR'];
+    else if(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+        return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
     }
 	// IP derrière un proxy
 	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {

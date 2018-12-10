@@ -132,7 +132,7 @@ jQuery(document).ready(function() {
             
                 <!-- IP addresses autorized -->
                 <h3><?php _e('IP autorized:', 'wp-maintenance'); ?></h3>
-                <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><br />
+                <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><?php _e('Your IP is: '.$_SERVER['REMOTE_ADDR'], 'wp-maintenance'); ?><br /><br />
                 <textarea name="wp_maintenance_ipaddresses" class="wpm-form-field" ROWS="5" style="width:80%;"><?php if( isset($paramIpAddress) && $paramIpAddress!='' ) { echo $paramIpAddress; } ?></textarea>
                 
                 <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
