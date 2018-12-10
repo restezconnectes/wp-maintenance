@@ -573,6 +573,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             foreach($lienIpAddress as $ipAutorized) {
                 if( strpos($ipAutorized, wpm_get_ip())!== false ) {
                     $statusActive = 0;
+                    
                 }
             }
             
