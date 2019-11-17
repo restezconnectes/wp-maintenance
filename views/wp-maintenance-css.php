@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_css' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_css' && wp_verify_nonce($_POST['security-css'], 'valid-css') ) {
 
     update_option('wp_maintenance_style', stripslashes($_POST["wp_maintenance_style"]));
     $options_saved = true;
@@ -31,7 +31,8 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     
     <form method="post" action="" name="valide_settings">
         <input type="hidden" name="action" value="update_css" />
-        
+        <?php wp_nonce_field('valid-css', 'security-css'); ?>
+
     <!-- HEADER -->
     <?php echo wpm_get_header( __('CSS Style', 'wp-maintenance'), 'dashicons-media-code', $messageUpdate ) ?>
     <!-- END HEADER -->

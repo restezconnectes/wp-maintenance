@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_settings' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_settings' && wp_verify_nonce($_POST['security-settings'], 'valid-settings') ) {
 
     update_option('wp_maintenance_limit', $_POST["wp_maintenance_limit"]);
     update_option('wp_maintenance_ipaddresses', $_POST["wp_maintenance_ipaddresses"]);
@@ -52,7 +52,7 @@ jQuery(document).ready(function() {
     
     <form method="post" action="" name="valide_settings">
         <input type="hidden" name="action" value="update_settings" />
-        
+        <?php wp_nonce_field('valid-settings', 'security-settings'); ?>
     <!-- HEADER -->
     <?php echo wpm_get_header( __('Settings', 'wp-maintenance'), 'dashicons-admin-generic', $messageUpdate ) ?>
     <!-- END HEADER -->
@@ -132,7 +132,7 @@ jQuery(document).ready(function() {
             
                 <!-- IP addresses autorized -->
                 <h3><?php _e('IP autorized:', 'wp-maintenance'); ?></h3>
-                <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><?php _e('Your IP is: '.$_SERVER['REMOTE_ADDR'], 'wp-maintenance'); ?><br /><br />
+                <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><br />
                 <textarea name="wp_maintenance_ipaddresses" class="wpm-form-field" ROWS="5" style="width:80%;"><?php if( isset($paramIpAddress) && $paramIpAddress!='' ) { echo $paramIpAddress; } ?></textarea>
                 
                 <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>

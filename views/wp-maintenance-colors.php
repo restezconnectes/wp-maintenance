@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_colors' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_colors' && wp_verify_nonce($_POST['security-colors'], 'valid-colors') ) {
 
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $options_saved = true;
@@ -36,7 +36,8 @@ $paramMMode = get_option('wp_maintenance_settings');
     
     <form method="post" action="" name="valide_settings">
         <input type="hidden" name="action" value="update_colors" />
-        
+        <?php wp_nonce_field('valid-colors', 'security-colors'); ?>
+
     <!-- HEADER -->
     <?php echo wpm_get_header( __('Colors & Fonts', 'wp-maintenance'), 'dashicons-art', $messageUpdate ) ?>
     <!-- END HEADER -->
@@ -172,7 +173,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </td>
                     <td>
                         <?php _e('Size:', 'wp-maintenance'); ?>
-                        <input type="text" size="3" class="wpm-form-field" id="date_cpt_size" name="wp_maintenance_settings[date_cpt_size]" value="<?php if( isset($paramMMode['date_cpt_size']) && $paramMMode['date_cpt_size']!='' ) { echo trim($paramMMode['date_cpt_size']); } else { echo '16'; } ?>" />px
+                        <input type="text" size="3" class="wpm-form-field" id="date_cpt_size" name="wp_maintenance_settings[date_cpt_size]" value="<?php if( isset($paramMMode['date_cpt_size']) && $paramMMode['date_cpt_size']!='' ) { echo trim($paramMMode['date_cpt_size']); } else { echo '10'; } ?>" />vw
 
                     </td>
                 </tr>

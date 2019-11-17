@@ -140,11 +140,11 @@ function wpm_sidebar() {
     $wpmSidebar .= '<div style="border: 1px solid #ddd;background-color:#fff;padding:10px;text-align:center;margin-bottom:5px;">'.__('ABOUT', 'wp-maintenance').'</div>';
     
      $wpmSidebar .= '<div style="text-align:justify;background-color:#fff;padding:10px;margin-bottom: 10px;">'.__('This plugin has been developed for you for free by <a href="https://restezconnectes.fr" target="_blank">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.', 'wp-maintenance').'<br /><br />';
-    $wpmSidebar .= ''.__('Visit', 'wp-maintenance').' <a href="https://wpmaintenance.info" target="_blank">WP Maintenance</a>, '.__('try the demo of the plugin, talk about this plugin to your surroundings!', 'wp-maintenance').'<br /><br />';
+    $wpmSidebar .= ''.__('Visit', 'wp-maintenance').' <a href="https://madeby.restezconnectes.fr" target="_blank">WP Maintenance</a>, '.__('try the demo of the plugin, talk about this plugin to your surroundings!', 'wp-maintenance').'<br /><br />';
     /* FAIRE UN DON SUR PAYPAL */
     $wpmSidebar .= ''.__('Support this extension and my other developments (French Paypal):', 'wp-maintenance').'<br /><br />
         <div style="width:220px;margin-left:auto;margin-right:auto;padding:5px;">
-            <a href="https://paypal.me/RestezConnectes/10" target="_blank" class="wpmclassname">
+            <a href="https://paypal.me/RestezConnectes/20" target="_blank" class="wpmclassname">
                 <img src="'.WPM_PLUGIN_URL.'images/donate.png" valign="bottom" width="64" /> Donate now!
             </a>
         </div>
@@ -175,7 +175,7 @@ function wpm_footer() {
     
     $wpmFooter = '
     <div style="margin-top:40px;">
-        <a href="https://wpmaintenance.info/" target="_blank">'.__('WP Maintenance','wp-maintenance').' (v.'.WPM_VERSION.')</a> '.__('is brought to you by','wp-maintenance').' <a href="https://restezconnectes.fr/" target="_blank">Restez Connectés</a> - '.__('If you found this plugin useful','wp-maintenance').' <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank">'.__('give it 5 &#9733; on WordPress.org','wp-maintenance').'</a>
+        <a href="https://madeby.restezconnectes.fr" target="_blank">'.__('WP Maintenance','wp-maintenance').' (v.'.WPM_VERSION.')</a> '.__('is brought to you by','wp-maintenance').' <a href="https://restezconnectes.fr/" target="_blank">Restez Connectés</a> - '.__('If you found this plugin useful','wp-maintenance').' <a href="https://wordpress.org/support/view/plugin-reviews/wp-maintenance" target="_blank">'.__('give it 5 &#9733; on WordPress.org','wp-maintenance').'</a>
     </div>
     ';
     
@@ -199,17 +199,7 @@ function wpm_get_ip() {
 	// IP si internet partagé
 	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
 		return $_SERVER['HTTP_CLIENT_IP'];
-	} 
-    
-    // IP V4 ?
-    else if(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {    
-        return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4);
-    } 
-    
-    // IP V6 ?
-    else if(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-        return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP,FILTER_FLAG_IPV6);
-    }
+	}
 	// IP derrière un proxy
 	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 		return $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -378,6 +368,7 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: none;}
     text-align:center;
     margin: 0.5em auto;
 }
+.wpm_ctp_sep { margin-top:1vw; }
 #header {
     background: #_COLORHEAD;
 }

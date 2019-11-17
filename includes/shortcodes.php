@@ -3,40 +3,41 @@
 defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
-function wpm_analytics_shortcode( $atts ) {
+    function wpm_analytics_shortcode( $atts ) {
 
-    if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-    $paramMMode = get_option('wp_maintenance_settings');
-
-    $nameServer = '';
-    if( isset($_SERVER['SERVER_NAME']) ) {
-        $nameServer = $_SERVER['SERVER_NAME'];
-    }
+        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
+        $paramMMode = get_option('wp_maintenance_settings');
     
-    // Attributes
-    extract( shortcode_atts(
-        array(
-            'enable' => 0,
-            'code' => $paramMMode['code_analytics'],
-            'domain' => ''.$nameServer.''
-        ), $atts )
-    );
-
-    if( isset($enable) && $enable==1 && $code!='') {
-        return "
+        $nameServer = '';
+        if( isset($_SERVER['SERVER_NAME']) ) {
+            $nameServer = $_SERVER['SERVER_NAME'];
+        }
+        
+        // Attributes
+        extract( shortcode_atts(
+            array(
+                'enable' => 0,
+                'code' => $paramMMode['code_analytics'],
+                'domain' => ''.$nameServer.''
+            ), $atts )
+        );
+    
+        if( isset($code) && $code!='') {
+            return "
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src=\"https://www.googletagmanager.com/gtag/js?id=".$code."\"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments)};
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
 
-  gtag('config', ".$code.");
+    gtag('config', ".$code.");
 </script>";
-    } else {
-        // Code
-        return '<!-- no analytics -->';
+        } else {
+            // Code
+            return '<!-- no analytics -->';
+        }
     }
-}
 add_shortcode( 'wpm_analytics', 'wpm_analytics_shortcode' );
 
 function wpm_social_shortcode( $atts ) {

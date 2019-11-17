@@ -1,10 +1,10 @@
 === WP Maintenance ===
 Contributors: Florent73
-Donate link: https://wpmaintenance.info/a-propos/
+Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 5.0
-Stable tag: 5.0.3
+Tested up to: 5.3
+Stable tag: 5.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,9 +53,12 @@ It is hard to continue development and support for this free plugin without cont
 = I have activated plugin and don’t see any changes, looks like plugin is not working. =
 This is normal because you are logged in as an administrator. Try a different browser. If you have registered as a wordpress user, you see the site in normal mode.
 
+= I have disabled plugin but I don’t see any changes, I have always the maintenance page, looks like plugin is not working. =
+You have a cache plugin ? Try to purge it and try again.
+
 = Where can I find out the login page to get to the site? =
 You can use your administrator access or create new user in wordpress dashboard
-http://yousite.com/wp-login.php
+https://yousite.com/wp-admin/
 
 = Can I change the plugin code? =
 
@@ -65,14 +68,25 @@ Yes. Thank you for submitting your changes to update the plugin.
 
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
-== Upgrade Notice ==
+== Changelog ==
+
+= 5.0.6 =
+* SECURITY UPDATE : Adding NONCE to forms
+* Change image defaut
+
+= 5.0.5 =
+* Fixed bug Google Analytics
+* Fixed bug link dashboard
+
+= 5.0.4 =
+* Add separete for countdown
+* Fixed bug authorize pages ID
+* Change font size of countdown : vw instead px
 
 = 5.0.3 =
 * Fixed bug : Warning in count function for 7.2 php version
 * Fixed bug : Background color
 * Design : Changing position of WP Maintenance menu
-
-== Changelog ==
 
 = 5.0.2 =
 * Fixed bug : conflict mode preview with others previews

@@ -68,7 +68,9 @@ class WP_maintenance {
             'titre_maintenance' => __('This site is down for maintenance', 'wp-maintenance'),
             'text_maintenance' => __('Come back quickly!', 'wp-maintenance'),
             'userlimit' => 'administrator',
-            'image' => WP_PLUGIN_URL.'/wp-maintenance/images/default.png',
+            'image' => WP_PLUGIN_URL.'/wp-maintenance/images/default2.png',
+            'image_width' => 450,
+            'image_height' => 450,
             'font_title' => 'PT Sans',
             'font_title_size' => 40,
             'font_title_weigth' => 'normal',
@@ -91,8 +93,6 @@ class WP_maintenance {
             'color_button_onclick' => '#333333',
             'color_button_hover' => '#cccccc',
             'color_button' => '#1e73be',
-            'image_width' => 250,
-            'image_height' => 100,
             'newletter' => 0,
             'active_cpt' => 0,
             'newletter_font_text' => 'PT Sans',
@@ -573,7 +573,6 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             foreach($lienIpAddress as $ipAutorized) {
                 if( strpos($ipAutorized, wpm_get_ip())!== false ) {
                     $statusActive = 0;
-                    
                 }
             }
             
@@ -597,14 +596,14 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         }
 
         /* Désactive le mode maintenance pour les PAGE ID définies */
-        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
+        /*if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( $valPageId == get_the_ID() ) {
                     $statusActive = 0;
                 }
             }
-        }
+        }*/
   
         /* On désactive le mode maintenance pour les admins */
         if( current_user_can('administrator') == true ) {
@@ -620,6 +619,8 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
 
     /* Mode Maintenance */
     function wpm_maintenance_mode() {
+
+        global $post;
 
         if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
         $paramMMode = get_option('wp_maintenance_settings');
@@ -666,6 +667,17 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             }
         }
 
+        $statusPageActive = 1;
+        /*Désactive le mode maintenance pour les PAGE ID définies */
+        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
+            $listPageId = explode(',', $paramMMode['id_pages']);
+            foreach($listPageId as $keyPageId => $valPageId) {
+                if( trim($valPageId) == $post->ID ) {
+                    $statusPageActive = 0;
+                }
+            }
+        }
+
         // Prevetn Plugins from caching
         // Disable caching plugins. This should take care of:
         //   - W3 Total Cache
@@ -687,46 +699,47 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             define('DONOTCACHEOBJECT', true);
         }
         nocache_headers();
+        if ($statusPageActive == 1) {
+            if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
+                header('HTTP/1.1 503 Service Temporarily Unavailable');
+                header('Status: 503 Service Temporarily Unavailable');
+                header('Retry-After: 86400'); // retry in a day
+            }
+            
+            $template = $this->wpm_get_default_template();
+            require_once( WPM_DIR.'/themes/default/functions.php' );
 
-        if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
-            header('HTTP/1.1 503 Service Temporarily Unavailable');
-            header('Status: 503 Service Temporarily Unavailable');
-            header('Retry-After: 86400'); // retry in a day
-        }
-        
-        $template = $this->wpm_get_default_template();
-        require_once( WPM_DIR.'/themes/default/functions.php' );
-
-        $template_tags = array (
-            "{TitleSEO}" => wpm_title_seo(),
-            "{MetaDescription}" => wpm_metadescription(),
-            "{HeaderCode}" => wpm_headercode(),
-            "{Head}" => wpm_head(),
-            "{Logo}" => wpm_logo(),
-            "{Version}" => WPM_VERSION,
-            "{Title}" => wpm_title(),
-            "{Text}" => wpm_text(),
-            "{Favicon}" => wpm_favicon(), 
-            "{CustomCSS}" => wpm_customcss(),
-            "{Analytics}" => wpm_analytics(),
-            "{TopSocialIcon}" => wpm_social_position("top"),
-            "{BottomSocialIcon}" => wpm_social_position("bottom"),
-            "{Copyrights}" => wpm_copyrights(),
-            "{AddStyleWysija}" => wpm_stylenewsletter(),
-            "{Newsletter}" => wpm_newsletter(),
-            "{SliderCSS}" => WPM_Slider::slider_css(),
-            "{ScriptSlider}" => WPM_Slider::slider_scripts(),
-            "{ScriptSlideshow}" => WPM_Slider::slider_functions(),
-            "{Counter}" => WPM_Countdown::display($dateCpt),
-            "{SlideshowAL}" => WPM_Slider::slidershow('abovelogo'),
-            "{SlideshowBL}" => WPM_Slider::slidershow('belowlogo'),
-            "{SlideshowBT}" => WPM_Slider::slidershow('belowtext'),
+            $template_tags = array (
+                "{TitleSEO}" => wpm_title_seo(),
+                "{MetaDescription}" => wpm_metadescription(),
+                "{HeaderCode}" => wpm_headercode(),
+                "{Head}" => wpm_head(),
+                "{Logo}" => wpm_logo(),
+                "{Version}" => WPM_VERSION,
+                "{Title}" => wpm_title(),
+                "{Text}" => wpm_text(),
+                "{Favicon}" => wpm_favicon(), 
+                "{CustomCSS}" => wpm_customcss(),
+                "{Analytics}" => wpm_analytics(),
+                "{TopSocialIcon}" => wpm_social_position("top"),
+                "{BottomSocialIcon}" => wpm_social_position("bottom"),
+                "{Copyrights}" => wpm_copyrights(),
+                "{AddStyleWysija}" => wpm_stylenewsletter(),
+                "{Newsletter}" => wpm_newsletter(),
+                "{SliderCSS}" => WPM_Slider::slider_css(),
+                "{ScriptSlider}" => WPM_Slider::slider_scripts(),
+                "{ScriptSlideshow}" => WPM_Slider::slider_functions(),
+                "{Counter}" => WPM_Countdown::display($dateCpt),
+                "{SlideshowAL}" => WPM_Slider::slidershow('abovelogo'),
+                "{SlideshowBL}" => WPM_Slider::slidershow('belowlogo'),
+                "{SlideshowBT}" => WPM_Slider::slidershow('belowtext'),
 
 
-        );
-        
-        echo strtr($template, $template_tags);
-        exit();
+            );
+            
+            echo strtr($template, $template_tags);
+            exit();
+        } 
     }
 
 }

@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_general' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_general' && wp_verify_nonce($_POST['security-general'], 'valid-general') ) {
 
     if( isset($_POST["wp_maintenance_social_options"]['reset']) && $_POST["wp_maintenance_social_options"]['reset'] ==1 ) {
         unset($_POST["wp_maintenance_social"]);
@@ -48,7 +48,8 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
 <div class="wrap">
     <form method="post" action="" id="valide_settings" name="valide_settings">
         <input type="hidden" name="action" value="update_general" />
-        
+        <?php wp_nonce_field('valid-general', 'security-general'); ?>
+
     <!-- HEADER -->
     <?php echo wpm_get_header( __('General', 'wp-maintenance'), 'dashicons-admin-settings', $messageUpdate ) ?>
     <!-- END HEADER -->

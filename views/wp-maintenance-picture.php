@@ -10,8 +10,11 @@ $admin_color = get_user_option( 'admin_color', get_current_user_id() );
 $colors      = $_wp_admin_css_colors[$admin_color]->colors;
 
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' && wp_verify_nonce($_POST['security-pictures'], 'valid-pictures') ) {
 
+    if( isset($_POST['upload_picture']) && $_POST['upload_picture']!='' ) {
+        $_POST["wp_maintenance_settings"]["image"] = $_POST['upload_picture'];
+    }
     if( isset($_POST["wpm_maintenance_detete"]) && is_array($_POST["wpm_maintenance_detete"]) ) {
         foreach($_POST["wpm_maintenance_detete"] as $delSlideId=>$delSlideTrue) {
             if (array_key_exists($delSlideId, $_POST["wp_maintenance_slider"]["slider_image"])) {
@@ -62,6 +65,7 @@ function toggleTable(texte) {
     
     <form method="post" action="" name="valide_settings">
         <input type="hidden" name="action" value="update_pictures" />
+        <?php wp_nonce_field('valid-pictures', 'security-pictures'); ?>
 
         <!-- HEADER -->
         <?php echo wpm_get_header( __('Picture', 'wp-maintenance'), 'dashicons-format-gallery', $messageUpdate ) ?>
@@ -75,17 +79,17 @@ function toggleTable(texte) {
 
                         <h3><?php _e('Header picture', 'wp-maintenance'); ?></h3>                
                         <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
-                        <input id="upload_image" size="65%" name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo $paramMMode['image']; } ?>" type="text" class="wpm-form-field" /> <a href="#" id="upload_image_button" class="button button-primary" style="padding-top: 0.2em;padding-bottom: 2.2em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
+                        <input id="settings_image"name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo $paramMMode['image']; } ?>" type="hidden" />
+                        <input id="upload_image" size="65%" name="upload_picture" value="" type="text" class="wpm-form-field" /> <a href="#" id="upload_image_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
                         <span class="description"><?php _e( 'URL path to image to replace default WordPress Logo. (You can upload your image with the WordPress media uploader)', 'wp-maintenance' ); ?></span><br /><br />
-                            <span class="description"><?php _e( 'Your Logo width (Enter in pixels). Default: 310px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo $paramMMode['image_width']; } ?>" name="wp_maintenance_settings[image_width]" /> <br />
-                            <span class="description"><?php _e( 'Your Logo Height (Enter in pixels). Default: 185px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo $paramMMode['image_height']; } ?>" name="wp_maintenance_settings[image_height]" /><br />
+                            <span class="description"><?php _e( 'Your Logo width (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo $paramMMode['image_width']; } ?>" name="wp_maintenance_settings[image_width]" /> <br />
+                            <span class="description"><?php _e( 'Your Logo Height (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo $paramMMode['image_height']; } ?>" name="wp_maintenance_settings[image_height]" /><br />
 
                     </div>
                     <div style="float:left;width:30%;text-align:center;">
                         <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
                         <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" />
                         <?php } ?>
-                        <?php if( isset($paramMMode['image']) && $paramMMode['image'] == WP_PLUGIN_URL.'/wp-maintenance/images/default.png' ) { ?><a href="https://fr.pngtree.com/freepng/cartoon-three---dimensional-square-cone-roadblock-vector-png_3258591.html" target="_blank" style="color:#ccc;text-decoration:none;"><small>Graphiques de pngtree.com</small></a><?php } ?>
                     </div>
                     <div class="clear"></div>
                 </div>

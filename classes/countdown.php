@@ -35,9 +35,9 @@ class WPM_Countdown extends WP_maintenance {
                         CountStepper = -1;
                         LeadingZero = true;
                 ';
-                $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
+                $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
                 if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1 ) {
-                    $Counter .= '<div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
+                    $Counter .= '<div class="wpm_ctp_sep" style="float:left;">:</div><div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
                 }
                 $Counter .= "';";
                 if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) {

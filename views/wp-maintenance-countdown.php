@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_countdown' ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_countdown' && wp_verify_nonce($_POST['security-countdown'], 'valid-countdown') ) {
 
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $messageUpdate = 1;
@@ -19,7 +19,8 @@ $paramMMode = get_option('wp_maintenance_settings');
 
     <form method="post" action="" name="valide_settings">
         <input type="hidden" name="action" value="update_countdown" />
-        
+        <?php wp_nonce_field('valid-countdown', 'security-countdown'); ?>
+
     <!-- HEADER -->
     <?php echo wpm_get_header( __('Countdown', 'wp-maintenance'), 'dashicons-clock', $messageUpdate ) ?>
     <!-- END HEADER -->
