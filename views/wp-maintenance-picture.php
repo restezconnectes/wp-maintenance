@@ -13,11 +13,22 @@ $colors      = $_wp_admin_css_colors[$admin_color]->colors;
 if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' && wp_verify_nonce($_POST['security-pictures'], 'valid-pictures') ) {
 
     if( isset($_POST['upload_picture']) && $_POST['upload_picture']!='' ) {
-        $_POST["wp_maintenance_settings"]["image"] = $_POST['upload_picture'];
+        $_POST["wp_maintenance_settings"]["image"] = sanitize_text_field($_POST['upload_picture']);
     }
+    if( isset($_POST['remove_image']) && $_POST['remove_image']==1 ) {
+        $_POST["wp_maintenance_settings"]["image"] = '';
+    }
+    if( isset($_POST['upload_b_image']) && $_POST['upload_b_image']!='' ) {
+        $_POST["wp_maintenance_settings"]["b_image"] = sanitize_text_field($_POST['upload_b_image']);
+    }
+    if( isset($_POST['remove_b_image']) && $_POST['remove_b_image']==1 ) {
+        $_POST["wp_maintenance_settings"]["b_image"] = '';
+        $_POST["wp_maintenance_settings"]["b_enable_image"] = 0;
+    }
+
     if( isset($_POST["wpm_maintenance_detete"]) && is_array($_POST["wpm_maintenance_detete"]) ) {
         foreach($_POST["wpm_maintenance_detete"] as $delSlideId=>$delSlideTrue) {
-            if (array_key_exists($delSlideId, $_POST["wp_maintenance_slider"]["slider_image"])) {
+            if ( array_key_exists($delSlideId, sanitize_text_field($_POST["wp_maintenance_slider"]["slider_image"]) ) ) {
                 unset($_POST["wp_maintenance_slider"]["slider_image"][$delSlideId]);
                 unset($_POST["wp_maintenance_slider"]["slider_text"][$delSlideId]);
                 unset($_POST["wp_maintenance_slider"]["slider_link"][$delSlideId]);
@@ -79,16 +90,16 @@ function toggleTable(texte) {
 
                         <h3><?php _e('Header picture', 'wp-maintenance'); ?></h3>                
                         <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
-                        <input id="settings_image"name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo $paramMMode['image']; } ?>" type="hidden" />
+                        <input id="settings_image"name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo esc_url($paramMMode['image']); } ?>" type="hidden" />
                         <input id="upload_image" size="65%" name="upload_picture" value="" type="text" class="wpm-form-field" /> <a href="#" id="upload_image_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
                         <span class="description"><?php _e( 'URL path to image to replace default WordPress Logo. (You can upload your image with the WordPress media uploader)', 'wp-maintenance' ); ?></span><br /><br />
-                            <span class="description"><?php _e( 'Your Logo width (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo $paramMMode['image_width']; } ?>" name="wp_maintenance_settings[image_width]" /> <br />
-                            <span class="description"><?php _e( 'Your Logo Height (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo $paramMMode['image_height']; } ?>" name="wp_maintenance_settings[image_height]" /><br />
+                            <span class="description"><?php _e( 'Your Logo width (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo esc_html($paramMMode['image_width']); } ?>" name="wp_maintenance_settings[image_width]" /> <br />
+                            <span class="description"><?php _e( 'Your Logo Height (Enter in pixels). Default: 450px', 'wp-maintenance' ); ?></span> <input type="text" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo esc_html($paramMMode['image_height']); } ?>" name="wp_maintenance_settings[image_height]" /><br />
 
                     </div>
                     <div style="float:left;width:30%;text-align:center;">
                         <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
-                        <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" />
+                        <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" /><br /><input type="checkbox" name="remove_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?>
                         <?php } ?>
                     </div>
                     <div class="clear"></div>
@@ -115,7 +126,8 @@ function toggleTable(texte) {
                     <!-- UPLOADER UNE IMAGE DE FOND -->
                     <div style="float:left;width:68%;margin-right:10px;">
                         <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
-                        <input id="upload_b_image" class="wpm-form-field" size="65%" name="wp_maintenance_settings[b_image]" value="<?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' ) { echo $paramMMode['b_image']; } ?>" type="text" /> <a href="#" id="upload_b_image_button" class="button button-primary" style="padding-top: 0.2em;padding-bottom: 2.2em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a>
+                        <input id="settings_image"name="wp_maintenance_settings[b_image]" value="<?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' ) { echo esc_url($paramMMode['b_image']); } ?>" type="hidden" />
+                        <input id="upload_b_image" class="wpm-form-field" size="65%" name="upload_b_image" value="" type="text" /> <a href="#" id="upload_b_image_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a>
                         <h4><?php _e('Background picture options', 'wp-maintenance'); ?></h4>
                         <select name="wp_maintenance_settings[b_repeat_image]" class="wpm-form-field" >
                             <option value="repeat"<?php if( (isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat') or empty($paramMMode['b_repeat_image']) ) { echo ' selected'; } ?>>repeat</option>
@@ -129,7 +141,7 @@ function toggleTable(texte) {
                     <div style="float:left;width:30%;text-align:center;">
                         <?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' && (!$paramMMode['b_pattern'] or $paramMMode['b_pattern']==0) ) { ?>
                             <?php _e('You use this background picture:', 'wp-maintenance'); ?><br />
-                            <img src="<?php echo $paramMMode['b_image']; ?>" width="200" /><br />
+                            <img src="<?php echo esc_url($paramMMode['b_image']); ?>" width="200" /><br /><input type="checkbox" name="remove_b_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?>
                         <?php } ?>
                     </div>
                     <div class="clear"></div>
@@ -153,7 +165,7 @@ function toggleTable(texte) {
                     <div style="float:left;width:30%;text-align:center;">
                         <?php if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']>0) { ?>
                         <?php _e('You use this pattern:', 'wp-maintenance'); ?><br />
-                        <div style="background: url('<?php echo WP_PLUGIN_URL ?>/wp-maintenance/images/pattern<?php echo $paramMMode['b_pattern']; ?>.png');width:200px;height:200px;border:1px solid #ddd;margin-left:auto;margin-right:auto;"></div>
+                        <div style="background: url('<?php echo esc_url(WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$paramMMode['b_pattern'].'.png'); ?>);width:200px;height:200px;border:1px solid #ddd;margin-left:auto;margin-right:auto;"></div>
                         <?php } ?>
                     </div>
                     <div class="clear"></div>
@@ -190,8 +202,8 @@ function toggleTable(texte) {
                     ?>
                     <div style="margin-bottom:15px;width:100%;">
                         <div style="width:30%;float:left;">
-                            <?php _e('Speed:', 'wp-maintenance'); ?> <input type="text" name="wp_maintenance_slider_options[slider_speed]" class="wpm-form-field" size="4" value="<?php if( isset($paramSliderOptions['slider_speed']) && $paramSliderOptions['slider_speed'] !='') { echo $paramSliderOptions['slider_speed']; } else { echo 500; } ?>" />ms<br />
-                            <?php _e('Width:', 'wp-maintenance'); ?> <input type="text" name="wp_maintenance_slider_options[slider_width]" class="wpm-form-field" size="3" value="<?php if( isset($paramSliderOptions['slider_width']) && $paramSliderOptions['slider_width'] !='') { echo $paramSliderOptions['slider_width']; } else { echo 50; } ?>" />%
+                            <?php _e('Speed:', 'wp-maintenance'); ?> <input type="text" name="wp_maintenance_slider_options[slider_speed]" class="wpm-form-field" size="4" value="<?php if( isset($paramSliderOptions['slider_speed']) && $paramSliderOptions['slider_speed'] !='') { echo esc_html($paramSliderOptions['slider_speed']); } else { echo 500; } ?>" />ms<br />
+                            <?php _e('Width:', 'wp-maintenance'); ?> <input type="text" name="wp_maintenance_slider_options[slider_width]" class="wpm-form-field" size="3" value="<?php if( isset($paramSliderOptions['slider_width']) && $paramSliderOptions['slider_width'] !='') { echo esc_html($paramSliderOptions['slider_width']); } else { echo 50; } ?>" />%
                         </div>
                         <div style="width:30%;float:left;padding-left:5px;">
                             
@@ -224,7 +236,7 @@ function toggleTable(texte) {
                         <div class="clear"></div>
                     </div>
 
-                    <input id="upload_slider_image" size="65%" class="wpm-form-field" name="wp_maintenance_slider[slider_image][<?php echo $countSlide; ?>][image]" value="" type="text" /> <a href="#" id="upload_slider_image_button" class="button button-primary" style="padding-top: 0.2em;padding-bottom: 2.2em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br /><br />
+                    <input id="upload_slider_image" size="65%" class="wpm-form-field" name="wp_maintenance_slider[slider_image][<?php echo $countSlide; ?>][image]" value="" type="text" /> <a href="#" id="upload_slider_image_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br /><br />
 
                     <div style="width:100%">
                         <?php
@@ -235,15 +247,15 @@ function toggleTable(texte) {
 
                                         $slideImg = '';
                                         if( isset($paramSlider['slider_image'][$numSlide]['image']) ) {
-                                            $slideImg = $paramSlider['slider_image'][$numSlide]['image'];
+                                            $slideImg = esc_url($paramSlider['slider_image'][$numSlide]['image']);
                                         }
                                         $slideText = '';
                                         if( isset($paramSlider['slider_image'][$numSlide]['text']) ) {
-                                            $slideText = stripslashes($paramSlider['slider_image'][$numSlide]['text']);
+                                            $slideText = esc_html(stripslashes($paramSlider['slider_image'][$numSlide]['text']));
                                         }
                                         $slideLink = '';
                                         if( isset($paramSlider['slider_image'][$numSlide]['link']) ) {
-                                            $slideLink = $paramSlider['slider_image'][$numSlide]['link'];
+                                            $slideLink = esc_url($paramSlider['slider_image'][$numSlide]['link']);
                                         }
                                         echo '<div style="float:left;width:45%;border: 1px solid #ececec;padding:0.8em;margin-right:1%;margin-bottom:1%">';
 

@@ -133,21 +133,21 @@ jQuery(document).ready(function() {
                 <!-- IP addresses autorized -->
                 <h3><?php _e('IP autorized:', 'wp-maintenance'); ?></h3>
                 <?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line:', 'wp-maintenance'); ?>&nbsp;<br /><br />
-                <textarea name="wp_maintenance_ipaddresses" class="wpm-form-field" ROWS="5" style="width:80%;"><?php if( isset($paramIpAddress) && $paramIpAddress!='' ) { echo $paramIpAddress; } ?></textarea>
+                <textarea name="wp_maintenance_ipaddresses" class="wpm-form-field" ROWS="5" style="width:80%;"><?php if( isset($paramIpAddress) && $paramIpAddress!='' ) { echo esc_textarea($paramIpAddress); } ?></textarea>
                 
                 <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
             
                 <!-- ID pages autorized -->
                 <h3><?php _e('ID pages autorized:', 'wp-maintenance'); ?></h3>
                 <?php _e('Allow the site to display these ID pages. Please, enter the ID pages separate with comma :', 'wp-maintenance'); ?>&nbsp;<br /><br />
-                <input name="wp_maintenance_settings[id_pages]" class="wpm-form-field" size="70" value="<?php if( isset($paramMMode['id_pages']) && $paramMMode['id_pages']!='' ) { echo $paramMMode['id_pages']; } ?>" />
+                <input name="wp_maintenance_settings[id_pages]" class="wpm-form-field" size="70" value="<?php if( isset($paramMMode['id_pages']) && $paramMMode['id_pages']!='' ) { echo esc_textarea($paramMMode['id_pages']); } ?>" />
                 
                 <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
             
                 <!-- Header Code -->
                 <h3><?php _e('Header Code:', 'wp-maintenance'); ?></h3>
                 <?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS.', 'wp-maintenance'); ?>&nbsp;<br /><br />
-                <textarea id="headercode" name="wp_maintenance_settings[headercode]" COLS=50 ROWS=2><?php if( isset($paramMMode['headercode']) && $paramMMode['headercode']!='' ) { echo stripslashes($paramMMode['headercode']); }  ?></textarea><br />
+                <textarea id="headercode" name="wp_maintenance_settings[headercode]" COLS=50 ROWS=2><?php if( isset($paramMMode['headercode']) && $paramMMode['headercode']!='' ) { echo esc_textarea(stripslashes($paramMMode['headercode'])); }  ?></textarea><br />
                 
                 
                 

@@ -672,7 +672,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
         if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
             $listPageId = explode(',', $paramMMode['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
-                if( trim($valPageId) == $post->ID ) {
+                if( isset($post->ID) && trim($valPageId) == $post->ID ) {
                     $statusPageActive = 0;
                 }
             }
@@ -710,21 +710,21 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             require_once( WPM_DIR.'/themes/default/functions.php' );
 
             $template_tags = array (
-                "{TitleSEO}" => wpm_title_seo(),
-                "{MetaDescription}" => wpm_metadescription(),
+                "{TitleSEO}" => sanitize_text_field(wpm_title_seo()),
+                "{MetaDescription}" => sanitize_text_field(wpm_metadescription()),
                 "{HeaderCode}" => wpm_headercode(),
                 "{Head}" => wpm_head(),
                 "{Logo}" => wpm_logo(),
                 "{Version}" => WPM_VERSION,
-                "{Title}" => wpm_title(),
-                "{Text}" => wpm_text(),
+                "{Title}" => sanitize_text_field(wpm_title()),
+                "{Text}" => sanitize_text_field(wpm_text()),
                 "{Favicon}" => wpm_favicon(), 
                 "{CustomCSS}" => wpm_customcss(),
                 "{Analytics}" => wpm_analytics(),
                 "{TopSocialIcon}" => wpm_social_position("top"),
                 "{BottomSocialIcon}" => wpm_social_position("bottom"),
-                "{Copyrights}" => wpm_copyrights(),
-                "{AddStyleWysija}" => wpm_stylenewsletter(),
+                "{Copyrights}" => sanitize_text_field(wpm_copyrights()),
+                "{AddStyleWysija}" => sanitize_text_field(wpm_stylenewsletter()),
                 "{Newsletter}" => wpm_newsletter(),
                 "{SliderCSS}" => WPM_Slider::slider_css(),
                 "{ScriptSlider}" => WPM_Slider::slider_scripts(),

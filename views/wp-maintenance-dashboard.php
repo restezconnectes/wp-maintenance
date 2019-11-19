@@ -73,7 +73,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
             <div style="margin-top:15px;margin-bottom:15px;"><hr /></div>
             
             <h3><?php _e('Title and text for the maintenance page:', 'wp-maintenance'); ?></h3>
-            <?php _e('Title:', 'wp-maintenance'); ?><br /><input class="wpm-form-field" type="text" size="100%" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) { echo stripslashes($paramMMode['titre_maintenance']); } ?>" /><br /><br />
+            <?php _e('Title:', 'wp-maintenance'); ?><br /><input class="wpm-form-field" type="text" size="100%" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) { echo esc_html(stripslashes($paramMMode['titre_maintenance'])); } ?>" /><br /><br />
             <?php _e('Text:', 'wp-maintenance'); ?><br />
             <?php 
                 $settingsTextmaintenance =   array(
@@ -90,7 +90,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                     'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
                 );
             $textWpm = '';
-            if( isset($paramMMode['text_maintenance']) && $paramMMode['text_maintenance']!='' ) { $textWpm = stripslashes($paramMMode['text_maintenance']); }
+            if( isset($paramMMode['text_maintenance']) && $paramMMode['text_maintenance']!='' ) { $textWpm = esc_textarea(stripslashes($paramMMode['text_maintenance'])); }
             ?>
             <?php wp_editor( nl2br($textWpm), 'wpm-textmaintenance', $settingsTextmaintenance ); ?>
             <br />
@@ -110,7 +110,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                     'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
                 );
             $textBt =  '';
-            if( isset($paramMMode['text_bt_maintenance']) && $paramMMode['text_bt_maintenance']!='' ) { $textBt = stripslashes($paramMMode['text_bt_maintenance']); } 
+            if( isset($paramMMode['text_bt_maintenance']) && $paramMMode['text_bt_maintenance']!='' ) { $textBt = esc_textarea(stripslashes($paramMMode['text_bt_maintenance'])); } 
             ?>
             <?php wp_editor( nl2br($textBt), 'wpm-textbtmaintenance', $settingsTextmaintenance ); ?>
             <br />
@@ -133,7 +133,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
             <div id="option-wplogin" style="<?php if( empty($paramMMode['add_wplogin']) || isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
 
                 <?php _e('Enter a text to go to the dashboard:', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[add_wplogin_title]" size="60%" value="<?php if( isset($paramMMode['add_wplogin_title']) && $paramMMode['add_wplogin_title']!='' ) { echo stripslashes(trim($paramMMode['add_wplogin_title'])); } ?>" /><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[add_wplogin_title]" size="60%" value="<?php if( isset($paramMMode['add_wplogin_title']) && $paramMMode['add_wplogin_title']!='' ) { echo esc_html(stripslashes(trim($paramMMode['add_wplogin_title']))); } ?>" /><br />
                 <small><?php _e('Eg: connect to %DASHBOARD% here!', 'wp-maintenance'); ?> <?php _e('(%DASHBOARD% will be replaced with the link to the dashboard and the word "Dashboard")', 'wp-maintenance'); ?></small>
                 
             </div>
@@ -157,9 +157,9 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
             <div id="option-seo" style="<?php if( empty($paramMMode['enable_seo']) || isset($paramMMode['enable_seo']) && $paramMMode['enable_seo']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
 
                 <?php _e('SEO Title', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[seo_title]" value="<?php if( isset($paramMMode['seo_title']) && $paramMMode['seo_title']!='' ) { echo stripslashes(trim($paramMMode['seo_title'])); } ?>"><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[seo_title]" value="<?php if( isset($paramMMode['seo_title']) && $paramMMode['seo_title']!='' ) { echo esc_html(stripslashes(trim($paramMMode['seo_title']))); } ?>"><br />
                 <?php _e('SEO Meta Description', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" size="80%" name="wp_maintenance_settings[seo_description]" value="<?php if( isset($paramMMode['seo_description']) && $paramMMode['seo_description']!='' ) { echo stripslashes(trim($paramMMode['seo_description'])); } ?>"><br />
+                <input type="text" class="wpm-form-field" size="80%" name="wp_maintenance_settings[seo_description]" value="<?php if( isset($paramMMode['seo_description']) && $paramMMode['seo_description']!='' ) { echo esc_html(stripslashes(trim($paramMMode['seo_description']))); } ?>"><br />
                 <br />
 
                 <!-- UPLOADER UN FAVICON -->
@@ -167,7 +167,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                 <div id="option-favicon">
                         <div style="float:left;width:68%;margin-right:10px;">
                             <small><?php _e('Enter a URL or upload an image.', 'wp-maintenance'); ?></small><br />
-                            <input id="upload_favicon" class="wpm-form-field" size="65%" name="wp_maintenance_settings[favicon]" value="<?php if( isset($paramMMode['favicon']) && $paramMMode['favicon']!='' ) { echo $paramMMode['favicon']; } ?>" type="text" /> <a href="#" id="upload_favicon_button" class="button button-primary" style="padding-top: 0.2em;padding-bottom: 2.2em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
+                            <input id="upload_favicon" class="wpm-form-field" size="65%" name="wp_maintenance_settings[favicon]" value="<?php if( isset($paramMMode['favicon']) && $paramMMode['favicon']!='' ) { echo esc_url($paramMMode['favicon']); } ?>" type="text" /> <a href="#" id="upload_favicon_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
                             <small><?php _e('Favicons are displayed in a browser tab. Need Help <a href="https://realfavicongenerator.net/" target="_blank">creating a favicon</a>?', 'wp-maintenance'); ?></small>
                         </div>
                         <div style="float:left;width:30%;text-align:center;">
@@ -183,9 +183,9 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                 <strong><?php _e('Analytics Code', 'wp-maintenance'); ?></strong>
                 <div id="option-analytics">
                     <?php _e('Enter your Google analytics tracking ID here:', 'wp-maintenance'); ?><br />
-                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_analytics]" value="<?php if( isset($paramMMode['code_analytics']) && $paramMMode['code_analytics']!='' ) { echo stripslashes(trim($paramMMode['code_analytics'])); } ?>"><br />
+                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_analytics]" value="<?php if( isset($paramMMode['code_analytics']) && $paramMMode['code_analytics']!='' ) { echo esc_html($paramMMode['code_analytics']); } ?>"><br />
                     <?php _e('Enter your domain URL:', 'wp-maintenance'); ?><br />
-                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[domain_analytics]" value="<?php if( isset($paramMMode['domain_analytics']) && $paramMMode['domain_analytics']!='' ) { echo stripslashes(trim($paramMMode['domain_analytics'])); } else { echo $_SERVER['SERVER_NAME']; } ?>">
+                    <input type="text" class="wpm-form-field" name="wp_maintenance_settings[domain_analytics]" value="<?php if( isset($paramMMode['domain_analytics']) && $paramMMode['domain_analytics']!='' ) { echo esc_url($paramMMode['domain_analytics']); } else { echo esc_url($_SERVER['SERVER_NAME']); } ?>">
                 </div>
             </div>
             
@@ -208,7 +208,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
             <div id="option-socials" style="<?php if( empty($paramSocialOption['enable']) || isset($paramSocialOption['enable']) && $paramSocialOption['enable']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
 
                 <?php _e('Enter text for the title icons:', 'wp-maintenance'); ?>
-                <input type="text" class="wpm-form-field" name="wp_maintenance_social_options[texte]" value="<?php if($paramSocialOption['texte']=='' && $paramSocialOption['texte']!='') { _e('Follow me on', 'wp-maintenance'); } else { echo stripslashes(trim($paramSocialOption['texte'])); } ?>" /><br /><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_social_options[texte]" value="<?php if($paramSocialOption['texte']=='' && $paramSocialOption['texte']!='') { _e('Follow me on', 'wp-maintenance'); } else { echo esc_html(stripslashes($paramSocialOption['texte'])); } ?>" /><br /><br />
                 <!-- Liste des réseaux sociaux -->
                 <?php _e('Drad and drop the lines to put in the order you want:', 'wp-maintenance'); ?><br /><br />
                 <ul class="sortable">
@@ -229,7 +229,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                         
                             $entryValue = '';
                             if( isset($paramSocial[$iconSocial]) ) { $entryValue = $paramSocial[$iconSocial]; }
-                            echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" class="wpm-form-field" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.$entryValue.'" onclick="select()" ><br />';
+                            echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" class="wpm-form-field" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
                         }
 
                 ?>
@@ -275,7 +275,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                      <option value="right"<?php if( isset($paramSocialOption['align']) && $paramSocialOption['align']=='right') { echo ' selected'; } ?>><?php _e('Right', 'wp-maintenance'); ?></option>
                  </select>
                  <br /><br />
-                 <?php _e('You have your own icons? Enter the folder name of your theme here:', 'wp-maintenance'); ?><br /><strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input class="wpm-form-field" type="text" value="<?php if( isset($paramSocialOption['theme']) && $paramSocialOption['theme']!='' ) { echo stripslashes(trim($paramSocialOption['theme'])); } ?>" name="wp_maintenance_social_options[theme]" /><br /><br />
+                 <?php _e('You have your own icons? Enter the folder name of your theme here:', 'wp-maintenance'); ?><br /><strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input class="wpm-form-field" type="text" value="<?php if( isset($paramSocialOption['theme']) && $paramSocialOption['theme']!='' ) { echo esc_url($paramSocialOption['theme']); } ?>" name="wp_maintenance_social_options[theme]" /><br /><br />
 
                 <div>
                     <div style="float:left; width:70%;"><h3><?php _e('Reset Social Icon?', 'wp-maintenance'); ?></h3></div>
@@ -310,11 +310,11 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
             <div id="option-newletter" style="<?php if( empty($paramMMode['newletter']) || isset($paramMMode['newletter']) && $paramMMode['newletter']==0) { echo ' display:none;'; } else { echo 'display:block'; } ?>">
 
                 <?php _e('Enter title for the newletter block:', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[title_newletter]" size="60" value="<?php if( isset($paramMMode['title_newletter']) && $paramMMode['title_newletter']!='' ) { echo stripslashes(trim($paramMMode['title_newletter'])); } ?>" /><br /><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[title_newletter]" size="60" value="<?php if( isset($paramMMode['title_newletter']) && $paramMMode['title_newletter']!='' ) { echo esc_html(stripslashes(trim($paramMMode['title_newletter']))); } ?>" /><br /><br />
                 <input type="radio" class="wpm-form-field" name="wp_maintenance_settings[type_newletter]" value="shortcode" <?php if( isset($paramMMode['type_newletter']) && $paramMMode['type_newletter']=='shortcode' ) { echo 'checked'; } if( empty($paramMMode['type_newletter']) ) { echo 'checked'; } ?>  /><?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><br />
-                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_newletter]" value='<?php if( isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' ) { echo stripslashes(trim($paramMMode['code_newletter'])); } ?>' onclick="select()" /><br /><br />
+                <input type="text" class="wpm-form-field" name="wp_maintenance_settings[code_newletter]" value='<?php if( isset($paramMMode['code_newletter']) && $paramMMode['code_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramMMode['code_newletter']))); } ?>' onclick="select()" /><br /><br />
                 <input type="radio" class="wpm-form-field" name="wp_maintenance_settings[type_newletter]" value="iframe" <?php if( isset($paramMMode['type_newletter']) && $paramMMode['type_newletter']=='iframe' ) { echo 'checked'; } ?>/> <?php _e('Or enter your newletter iframe code here:', 'wp-maintenance'); ?><br />
-                <textarea class="wpm-form-field" id="iframe_newletter" cols="60" rows="10" name="wp_maintenance_settings[iframe_newletter]"><?php if( isset($paramMMode['iframe_newletter']) && $paramMMode['iframe_newletter']!='' ) { echo stripslashes(trim($paramMMode['iframe_newletter'])); } ?></textarea> 
+                <textarea class="wpm-form-field" id="iframe_newletter" cols="60" rows="10" name="wp_maintenance_settings[iframe_newletter]"><?php if( isset($paramMMode['iframe_newletter']) && $paramMMode['iframe_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramMMode['iframe_newletter']))); } ?></textarea> 
 
             </div>
             

@@ -132,7 +132,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                             'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
                         );
                     $textCpt_fin =  '';
-                    if( isset($paramMMode['message_cpt_fin']) ) { $textCpt_fin = stripslashes($paramMMode['message_cpt_fin']); } 
+                    if( isset($paramMMode['message_cpt_fin']) ) { $textCpt_fin = esc_textarea(stripslashes($paramMMode['message_cpt_fin'])); } 
                     ?>
                     <?php wp_editor( nl2br($textCpt_fin), 'message_cpt_fin', $settingsCountdown ); ?><br />
 

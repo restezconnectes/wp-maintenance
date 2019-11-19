@@ -53,7 +53,7 @@
                 {SlideshowBL}
                 <div id="sscontent">
                     <h3>{Title}</h3>
-                    {Text}
+                    <p>{Text}</p>
                     {SlideshowBT}
                     {Counter}
                     {Newsletter}

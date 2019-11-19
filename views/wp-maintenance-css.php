@@ -44,7 +44,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     <!-- UTILISER UNE FEUILLE DE STYLE PERSO -->
                     <?php _e('Edit the CSS sheet of your maintenance page here. Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?><br /><br />
                     <div style="float:left;width:100%;margin-right:15px;">
-                        <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:250px;"><?php echo stripslashes(trim(get_option('wp_maintenance_style'))); ?></TEXTAREA>
+                        <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:250px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_style')))); ?></TEXTAREA>
                     </div>
 
                     <div class="clear"></div>

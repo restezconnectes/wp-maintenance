@@ -52,7 +52,7 @@ function wpm_copyrights() {
 	$output = '';
 
 	if( isset($o['text_bt_maintenance']) && $o['text_bt_maintenance']!='' ) {
-		$output = stripslashes($o['text_bt_maintenance']);
+		$output = sanitize_text_field(stripslashes($o['text_bt_maintenance']));
 	}
 	if( (isset($o['add_wplogin']) && $o['add_wplogin']==1) && (isset($o['add_wplogin_title']) && $o['add_wplogin_title']!='') ) {
 		$output .= '<br /><br /><a href="'.get_admin_url().'">'.str_replace('%DASHBOARD%', '--'.__('Dashboard', 'wp-maintenance'), $o['add_wplogin_title']).'</a>';
@@ -105,7 +105,7 @@ function wpm_text() {
 	if( !empty($o['text_maintenance']) ) {
 		$output = stripslashes(wpautop($o['text_maintenance']));
 	}
-	return $output;
+	return sanitize_text_field($output);
 }
 
 function wpm_logo() {
@@ -119,7 +119,7 @@ function wpm_logo() {
 	if ( !empty( $o['image'] ) ) {
 		if( empty($o['image_width']) ) { $o['image_width'] = 450; }
         if( empty($o['image_height']) ) { $o['image_height'] = 450; }
-		$output .= "<div id='logo'><img id='wpm-image' src='".$o['image']."' width='".$o['image_width']."' height='".$o['image_height']."'  alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."'></div>";
+		$output .= "<div id='logo'><img id='wpm-image' src='".sanitize_text_field($o['image'])."' width='".$o['image_width']."' height='".$o['image_height']."'  alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."'></div>";
 	}
 
 	return  $output;
@@ -182,7 +182,7 @@ function wpm_customcss() {
 		$optionBackground = '';
 		if( isset($o['b_pattern']) && $o['b_pattern']>0 ) { ?>
 body {
-background-image: url(<?php echo WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$o['b_pattern']; ?>.png);
+background-image: url(<?php echo sanitize_text_field(WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$o['b_pattern'].'.png'); ?>);
 background-repeat: repeat;
 background-color: <?php echo $o['color_bg']; ?>
 <?php echo $optionBackground; ?>   
@@ -201,7 +201,7 @@ background-color: <?php echo $o['color_bg']; ?>
 ?>
 body {
 display: grid!important;
-background:url(<?php echo $o['b_image']; ?>) <?php echo $o['b_repeat_image']; ?> <?php echo $o['b_fixed_image']; ?>top center;
+background:url(<?php echo sanitize_text_field($o['b_image']); ?>) <?php echo $o['b_repeat_image']; ?> <?php echo $o['b_fixed_image']; ?>top center;
 background-size: cover;
 -webkit-background-size: cover;
 -moz-background-size: cover;
@@ -399,7 +399,7 @@ function wpm_stylenewsletter() {
 	}
 
 	if( isset($output) && $output!='' ) {
-		return '<style type="text/css">'.$output.'</style>';
+		return '<style type="text/css">'.sanitize_text_field($output).'</style>';
 	} else {
 		return;
 	}
@@ -417,7 +417,7 @@ function wpm_newsletter() {
 
 		$output = '<div class="wpm_newletter">';
 		if( isset($o['title_newletter']) && $o['title_newletter']!='') {
-			$output .= '<div>'.stripslashes($o['title_newletter']).'</div>';
+			$output .= '<div>'.sanitize_text_field(stripslashes($o['title_newletter'])).'</div>';
 		}
 		if( isset($o['type_newletter']) && isset($o['iframe_newletter']) && $o['iframe_newletter']!='' && $o['type_newletter']=='iframe' ) {
 			$output .= stripslashes($o['iframe_newletter']);

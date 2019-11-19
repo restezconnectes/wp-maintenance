@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2019-11-17 03:57+0100\n"
-"PO-Revision-Date: 2019-11-17 03:58+0100\n"
+"POT-Creation-Date: 2019-11-19 10:36+0100\n"
+"PO-Revision-Date: 2019-11-19 10:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -243,9 +243,9 @@ msgstr "Taille :"
 #: views/wp-maintenance-dashboard.php:149
 #: views/wp-maintenance-dashboard.php:200
 #: views/wp-maintenance-dashboard.php:285
-#: views/wp-maintenance-dashboard.php:302 views/wp-maintenance-picture.php:105
-#: views/wp-maintenance-picture.php:170 views/wp-maintenance-picture.php:202
-#: views/wp-maintenance-picture.php:209 views/wp-maintenance-settings.php:69
+#: views/wp-maintenance-dashboard.php:302 views/wp-maintenance-picture.php:116
+#: views/wp-maintenance-picture.php:182 views/wp-maintenance-picture.php:214
+#: views/wp-maintenance-picture.php:221 views/wp-maintenance-settings.php:69
 #: views/wp-maintenance-settings.php:89 views/wp-maintenance-settings.php:104
 msgid "Yes"
 msgstr "Oui"
@@ -261,9 +261,9 @@ msgstr "Oui"
 #: views/wp-maintenance-dashboard.php:151
 #: views/wp-maintenance-dashboard.php:202
 #: views/wp-maintenance-dashboard.php:287
-#: views/wp-maintenance-dashboard.php:304 views/wp-maintenance-picture.php:107
-#: views/wp-maintenance-picture.php:172 views/wp-maintenance-picture.php:204
-#: views/wp-maintenance-picture.php:211 views/wp-maintenance-settings.php:71
+#: views/wp-maintenance-dashboard.php:304 views/wp-maintenance-picture.php:118
+#: views/wp-maintenance-picture.php:184 views/wp-maintenance-picture.php:216
+#: views/wp-maintenance-picture.php:223 views/wp-maintenance-settings.php:71
 #: views/wp-maintenance-settings.php:91 views/wp-maintenance-settings.php:106
 msgid "No"
 msgstr "Non"
@@ -288,7 +288,7 @@ msgstr "Couleur :"
 msgid "Opacity:"
 msgstr "Opacité :"
 
-#: views/wp-maintenance-colors.php:155 views/wp-maintenance-picture.php:194
+#: views/wp-maintenance-colors.php:155 views/wp-maintenance-picture.php:206
 msgid "Width:"
 msgstr "Largeur :"
 
@@ -559,7 +559,7 @@ msgstr "Titre et Texte de la page maintenance :"
 msgid "Title:"
 msgstr "Titre :"
 
-#: views/wp-maintenance-dashboard.php:77 views/wp-maintenance-picture.php:256
+#: views/wp-maintenance-dashboard.php:77 views/wp-maintenance-picture.php:268
 msgid "Text:"
 msgstr "Texte :"
 
@@ -603,13 +603,13 @@ msgstr "Méta description SEO"
 msgid "Add a favicon"
 msgstr "Ajouter un favicon"
 
-#: views/wp-maintenance-dashboard.php:169 views/wp-maintenance-picture.php:81
-#: views/wp-maintenance-picture.php:117
+#: views/wp-maintenance-dashboard.php:169 views/wp-maintenance-picture.php:92
+#: views/wp-maintenance-picture.php:128
 msgid "Enter a URL or upload an image."
 msgstr "Entrez une url ou mettez en ligne une image."
 
-#: views/wp-maintenance-dashboard.php:170 views/wp-maintenance-picture.php:83
-#: views/wp-maintenance-picture.php:118 views/wp-maintenance-picture.php:227
+#: views/wp-maintenance-dashboard.php:170 views/wp-maintenance-picture.php:94
+#: views/wp-maintenance-picture.php:130 views/wp-maintenance-picture.php:239
 msgid "Media Image Library"
 msgstr "Bibliothèque d'Images"
 
@@ -663,7 +663,7 @@ msgstr "Choisissez la taille des icônes :"
 msgid "Choose icons style:"
 msgstr "Choisissez le style des icônes :"
 
-#: views/wp-maintenance-dashboard.php:265 views/wp-maintenance-picture.php:217
+#: views/wp-maintenance-dashboard.php:265 views/wp-maintenance-picture.php:229
 msgid "Position:"
 msgstr "Position :"
 
@@ -716,15 +716,15 @@ msgstr "Entrez le Shortcode de la newletter ici :"
 msgid "Or enter your newletter iframe code here:"
 msgstr "Ou entrez le code iframe de la newsletter ici :"
 
-#: views/wp-maintenance-picture.php:71
+#: views/wp-maintenance-picture.php:82
 msgid "Picture"
 msgstr "Image"
 
-#: views/wp-maintenance-picture.php:80
+#: views/wp-maintenance-picture.php:91
 msgid "Header picture"
 msgstr "Image d'entête"
 
-#: views/wp-maintenance-picture.php:84
+#: views/wp-maintenance-picture.php:95
 msgid ""
 "URL path to image to replace default WordPress Logo. (You can upload your "
 "image with the WordPress media uploader)"
@@ -732,87 +732,91 @@ msgstr ""
 "Url de l'image pour remplacer le logo WordPress par défaut. (Vous pouvez "
 "envoyer votre image avec l'outil d'envoi de médias interne à WordPress)"
 
-#: views/wp-maintenance-picture.php:85
+#: views/wp-maintenance-picture.php:96
 msgid "Your Logo width (Enter in pixels). Default: 450px"
 msgstr "Largeur de votre logo (entrez-la en pixels). Par défaut : 450px"
 
-#: views/wp-maintenance-picture.php:86
+#: views/wp-maintenance-picture.php:97
 msgid "Your Logo Height (Enter in pixels). Default: 450px"
 msgstr "Hauteur de votre logo (entrez-la en pixels). Par défaut : 450px"
 
-#: views/wp-maintenance-picture.php:91
+#: views/wp-maintenance-picture.php:102
 msgid "You use this picture:"
 msgstr "Image actuelle :"
 
-#: views/wp-maintenance-picture.php:101
+#: views/wp-maintenance-picture.php:102 views/wp-maintenance-picture.php:144
+msgid "Remove"
+msgstr "Supprimer"
+
+#: views/wp-maintenance-picture.php:112
 msgid "Background picture or pattern"
 msgstr "Image de fond ou un modèle"
 
-#: views/wp-maintenance-picture.php:119
+#: views/wp-maintenance-picture.php:131
 msgid "Background picture options"
 msgstr "Options de l'image de fond"
 
-#: views/wp-maintenance-picture.php:125
+#: views/wp-maintenance-picture.php:137
 msgid "Fixed"
 msgstr "Fixe"
 
-#: views/wp-maintenance-picture.php:126
+#: views/wp-maintenance-picture.php:138
 msgid "Background Opacity"
 msgstr "Opacité de l’arrière-plan"
 
-#: views/wp-maintenance-picture.php:131
+#: views/wp-maintenance-picture.php:143
 msgid "You use this background picture:"
 msgstr "Image de fond actuelle :"
 
-#: views/wp-maintenance-picture.php:139
+#: views/wp-maintenance-picture.php:151
 msgid "Or choose a pattern:"
 msgstr "Ou choisissez un pattern de fond :"
 
-#: views/wp-maintenance-picture.php:142
+#: views/wp-maintenance-picture.php:154
 msgid "NO PATTERN"
 msgstr "AUCUN PATTERN"
 
-#: views/wp-maintenance-picture.php:155
+#: views/wp-maintenance-picture.php:167
 msgid "You use this pattern:"
 msgstr "Vous utilisez ce modèle :"
 
-#: views/wp-maintenance-picture.php:166
+#: views/wp-maintenance-picture.php:178
 msgid "Enable Slider"
 msgstr "Activer le Slider"
 
-#: views/wp-maintenance-picture.php:179
+#: views/wp-maintenance-picture.php:191
 msgid "Slider image options"
 msgstr "Options du Slider"
 
-#: views/wp-maintenance-picture.php:193
+#: views/wp-maintenance-picture.php:205
 msgid "Speed:"
 msgstr "Vitesse :"
 
-#: views/wp-maintenance-picture.php:199
+#: views/wp-maintenance-picture.php:211
 msgid "Display Auto Slider:"
 msgstr "Afficher le Slider en auto :"
 
-#: views/wp-maintenance-picture.php:206
+#: views/wp-maintenance-picture.php:218
 msgid "Display button navigation:"
 msgstr "Afficher les boutons navigation :"
 
-#: views/wp-maintenance-picture.php:219
+#: views/wp-maintenance-picture.php:231
 msgid "Above logo"
 msgstr "Au-dessus du logo"
 
-#: views/wp-maintenance-picture.php:220
+#: views/wp-maintenance-picture.php:232
 msgid "Below logo"
 msgstr "Au-dessous du logo"
 
-#: views/wp-maintenance-picture.php:221
+#: views/wp-maintenance-picture.php:233
 msgid "Below title & text"
 msgstr "Au-dessous du titre & texte"
 
-#: views/wp-maintenance-picture.php:257
+#: views/wp-maintenance-picture.php:269
 msgid "Link:"
 msgstr "Lien :"
 
-#: views/wp-maintenance-picture.php:260
+#: views/wp-maintenance-picture.php:272
 msgid "Delete this slide"
 msgstr "Supprimer ce slide"
 
