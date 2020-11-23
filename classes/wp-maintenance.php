@@ -644,19 +644,7 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             $dateCpt = '';
         }
 
-        /* Si on a un epage maintenance.php dans le theme */
-        if ( file_exists( get_stylesheet_directory() ) ) {
-            $urlTpl = get_stylesheet_directory();
-        } else {
-            $urlTpl = get_template_directory();
-        }
-
-        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') ) {
-
-            include_once( $urlTpl.'/maintenance.php' );
-            die();
-
-        } 
+      
         
         /* Si on désactive le mode maintenance en fin de compte à rebours */
         if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $this->wpm_check_active() == 1 ) {
@@ -699,6 +687,21 @@ a.wpmadashicons:hover { text-decoration:none;color: '.$colors[2].'!important; }
             define('DONOTCACHEOBJECT', true);
         }
         nocache_headers();
+
+        /* Si on a une page maintenance.php dans le theme */
+        if ( file_exists( get_stylesheet_directory() ) ) {
+            $urlTpl = get_stylesheet_directory();
+        } else {
+            $urlTpl = get_template_directory();
+        }
+
+        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') && $statusPageActive==1 ) {
+
+            include_once( $urlTpl.'/maintenance.php' );
+            die();
+
+        } 
+
         if ($statusPageActive == 1) {
             if( isset($paramMMode['error_503']) && $paramMMode['error_503']=='Yes' ) {
                 header('HTTP/1.1 503 Service Temporarily Unavailable');
