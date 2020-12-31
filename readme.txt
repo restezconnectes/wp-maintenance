@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 5.3
-Stable tag: 5.0.7
+Tested up to: 5.6
+Stable tag: 6.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Countdown
 - Google Analytics ready
 - Social Networks ready
+- Customize CSS
 - Insert for shorcode (Newletter or Contact form)
 - Enable "503 Service temporarily unavailable"
 - Choose access by Roles and Capabilities
@@ -51,7 +52,7 @@ You will find 'WP Maintenance' menu in your WordPress admin panel
 It is hard to continue development and support for this free plugin without contributions from users like you. If you enjoy using WP Maintenance and find it useful, please consider <a href="https://www.paypal.me/RestezConnectes/25">making a donation</a>. Your donation will help encourage and support the plugin's continued development and better user support.
 
 = I have activated plugin and don’t see any changes, looks like plugin is not working. =
-This is normal because you are logged in as an administrator. Try a different browser. If you have registered as a wordpress user, you see the site in normal mode.
+This is normal because you are logged in as an administrator. Try a different browser or use the preview link. If you have registered as a wordpress user, you see the site in normal mode.
 
 = I have disabled plugin but I don’t see any changes, I have always the maintenance page, looks like plugin is not working. =
 You have a cache plugin ? Try to purge it and try again.
@@ -69,6 +70,19 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Changelog ==
+
+= 6.0.0 =
+* New design
+* This version is a major version and somes settings are changed. Check your settings after update.
+
+= 5.1.0 =
+* Fixed bug remove slide
+
+= 5.0.9 =
+* Fixed bug background color
+
+= 5.0.8 =
+* Fixed bug texts
 
 = 5.0.7 =
 * SECURITY UPDATE

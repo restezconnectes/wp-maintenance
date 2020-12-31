@@ -4,46 +4,17 @@ defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
 
-function wpm_get_header( $text = 'Settings', $dashicon = 'dashicons-admin-settings', $update = 0 ) {
-    
-    global $current_user;
-    global $_wp_admin_css_colors;
-
-    $admin_color = get_user_option( 'admin_color', get_current_user_id() );
-    $colors      = $_wp_admin_css_colors[$admin_color]->colors;
-    
-    $getHeader = '
-     <div id="wpm-container">
-            <div id="wpm-navtitle">
-                <div id="wpm-navtext">
-                    <h2 style="font-size: 23px;font-weight: 400;line-height: 29px;margin-bottom:15px;">
-                        <span class="dashicons '.$dashicon.'" style="font-size:35px;margin-right:10px;"></span> '.$text.'
-                    </h2>
-                </div>';
-    $getHeader .= '<div id="wpm-navdashicons">
-        <div style="text-align:center;border-bottom: 1px solid #ddd;margin-bottom: 5px;">MENU</div><div style="text-align:center;">'.wpm_list_dashicons().' <a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()"><span class="dashicons dashicons-external" style="font-size:25px;margin-right:15px;color:'.$colors[2].'" ></span></a></div>
-    </div>';
-    $getHeader .= '<div id="wpm-navmessage">';
-    if( $update == 1 ) {
-    $getHeader .= '<div id="wpmNotifications"><strong>'.__('Options saved.', 'wp-maintenance').'</strong></div>';
-    $getHeader .= '<script>
-        jQuery("#wpmNotifications").delay(4000).fadeOut(2000, function(){ 
-            jQuery(this).remove();
-        });
-        
-        </script>';
+function wpm_get_header( $message = 0) {
+       
+    $getHeader = '<h2 style="font-size: 23px;font-weight: 400;padding: 9px 15px 4px 0px;line-height: 29px;">'.__('WP Maintenance - Settings', 'wp-maintenance').' <sup>v.'.WPM_VERSION.'</sup>
+</h2>';
+    if( $message == 1 ) {
+        $getHeader .= '<div id="message" class="updated fade"><p><strong>'.__('Options saved.', 'wp-maintenance').'</strong></p></div>';
     }
-    $getHeader .= '</div>
-            <div id="wpm-navsave">
-            '.get_submit_button( '', 'primary', 'valide_settings', false ).'
-            </div><div class="clear"></div>
-        </div>
-    </div><div class="clear"></div>';
-    
     return $getHeader;
 }
 
-function wpm_list_dashicons() {
+function wpm_get_nav() {
     
     global $current_user;
     global $_wp_admin_css_colors;
@@ -56,45 +27,90 @@ function wpm_list_dashicons() {
         'wp-maintenance' => array(
             'dashicons' => 'dashicons-admin-settings',
             'link' => 'wp-maintenance',
-            'text' => __('Go to Generals options', 'wp-maintenance')
+            'text' => __('Dashboard', 'wp-maintenance'),
+            'desc' => __('Here, the beginning...', 'wp-maintenance')
             ),
         'wp-maintenance-colors' => array(
             'dashicons' => 'dashicons-art',
             'link' => 'wp-maintenance-colors',
-            'text' => __('Go to Colors and Fonts options', 'wp-maintenance')
+            'text' => __('Colors and Fonts', 'wp-maintenance'),
+            'desc' => __('Have a creative mind', 'wp-maintenance')
             ),
         'wp-maintenance-picture' => array(
             'dashicons' => 'dashicons-format-gallery',
             'link' => 'wp-maintenance-picture',
-            'text' => __('Go to Pictures options', 'wp-maintenance')
+            'text' => __('Pictures', 'wp-maintenance'),
+            'desc' => __('Are we playing with the images?', 'wp-maintenance')
             ),
         'wp-maintenance-countdown' => array(
             'dashicons' => 'dashicons-clock',
             'link' => 'wp-maintenance-countdown',
-            'text' => __('Go to Countdown options', 'wp-maintenance')
+            'text' => __('Countdown', 'wp-maintenance'),
+            'desc' => __('Stop the time... or not!', 'wp-maintenance')
             ),
         'wp-maintenance-css' => array(
             'dashicons' => 'dashicons-media-code',
             'link' => 'wp-maintenance-css',
-            'text' => __('Go to CSS options', 'wp-maintenance')
+            'text' => __('CSS', 'wp-maintenance'),
+            'desc' => __('Customize the style sheet', 'wp-maintenance')
+            ),
+        'wp-maintenance-seo' => array(
+            'dashicons' => 'dashicons-admin-site-alt',
+            'link' => 'wp-maintenance-seo',
+            'text' => __('SEO', 'wp-maintenance'),
+            'desc' => __('Keep your site optimized', 'wp-maintenance')
+            ),
+        'wp-maintenance-socialnetworks' => array(
+            'dashicons' => 'dashicons-format-status',
+            'link' => 'wp-maintenance-socialnetworks',
+            'text' => __('Social Networks', 'wp-maintenance'),
+            'desc' => __('Adding social networks icons', 'wp-maintenance')
+            ),
+        'wp-maintenance-footer' => array(
+            'dashicons' => 'dashicons-table-row-before',
+            'link' => 'wp-maintenance-footer',
+            'text' => __('Footer', 'wp-maintenance'),
+            'desc' => __('Here, we are talking about the footer', 'wp-maintenance')
             ),
         'wp-maintenance-settings' => array(
             'dashicons' => 'dashicons-admin-generic',
             'link' => 'wp-maintenance-settings',
-            'text' => __('Go to Settings options', 'wp-maintenance')
+            'text' => __('Settings', 'wp-maintenance'),
+            'desc' => __('A few additional options', 'wp-maintenance')
             )
     );
     
-    $getDashicons = '';
+    $getDashicons = '<div class="wp-maintenance-modules-sidebar">';
+    $getDashicons .= '<a href="https://madeby.restezconnectes.fr/project/wp-maintenance/" alt="'.__('Visit the WP Maintenance page project.', 'wp-maintenance').'" title="'.__('Visit the WP Maintenance page project.', 'wp-maintenance').'"><div class="wp-maintenance-sidebar-header"><img src="'.plugins_url('wp-maintenance/images/logo-sidebar.png').'" width="238" height="120" valign="bottom"  /></div></a>';
+    
+    $getDashicons .= '<a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()" style="color:#23282d;text-decoration:none;"><div style="background:#D6D5AA;color:#23282d;padding:1em 1em;margin: 1em 1em;text-align:center;"><span class="dashicons dashicons-external" style="font-size:20px;" ></span> '.__('Preview page', 'wp-maintenance').'</div></a>';
+
+    $getDashicons .= '<ul id="wp-maintenance-modules-navigation" class="wp-maintenance-modules-list-links">';
         
     foreach( $tabOptions as $page=>$values) {
         
-        if (isset($_GET['page']) && $_GET['page']!=$page ) {
-        
-            $getDashicons .= '<a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="wpmadashicons" onFocus="this.blur()"><span class="dashicons '.$tabOptions[$page]['dashicons'].'" class="wpmdashicons" style="font-size:25px;margin-right:15px;"></span></a>';
 
-        } 
+        if (isset($_GET['page']) && $_GET['page']!=$page ) { $active = ''; } else { $active = 'active'; }
+        
+        $getDashicons .= '<li>';
+        $getDashicons .= '<a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="'.$active.' module-'.$page.'" onFocus="this.blur()">';
+        $getDashicons .= '<span class="wp-maintenance-tab-name">'.$tabOptions[$page]['text'].'</span> <span class="wp-maintenance-tab-summary">'.$tabOptions[$page]['desc'].'</span>';
+        $getDashicons .= '<span class="dashicons wpmdashicons '.$tabOptions[$page]['dashicons'].'"></span></a>';
+        $getDashicons .= '</li>';
+
+        
     }
+    $getDashicons .= '</ul>';
+    $getDashicons .= '<div class="clear">&nbsp;</div>';
+    $getDashicons .= '<div style="padding:1em 1em;margin: 1em 1em;color:#D6D5AA;">'.__('This plugin has been developed for you for free by <a href="https://restezconnectes.fr" target="_blank" style="color:#D6D5AA;">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.', 'wp-maintenance').'<br />';
+        /* FAIRE UN DON SUR PAYPAL */
+    $getDashicons .= '<br />'.__('Support this extension and my other developments (French Paypal):', 'wp-maintenance').'<br /><br />
+        <div style="">
+            <a href="https://paypal.me/RestezConnectes/20" target="_blank" style="color:#D6D5AA;text-decoration:none;border: 2px solid #D6D5AA;padding: 0.56em;">'.__('Donate now!', 'wp-maintenance').'</a>
+        </div>
+    </div>';
+/* FIN FAIRE UN DON */
+    $getDashicons .= '</div>';
     
     return $getDashicons;
 }
@@ -345,14 +361,43 @@ function wpm_format_font($font) {
     return str_replace('+', ' ', $font);
 }
 
+function wpm_compress($buffer) {
+
+    // Récupère les paramètres sauvegardés
+	if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
+    $o = get_option('wp_maintenance_settings');
+    
+    $variables_css = array(
+        "#_COLORTXT" => esc_html($o['color_field_text']),
+		"#_COLORBG" => esc_html($o['color_field_background']),
+		"#_COLORBORDER" => esc_html($o['color_field_border']),
+		"#_COLORBUTTON" => esc_html($o['color_button']),
+		"#_COLORTEXTBUTTON" => esc_html($o['color_text_button']),
+		"#_COLOR_BTN_HOVER" => esc_html($o['color_button_hover']),
+		"#_COLOR_BTN_CLICK" => esc_html($o['color_button_onclick'])
+        );
+    // On remplace les variables par leur valeur
+    foreach($variables_css as $code_variable => $valeur) {
+        $buffer = str_replace('{'.$code_variable.'}', $valeur, $buffer);
+    
+        // Suppression des commentaires
+        $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
+    
+        // Suppression des tabulations, espaces multiples, retours à la ligne, etc.
+        $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '	 ', '	 '), '', $buffer);
+    }
+    // Suppression des derniers espaces inutiles
+    $buffer = str_replace(array(' { ',' {','{ '), '{', $buffer);
+    $buffer = str_replace(array(' } ',' }','} '), '}', $buffer);
+    $buffer = str_replace(array(' : ',' :',': '), ':', $buffer);
+
+    return $buffer;
+}
+
 /* Feuille de style par défault */
 function wpm_print_style() {
     
-    return '
-
-#logo {
-    text-align: center;
-}
+    return '#logo {text-align: center;max-width: 100%;height: auto;text-align: center;}
 
 a:link {color: #_COLORTXT;text-decoration: none;}
 a:visited {color: #_COLORTXT;text-decoration: none;}
@@ -368,10 +413,9 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: none;}
     text-align:center;
     margin: 0.5em auto;
 }
-.wpm_ctp_sep { margin-top:1vw; }
-#header {
-    background: #_COLORHEAD;
-}
+.wpm_ctp_sep {margin-top:1vw;}
+
+header {background: #_COLORHEAD;}
 
 #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {
     color: #_COLORCPT;
@@ -389,30 +433,13 @@ a:hover, a:focus, a:active {color: #_COLORTXT;text-decoration: none;}
     font-size: 10px;
     padding: 25px 5px 0 2px;
 }
+.wpm_social ul, li { background:none!important; }
+.wpm_horizontal li {display: inline-block;list-style: none;margin:5px;opacity:1;}
+.wpm_horizontal li:hover {opacity:0.5;}
 
-.wpm_horizontal li {
-    display: inline-block;
-    list-style: none;
-    margin:5px;
-    opacity:1;
-}
-.wpm_horizontal li:hover {
-    opacity:0.5;
-}
-
-.wpm_social {
-    padding: 0 45px;
-    text-align: center;
-}
-.wpm_newletter {
-    text-align:center;
-}
-#countdown {
-    clear:both;
-    margin-left:auto;
-    margin-right:auto;
-    text-align: center;
-}
+.wpm_social {padding: 0 45px;text-align: center;}
+.wpm_newletter {text-align:center;}
+#countdown {clear:both;margin-left:auto;margin-right:auto;text-align: center;}
 
     ';   
 }

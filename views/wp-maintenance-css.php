@@ -15,81 +15,62 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_css' && wp_verify_non
 /* Si on réinitialise les feuille de styles  */
 if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     update_option( 'wp_maintenance_style', wpm_print_style() );
-    $options_saved = true;
-    //echo '<div id="message" class="updated fade"><p><strong>'.__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
+    //$options_saved = true;
+    echo '<div id="message" class="updated fade"><p><strong>'.__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
 }
 
 ?>
 <style>
     .CodeMirror {
       border: 1px solid #eee;
-      height: 550px;
+      height: 750px;
     }
     
 </style>
 <div class="wrap">
-    
-    <form method="post" action="" name="valide_settings">
-        <input type="hidden" name="action" value="update_css" />
-        <?php wp_nonce_field('valid-css', 'security-css'); ?>
 
     <!-- HEADER -->
-    <?php echo wpm_get_header( __('CSS Style', 'wp-maintenance'), 'dashicons-media-code', $messageUpdate ) ?>
+    <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div style="margin-top: 40px;">
-    
-        <div id="wpm-column1">
-                
-                    <!-- UTILISER UNE FEUILLE DE STYLE PERSO -->
-                    <?php _e('Edit the CSS sheet of your maintenance page here. Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?><br /><br />
-                    <div style="float:left;width:100%;margin-right:15px;">
-                        <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:250px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_style')))); ?></TEXTAREA>
-                    </div>
+    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+        
+        <?php echo wpm_get_nav(); ?>
+            
+        <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
+            
+            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-media-code" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('CSS', 'wp-maintenance'); ?></h2></div>
 
-                    <div class="clear"></div>
-                    <br />
-                    <div>
-                        <div style="float:left; width:70%;"><h4><?php _e('Reset default CSS stylesheet ?', 'wp-maintenance'); ?></h4></div>
-                        <div style="float:left; width:30%;text-align:right;">
-                            <div class="switch-field">
-                                <input class="switch_left" type="radio" id="switch_left" name="wpm_initcss" value="1" />
-                                <label for="switch_left"><?php _e('Yes', 'wp-maintenance'); ?></label>
-                                <input class="switch_right_no" type="radio" id="switch_right" name="wpm_initcss" value="0" checked />
-                                <label for="switch_right"><?php _e('No', 'wp-maintenance'); ?></label>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
+            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
+                
+                <form method="post" action="" id="valide_settings" name="valide_settings">
+                    <input type="hidden" name="action" value="update_css" />
+                    <?php wp_nonce_field('valid-css', 'security-css'); ?>
+
+                    <!-- PIED DE PAGE  -->
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Edit the CSS sheet of your maintenance page here.', 'wp-maintenance'); ?></h3></div>
+                    <h3><?php _e('Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?></h3>
+                    <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:350px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_style')))); ?></TEXTAREA>
+                    <?php //echo wpm_compress(get_option('wp_maintenance_style')); ?>
+                    
+                    <p class="wp-maintenance-fieldset-item ">
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, reset style sheet', 'wp-maintenance'); ?></span>
+                            <input type="checkbox" name="wpm_initcss" value="1">
+                            <span class="wp-maintenance-checkmark"></span>
+                        </label>
+                    </p>
+
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Markers for colors', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-setting-row">
+                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php _e('Use this code for text color', 'wp-maintenance'); ?>
+                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORBG</label> <?php _e('Use this code for background text color', 'wp-maintenance'); ?>
+                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORCPTBG</label> <?php _e('Use this code for background color countdown', 'wp-maintenance'); ?>
+                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_DATESIZE</label> <?php _e('Use this code for size countdown', 'wp-maintenance'); ?>
+                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORCPT</label> <?php _e('Use this code for countdown color', 'wp-maintenance'); ?>
                     </div>
-                        
-                    <table class="wp-list-table widefat fixed" cellspacing="0">
-                        <tbody id="the-list">
-                            <tr>
-                                <td><h3 class="hndle"><span><strong><?php _e('Markers for colors', 'wp-maintenance'); ?></strong></span></h3></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>#_COLORTXT</td>
-                                <td><?php _e('Use this code for text color', 'wp-maintenance'); ?></td>
-                            </tr>
-                            <tr>
-                                <td>#_COLORBG</td>
-                                <td><?php _e('Use this code for background text color', 'wp-maintenance'); ?></td>
-                            </tr>
-                            <tr>
-                                <td>#_COLORCPTBG</td>
-                                <td><?php _e('Use this code for background color countdown', 'wp-maintenance'); ?></td>
-                            </tr>
-                            <tr>
-                                <td>#_DATESIZE</td>
-                                <td><?php _e('Use this code for size countdown', 'wp-maintenance'); ?></td>
-                            </tr>
-                            <tr>
-                                <td>#_COLORCPT</td>
-                                <td><?php _e('Use this code for countdown color', 'wp-maintenance'); ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    
                     <br />                
                     <a href="" onclick="AfficherCacher('divcss'); return false" ><?php _e('Need CSS code for MailPoet plugin?', 'wp-maintenance'); ?></a>
                     <div id="divcss" style="display:none;"><i><?php _e('Click for select all', 'wp-maintenance'); ?></i><br />
@@ -122,15 +103,13 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 .mc4wp-error {  } /* error messages */
                     </textarea>
                 </div>
-                <p>
-                    <?php submit_button(); ?>
-                </p>
+
+                </form>
+
+            </div>
         </div>
-        
-       <?php echo wpm_sidebar(); ?>
-                
+
     </div>
-    </form>
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("wpmaintenancestyle"), {
         lineNumbers: true,

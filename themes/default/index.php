@@ -71,4 +71,4 @@
     </body>
 
 </html>
-<!-- WP Maintenance Mode by RestezConnectés. Learn more: https://restezconnectes.fr -->
+<!-- WP Maintenance - VERSION {Version} - By RestezConnectés. Learn more: https://madeby.restezconnectes.fr/project/wp-maintenance/ -->
