@@ -6,6 +6,7 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_colors' && wp_verify_nonce($_POST['security-colors'], 'valid-colors') ) {
 
+    if( empty($_POST["wp_maintenance_settings"]["container_active"]) ) { $_POST["wp_maintenance_settings"]["container_active"] = 0; }
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     //var_dump($_POST["wp_maintenance_settings"]);
     //exit();

@@ -6,7 +6,9 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_general' && wp_verify_nonce($_POST['security-general'], 'valid-general') ) {
 
-    update_option('wp_maintenance_active', $_POST["wp_maintenance_active"]);
+    if( isset($_POST["wp_maintenance_active"]) && $_POST["wp_maintenance_active"] == 1 ) { $wp_maintenance_active = 1; } else { $wp_maintenance_active = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["newletter"]) ) { $_POST["wp_maintenance_settings"]["newletter"] = 0; }
+    update_option('wp_maintenance_active', $wp_maintenance_active);
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
 
     $messageUpdate = 1;

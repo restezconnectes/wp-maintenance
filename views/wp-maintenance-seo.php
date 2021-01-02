@@ -6,6 +6,8 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-footer'], 'valid-footer') ) {
    
+    if( empty($_POST["wp_maintenance_settings"]["enable_seo"]) ) { $_POST["wp_maintenance_settings"]["enable_seo"] = 0; }
+
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $messageUpdate = 1;
 }

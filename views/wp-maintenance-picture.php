@@ -36,6 +36,10 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' && wp_verif
         }
     }
     
+    if( empty($_POST["wp_maintenance_settings"]["b_enable_image"]) ) { $_POST["wp_maintenance_settings"]["b_enable_image"] = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["b_fixed_image"]) ) { $_POST["wp_maintenance_settings"]["b_fixed_image"] = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["enable_slider"]) ) { $_POST["wp_maintenance_settings"]["enable_slider"] = 0; }
+    
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     update_option('wp_maintenance_slider', $_POST["wp_maintenance_slider"]);
     update_option('wp_maintenance_slider_options', $_POST["wp_maintenance_slider_options"]);
@@ -111,11 +115,18 @@ function toggleTable(texte) {
 
                     <!-- BACKGROUND PICTURE -->
                     <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Background / Pattern picture', 'wp-maintenance'); ?></h3>
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Background picture', 'wp-maintenance'); ?></h3>
                     </div>
                     <p class="wp-maintenance-fieldset-item ">
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate picture or pattern background', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) { echo ' checked'; } ?>>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e("Disable background or pattern picture", 'wp-maintenance'); ?></span>
+                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="0" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==0) { echo ' checked'; } ?>>
+                            <span class="wp-maintenance-checkmark"></span>
+                      </label>
+                    </p>
+
+                    <p class="wp-maintenance-fieldset-item ">
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate picture background', 'wp-maintenance'); ?></span>
+                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                       </label>
                     </p>
@@ -124,14 +135,12 @@ function toggleTable(texte) {
                         <label for="wp_maintenance_settings[color_txt]" class="wp-maintenance-setting-row-title"><?php _e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
                         <input id="upload_b_image" size="65%" name="upload_b_image" value="" type="text" /> <a href="#" id="upload_b_image_button" class="wp-maintenance-button-primary" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a>
                         
-                        <?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' && (!$paramMMode['b_pattern'] or $paramMMode['b_pattern']==0) ) { ?>
-                        <div class="wp-maintenance-encadre">
-                            <?php _e('You use this background picture:', 'wp-maintenance'); ?><br />
-                            <img src="<?php echo esc_url($paramMMode['b_image']); ?>" width="200" /><br /><label class="wpm-container"><input type="checkbox" name="remove_b_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label> 
-                        </div>
-                        <?php }
-                        if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']>=1 ) { ?>
-                        <div class="wp-maintenance-encadre"><br /><?php _e('You use a pattern. Remove pattern for use image background.', 'wp-maintenance'); ?><br /><br /></div>
+                        <?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' ) { ?>
+                        <div style="padding-top:1em;text-align:center;"><?php _e('You use this background picture:', 'wp-maintenance'); ?></div>
+                        <div class="wp-maintenance-encadre" style="height:200px;margin-top: 0em;background:url('<?php echo esc_url($paramMMode['b_image']) ?>');top center;background-size: cover;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-position: center;background-color: rgba(0,0,0,<?php echo esc_html($paramMMode['b_opacity_image']); ?>);">
+                            
+                            
+                        </div><div style="text-align:center;"><label class="wpm-container"><input type="checkbox" name="remove_b_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label></div>
                         <?php } ?>
                         
                     </div>
@@ -156,9 +165,23 @@ function toggleTable(texte) {
                         </label>
                     </p>
 
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+
+                    <!-- BACKGROUND PATTERN -->
+                    <div class="wp-maintenance-settings-section-header">
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Pattern picture', 'wp-maintenance'); ?></h3>
+                    </div>
+
+                    <p class="wp-maintenance-fieldset-item ">
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate pattern background', 'wp-maintenance'); ?></span>
+                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="2" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==2) { echo ' checked'; } ?>>
+                            <span class="wp-maintenance-checkmark"></span>
+                      </label>
+                    </p>
+
                     <!-- CHOIX PATTERN -->  
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Or choose a pattern', 'wp-maintenance'); ?></label>
+                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Choose a pattern', 'wp-maintenance'); ?></label>
                         <ul id="pattern">
                             <li>
                                 <div style="width:50px;height:50px;border:1px solid #333;background-color:#ffffff;font-size:0.8em;margin-bottom:5px;"><?php _e('NO PATTERN', 'wp-maintenance'); ?></div>

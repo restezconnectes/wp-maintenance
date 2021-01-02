@@ -57,10 +57,10 @@ function wpm_footer_text() {
 		$output .= '<footer>';
 
 		if( isset($o['text_bt_maintenance']) && $o['text_bt_maintenance']!='' ) {
-			$output .= nl2br(stripslashes($o['text_bt_maintenance']));
+			$output .= esc_html(nl2br(stripslashes($o['text_bt_maintenance'])));
 		}
 		if( (isset($o['add_wplogin']) && $o['add_wplogin']==1) && (isset($o['add_wplogin_title']) && $o['add_wplogin_title']!='') ) {
-			$output .= '<br /><br /><a href="'.get_admin_url().'">'.str_replace('%DASHBOARD%', ' '.__('Dashboard', 'wp-maintenance'), $o['add_wplogin_title']).'</a>';
+			$output .= '<br /><br /><a href="'.get_admin_url().'">'.str_replace('%DASHBOARD%', ' '.__('Dashboard', 'wp-maintenance'), esc_html($o['add_wplogin_title'])).'</a>';
 
 		}
 		$output .= '</footer>';
@@ -79,8 +79,6 @@ function wpm_favicon() {
 	if ( !empty( $o['favicon'] ) ) {
 		$output .= "<!-- Favicon -->\n";
 		$output .= '<link href="'.esc_attr( $o['favicon'] ).'" rel="shortcut icon" type="image/x-icon" />';
-		
-		
 	}
 
 	return $output;
@@ -170,19 +168,20 @@ function wpm_customcss() {
 	$remplaceStyle = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_style'));
 	$output .= wpm_compress($remplaceStyle);
 
-	/* Si on a activé une image ou pattern */
-	if( isset($o['b_enable_image']) && $o['b_enable_image']==1 ) {
+	/* Si on a activé un motif */
+	if( isset($o['b_enable_image']) && $o['b_enable_image'] == 2 ) {
 
-		/* Si on a une image de fond */
-		if( isset($o['b_pattern']) && $o['b_pattern']>0 ) { 
-			$addStyleGeneral .= 'body {
-			background-image: url('.esc_url(WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$o['b_pattern'].'.png').');
-			background-repeat: repeat;
-			background-color: '.$o['color_bg'].'';
+		$addStyleGeneral .= 'body {
+		background-image: url('.esc_url(WP_PLUGIN_URL.'/wp-maintenance/images/pattern'.$o['b_pattern'].'.png').');
+		background-repeat: repeat;
+		background-color: '.$o['color_bg'].';}';
+		
+	}
 
+	/* Si on a une image de fond */
+	if( isset($o['b_enable_image']) && $o['b_enable_image'] == 1 ) {
 
-		/* Si on a motif */
-		} elseif( isset($o['b_image']) && $o['b_image'] ) {
+		if( isset($o['b_image']) && $o['b_image'] ) {
 
 			if( empty($o['b_repeat_image']) ) { $o['b_repeat_image'] = 'repeat'; }
 			if( isset($o['b_fixed_image']) && $o['b_fixed_image']==1 ) {
@@ -194,11 +193,13 @@ function wpm_customcss() {
 			-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-color: '.$o['color_bg'].';background-position: center;}';
 
 			if( isset($o['b_opacity_image']) ) {
-				$addStyleGeneral .= '#wrapper { background-color: rgba(0,0,0,'.esc_html($o['b_opacity_image']).'); }';
+				$addStyleGeneral .= '#main { background-color: rgba(0,0,0,'.esc_html($o['b_opacity_image']).'); }';
 			} 
 		}
 
-	} else {
+	} 
+
+	if( isset($o['b_enable_image']) && $o['b_enable_image']==0 ) {
 		$addStyleGeneral .= 'body {background-color: '.$o['color_bg'].';}';
 	} 
 
@@ -217,6 +218,7 @@ function wpm_customcss() {
 		$addStyleGeneral .= '#sscontent {background-color: rgba('.esc_html($paramRGBColor['rouge']).','.esc_html($paramRGBColor['vert']).','.esc_html($paramRGBColor['bleu']).', '.esc_html($o['container_opacity']).');padding:0.8em;margin-left:auto;margin-right:auto;width:'.$o['container_width'].'%;}';
 
 	}
+
 	$addStyleGeneral .= '.wpm_newletter {';
     if( isset($o['newletter_size']) ) { $addStyleGeneral .= 'font-size:'.esc_html($o['newletter_size']).'px;'; } 
     if( isset($o['newletter_font_style']) ) { $addStyleGeneral .= 'font-style:'.esc_html($o['newletter_font_style']).';'; } 
@@ -309,7 +311,7 @@ function wpm_social_position($position = '') {
 
 	$output = '';
 	if( isset($o['enable']) && $o['enable'] == 1 ) { 
-		
+
 		if( isset($o['position']) && $o['position']=='top' && isset($position) && $position=='top' ) {
 			$output = '<header id="header" role="banner" class="pam">'.do_shortcode('[wpm_social]').'</header>';
 		} 

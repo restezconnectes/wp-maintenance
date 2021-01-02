@@ -10,6 +10,8 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
         unset($_POST["wp_maintenance_social"]);
         $_POST["wp_maintenance_social"] = '';
     }
+    if( empty($_POST["wp_maintenance_social_options"]["enable"]) ) { $_POST["wp_maintenance_social_options"]["enable"] = 0; }
+
     update_option('wp_maintenance_social', $_POST["wp_maintenance_social"]);
     update_option('wp_maintenance_social_options', $_POST["wp_maintenance_social_options"]);
 

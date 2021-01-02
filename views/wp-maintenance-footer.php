@@ -6,6 +6,8 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-footer'], 'valid-footer') ) {
    
+    if( empty($_POST["wp_maintenance_settings"]["add_wplogin"]) ) { $_POST["wp_maintenance_settings"]["add_wplogin"] = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["enable_footer"]) ) { $_POST["wp_maintenance_settings"]["enable_footer"] = 0; }
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $messageUpdate = 1;
 }
@@ -77,7 +79,7 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <p class="wp-maintenance-fieldset-item ">
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, show text and link to go to the dashboard', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[add_wplogin]" value="1" <?php if( empty($paramMMode['add_wplogin']) || (isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin']==0) ) { echo ' checked'; }?>>
+                            <input type="checkbox" name="wp_maintenance_settings[add_wplogin]" value="1" <?php if( isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin'] == 1 ) { echo ' checked'; }?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>

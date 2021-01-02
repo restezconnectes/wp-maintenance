@@ -6,6 +6,10 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_countdown' && wp_verify_nonce($_POST['security-countdown'], 'valid-countdown') ) {
 
+    if( empty($_POST["wp_maintenance_settings"]["active_cpt"]) ) { $_POST["wp_maintenance_settings"]["active_cpt"] = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["active_cpt_s"]) ) { $_POST["wp_maintenance_settings"]["active_cpt_s"] = 0; }
+    if( empty($_POST["wp_maintenance_settings"]["disable"]) ) { $_POST["wp_maintenance_settings"]["disable"] = 0; }
+    
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $messageUpdate = 1;
 }
