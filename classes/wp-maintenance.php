@@ -600,13 +600,18 @@ class WP_maintenance {
 
         // Récupère les ip autorisee
         $paramIpAddress = get_option('wp_maintenance_ipaddresses');
+
         /* Désactive le mode maintenance pour les IP définies */
         if( isset($paramIpAddress) ) {
             $lienIpAddress = explode("\n", $paramIpAddress);
+            $ip_autorized = array();
             foreach($lienIpAddress as $ipAutorized) {
-                if( strpos($ipAutorized, wpm_get_ip())!== false ) {
-                    $statusActive = 0;
+                if( $ipAutorized!='' ) {
+                    array_push( $ip_autorized, $ipAutorized);
                 }
+            }          
+            if ( array_search(wpm_get_ip(), $ip_autorized) !== FALSE ) {
+                $statusActive = 0;
             }
             
         }
