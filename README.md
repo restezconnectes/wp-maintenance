@@ -100,10 +100,13 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 ## Installation
 1. Upload the full directory into your '/wp-content/plugins' directory
 2. Activate the plugin at the plugin administration page
-3. Open the plugin configuration page, which is located under 'Contact->Send PDF with CF7'
 
 ### Some screenshots:
 
-![Admin Setting - Select your form](https://madeby.restezconnectes.fr/plugins/send-pdf-for-contact-form-7/screenshot-1.png)
-![Admin Setting  view](https://madeby.restezconnectes.fr/plugins/send-pdf-for-contact-form-7/screenshot-2.png)
-![Admin Layout View](https://madeby.restezconnectes.fr/plugins/send-pdf-for-contact-form-7/screenshot-3.png)
+![General view](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-1.png)
+![View by visitors to your site](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-2.png)
+![Colors and fonts settings](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-3.png)
+![Upload a personal header, background and slides picture](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-4.png)
+![Countdown settings](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-5.png)
+![CSS settings](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-6.png)
+![Others settings](https://madeby.restezconnectes.fr/plugins/wp-maintenance/screenshot-7.png)
