@@ -677,18 +677,20 @@ class WP_maintenance {
             $dateCpt = '';
         }
 
-        /* Si on a un epage maintenance.php dans le theme */
-        if ( file_exists( get_stylesheet_directory() ) ) {
-            $urlTpl = get_stylesheet_directory();
+        /* Si on a une page maintenance.php dans le theme */
+        if ( file_exists( get_stylesheet_directory() ) && file_exists( get_stylesheet_directory() . '/maintenance.php')) {
+            $urlTpl = get_stylesheet_directory() . '/maintenance.php';
+        } 
+        /* Si on a une page maintenance.php dans le theme parent */
+        elseif( file_exists( get_template_directory() ) && file_exists( get_template_directory() . '/maintenance.php') ) {
+            $urlTpl = get_template_directory() . '/maintenance.php';
         } else {
-            $urlTpl = get_template_directory();
+            $urlTpl = '';
         }
 
-        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && file_exists($urlTpl.'/maintenance.php') ) {
-
-            include_once( $urlTpl.'/maintenance.php' );
+        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && $urlTpl !== '' ) {
+            include_once( $urlTpl );
             die();
-
         } 
         
         /* Si on désactive le mode maintenance en fin de compte à rebours */
