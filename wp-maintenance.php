@@ -36,7 +36,7 @@ define( 'WPM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPM_PLUGIN_URL', plugins_url().'/'.strtolower('wp-maintenance').'/');
 define( 'WPM_ICONS_URL', plugins_url().'/'.strtolower('wp-maintenance').'/socialicons/');
 
-if( !defined( 'WPM_VERSION' )) { define( 'WPM_VERSION', '6.0.0' ); }
+if( !defined( 'WPM_VERSION' )) { define( 'WPM_VERSION', '6.0.1' ); }
 
 require WPM_DIR . 'classes/wp-maintenance.php';
 require WPM_DIR . 'classes/slider.php';

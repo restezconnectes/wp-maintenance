@@ -280,10 +280,10 @@ function wpm_analytics() {
 	if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
 	$o = get_option('wp_maintenance_settings');
 
-	$output = '<!-- analytics ici '.$o['code_analytics'].' -->';
+	$output = '<!-- analytics ici -->';
 
-	if( isset($o['code_analytics']) && $o['code_analytics']!='') {
-		$output = do_shortcode('[wpm_analytics enable="'.$o['code_analytics'].'"]');
+	if( isset($o['codeanalytics']) && $o['codeanalytics']!='') {
+		$output = stripslashes($o['codeanalytics']);
 	}
 
 	return $output;

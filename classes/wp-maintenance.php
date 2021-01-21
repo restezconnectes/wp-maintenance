@@ -682,7 +682,7 @@ class WP_maintenance {
             $dateCpt = '';
         }
 
-        /* Si on a une page maintenance.php dans le theme */
+        /* Si on a un epage maintenance.php dans le theme */
         if ( file_exists( get_stylesheet_directory() ) && file_exists( get_stylesheet_directory() . '/maintenance.php')) {
             $urlTpl = get_stylesheet_directory() . '/maintenance.php';
         } 
@@ -696,7 +696,7 @@ class WP_maintenance {
         if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && $urlTpl !== '' ) {
             include_once( $urlTpl );
             die();
-        } 
+        }  
         
         /* Si on désactive le mode maintenance en fin de compte à rebours */
         if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $this->wpm_check_active() == 1 ) {
