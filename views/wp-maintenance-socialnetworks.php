@@ -121,9 +121,10 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_social_options[style]" class="wp-maintenance-setting-row-title"><?php _e('Choose icons style', 'wp-maintenance'); ?></label>
                         <ul id="pattern">
-                            <?php for ($ico = 1; $ico <= 6; $ico++) {
-                                if( empty($paramSocialOption['style']) ) { $paramSocialOption['style'] == 'style1'; }
-                                if( isset($paramSocialOption['style']) && $paramSocialOption['style'] == 'style'.$ico ) { $selected = ' checked'; } else { $selected = ''; } 
+                            <?php
+                                //if( empty($paramSocialOption['style']) ) { $paramSocialOption['style'] == 'style1'; }
+                                for ($ico = 1; $ico <= 6; $ico++) {                                
+                                    if( isset($paramSocialOption['style']) && $paramSocialOption['style'] == 'style'.$ico ) { $selected = ' checked'; } else { $selected = ''; } 
                             ?>
                                 <li>
                                     <div style="width:64px;height:64px;border:2px solid #ECF0F1;background:url('<?php echo WPM_ICONS_URL.'style'.$ico.'/64/facebook.png'; ?>');margin-bottom:5px;"></div>

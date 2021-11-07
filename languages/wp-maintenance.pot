@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2021-01-02 11:35+0100\n"
+"POT-Creation-Date: 2021-06-02 09:41+0200\n"
 "PO-Revision-Date: 2015-03-19 11:19+0100\n"
 "Last-Translator: Florent Maillefaud <contact@restezconnectes.fr>\n"
 "Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
@@ -49,89 +49,89 @@ msgstr ""
 msgid "Come back quickly!"
 msgstr ""
 
-#: classes/wp-maintenance.php:182 classes/wp-maintenance.php:304
-#: classes/wp-maintenance.php:354 includes/functions.php:78
+#: classes/wp-maintenance.php:202 classes/wp-maintenance.php:324
+#: classes/wp-maintenance.php:374 includes/functions.php:78
 msgid "Settings"
 msgstr ""
 
-#: classes/wp-maintenance.php:211 includes/functions.php:194
+#: classes/wp-maintenance.php:231 includes/functions.php:194
 msgid "WP Maintenance"
 msgstr ""
 
-#: classes/wp-maintenance.php:234
+#: classes/wp-maintenance.php:254
 msgid "Colors"
 msgstr ""
 
-#: classes/wp-maintenance.php:244 classes/wp-maintenance.php:348
+#: classes/wp-maintenance.php:264 classes/wp-maintenance.php:368
 #: includes/functions.php:42
 msgid "Pictures"
 msgstr ""
 
-#: classes/wp-maintenance.php:254 includes/functions.php:48
+#: classes/wp-maintenance.php:274 includes/functions.php:48
 msgid "Countdown"
 msgstr ""
 
-#: classes/wp-maintenance.php:264 includes/functions.php:54
+#: classes/wp-maintenance.php:284 includes/functions.php:54
 #: views/wp-maintenance-css.php:42
 msgid "CSS"
 msgstr ""
 
-#: classes/wp-maintenance.php:274 classes/wp-maintenance.php:353
+#: classes/wp-maintenance.php:294 classes/wp-maintenance.php:373
 #: includes/functions.php:72 views/wp-maintenance-footer.php:33
 msgid "Footer"
 msgstr ""
 
-#: classes/wp-maintenance.php:284 classes/wp-maintenance.php:351
+#: classes/wp-maintenance.php:304 classes/wp-maintenance.php:371
 #: includes/functions.php:60
 msgid "SEO"
 msgstr ""
 
-#: classes/wp-maintenance.php:294 classes/wp-maintenance.php:352
+#: classes/wp-maintenance.php:314 classes/wp-maintenance.php:372
 #: includes/functions.php:66 views/wp-maintenance-socialnetworks.php:46
 msgid "Social Networks"
 msgstr ""
 
-#: classes/wp-maintenance.php:346 views/wp-maintenance-dashboard.php:31
+#: classes/wp-maintenance.php:366 views/wp-maintenance-dashboard.php:31
 msgid "General"
 msgstr ""
 
-#: classes/wp-maintenance.php:347
+#: classes/wp-maintenance.php:367
 msgid "Colors & Fonts"
 msgstr ""
 
-#: classes/wp-maintenance.php:349
+#: classes/wp-maintenance.php:369
 msgid "CountDown"
 msgstr ""
 
-#: classes/wp-maintenance.php:350
+#: classes/wp-maintenance.php:370
 msgid "CSS Style"
 msgstr ""
 
-#: classes/wp-maintenance.php:413
+#: classes/wp-maintenance.php:433
 msgid "Choose This Image"
 msgstr ""
 
-#: classes/wp-maintenance.php:414
+#: classes/wp-maintenance.php:434
 msgid "Choose Image"
 msgstr ""
 
-#: classes/wp-maintenance.php:428 classes/wp-maintenance.php:436
-#: classes/wp-maintenance.php:444 classes/wp-maintenance.php:453
-#: classes/wp-maintenance.php:462 classes/wp-maintenance.php:471
-#: classes/wp-maintenance.php:480 classes/wp-maintenance.php:489
-#: classes/wp-maintenance.php:498
+#: classes/wp-maintenance.php:448 classes/wp-maintenance.php:456
+#: classes/wp-maintenance.php:464 classes/wp-maintenance.php:473
+#: classes/wp-maintenance.php:482 classes/wp-maintenance.php:491
+#: classes/wp-maintenance.php:500 classes/wp-maintenance.php:509
+#: classes/wp-maintenance.php:518
 msgid "You do not have sufficient privileges to access this page."
 msgstr ""
 
-#: classes/wp-maintenance.php:572
+#: classes/wp-maintenance.php:592
 msgid "Please upload a valid .json file"
 msgstr ""
 
-#: classes/wp-maintenance.php:578
+#: classes/wp-maintenance.php:598
 msgid "Please upload a file to import"
 msgstr ""
 
-#: classes/wp-maintenance.php:588
+#: classes/wp-maintenance.php:608
 msgid "New settings imported successfully!"
 msgstr ""
 
@@ -277,8 +277,8 @@ msgstr ""
 #: views/wp-maintenance-settings.php:161
 #: views/wp-maintenance-socialnetworks.php:66
 #: views/wp-maintenance-socialnetworks.php:103
-#: views/wp-maintenance-socialnetworks.php:158
-#: views/wp-maintenance-socialnetworks.php:169
+#: views/wp-maintenance-socialnetworks.php:159
+#: views/wp-maintenance-socialnetworks.php:170
 msgid "Save"
 msgstr ""
 
@@ -470,8 +470,8 @@ msgstr ""
 msgid "Enable seconds ?"
 msgstr ""
 
-#: views/wp-maintenance-countdown.php:104 views/wp-maintenance-dashboard.php:52
-msgid "Yes, enable maintenance mode"
+#: views/wp-maintenance-countdown.php:104
+msgid "Yes, enable seconds"
 msgstr ""
 
 #: views/wp-maintenance-countdown.php:109
@@ -645,6 +645,10 @@ msgstr ""
 
 #: views/wp-maintenance-dashboard.php:44
 msgid "Activate maintenance mode"
+msgstr ""
+
+#: views/wp-maintenance-dashboard.php:52
+msgid "Yes, enable maintenance mode"
 msgstr ""
 
 #: views/wp-maintenance-dashboard.php:60
@@ -830,7 +834,7 @@ msgid "Display button navigation"
 msgstr ""
 
 #: views/wp-maintenance-picture.php:252
-#: views/wp-maintenance-socialnetworks.php:137
+#: views/wp-maintenance-socialnetworks.php:138
 msgid "Position"
 msgstr ""
 
@@ -932,7 +936,7 @@ msgstr ""
 msgid "Delete custom settings upon plugin deactivation?"
 msgstr ""
 
-#: views/wp-maintenance-settings.php:90 views/wp-maintenance-settings.php:99
+#: views/wp-maintenance-settings.php:90
 msgid ""
 "Yes, all custom settings will be deleted from database upon plugin "
 "deactivation"
@@ -940,6 +944,12 @@ msgstr ""
 
 #: views/wp-maintenance-settings.php:97
 msgid "Display code HTTP Error 503?"
+msgstr ""
+
+#: views/wp-maintenance-settings.php:99
+msgid ""
+"Yes, inform visitors and search engines that my site is temporarily "
+"unavailable."
 msgstr ""
 
 #: views/wp-maintenance-settings.php:108
@@ -1038,38 +1048,38 @@ msgstr ""
 msgid "Choose icons style"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:139
+#: views/wp-maintenance-socialnetworks.php:140
 msgid "Top"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:140
+#: views/wp-maintenance-socialnetworks.php:141
 msgid "Bottom"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:145
+#: views/wp-maintenance-socialnetworks.php:146
 msgid "Align"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:147
+#: views/wp-maintenance-socialnetworks.php:148
 msgid "Left"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:148
+#: views/wp-maintenance-socialnetworks.php:149
 msgid "Center"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:149
+#: views/wp-maintenance-socialnetworks.php:150
 msgid "Right"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:154
+#: views/wp-maintenance-socialnetworks.php:155
 msgid "You have your own icons? Enter the folder name of your theme here"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:161
+#: views/wp-maintenance-socialnetworks.php:162
 msgid "Reset Social Networks Icons Options"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:164
+#: views/wp-maintenance-socialnetworks.php:165
 msgid "Yes, reset Social Networks Icons?"
 msgstr ""

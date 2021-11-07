@@ -101,7 +101,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                     <h3><?php _e('Enable seconds ?', 'wp-maintenance'); ?></h3>
 
                     <p class="wp-maintenance-fieldset-item ">
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable maintenance mode', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable seconds', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>

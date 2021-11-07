@@ -96,7 +96,7 @@ jQuery(document).ready(function() {
                     <!-- DISPLAY 503 ERROR? -->
                     <h3><?php _e('Display code HTTP Error 503?', 'wp-maintenance'); ?></h3>
                     <p class="wp-maintenance-fieldset-item ">
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, all custom settings will be deleted from database upon plugin deactivation', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, inform visitors and search engines that my site is temporarily unavailable.', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[error_503]" value="1" <?php if( isset($paramMMode['error_503']) && $paramMMode['error_503']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>

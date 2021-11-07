@@ -57,7 +57,7 @@ function wpm_footer_text() {
 		$output .= '<footer>';
 
 		if( isset($o['text_bt_maintenance']) && $o['text_bt_maintenance']!='' ) {
-			$output .= esc_html(nl2br(stripslashes($o['text_bt_maintenance'])));
+			$output .= nl2br(stripslashes($o['text_bt_maintenance']));
 		}
 		if( (isset($o['add_wplogin']) && $o['add_wplogin']==1) && (isset($o['add_wplogin_title']) && $o['add_wplogin_title']!='') ) {
 			$output .= '<br /><br /><a href="'.get_admin_url().'">'.str_replace('%DASHBOARD%', ' '.__('Dashboard', 'wp-maintenance'), esc_html($o['add_wplogin_title'])).'</a>';
@@ -124,7 +124,7 @@ function wpm_logo() {
 	if ( !empty( $o['image'] ) ) {
 		if( empty($o['image_width']) ) { $o['image_width'] = 450; }
         if( empty($o['image_height']) ) { $o['image_height'] = 450; }
-		$output .= "<div id='logo'><img id='wpm-image' src='".esc_url($o['image'])."' width='".$o['image_width']."' height='".$o['image_height']."'  alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."'></div>";
+		$output .= "<div id='logo'><img id='wpm-image' src='".esc_url($o['image'])."' width='".$o['image_width']."px' height='".$o['image_height']."px' alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' style='width:".$o['image_width']."px!important;height:".$o['image_height']."px!important;'></div>";
 	}
 
 	return  $output;

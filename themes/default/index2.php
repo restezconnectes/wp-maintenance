@@ -26,12 +26,14 @@
 				{Logo}
 				{SlideshowBL}
 			</p>
-			<p style="text-align:center;padding:1.5em;"><h3>{Title}</h3>
-				<p>{Text}</p>
-				{SlideshowBT}
-				{Counter}
-				{Newsletter}
-			</p>
+			<div id="sscontent">
+				<p style="text-align:center;padding:1.5em;"><h3>{Title}</h3>
+					<p>{Text}</p>
+					{SlideshowBT}
+					{Counter}
+					{Newsletter}
+				</p>
+			</div>
 			<p>{BottomSocialIcon}</p>	
 		</main>
 		{FooterText}

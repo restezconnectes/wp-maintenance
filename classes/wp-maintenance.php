@@ -145,6 +145,26 @@ class WP_maintenance {
             add_option('wp_maintenance_style', wpm_print_style());
         }
 
+        $wpParamSocialOption = array(
+
+            'enable' => 0,
+            'texte' => 'Follow me on',
+            'style' => 'style1',
+            'size' => 64,
+            'position' => 'bottom',
+            'align' => 'center',
+            'theme' => ''
+        );
+
+        $getParamSocialOption = get_option('wp_maintenance_social_options');
+        if ( empty($getParamSocialOption) ) {
+            foreach ($wpParamSocialOption as $key => $option) {
+                $wpParamSocialOption[$key] = $option;
+            }
+            add_option('wp_maintenance_social_options', $wpParamSocialOption);
+        }
+        
+
     }
 
     public static function wpm_dashboard_remove() {
@@ -603,7 +623,7 @@ class WP_maintenance {
 
         /* Désactive le mode maintenance pour les IP définies */
         if( isset($paramIpAddress) ) {
-            $lienIpAddress = explode("\n", $paramIpAddress);
+            $lienIpAddress = explode("\r\n", $paramIpAddress);
             $ip_autorized = array();
             foreach($lienIpAddress as $ipAutorized) {
                 if( $ipAutorized!='' ) {
