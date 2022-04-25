@@ -21,7 +21,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
         if ($find_social_url === false) {
 
         } else {
-            $listInsertSocial[$title] = strip_tags( stripslashes( filter_var($value, FILTER_VALIDATE_URL) ) );
+            $listInsertSocial[$title] = strip_tags( stripslashes( esc_url_raw($value) ) );
         }
     }
 
