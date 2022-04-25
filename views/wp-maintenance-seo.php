@@ -24,26 +24,24 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+    <div class="wp-maintenance-wrapper">
         
-        <?php echo wpm_get_nav(); ?>
-          
+        <?php echo wpm_get_nav2(); ?>
+        
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
             
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-admin-site-alt" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('SEO options', 'wp-maintenance'); ?></h2></div>
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_footer" />
+                <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
-                
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_footer" />
-                    <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
-
-                    <!-- ENABLE SEO -->
+                <!-- ENABLE SEO -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Active SEO settings?', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, active SEO', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[enable_seo]" value="1" <?php if( isset($paramMMode['enable_seo']) && $paramMMode['enable_seo']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -67,7 +65,10 @@ $paramMMode = get_option('wp_maintenance_settings');
                     
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                    <!-- UPLOADER UN FAVICON -->
+                </div>
+
+                <!-- UPLOADER UN FAVICON -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Add a favicon', 'wp-maintenance'); ?></h3></div>
 
                     <div class="wp-maintenance-setting-row">
@@ -77,23 +78,13 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <?php if( isset($paramMMode['favicon']) && $paramMMode['favicon']!='' ) { ?>
                             <div class="wp-maintenance-encadre">
                                 <?php _e('You use this favicon:', 'wp-maintenance'); ?><br />
-                                <img src="<?php echo $paramMMode['favicon']; ?>" width="100" /><br />
+                                <img src="<?php echo esc_url($paramMMode['favicon']); ?>" width="100" /><br />
                             </div> 
                         <?php } ?>
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
-
-                    <!-- GOOGLE ANALYTICS -->
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Analytics Code', 'wp-maintenance'); ?></h3></div>
-                    <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[codeanalytics]" class="wp-maintenance-setting-row-title"><?php _e('Enter your analytics tracking code here:', 'wp-maintenance'); ?></label>
-                        <textarea name="wp_maintenance_settings[codeanalytics]" wrap="off" class="wp-maintenance-input" rows="5%" cols="80%"><?php if( isset($paramMMode['codeanalytics']) && $paramMMode['codeanalytics']!='' ) { echo esc_html($paramMMode['codeanalytics']); } ?></textarea>
-                    </div>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
-
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>

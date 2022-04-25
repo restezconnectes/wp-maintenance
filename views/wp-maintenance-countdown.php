@@ -25,21 +25,18 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
-        
-        <?php echo wpm_get_nav(); ?>
+    <div class="wp-maintenance-wrapper">
+
+        <?php echo wpm_get_nav2(); ?>
         
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-art" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Countdown settings', 'wp-maintenance'); ?></h2></div>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
-                
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_countdown" />
-                    <?php wp_nonce_field('valid-countdown', 'security-countdown'); ?>
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_countdown" />
+                <?php wp_nonce_field('valid-countdown', 'security-countdown'); ?>
 
-                    <!-- ACTIVER COMPTEUR -->
+                <!-- ACTIVER COMPTEUR -->
+                <div class="wp-maintenance-module-options-block">
                     <?php
 
                         // Old version compte à rebours
@@ -57,14 +54,16 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     ?>
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Enable a countdown', 'wp-maintenance'); ?></h3></div>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable a countdown', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[active_cpt]" value="1" <?php if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
-
+                </div>
+                
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Date/time Launch', 'wp-maintenance'); ?></h3>
                     </div>
@@ -93,6 +92,8 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <div id="wpmdatecontainer"></div>
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
+                <div class="wp-maintenance-module-options-block">
 
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Others Settings', 'wp-maintenance'); ?></h3>
@@ -100,14 +101,14 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <h3><?php _e('Enable seconds ?', 'wp-maintenance'); ?></h3>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable seconds', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[active_cpt_s]" value="1" <?php if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
                     <h3><?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?></h3>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, disable maintenance mode at the end of countdown', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[disable]" value="1" <?php if( isset($paramMMode['disable']) && $paramMMode['disable']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -129,15 +130,14 @@ $paramMMode = get_option('wp_maintenance_settings');
                             'quicktags' => true // load Quicktags, can be used to pass settings directly to Quicktags using an array()
                         );
                     $textCpt_fin =  '';
-                    if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) { $textCpt_fin = esc_textarea(stripslashes($paramMMode['message_cpt_fin'])); } else { $textCpt_fin = ' '; }
+                    /*if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) { $textCpt_fin = esc_textarea(stripslashes($paramMMode['message_cpt_fin'])); } else { $textCpt_fin = ' '; }*/
                     ?>
                     <?php wp_editor( nl2br($textCpt_fin), 'message_cpt_fin', $settingsCountdown ); ?>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>

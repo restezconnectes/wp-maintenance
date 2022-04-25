@@ -24,26 +24,24 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+    <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav(); ?>
-
+        <?php echo wpm_get_nav2(); ?>
+        
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-table-row-before" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Footer', 'wp-maintenance'); ?></h2></div>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_footer" />
+                <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
+
+                <!-- ENABLE FOOTER -->
+                <div class="wp-maintenance-module-options-block">
                 
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_footer" />
-                    <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
-
-                    <!-- ENABLE FOOTER -->
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Enable Footer?', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable footer', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[enable_footer]" value="1" <?php if( isset($paramMMode['enable_footer']) && $paramMMode['enable_footer']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -71,13 +69,16 @@ $paramMMode = get_option('wp_maintenance_settings');
                     ?>
                     <?php wp_editor( nl2br($textBt), 'wpm-textbtmaintenance', $settingsTextmaintenance ); ?>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
+                
+                <!-- LINK TO LOGIN -->
+                <div class="wp-maintenance-module-options-block">
                     
-                    <!-- LINK TO LOGIN -->
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Add a link to dashboard in the footer?', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, show text and link to go to the dashboard', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[add_wplogin]" value="1" <?php if( isset($paramMMode['add_wplogin']) && $paramMMode['add_wplogin'] == 1 ) { echo ' checked'; }?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -92,9 +93,8 @@ $paramMMode = get_option('wp_maintenance_settings');
                         
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>

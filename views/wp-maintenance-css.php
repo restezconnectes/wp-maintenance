@@ -33,19 +33,17 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
-        
-        <?php echo wpm_get_nav(); ?>
-            
-        <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-media-code" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('CSS', 'wp-maintenance'); ?></h2></div>
+    <div class="wp-maintenance-wrapper">
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
-                
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_css" />
-                    <?php wp_nonce_field('valid-css', 'security-css'); ?>
+        <?php echo wpm_get_nav2(); ?>
+ 
+        <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
+
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_css" />
+                <?php wp_nonce_field('valid-css', 'security-css'); ?>
+
+                <div class="wp-maintenance-module-options-block">                
 
                     <!-- PIED DE PAGE  -->
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Edit the CSS sheet of your maintenance page here.', 'wp-maintenance'); ?></h3></div>
@@ -53,7 +51,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:350px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_style')))); ?></TEXTAREA>
                     <?php //echo wpm_compress(get_option('wp_maintenance_style')); ?>
                     
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, reset style sheet', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpm_initcss" value="1">
                             <span class="wp-maintenance-checkmark"></span>
@@ -61,7 +59,9 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     </p>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
+                <div class="wp-maintenance-module-options-block"> 
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Markers for colors', 'wp-maintenance'); ?></h3></div>
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php _e('Use this code for text color', 'wp-maintenance'); ?>
@@ -104,20 +104,14 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     </textarea>
                 </div>
 
-                </form>
-
             </div>
+            </form>
         </div>
 
     </div>
     <script>
-        var editor = CodeMirror.fromTextArea(document.getElementById("wpmaintenancestyle"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        textWrapping: true,
-        lineWrapping: true,
-        mode: "text/x-scss",
-        theme:"material"
+        jQuery(document).ready(function($) {
+        wp.codeEditor.initialize($('#wpmaintenancestyle'), cm_settings);
         });
     </script> 
     

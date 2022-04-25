@@ -79,21 +79,19 @@ function toggleTable(texte) {
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
-        
-        <?php echo wpm_get_nav(); ?>
+    <div class="wp-maintenance-wrapper">
+
+        <?php echo wpm_get_nav2(); ?>
             
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-format-gallery" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Picture Options', 'wp-maintenance'); ?></h2></div>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
-                
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_pictures" />
-                    <?php wp_nonce_field('valid-pictures', 'security-pictures'); ?>
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_pictures" />
+                <?php wp_nonce_field('valid-pictures', 'security-pictures'); ?>
 
-                    <!-- HEADER PICTURE -->
+                <!-- HEADER PICTURE -->
+                <div class="wp-maintenance-module-options-block">
+
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Header picture', 'wp-maintenance'); ?></h3>
                     </div>
@@ -114,19 +112,21 @@ function toggleTable(texte) {
                     </div>
                     
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- BACKGROUND PICTURE -->
+                <!-- BACKGROUND PICTURE -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Background picture', 'wp-maintenance'); ?></h3>
                     </div>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e("Disable background or pattern picture", 'wp-maintenance'); ?></span>
                             <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="0" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==0) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                       </label>
                     </p>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate picture background', 'wp-maintenance'); ?></span>
                             <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -160,7 +160,7 @@ function toggleTable(texte) {
                         <input id="fontSize" name="wp_maintenance_settings[b_opacity_image]" value="<?php if( isset($paramMMode['b_opacity_image']) ) { echo $paramMMode['b_opacity_image']; } else { echo '0.2'; } ?>" size="4" readonly="readonly" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"><br /><br /><div id="slider" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"></div>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Fix the background picture', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[b_fixed_image]" value="1" <?php if( isset($paramMMode['b_fixed_image']) && $paramMMode['b_fixed_image']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -168,13 +168,15 @@ function toggleTable(texte) {
                     </p>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- BACKGROUND PATTERN -->
+                <!-- BACKGROUND PATTERN -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Pattern picture', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate pattern background', 'wp-maintenance'); ?></span>
                             <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="2" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==2) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -206,13 +208,15 @@ function toggleTable(texte) {
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- ENABLE SLIDER -->
+                <!-- ENABLE SLIDER -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Slider', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable Slider', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[enable_slider]" value="1" <?php if( isset($paramMMode['enable_slider']) && $paramMMode['enable_slider']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -224,7 +228,7 @@ function toggleTable(texte) {
                         <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Slider options', 'wp-maintenance'); ?></label>
                         <?php
 
-                            if( $paramSlider!==null ) {
+                            if( isset($paramSlider) && $paramSlider!==false ) {
 
                                 if( $paramSlider['slider_image'] ) {
                                     $lastKeySlide = key($paramSlider['slider_image']);
@@ -309,9 +313,8 @@ function toggleTable(texte) {
 
                 <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>

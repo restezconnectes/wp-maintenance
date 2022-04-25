@@ -12,7 +12,6 @@
 	<link rel="stylesheet" href="{Url}themes/default/css/styles.css" media="all">
 	{CustomCSS}
 	{AddStyleWysija}
-	{Analytics}
 	{HeaderCode}
 	{SliderCSS}
 	{ScriptSlider}

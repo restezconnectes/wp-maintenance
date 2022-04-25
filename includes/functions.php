@@ -14,7 +14,7 @@ function wpm_get_header( $message = 0) {
     return $getHeader;
 }
 
-function wpm_get_nav() {
+function wpm_get_nav2() {
     
     global $current_user;
     global $_wp_admin_css_colors;
@@ -79,38 +79,20 @@ function wpm_get_nav() {
             'desc' => __('A few additional options', 'wp-maintenance')
             )
     );
-    
-    $getDashicons = '<div class="wp-maintenance-modules-sidebar">';
-    $getDashicons .= '<a href="https://madeby.restezconnectes.fr/project/wp-maintenance/" alt="'.__('Visit the WP Maintenance page project.', 'wp-maintenance').'" title="'.__('Visit the WP Maintenance page project.', 'wp-maintenance').'"><div class="wp-maintenance-sidebar-header"><img src="'.plugins_url('wp-maintenance/images/logo-sidebar.png').'" width="238" height="120" valign="bottom"  /></div></a>';
-    
-    $getDashicons .= '<a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()" style="color:#23282d;text-decoration:none;"><div style="background:#D6D5AA;color:#23282d;padding:1em 1em;margin: 1em 1em;text-align:center;"><span class="dashicons dashicons-external" style="font-size:20px;" ></span> '.__('Preview page', 'wp-maintenance').'</div></a>';
-
-    $getDashicons .= '<ul id="wp-maintenance-modules-navigation" class="wp-maintenance-modules-list-links">';
-        
+    $getDashicons = '<nav>
+    <div class="conteneur-nav">
+    <label for="mobile">Afficher / Cacher le menu</label>
+    <input type="checkbox" id="mobile" role="button">
+      <ul>';
     foreach( $tabOptions as $page=>$values) {
         
-
         if (isset($_GET['page']) && $_GET['page']!=$page ) { $active = ''; } else { $active = 'active'; }
         
-        $getDashicons .= '<li>';
-        $getDashicons .= '<a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="'.$active.' module-'.$page.'" onFocus="this.blur()">';
-        $getDashicons .= '<span class="wp-maintenance-tab-name">'.$tabOptions[$page]['text'].'</span> <span class="wp-maintenance-tab-summary">'.$tabOptions[$page]['desc'].'</span>';
-        $getDashicons .= '<span class="dashicons wpmdashicons '.$tabOptions[$page]['dashicons'].'"></span></a>';
-        $getDashicons .= '</li>';
-
+        $getDashicons .= '<li><a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="'.$active.' module-'.$page.'" onFocus="this.blur()"><span class="dashicons '.$tabOptions[$page]['dashicons'].'"></span><br />'.$tabOptions[$page]['text'].'</a></li>';
         
     }
-    $getDashicons .= '</ul>';
-    $getDashicons .= '<div class="clear">&nbsp;</div>';
-    $getDashicons .= '<div style="padding:1em 1em;margin: 1em 1em;color:#D6D5AA;">'.__('This plugin has been developed for you for free by <a href="https://restezconnectes.fr" target="_blank" style="color:#D6D5AA;">Florent Maillefaud</a>. It is royalty free, you can take it, modify it, distribute it as you see fit.', 'wp-maintenance').'<br />';
-        /* FAIRE UN DON SUR PAYPAL */
-    $getDashicons .= '<br />'.__('Support this extension and my other developments (French Paypal):', 'wp-maintenance').'<br /><br />
-        <div style="">
-            <a href="https://paypal.me/RestezConnectes/20" target="_blank" style="color:#D6D5AA;text-decoration:none;border: 2px solid #D6D5AA;padding: 0.56em;">'.__('Donate now!', 'wp-maintenance').'</a>
-        </div>
-    </div>';
-/* FIN FAIRE UN DON */
-    $getDashicons .= '</div>';
+    $getDashicons .= '<a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()" style="color:#23282d;text-decoration:none;"><div style="background:#D6D5AA;color:#23282d;padding:1em 1em;margin: 1em 1em;text-align:center;"><span class="dashicons dashicons-external" style="font-size:20px;" ></span> '.__('Preview page', 'wp-maintenance').'</div></a>';
+    $getDashicons .= '</ul></div></nav>';
     
     return $getDashicons;
 }

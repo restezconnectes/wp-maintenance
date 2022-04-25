@@ -3,43 +3,6 @@
 defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
-    function wpm_analytics_shortcode( $atts ) {
-
-        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-        $paramMMode = get_option('wp_maintenance_settings');
-    
-        $nameServer = '';
-        if( isset($_SERVER['SERVER_NAME']) ) {
-            $nameServer = $_SERVER['SERVER_NAME'];
-        }
-        
-        // Attributes
-        extract( shortcode_atts(
-            array(
-                'enable' => 0,
-                'code' => $paramMMode['code_analytics'],
-                'domain' => ''.$nameServer.''
-            ), $atts )
-        );
-    
-        if( isset($code) && $code!='') {
-            return "
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src=\"https://www.googletagmanager.com/gtag/js?id=".$code."\"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
-
-    gtag('config', ".$code.");
-</script>";
-        } else {
-            // Code
-            return '<!-- no analytics -->';
-        }
-    }
-add_shortcode( 'wpm_analytics', 'wpm_analytics_shortcode' );
-
 function wpm_social_shortcode( $atts ) {
 
     if(get_option('wp_maintenance_social')) { extract(get_option('wp_maintenance_social')); }
@@ -60,7 +23,7 @@ function wpm_social_shortcode( $atts ) {
 		), $atts )
 	);
     if($paramSocialOption['theme']!='') {
-        $srcIcon = get_stylesheet_directory_uri().'/'.$paramSocialOption['theme'].'/';
+        $srcIcon = get_stylesheet_directory_uri().'/'.esc_html($paramSocialOption['theme']).'/';
         $iconSize = 'width='.$paramSocialOption['size'];
     } else {
         $srcIcon = WP_CONTENT_URL.'/plugins/wp-maintenance/socialicons/'.$paramSocialOption['style'].'/'.$paramSocialOption['size'].'/';
@@ -70,7 +33,7 @@ function wpm_social_shortcode( $atts ) {
          $contentSocial .= '<div id="wpm-social-footer" class="wpm_social"><ul class="wpm_horizontal">';
             foreach($paramSocial as $socialName=>$socialUrl) {
                 if($socialUrl!='') {
-                    $contentSocial .= '<li><a href="'.$socialUrl.'" target="_blank"><img src="'.$srcIcon.$socialName.'.png" alt="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" '.$iconSize.' title="'.$paramSocialOption['texte'].' '.ucfirst($socialName).'" /></a></li>';
+                    $contentSocial .= '<li><a href="'.esc_url($socialUrl).'" target="_blank"><img src="'.esc_url($srcIcon.$socialName).'.png" alt="'.esc_html($paramSocialOption['texte']).' '.ucfirst(esc_html($socialName)).'" '.$iconSize.' title="'.esc_html($paramSocialOption['texte']).' '.ucfirst(esc_html($socialName)).'" /></a></li>';
                 }
             }
          $contentSocial .='</ul></div>';

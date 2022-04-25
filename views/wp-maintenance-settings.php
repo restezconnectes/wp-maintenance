@@ -58,22 +58,20 @@ jQuery(document).ready(function() {
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+    <div class="wp-maintenance-wrapper">
         
-        <?php echo wpm_get_nav(); ?>
-        
+        <?php echo wpm_get_nav2(); ?>
+
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
+
+            <form method="post" action="" name="valide_settings">
+                <input type="hidden" name="action" value="update_settings" />
+                <?php wp_nonce_field('valid-settings', 'security-settings'); ?>
             
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-admin-generic" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Generals Settings', 'wp-maintenance'); ?></h2></div>
-
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
-                <form method="post" action="" name="valide_settings">
-                    <input type="hidden" name="action" value="update_settings" />
-                    <?php wp_nonce_field('valid-settings', 'security-settings'); ?>
-
-
+                <div class="wp-maintenance-module-options-block">
+                
                     <h3><?php _e('Theme maintenance page', 'wp-maintenance'); ?></h3>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, I use a theme maintenance page', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[pageperso]" value="1" <?php if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -81,12 +79,12 @@ jQuery(document).ready(function() {
                         
                     </p>
                     <div class="wp-maintenance-setting-row">
-                    <?php _e('You can use this shortcode to include Google Analytics code:', 'wp-maintenance'); ?> <input type="text" value="do_shortcode('[wpm_analytics']);" onclick="select()" style="width:250px;" /><br /><?php _e('You can use this shortcode to include Social Networks icons:', 'wp-maintenance'); ?> <input type="text" value="do_shortcode('[wpm_social]');" onclick="select()" style="width:250px;" />
+                    <?php _e('You can use this shortcode to include Social Networks icons:', 'wp-maintenance'); ?> <input type="text" value="do_shortcode('[wpm_social]');" onclick="select()" style="width:250px;" />
                     </div>
 
                     <!-- DELETE OPTION IF DEACTIVATED -->
                     <h3><?php _e('Delete custom settings upon plugin deactivation?', 'wp-maintenance'); ?></h3>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, all custom settings will be deleted from database upon plugin deactivation', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[dashboard_delete_db]" value="1" <?php if( isset($paramMMode['dashboard_delete_db']) && $paramMMode['dashboard_delete_db']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -95,20 +93,23 @@ jQuery(document).ready(function() {
 
                     <!-- DISPLAY 503 ERROR? -->
                     <h3><?php _e('Display code HTTP Error 503?', 'wp-maintenance'); ?></h3>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, inform visitors and search engines that my site is temporarily unavailable.', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[error_503]" value="1" <?php if( isset($paramMMode['error_503']) && $paramMMode['error_503']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- Roles and Capabilities -->
+                <!-- Roles and Capabilities -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Roles and Capabilities', 'wp-maintenance'); ?></h3>
                     </div>
                     <h3><?php _e('Allow the site to display these roles', 'wp-maintenance'); ?></h3>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <input type="hidden" name="wp_maintenance_limit[administrator]" value="administrator" />                        
                         <?php
                         $roles = wpm_get_roles();
@@ -126,8 +127,11 @@ jQuery(document).ready(function() {
                     <?php } }//end foreach ?>
                     </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- IP addresses autorized -->
+                <!-- IP addresses autorized -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('IP autorized', 'wp-maintenance'); ?></h3>
                     </div>
@@ -137,8 +141,11 @@ jQuery(document).ready(function() {
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- ID pages autorized -->
+                <!-- ID pages autorized -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('ID pages autorized', 'wp-maintenance'); ?></h3>
                     </div>
@@ -148,11 +155,14 @@ jQuery(document).ready(function() {
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- Header Code -->
+                <!-- Header Code -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Header Code', 'wp-maintenance'); ?></h3>
-                </div>
+                    </div>
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS', 'wp-maintenance'); ?></label>
                         <textarea id="headercode" name="wp_maintenance_settings[headercode]" class="wp-maintenance-input" COLS=50 ROWS=2><?php if( isset($paramMMode['headercode']) && $paramMMode['headercode']!='' ) { echo esc_textarea(stripslashes($paramMMode['headercode'])); }  ?></textarea>
@@ -160,6 +170,9 @@ jQuery(document).ready(function() {
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                 </form>
+            </div>
+            
+            <div class="wp-maintenance-module-options-block">
                 <div class="wp-maintenance-settings-section-header">
                     <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Export / Import Settings', 'wp-maintenance'); ?></h3>
                 </div>
@@ -181,7 +194,6 @@ jQuery(document).ready(function() {
                         <?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?></p>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>    
@@ -190,12 +202,7 @@ jQuery(document).ready(function() {
     
 </div>
 <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("headercode"), {
-    lineNumbers: true,
-    matchBrackets: true,
-    textWrapping: true,
-    lineWrapping: true,
-    mode: "text/x-scss",
-    theme:"material"
+    jQuery(document).ready(function($) {
+        wp.codeEditor.initialize($('#headercode'), cm_settings);
     });
 </script>

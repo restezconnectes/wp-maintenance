@@ -41,21 +41,19 @@ $paramMMode = get_option('wp_maintenance_settings');
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+    <div class="wp-maintenance-wrapper">
         
-        <?php echo wpm_get_nav(); ?>
+        <?php echo wpm_get_nav2(); ?>
         
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
             
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-art" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Colors and Fonts', 'wp-maintenance'); ?></h2></div>
-
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_colors" />
+                <?php wp_nonce_field('valid-colors', 'security-colors'); ?>
                 
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_colors" />
-                    <?php wp_nonce_field('valid-colors', 'security-colors'); ?>
+                <!-- COULEUR DU FOND DE PAGE -->
+                <div class="wp-maintenance-module-options-block">
 
-                    <!-- COULEUR DU FOND DE PAGE -->
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Choice general colors', 'wp-maintenance'); ?></h3>
                     </div>
@@ -67,9 +65,11 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p> 
-                                
+                </div>
 
-                    <!-- POLICE DU TITRE -->
+                <!-- POLICE DU TITRE -->
+                <div class="wp-maintenance-module-options-block">
+                    
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Title Settings', 'wp-maintenance'); ?></h3>
                     </div>
@@ -86,7 +86,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <label for="wp_maintenance_settings[font_title]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
                       <table cellspacing="10">
                             <tr>
-                                <td valign="middle" align="left">
+                                <td valign="middle"style="text-align:left;">
                                     <input name="wp_maintenance_settings[font_title]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_title']) && $paramMMode['font_title']!='' ) { echo str_replace(' ', '+', $paramMMode['font_title']); } else { echo 'Anton'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" name="wp_maintenance_settings[font_title_size]" value="<?php if( isset($paramMMode['font_title_size']) && $paramMMode['font_title_size']!='' ) { echo stripslashes($paramMMode['font_title_size']); } else { echo '16'; } ?>" />px</td>
@@ -108,8 +108,10 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>   
                     <!-- FIN POLICE DU TITRE-->
-                            
-                    <!-- POLICE DU TEXTE -->
+                </div>
+
+                <!-- POLICE DU TEXTE -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Text Settings', 'wp-maintenance'); ?></h3>
                     </div>
@@ -126,7 +128,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <label for="wp_maintenance_settings[font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
-                              <td valign="middle" align="left">
+                              <td valign="middle"style="text-align:left;">
                                 <input name="wp_maintenance_settings[font_text]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_text']) && $paramMMode['font_text']!='' ) { echo str_replace(' ', '+', $paramMMode['font_text']); } else { echo 'Anton'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" name="wp_maintenance_settings[font_text_size]" value="<?php if( isset($paramMMode['font_text_size']) && $paramMMode['font_text_size']!='' ) { echo stripslashes($paramMMode['font_text_size']); } else { echo '16'; } ?>" />px</td>
@@ -147,13 +149,15 @@ $paramMMode = get_option('wp_maintenance_settings');
                         </table>                 
                     </div> 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
-                    <!-- CADRE -->
+                <!-- CADRE -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Frame Settings', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable frame', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[container_active]" value="1" <?php if( isset($paramMMode['container_active']) && $paramMMode['container_active']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -175,9 +179,12 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                     <!-- FIN CADRE -->
-                    
+                
                     <a name="countdown"></a>
-                    <!-- COMPTE A REBOURS -->
+                </div>
+
+                <!-- COMPTE A REBOURS -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Countdown Settings', 'wp-maintenance'); ?></h3>
                     </div>
@@ -198,7 +205,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <label for="wp_maintenance_settings[font_cpt]" class="wp-maintenance-setting-row-title"><?php _e('Choose font', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
-                                <td valign="middle" align="left">
+                                <td valign="middle"style="text-align:left;">
                                 <input name="wp_maintenance_settings[font_cpt]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_cpt']) &&  $paramMMode['font_cpt']!='' ) { echo str_replace(' ', '+', $paramMMode['font_cpt']); } else { echo 'Pacifico'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" id="date_cpt_size" name="wp_maintenance_settings[date_cpt_size]" value="<?php if( isset($paramMMode['date_cpt_size']) && $paramMMode['date_cpt_size']!='' ) { echo trim($paramMMode['date_cpt_size']); } else { echo '6'; } ?>" />vw</td>
@@ -210,7 +217,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <label for="wp_maintenance_settings[cpt_end_size]" class="wp-maintenance-setting-row-title"><?php _e('Choose font', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
-                                <td valign="middle" align="left">
+                                <td valign="middle"style="text-align:left;">
                                 <input name="wp_maintenance_settings[font_end_cpt]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_end_cpt']) &&  $paramMMode['font_end_cpt']!='' ) { echo str_replace(' ', '+', $paramMMode['font_end_cpt']); } else { echo 'Pacifico'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" id="date_cpt_size" name="wp_maintenance_settings[cpt_end_size]" value="<?php if( isset($paramMMode['cpt_end_size']) && $paramMMode['cpt_end_size']!='' ) { echo trim($paramMMode['cpt_end_size']); } else { echo '2'; } ?>" />vw</td>
@@ -219,8 +226,10 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                     <!-- FIN POLICE DU COMPTEUR -->
-                    
-                    <!-- BOTTOM PAGE -->
+                </div>
+
+                <!-- BOTTOM PAGE -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Footer settings', 'wp-maintenance'); ?></h3>
                     </div>
@@ -236,12 +245,11 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <input type="text" value="<?php if( isset($paramMMode['color_bg_bottom']) && $paramMMode['color_bg_bottom']!='' ) { echo $paramMMode['color_bg_bottom']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_bg_bottom]" class="wpm-color-field" data-default-color="#333333" />                                           
                     </div>
 
-
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
-                              <td valign="middle" align="left">
+                              <td valign="middle"style="text-align:left;">
                               <input name="wp_maintenance_settings[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramMMode['font_text_bottom']) && $paramMMode['font_text_bottom']!='' ) { echo str_replace(' ', '+', $paramMMode['font_text_bottom']); } else { echo 'PT+Sans'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" name="wp_maintenance_settings[font_bottom_size]" value="<?php if( isset($paramMMode['font_bottom_size']) && $paramMMode['font_bottom_size']!='' ) { echo stripslashes($paramMMode['font_bottom_size']); } else { echo '12'; } ?>" />px</td>
@@ -264,6 +272,9 @@ $paramMMode = get_option('wp_maintenance_settings');
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                     <!-- FIN POLICE DU TEXTE BAS DE PAGE -->
                     
+                </div>
+
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Form color settings', 'wp-maintenance'); ?></h3>
                     </div>
@@ -281,7 +292,7 @@ $paramMMode = get_option('wp_maintenance_settings');
                         <label for="wp_maintenance_settings[font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
-                                <td valign="middle" align="left">
+                                <td valign="middle"style="text-align:left;">
                                     <input name="wp_maintenance_settings[newletter_font_text]" class="selectfont" type="text" value="<?php if( isset($paramMMode['newletter_font_text']) && $paramMMode['newletter_font_text']!='' ) { echo str_replace(' ', '+', $paramMMode['newletter_font_text']); } else { echo 'PT+Sans'; } ?>" />
                                 </td>
                                 <td><input type="text" size="3" name="wp_maintenance_settings[newletter_size]" value="<?php if( isset($paramMMode['newletter_size']) && $paramMMode['newletter_size']!='') { echo stripslashes($paramMMode['newletter_size']); } else { echo '14'; } ?>" />px</td>
@@ -340,14 +351,9 @@ $paramMMode = get_option('wp_maintenance_settings');
                         }
                         }
                     ?>
-
-                    
-
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
-
     </div>
 
     <?php echo wpm_footer(); ?>

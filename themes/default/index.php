@@ -33,7 +33,6 @@
             div.conteneur > span { zoom:1; /* layout */ }
         </style>
         <![endif]-->
-        {Analytics}
         {HeaderCode}
         {SliderCSS}
         {ScriptSlider}

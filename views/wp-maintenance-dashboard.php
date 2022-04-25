@@ -31,24 +31,23 @@ $statusActive = get_option('wp_maintenance_active');
     <?php echo wpm_get_header( __('General', 'wp-maintenance'), 'dashicons-admin-settings', $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
+    <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav(); ?>
+        <?php echo wpm_get_nav2(); ?>
 
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-admin-settings" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Dashboard', 'wp-maintenance'); ?></h2></div>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_general" />
+                <?php wp_nonce_field('valid-general', 'security-general'); ?>
+
+                <!-- ACTIVER WP MAINTENANCE -->
+                <div class="wp-maintenance-module-options-block">
                 
-                <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
-
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_general" />
-                    <?php wp_nonce_field('valid-general', 'security-general'); ?>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
                     
-                    <!-- ACTIVER WP MAINTENANCE -->
-                    <p class="wp-maintenance-fieldset-item ">
+                    
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable maintenance mode', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_active" value="1" <?php if( isset($statusActive) && $statusActive==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -56,9 +55,11 @@ $statusActive = get_option('wp_maintenance_active');
                     </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                    <!-- TITRE ET TEXTE  -->
+                </div>
+                <!-- TITRE ET TEXTE  -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Title and text', 'wp-maintenance'); ?></h3></div>
-                    <input type="text" size="100%" class="wp-maintenance-input" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) { echo esc_html(stripslashes($paramMMode['titre_maintenance'])); } ?>" /><br />
+                    <input type="text" size="80%" class="wp-maintenance-input" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) { echo esc_html(stripslashes($paramMMode['titre_maintenance'])); } ?>" /><br />
                     <?php 
                         $settingsTextmaintenance =   array(
                             'wpautop' => true, // use wpautop?
@@ -79,9 +80,12 @@ $statusActive = get_option('wp_maintenance_active');
                     <?php wp_editor( nl2br($textWpm), 'wpm-textmaintenance', $settingsTextmaintenance ); ?>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                    <!-- Encart Newletter -->
+                </div>
+                
+                <!-- Encart Newletter -->
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Activate newsletter block', 'wp-maintenance'); ?></h3></div>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable newsletter block', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 ) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -104,24 +108,9 @@ $statusActive = get_option('wp_maintenance_active');
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                </form>
-
-            </div>
-        </div>
-
-        <!--<div class="wp-maintenance-sideads">
-            
-            <div class="wp-maintenance-bordered wp-maintenance-mail-ad">
-                <div class="wp-maintenance-ad-header wp-maintenance-flex">
-                    <span><i class="dashicons dashicons-plus-alt wp-maintenance-primary" aria-hidden="true"></i></span>
-                    <p>Site piraté&nbsp;?</p>
                 </div>
-                <div class="wp-maintenance-ad-content-padded wp-maintenance-ad-content">pub ici</div>   
-            </div>
-            <p></p>
-            </hr>
-            <p></p>
-        </div>-->
+            </form>
+        </div>
 
     </div>
    

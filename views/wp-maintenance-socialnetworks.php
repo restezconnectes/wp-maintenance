@@ -3,8 +3,9 @@
 defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
+
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-footer'], 'valid-footer') ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-socialn'], 'valid-socialn') ) {
    
     if( isset($_POST["wp_maintenance_social_options"]['reset']) && $_POST["wp_maintenance_social_options"]['reset'] ==1 ) {
         unset($_POST["wp_maintenance_social"]);
@@ -12,7 +13,19 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
     }
     if( empty($_POST["wp_maintenance_social_options"]["enable"]) ) { $_POST["wp_maintenance_social_options"]["enable"] = 0; }
 
-    update_option('wp_maintenance_social', $_POST["wp_maintenance_social"]);
+    //var_dump($_POST["wp_maintenance_social"]);
+    $listSocial = $_POST["wp_maintenance_social"];
+    $listInsertSocial = array();
+    foreach($listSocial as $title => $value ) {
+        $find_social_url = strpos($value, $title);
+        if ($find_social_url === false) {
+
+        } else {
+            $listInsertSocial[$title] = strip_tags( stripslashes( filter_var($value, FILTER_VALIDATE_URL) ) );
+        }
+    }
+
+    update_option('wp_maintenance_social', $listInsertSocial);
     update_option('wp_maintenance_social_options', $_POST["wp_maintenance_social_options"]);
 
     $messageUpdate = 1;
@@ -37,26 +50,24 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
     <?php echo wpm_get_header( $messageUpdate ) ?>
     <!-- END HEADER -->
 
-    <div class="wp-maintenance-wrapper wp-maintenance-flex wp-maintenance-flex-top">
-        
-        <?php echo wpm_get_nav(); ?>
+    <div class="wp-maintenance-wrapper">
+
+        <?php echo wpm_get_nav2(); ?>
 
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
-            
-            <div class="wp-maintenance-tab-content-header"><i class="dashicons dashicons-format-status" style="margin-right: 10px;height:50px;width:50px;font-size:50px;padding: 8px 8px 14px 10px;border-radius: 5px;display: inline;float:left;"></i>  <h2 class="wp-maintenance-tc-title"><?php _e('Social Networks', 'wp-maintenance'); ?></h2></div>
 
-            <div class="wp-maintenance-module-options-block" id="block-advanced_options" data-module="welcome">
+            <form method="post" action="" id="valide_settings" name="valide_settings">
+                <input type="hidden" name="action" value="update_footer" />
+                <?php wp_nonce_field('valid-socialn', 'security-socialn'); ?>
                 
-                <form method="post" action="" id="valide_settings" name="valide_settings">
-                    <input type="hidden" name="action" value="update_footer" />
-                    <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
-
-                    <!-- LINK TO LOGIN -->
+                <!-- LINK TO LOGIN -->
+                <div class="wp-maintenance-module-options-block">
+                
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Enable social networks', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable social networks options', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_social_options[enable]" value="1" <?php if( isset($paramSocialOption['enable']) && $paramSocialOption['enable']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
@@ -64,7 +75,9 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                     </p>
                         
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('List of Social networks', 'wp-maintenance'); ?></h3>
                     </div>
@@ -94,14 +107,16 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                                 
                                     $entryValue = '';
                                     if( isset($paramSocial[$iconSocial]) ) { $entryValue = $paramSocial[$iconSocial]; }
-                                    echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
+                                    echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3" name="'.$iconSocial.'.png" title="'.$iconSocial.'.png"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
                                 }
 
                         ?>
                         </ul>
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Social Networks Style', 'wp-maintenance'); ?></h3>
                     </div>
@@ -153,25 +168,31 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_social_options[theme]" class="wp-maintenance-setting-row-title"><?php _e('You have your own icons? Enter the folder name of your theme here', 'wp-maintenance'); ?></label>
-                        <strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input type="text" value="<?php if( isset($paramSocialOption['theme']) && $paramSocialOption['theme']!='' ) { echo esc_url($paramSocialOption['theme']); } ?>" name="wp_maintenance_social_options[theme]" />
+                        <strong><?php echo get_stylesheet_directory_uri(); ?>/</strong><input type="text" value="<?php if( isset($paramSocialOption['theme']) && $paramSocialOption['theme']!='' ) { echo esc_html($paramSocialOption['theme']); } ?>" name="wp_maintenance_social_options[theme]" /><strong>/facebook.png</strong><br />
+                        <p><i><?php _e("In your icon's folder child theme, you must have the same names like mine, let's mouse over list icons for display picture's name. For example: ", 'wp-maintenance'); ?>'facebook.png'.</i></p><br />
+                        <?php if( isset($paramSocialOption['theme']) && $paramSocialOption['theme']!='' ) { ?>
+                            <label for="wp_maintenance_social_options[position]" class="wp-maintenance-setting-row-title"><?php _e('You use this picture:', 'wp-maintenance'); ?></label><br />
+                            <img src=" <?php echo esc_url(get_stylesheet_directory_uri().'/'.$paramSocialOption['theme'].'/facebook.png'); ?>" width="64"/>
+                        <?php } ?>
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                </div>
 
+                <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Reset Social Networks Icons Options', 'wp-maintenance'); ?></h3>
                     </div>
-                    <p class="wp-maintenance-fieldset-item ">
+                    <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, reset Social Networks Icons?', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_social_options[reset]" value="1" <?php if( isset($paramSocialOption['reset']) && $paramSocialOption['reset']==1) { echo ' checked'; } ?>>
+                            <input type="checkbox" name="wp_maintenance_social_options[reset]" value="1">
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
 
-                </form>
-
-            </div>
+                </div>
+            </form>
         </div>
 
     </div>

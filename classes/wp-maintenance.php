@@ -28,7 +28,7 @@ class WP_maintenance {
 
         if( is_admin() ) {
             add_action( 'admin_menu', array( &$this, 'wpm_add_admin') );
-            add_filter( 'plugin_action_links', array( &$this, 'wpm_plugin_actions'), 10, 2 );
+            add_filter( 'plugin_action_links_wp-maintenance/wp-maintenance.php', array( &$this, 'wpm_plugin_action_links'), 10, 3 );
             add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
             add_action( 'init', array( &$this, 'wpm_date_picker') );
             add_action( 'admin_bar_menu', array( &$this, 'wpm_add_menu_admin_bar'), 999 );
@@ -37,8 +37,7 @@ class WP_maintenance {
             add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );
             add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
-        
-        
+
     }
 
     function wpm_theme_add_editor_styles() {
@@ -191,6 +190,15 @@ class WP_maintenance {
 
     }
 
+
+    function wpm_plugin_action_links($actions, $file, $plugin_data) {
+        $new_actions = array();
+        $new_actions[] = sprintf( '<a href="'.WPM_ADMIN_URL.'">%s</a>', __('Settings', 'wp-maintenance') );
+        $new_actions = array_merge($new_actions, $actions);
+        $uninstall_url = WPM_ADMIN_URL.'&amp;action=uninstall&amp;_wpnonce='.wp_create_nonce('wpm_uninstall_'.get_current_user_id().'_wpnonce');
+        $new_actions[] = '<span class="delete"><a href="'.$uninstall_url.'" class="delete">'.__('Uninstall','=wp-maintenance').'</a></span>';
+        return $new_actions;
+    }
 
     // Add "Réglages" link on plugins page
     function wpm_plugin_actions( $links, $file ) {
@@ -402,25 +410,11 @@ class WP_maintenance {
             wp_register_script('imagepickerjs', WPM_PLUGIN_URL.'js/image-picker.min.js', 'jquery', '1.0');
             wp_enqueue_script('imagepickerjs');
 
-            //wp_enqueue_script('nomikos_my_plugin_js_comment', site_url('wp-admin/js/comment.js'));
-
-            /* ****************************************
-             * Create a simple CodeMirror instance
-             * ****************************************
-             */
-            // Mode http://codemirror.net/mode/php/index.html
-            wp_register_style( 'wpm_codemirror_css', WPM_PLUGIN_URL.'js/codemirror/codemirror.css', false, '1.0.0' );
-            wp_enqueue_style( 'wpm_codemirror_css' );
-
-            wp_register_style( 'wpm_codemirror_theme_css', WPM_PLUGIN_URL.'js/codemirror/theme/material.css', false, '1.0.0' );
-            wp_enqueue_style( 'wpm_codemirror_theme_css' );
-
-            wp_register_script('wpm_codemirror', WPM_PLUGIN_URL.'js/codemirror/codemirror.js', 'jquery', '1.0');
-            wp_enqueue_script('wpm_codemirror');
-            wp_register_script('wpm_codemirror_css', WPM_PLUGIN_URL.'js/codemirror/css.js', 'jquery', '1.0');
-            wp_enqueue_script('wpm_codemirror_css');
-
-            /* END CODE MIRROR */
+            $wpm_settings['codeEditor'] = wp_enqueue_code_editor(array('type' => 'text/css'));
+            wp_localize_script('jquery', 'cm_settings', $wpm_settings);
+            
+            wp_enqueue_script('wp-theme-plugin-editor');
+            wp_enqueue_style('wp-codemirror');
 
             wp_register_script('wpm_sticky', WPM_PLUGIN_URL.'js/jquery.sticky.js', 'jquery', '1.0');
             wp_enqueue_script('wpm_sticky');
@@ -781,7 +775,6 @@ class WP_maintenance {
                 "{Text}" => wpm_text(),
                 "{Favicon}" => wpm_favicon(), 
                 "{CustomCSS}" => wpm_customcss(),
-                "{Analytics}" => wpm_analytics(),
                 "{TopSocialIcon}" => wpm_social_position("top"),
                 "{BottomSocialIcon}" => wpm_social_position("bottom"),
                 "{FooterText}" => wpm_footer_text(),
@@ -795,8 +788,6 @@ class WP_maintenance {
                 "{SlideshowBL}" => WPM_Slider::slidershow('belowlogo'),
                 "{SlideshowBT}" => WPM_Slider::slidershow('belowtext'),
                 "{Url}" => WPM_PLUGIN_URL
-
-
             );
             
             echo strtr($template, $template_tags);
