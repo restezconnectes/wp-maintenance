@@ -112,7 +112,7 @@ function wpm_update_settings($tabPost) {
             if ( array_key_exists($variable, $paramTemp) ) {
                 // Si la clé est la même que venant du post je la change
                 if( isset($tabPost[$variable]) ) { 
-                    array_fill_keys($paramTemp, $tabPost[$variable]);
+                    array_fill_keys($paramTemp, sanitize_textarea_field($tabPost[$variable]));
                 }
             }
         }
@@ -196,7 +196,7 @@ function wpm_get_ip() {
 
 	// IP si internet partagé
 	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-		return $_SERVER['HTTP_CLIENT_IP'];
+		return esc_url($_SERVER['HTTP_CLIENT_IP']);
 	}
 	// IP derrière un proxy
 	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {

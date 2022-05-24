@@ -59,9 +59,9 @@ $paramMMode = get_option('wp_maintenance_settings');
                     </div>
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_bg]" class="wp-maintenance-setting-row-title"><?php _e('Background page color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_bg']) && $paramMMode['color_bg']!='' ) { echo $paramMMode['color_bg']; } ?>" name="wp_maintenance_settings[color_bg]" class="wpm-color-field" data-default-color="#f1f1f1" />
+                        <input type="text" value="<?php if( isset($paramMMode['color_bg']) && $paramMMode['color_bg']!='' ) { echo esc_html($paramMMode['color_bg']); } ?>" name="wp_maintenance_settings[color_bg]" class="wpm-color-field" data-default-color="#f1f1f1" />
                         <label for="wp_maintenance_settings[color_bg_header]" class="wp-maintenance-setting-row-title"><?php _e('Header color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_bg_header']) && $paramMMode['color_bg_header']!='' ) { echo $paramMMode['color_bg_header']; } ?>" name="wp_maintenance_settings[color_bg_header]" class="wpm-color-field" data-default-color="#ffffff" />
+                        <input type="text" value="<?php if( isset($paramMMode['color_bg_header']) && $paramMMode['color_bg_header']!='' ) { echo esc_html($paramMMode['color_bg_header']); } ?>" name="wp_maintenance_settings[color_bg_header]" class="wpm-color-field" data-default-color="#ffffff" />
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p> 
@@ -79,7 +79,7 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_title]" class="wp-maintenance-setting-row-title"><?php _e('Choose font color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_title']) && $paramMMode['color_title']!='' ) { echo $paramMMode['color_title']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_title]" class="wpm-color-field" data-default-color="#333333" />
+                        <input type="text" value="<?php if( isset($paramMMode['color_title']) && $paramMMode['color_title']!='' ) { echo esc_html($paramMMode['color_title']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_title]" class="wpm-color-field" data-default-color="#333333" />
                     </div>
                     
                     <div class="wp-maintenance-setting-row">
@@ -121,7 +121,7 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_txt]" class="wp-maintenance-setting-row-title"><?php _e('Choose font color', 'wp-maintenance'); ?></label>
-                      <input type="text" value="<?php if( isset($paramMMode['color_txt']) && $paramMMode['color_txt']!='' ) { echo $paramMMode['color_txt']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#333333" />
+                      <input type="text" value="<?php if( isset($paramMMode['color_txt']) && $paramMMode['color_txt']!='' ) { echo esc_html($paramMMode['color_txt']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_txt]" class="wpm-color-field" data-default-color="#333333" />
                     </div>
 
                     <div class="wp-maintenance-setting-row">
@@ -168,7 +168,7 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[container_color]" class="wp-maintenance-setting-row-title"><?php _e('Choose frame color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['container_color']) && $paramMMode['container_color']!='' ) { echo $paramMMode['container_color']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[container_color]" class="wpm-color-field" data-default-color="#333333" />
+                        <input type="text" value="<?php if( isset($paramMMode['container_color']) && $paramMMode['container_color']!='' ) { echo esc_html($paramMMode['container_color']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[container_color]" class="wpm-color-field" data-default-color="#333333" />
                     </div>
 
                     <div class="wp-maintenance-setting-row">
@@ -193,12 +193,12 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_cpt]" class="wp-maintenance-setting-row-title"><?php _e('Countdown text color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_cpt']) && $paramMMode['color_cpt']!='' ) { echo $paramMMode['color_cpt']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_cpt]" class="wpm-color-field" data-default-color="#333333" />                        
+                        <input type="text" value="<?php if( isset($paramMMode['color_cpt']) && $paramMMode['color_cpt']!='' ) { echo esc_html($paramMMode['color_cpt']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_cpt]" class="wpm-color-field" data-default-color="#333333" />                        
                     </div>
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_cpt_bg]" class="wp-maintenance-setting-row-title"><?php _e('Countdown background color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_cpt_bg']) && $paramMMode['color_cpt_bg']!='' ) { echo $paramMMode['color_cpt_bg']; } ?>" name="wp_maintenance_settings[color_cpt_bg]" class="wpm-color-field" data-default-color="#ffffff" />                      
+                        <input type="text" value="<?php if( isset($paramMMode['color_cpt_bg']) && $paramMMode['color_cpt_bg']!='' ) { echo esc_html($paramMMode['color_cpt_bg']); } ?>" name="wp_maintenance_settings[color_cpt_bg]" class="wpm-color-field" data-default-color="#ffffff" />                      
                     </div>
                     <!-- POLICE DU COMPTEUR -->
                     <div class="wp-maintenance-setting-row">
@@ -237,12 +237,12 @@ $paramMMode = get_option('wp_maintenance_settings');
 
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title"><?php _e('Text color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_text_bottom']) && $paramMMode['color_text_bottom']!='' ) { echo $paramMMode['color_text_bottom']; } else { echo '#FFFFFF'; } ?>" name="wp_maintenance_settings[color_text_bottom]" class="wpm-color-field" data-default-color="#ffffff" />                   
+                        <input type="text" value="<?php if( isset($paramMMode['color_text_bottom']) && $paramMMode['color_text_bottom']!='' ) { echo esc_html($paramMMode['color_text_bottom']); } else { echo '#FFFFFF'; } ?>" name="wp_maintenance_settings[color_text_bottom]" class="wpm-color-field" data-default-color="#ffffff" />                   
                     </div>
                     
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_settings[color_bg_bottom]" class="wp-maintenance-setting-row-title"><?php _e('Background color', 'wp-maintenance'); ?></label>
-                        <input type="text" value="<?php if( isset($paramMMode['color_bg_bottom']) && $paramMMode['color_bg_bottom']!='' ) { echo $paramMMode['color_bg_bottom']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_bg_bottom]" class="wpm-color-field" data-default-color="#333333" />                                           
+                        <input type="text" value="<?php if( isset($paramMMode['color_bg_bottom']) && $paramMMode['color_bg_bottom']!='' ) { echo esc_html($paramMMode['color_bg_bottom']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_bg_bottom]" class="wpm-color-field" data-default-color="#333333" />                                           
                     </div>
 
                     <div class="wp-maintenance-setting-row">
@@ -318,21 +318,21 @@ $paramMMode = get_option('wp_maintenance_settings');
                             <tr>
                                 <td width="40%">
                                     <label for="wp_maintenance_settings[color_field_text]" class="wp-maintenance-setting-row-title"><?php _e('Field text color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_field_text']) && $paramMMode['color_field_text']!='' ) { echo $paramMMode['color_field_text']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_field_text']) && $paramMMode['color_field_text']!='' ) { echo esc_html($paramMMode['color_field_text']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
                                     <label for="wp_maintenance_settings[color_field_border]" class="wp-maintenance-setting-row-title"><?php _e('Field border color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_field_border']) && $paramMMode['color_field_border']!='' ) { echo $paramMMode['color_field_border']; } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_field_border']) && $paramMMode['color_field_border']!='' ) { echo esc_html($paramMMode['color_field_border']); } else { echo '#333333'; } ?>" name="wp_maintenance_settings[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
                                     <label for="wp_maintenance_settings[color_field_background]" class="wp-maintenance-setting-row-title"><?php _e('Field background color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_field_background']) && $paramMMode['color_field_background']!='' ) { echo $paramMMode['color_field_background']; } else { echo '#cccccc'; } ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_field_background']) && $paramMMode['color_field_background']!='' ) { echo esc_html($paramMMode['color_field_background']); } else { echo '#cccccc'; } ?>" name="wp_maintenance_settings[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" />
                                     <label for="wp_maintenance_settings[color_text_button]" class="wp-maintenance-setting-row-title"><?php _e('Button text color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_text_button']) && $paramMMode['color_text_button']!='' ) { echo $paramMMode['color_text_button']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_text_button']) && $paramMMode['color_text_button']!='' ) { echo esc_html($paramMMode['color_text_button']); } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
                                 <td>
                                 <td style="vertical-align:top;">                       
                                     <label for="wp_maintenance_settings[color_button]" class="wp-maintenance-setting-row-title"><?php _e('Button color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_button']) && $paramMMode['color_button']!='' ) { echo $paramMMode['color_button']; } else { echo '#1e73be'; } ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_button']) && $paramMMode['color_button']!='' ) { echo esc_html($paramMMode['color_button']); } else { echo '#1e73be'; } ?>" name="wp_maintenance_settings[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
                                     <label for="wp_maintenance_settings[color_button_hover]" class="wp-maintenance-setting-row-title"><?php _e('Button color hover', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_button_hover']) && $paramMMode['color_button_hover']!='' ) { echo $paramMMode['color_button_hover']; } else { echo '#ffffff'; }  ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_button_hover']) && $paramMMode['color_button_hover']!='' ) { echo esc_html($paramMMode['color_button_hover']); } else { echo '#ffffff'; }  ?>" name="wp_maintenance_settings[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
                                     <label for="wp_maintenance_settings[color_button_onclick]" class="wp-maintenance-setting-row-title"><?php _e('Button color onclick', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramMMode['color_button_onclick']) && $paramMMode['color_button_onclick']!=''  ) { echo $paramMMode['color_button_onclick']; } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+                                    <input type="text" value="<?php if( isset($paramMMode['color_button_onclick']) && $paramMMode['color_button_onclick']!=''  ) { echo esc_html($paramMMode['color_button_onclick']); } else { echo '#ffffff'; } ?>" name="wp_maintenance_settings[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
                                 </td>
                             </tr>
                         </table>

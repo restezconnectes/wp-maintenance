@@ -10,8 +10,8 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_settings' && wp_verif
     if( empty($_POST["wp_maintenance_settings"]["dashboard_delete_db"]) ) { $_POST["wp_maintenance_settings"]["dashboard_delete_db"] = 0; }
     if( empty($_POST["wp_maintenance_settings"]["error_503"]) ) { $_POST["wp_maintenance_settings"]["error_503"] = 0; }
 
-    update_option('wp_maintenance_limit', $_POST["wp_maintenance_limit"]);
-    update_option('wp_maintenance_ipaddresses', $_POST["wp_maintenance_ipaddresses"]);
+    update_option('wp_maintenance_limit', sanitize_text_field($_POST["wp_maintenance_limit"]));
+    update_option('wp_maintenance_ipaddresses', sanitize_textarea_field($_POST["wp_maintenance_ipaddresses"]));
     
     $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
     $messageUpdate = 1;

@@ -50,7 +50,7 @@ class WPM_Countdown extends WP_maintenance {
                 $Counter .= '
                     </script>';
                 $Counter .= '
-                <script language="JavaScript" src="'.WP_PLUGIN_URL.'/wp-maintenance/js/wpm-cpt-script.js"></script>
+                <script language="JavaScript" src="'.plugins_url( '../js/wpm-cpt-script.js', __FILE__ ).'"></script>
                 </div>';
             }
         }

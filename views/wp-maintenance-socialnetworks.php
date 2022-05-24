@@ -26,7 +26,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
     }
 
     update_option('wp_maintenance_social', $listInsertSocial);
-    update_option('wp_maintenance_social_options', $_POST["wp_maintenance_social_options"]);
+    update_option('wp_maintenance_social_options', esc_html($_POST["wp_maintenance_social_options"]));
 
     $messageUpdate = 1;
 }
@@ -107,7 +107,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                                 
                                     $entryValue = '';
                                     if( isset($paramSocial[$iconSocial]) ) { $entryValue = $paramSocial[$iconSocial]; }
-                                    echo '<li><span>::</span><img src="'.$linkIcon.'" valign="middle" hspace="3" name="'.$iconSocial.'.png" title="'.$iconSocial.'.png"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
+                                    echo '<li><span>::</span><img src="'.esc_url($linkIcon).'" valign="middle" hspace="3" name="'.$iconSocial.'.png" title="'.$iconSocial.'.png"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_social['.$iconSocial.']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
                                 }
 
                         ?>
@@ -127,7 +127,7 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
                             $wpm_tabIcon = array(32, 64, 128, 256, 512);
                             foreach($wpm_tabIcon as $wpm_icon) {
                                 if($paramSocialOption['size']==$wpm_icon) { $selected = ' selected'; } else { $selected = ''; }
-                                echo '<option value="'.$wpm_icon.'" '.$selected.'>'.$wpm_icon.'</option>';
+                                echo '<option value="'.esc_url($wpm_icon).'" '.$selected.'>'.$wpm_icon.'</option>';
                             }
                         ?>
                         </select>
@@ -199,5 +199,4 @@ $paramSocialOption = get_option('wp_maintenance_social_options');
 
     <?php echo wpm_footer(); ?>
 </div>
-<script src="<?php echo WPM_PLUGIN_URL; ?>js/jquery.sortable.js"></script>
 <script> jQuery('.sortable').sortable(); </script>

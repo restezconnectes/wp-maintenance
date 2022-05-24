@@ -6,7 +6,7 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_css' && wp_verify_nonce($_POST['security-css'], 'valid-css') ) {
 
-    update_option('wp_maintenance_style', stripslashes($_POST["wp_maintenance_style"]));
+    update_option('wp_maintenance_style', sanitize_textarea_field(stripslashes($_POST["wp_maintenance_style"])));
     $options_saved = true;
 
     $messageUpdate = 1;

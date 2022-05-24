@@ -21,8 +21,6 @@ $paramMMode = get_option('wp_maintenance_settings');
 // Récupère si le status est actif ou non 
 $statusActive = get_option('wp_maintenance_active');
 
-
-
 ?>
 
 <div class="wrap">

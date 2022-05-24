@@ -274,21 +274,6 @@ function wpm_customcss() {
 	return $output;
 }
 
-function wpm_analytics() {
-
-	// Récupère les paramètres sauvegardés
-	if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-	$o = get_option('wp_maintenance_settings');
-
-	$output = '<!-- analytics ici -->';
-
-	if( isset($o['codeanalytics']) && $o['codeanalytics']!='') {
-		$output = stripslashes($o['codeanalytics']);
-	}
-
-	return $output;
-}
-
 function wpm_headercode() {
 
 	// Récupère les paramètres sauvegardés
