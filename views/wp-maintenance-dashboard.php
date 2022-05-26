@@ -26,7 +26,10 @@ $statusActive = get_option('wp_maintenance_active');
 <div class="wrap">
 
     <!-- HEADER -->
-    <?php echo wpm_get_header( __('General', 'wp-maintenance'), 'dashicons-admin-settings', $messageUpdate ) ?>
+    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <?php if( isset($message) && $message == 1 ) { ?>
+        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+    <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
@@ -42,7 +45,7 @@ $statusActive = get_option('wp_maintenance_active');
                 <!-- ACTIVER WP MAINTENANCE -->
                 <div class="wp-maintenance-module-options-block">
                 
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php _e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
                     
                     
                     <p>
@@ -56,7 +59,7 @@ $statusActive = get_option('wp_maintenance_active');
                 </div>
                 <!-- TITRE ET TEXTE  -->
                 <div class="wp-maintenance-module-options-block">
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Title and text', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php _e('Title and text', 'wp-maintenance'); ?></h3></div>
                     <input type="text" size="80%" class="wp-maintenance-input" name="wp_maintenance_settings[titre_maintenance]" value="<?php if( isset($paramMMode['titre_maintenance']) && $paramMMode['titre_maintenance']!='' ) { echo esc_html(stripslashes($paramMMode['titre_maintenance'])); } ?>" /><br />
                     <?php 
                         $settingsTextmaintenance =   array(
@@ -82,7 +85,7 @@ $statusActive = get_option('wp_maintenance_active');
                 
                 <!-- Encart Newletter -->
                 <div class="wp-maintenance-module-options-block">
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Activate newsletter block', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title"><?php _e('Activate newsletter block', 'wp-maintenance'); ?></h3></div>
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable newsletter block', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_settings[newletter]" value="1" <?php if( isset($paramMMode['newletter']) && $paramMMode['newletter']==1 ) { echo ' checked'; } ?>>

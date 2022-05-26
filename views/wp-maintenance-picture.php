@@ -58,7 +58,10 @@ function toggleTable(texte) {
 <div class="wrap">
     
     <!-- HEADER -->
-    <?php echo wpm_get_header( $messageUpdate ) ?>
+    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <?php if( isset($message) && $message == 1 ) { ?>
+        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+    <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
@@ -209,7 +212,7 @@ jQuery(document).ready(function() {
         orientation: "horizontal",
         range: false,
         step: 0.1,
-        value: <?php if( isset($paramMMode['b_opacity_image']) ) { echo $paramMMode['b_opacity_image']; } else { echo '0.2'; } ?>,
+        value: <?php if( isset($paramMMode['b_opacity_image']) ) { echo esc_html($paramMMode['b_opacity_image']); } else { echo '0.2'; } ?>,
         animate:"slow",
         slide: function( event, ui ) {
             jQuery( "#fontSize" ).val( ui.value );

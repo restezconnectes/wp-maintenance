@@ -8,9 +8,8 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Choice texts colors and fonts
 - Upload logo picture
 - Upload background picture or pattern
-- Slider
 - Countdown
-- Google Analytics ready
+- Custom Header Code ready
 - Social Networks ready
 - Customize CSS
 - Insert for shorcode (Newletter or Contact form)

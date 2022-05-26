@@ -22,7 +22,10 @@ $paramMMode = get_option('wp_maintenance_settings');
 <div class="wrap">
     
     <!-- HEADER -->
-    <?php echo wpm_get_header( $messageUpdate ) ?>
+    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <?php if( isset($message) && $message == 1 ) { ?>
+        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+    <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">

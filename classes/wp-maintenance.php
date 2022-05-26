@@ -32,8 +32,6 @@ class WP_maintenance {
             add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
             add_action( 'admin_bar_menu', array( &$this, 'wpm_add_menu_admin_bar'), 999 );
             add_action( 'admin_footer', array( &$this, 'wpm_print_footer_scripts') );        
-            add_action( 'admin_init', array( &$this, 'wpm_process_settings_import') );
-            add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );
             add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
 
@@ -212,7 +210,7 @@ class WP_maintenance {
 <style>#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }</style>        
         ';
         if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
-            echo '<link rel="stylesheet" type="text/css" media="all" href="' .WPM_PLUGIN_URL.'css/wpm-admin.css">';
+            echo '<link rel="stylesheet" type="text/css" media="all" href="' .plugins_url('../css/wpm-admin.css', __FILE__ ).'">';
 
         } else {
             echo '
@@ -365,24 +363,24 @@ class WP_maintenance {
             wp_enqueue_script('media-upload');
             wp_enqueue_script('thickbox');
 
-            wp_register_script('wpm-my-upload', WPM_PLUGIN_URL.'js/wpm-script.js', array('jquery','media-upload','thickbox'));
+            wp_register_script('wpm-my-upload', plugins_url('../js/wpm-script.js', __FILE__ ), array('jquery','media-upload','thickbox'));
             wp_enqueue_script('wpm-my-upload');
 
-            wp_enqueue_style('jquery-defaut-style', WPM_PLUGIN_URL.'js/lib/themes/default.css');
-            wp_enqueue_style('jquery-date-style', WPM_PLUGIN_URL.'js/lib/themes/default.date.css' );
-            wp_enqueue_style('jquery-time-style', WPM_PLUGIN_URL.'js/lib/themes/default.time.css');
-            wp_enqueue_style('jquery-fontselect-style', WPM_PLUGIN_URL.'js/fontselect/fontselect.css' );
+            wp_enqueue_style('jquery-defaut-style', plugins_url('../js/lib/themes/default.css', __FILE__ ));
+            wp_enqueue_style('jquery-date-style', plugins_url('../js/lib/themes/default.date.css', __FILE__ ));
+            wp_enqueue_style('jquery-time-style', plugins_url('../js/lib/themes/default.time.css', __FILE__ ));
+            wp_enqueue_style('jquery-fontselect-style', plugins_url('../js/fontselect/fontselect.css', __FILE__ ));
 
             wp_enqueue_style( 'wp-color-picker' );
-            wp_enqueue_script( 'my-script-handle', WPM_PLUGIN_URL.'js/wpm-color-options.js', array( 'wp-color-picker' ), false, true );
+            wp_enqueue_script( 'my-script-handle', plugins_url('../js/wpm-color-options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
 
             wp_enqueue_style('thickbox');
             
             /* Image picker */
             wp_enqueue_style('imagepicker');
-            wp_enqueue_style('imagepicker', WPM_PLUGIN_URL.'css/image-picker.css');
+            wp_enqueue_style('imagepicker', plugins_url('../css/image-picker.css', __FILE__ ));
             
-            wp_register_script('imagepickerjs', WPM_PLUGIN_URL.'js/image-picker.min.js', 'jquery', WPM_VERSION);
+            wp_register_script('imagepickerjs', plugins_url('../js/image-picker.min.js', __FILE__ ), 'jquery', WPM_VERSION);
             wp_enqueue_script('imagepickerjs');
 
             $wpm_settings['codeEditor'] = wp_enqueue_code_editor(array('type' => 'text/css'));
@@ -391,10 +389,10 @@ class WP_maintenance {
             wp_enqueue_script('wp-theme-plugin-editor');
             wp_enqueue_style('wp-codemirror');
 
-            wp_register_script('wpm_sticky', WPM_PLUGIN_URL.'js/jquery.sticky.js', 'jquery', WPM_VERSION);
+            wp_register_script('wpm_sticky', plugins_url('../js/jquery.sticky.js', __FILE__ ), 'jquery', WPM_VERSION);
             wp_enqueue_script('wpm_sticky');
             
-            wp_enqueue_script( 'emosm-leafletprovidersjs', WPM_PLUGIN_URL.'js/jquery.sortable.js', 'jquery', WPM_VERSION);
+            wp_enqueue_script( 'emosm-leafletprovidersjs', plugins_url('../js/jquery.sortable.js', __FILE__ ), 'jquery', WPM_VERSION);
 
             // If you're not including an image upload then you can leave this function call out
             wp_enqueue_media();
@@ -405,7 +403,7 @@ class WP_maintenance {
               'title'  => __( 'Choose Image', 'wp-maintenance' ),
             ) );
 
-            wp_register_script('wpm-admin-fontselect', WPM_PLUGIN_URL.'js/fontselect/jquery.fontselect.min.js' );
+            wp_register_script('wpm-admin-fontselect', plugins_url('../js/fontselect/jquery.fontselect.min.js', __FILE__ ) );
             wp_enqueue_script('wpm-admin-fontselect');
 
         }
@@ -494,88 +492,15 @@ class WP_maintenance {
     function wpm_print_footer_scripts() {
 
        if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
-            wp_register_script('wpm-picker', WPM_PLUGIN_URL.'js/lib/picker.js' );
+            wp_register_script('wpm-picker', plugins_url('../js/lib/picker.js', __FILE__ ) );
             wp_enqueue_script('wpm-picker');
-            wp_register_script('wpm-datepicker', WPM_PLUGIN_URL.'js/lib/picker.date.js' );
+            wp_register_script('wpm-datepicker', plugins_url('../js/lib/picker.date.js', __FILE__ ) );
             wp_enqueue_script('wpm-datepicker');
-            wp_register_script('wpm-timepicker', WPM_PLUGIN_URL.'js/lib/picker.time.js' );
+            wp_register_script('wpm-timepicker', plugins_url('../js/lib/picker.time.js', __FILE__ ) );
             wp_enqueue_script('wpm-timepicker');
-            wp_register_script('wpm-legacy', WPM_PLUGIN_URL.'js/lib/legacy.js' );
+            wp_register_script('wpm-legacy', plugins_url('../js/lib/legacy.js', __FILE__ ) );
             wp_enqueue_script('wpm-legacy');
         }
-    }
-
-    /**
-     * Process a settings export that generates a .json file of the erident settings
-     */
-    function wpm_process_settings_export() {
-
-        if( empty( $_POST['wpm_action'] ) || 'export_settings' != $_POST['wpm_action'] )
-            return;
-
-        if( ! wp_verify_nonce( $_POST['wpm_export_nonce'], 'wpm_export_nonce' ) )
-            return;
-
-        if( ! current_user_can( 'manage_options' ) )
-            return;
-
-        $settingsJson = array(
-            'settings' => get_option('wp_maintenance_settings'),
-            'social' => get_option('wp_maintenance_social'),
-            'social_options' => get_option('wp_maintenance_social_options'),
-            'limit' => get_option('wp_maintenance_limit'),
-            'ipaddresses' => get_option('wp_maintenance_ipaddresses'),
-            'style' => get_option('wp_maintenance_style')
-            );
-        
-        ignore_user_abort( true );
-
-        nocache_headers();
-        header( 'Content-Type: application/json; charset=utf-8' );
-        header( 'Content-Disposition: attachment; filename=wp-maintenance-' . date( 'm-d-Y' ) . '.json' );
-        header( "Expires: 0" );
-
-        echo json_encode( $settingsJson );
-        exit;
-    }
-
-
-    /**
-     * Process a settings import from a json file
-     */
-    function wpm_process_settings_import() {
-
-        if( empty( $_POST['wpm_action'] ) || 'import_settings' != $_POST['wpm_action'] )
-            return;
-
-        if( ! wp_verify_nonce( $_POST['wpm_import_nonce'], 'wpm_import_nonce' ) )
-            return;
-
-        if( ! current_user_can( 'manage_options' ) )
-            return;
-
-        $extensionExploded = explode('.', esc_url($_FILES['wpm_import_file']['name']));
-        $extension = strtolower(end($extensionExploded));
-
-        if( $extension != 'json' ) {
-            wp_die( __( 'Please upload a valid .json file' ) );
-        }
-
-        $import_file = $_FILES['wpm_import_file']['tmp_name'];
-
-        if( empty( $import_file ) ) {
-            wp_die( __( 'Please upload a file to import', 'wp-maintenance' ) );
-        }
-
-        // Retrieve the settings from the file and convert the json object to an array.
-        $settings = (array) json_decode( file_get_contents( $import_file ), true);
-
-        foreach($settings as $name=>$value) {
-            update_option('wp_maintenance_'.$name, $value);
-        }
-
-      echo '<div id="message" class="updated fade"><p><strong>' . __('New settings imported successfully!', 'wp-maintenance') . '</strong></p></div>';
-
     }
 
     /* Check le Mode Maintenance si on doit l'activer ou non */

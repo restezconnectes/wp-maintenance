@@ -55,7 +55,10 @@ jQuery(document).ready(function() {
 <div class="wrap">
     
     <!-- HEADER -->
-    <?php echo wpm_get_header( $messageUpdate ) ?>
+    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <?php if( isset($message) && $message == 1 ) { ?>
+        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+    <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
@@ -119,7 +122,7 @@ jQuery(document).ready(function() {
                             if( $role !='administrator') {
                             
                     ?>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php echo $name; ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php echo esc_html($name); ?></span>
                             <input type="checkbox" class="switch-field" name="wp_maintenance_limit[<?php echo $role; ?>]" value="<?php echo $role; ?>"<?php echo $limitCheck; ?> />
                             <span class="wp-maintenance-checkmark"></span>
                         </label><br />
@@ -172,30 +175,7 @@ jQuery(document).ready(function() {
                 </form>
             </div>
             
-            <div class="wp-maintenance-module-options-block">
-                <div class="wp-maintenance-settings-section-header">
-                    <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Export / Import Settings', 'wp-maintenance'); ?></h3>
-                </div>
-                <div class="wp-maintenance-setting-row">
-                    <label for="wp_maintenance_settings[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('Export Settings', 'wp-maintenance'); ?></label>
-                    <form method="post">
-                        <input type="hidden" name="wpm_action" value="export_settings" />
-                        <?php wp_nonce_field( 'wpm_export_nonce', 'wpm_export_nonce' ); ?>
-                        <?php submit_button( __( 'Export', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?>
-                    </form>
-                </div>
-                
-                <div class="wp-maintenance-setting-row">
-                    <label for="wp_maintenance_settings[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('Import the plugin settings from a .json file. This file can be obtained by exporting the settings on another site using the form above', 'wp-maintenance'); ?></label>
-                    <form method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="wpm_action" value="import_settings" />
-                        <input type="file" name="wpm_import_file"/>                            
-                        <?php wp_nonce_field( 'wpm_import_nonce', 'wpm_import_nonce' ); ?><p>
-                        <?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?></p>
-                    </form>
-                </div>
-            </div>
-        </div>
+         </div>
     </div>    
     
     <?php echo wpm_footer(); ?>

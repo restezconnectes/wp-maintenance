@@ -4,16 +4,6 @@ defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
 
-function wpm_get_header( $message = 0) {
-       
-    $getHeader = '<h2 style="font-size: 23px;font-weight: 400;padding: 9px 15px 4px 0px;line-height: 29px;">'.__('WP Maintenance - Settings', 'wp-maintenance').' <sup>v.'.WPM_VERSION.'</sup>
-</h2>';
-    if( $message == 1 ) {
-        $getHeader .= '<div id="message" class="updated fade"><p><strong>'.__('Options saved.', 'wp-maintenance').'</strong></p></div>';
-    }
-    return $getHeader;
-}
-
 function wpm_get_nav2() {
     
     global $current_user;
