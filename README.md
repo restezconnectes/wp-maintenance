@@ -21,7 +21,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 
 wp-maintenance.pot file available
 
-Current Version:  6.0.6
+Current Version:  6.0.8
 
 ## Frequently Asked Questions
 
@@ -48,6 +48,13 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 ## Changelog
+
+### 6.0.8 =
+* Several security patches brought
+
+### 6.0.7 =
+* Remove Slider option
+* Several security patches brought
 
 ### 6.0.6 =
 * Cross-Site Scripting (XSS) vulnerability fixed
