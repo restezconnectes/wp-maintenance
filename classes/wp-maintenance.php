@@ -210,7 +210,7 @@ class WP_maintenance {
 <style>#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }</style>        
         ';
         if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
-            echo '<link rel="stylesheet" type="text/css" media="all" href="' .plugins_url('../css/wpm-admin.css', __FILE__ ).'">';
+            //echo '<link rel="stylesheet" type="text/css" media="all" href="' .plugins_url('../css/wpm-admin.css', __FILE__ ).'">';
 
         } else {
             echo '
@@ -344,7 +344,7 @@ class WP_maintenance {
 
     function wpm_add_admin() {
 
-        add_menu_page( 'WP Maintenance Settings', 'WP Maintenance', 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page'), plugins_url( '/wp-maintenance/images/wpm-menu-icon.png', __FILE__ ) );
+        add_menu_page( 'WP Maintenance Settings', 'WP Maintenance', 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page'), plugins_url( '../images/wpm-menu-icon.png', __FILE__ ) );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('General', 'wp-maintenance'), __('General', 'wp-maintenance'), 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page') );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('Colors & Fonts', 'wp-maintenance'), __('Colors & Fonts', 'wp-maintenance'), 'manage_options', 'wp-maintenance-colors', array( $this, 'wpm_colors_page') );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('Pictures', 'wp-maintenance'), __('Pictures', 'wp-maintenance'), 'manage_options', 'wp-maintenance-picture', array( $this, 'wpm_picture_page') );
@@ -405,6 +405,10 @@ class WP_maintenance {
 
             wp_register_script('wpm-admin-fontselect', plugins_url('../js/fontselect/jquery.fontselect.min.js', __FILE__ ) );
             wp_enqueue_script('wpm-admin-fontselect');
+
+            wp_enqueue_style('admincss');
+            wp_enqueue_style('admincss', plugins_url('../css/wpm-admin.css', __FILE__ ));
+            
 
         }
         

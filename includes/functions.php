@@ -190,7 +190,7 @@ function wpm_get_ip() {
 	}
 	// IP derrière un proxy
 	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		return $_SERVER['HTTP_X_FORWARDED_FOR'];
+		return esc_url($_SERVER['HTTP_X_FORWARDED_FOR']);
 	}
 	// Sinon : IP normale
 	else {
