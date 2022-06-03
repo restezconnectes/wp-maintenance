@@ -29,7 +29,12 @@
 			</div>
 			<p>{BottomSocialIcon}</p>	
 		</main>
-		{FooterText}
+		
+		<div class="footer-basic">
+			<footer>
+				<p class="copyright">{FooterText}</p>
+			</footer>
+    	</div>
   	</body>
 </html>
 <?php die(); ?>

@@ -72,6 +72,7 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 = 6.0.8 =
 * Several security patches brought
+* WARNING : somes parameters will be reinitilized, please check all
 
 = 6.0.7 =
 * Remove Slider option

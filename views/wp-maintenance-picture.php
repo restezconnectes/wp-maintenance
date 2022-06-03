@@ -13,31 +13,34 @@ $colors      = $_wp_admin_css_colors[$admin_color]->colors;
 if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' && wp_verify_nonce($_POST['security-pictures'], 'valid-pictures') ) {
 
     if( isset($_POST['upload_picture']) && $_POST['upload_picture']!='' ) {
-        $_POST["wp_maintenance_settings"]["image"] = sanitize_text_field($_POST['upload_picture']);
+        $_POST["wpmpicture"]["image"] = sanitize_text_field($_POST['upload_picture']);
     }
     if( isset($_POST['remove_image']) && $_POST['remove_image']==1 ) {
-        $_POST["wp_maintenance_settings"]["image"] = '';
+        $_POST["wpmpicture"]["image"] = '';
     }
     if( isset($_POST['upload_b_image']) && $_POST['upload_b_image']!='' ) {
-        $_POST["wp_maintenance_settings"]["b_image"] = sanitize_text_field($_POST['upload_b_image']);
+        $_POST["wpmpicture"]["b_image"] = sanitize_text_field($_POST['upload_b_image']);
     }
     if( isset($_POST['remove_b_image']) && $_POST['remove_b_image']==1 ) {
-        $_POST["wp_maintenance_settings"]["b_image"] = '';
-        $_POST["wp_maintenance_settings"]["b_enable_image"] = 0;
+        $_POST["wpmpicture"]["b_image"] = '';
+        $_POST["wpmpicture"]["b_enable_image"] = 0;
     }
    
-    if( empty($_POST["wp_maintenance_settings"]["b_enable_image"]) ) { $_POST["wp_maintenance_settings"]["b_enable_image"] = 0; }
-    if( empty($_POST["wp_maintenance_settings"]["b_fixed_image"]) ) { $_POST["wp_maintenance_settings"]["b_fixed_image"] = 0; }
+    if( empty($_POST["wpmpicture"]["b_enable_image"]) ) { $_POST["wpmpicture"]["b_enable_image"] = 0; }
+    if( empty($_POST["wpmpicture"]["b_fixed_image"]) ) { $_POST["wpmpicture"]["b_fixed_image"] = 0; }
     
-    $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
+    $updateSetting = wpm_update_settings( $_POST["wpmpicture"], 'wp_maintenance_settings_picture');
+    if( $updateSetting == true ) { $messageUpdate = 1; }
 
-
-    $messageUpdate = 1;
 }
 
 // Récupère les paramètres sauvegardés
-if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-$paramMMode = get_option('wp_maintenance_settings');
+if(get_option('wp_maintenance_settings_picture')) { extract(get_option('wp_maintenance_settings_picture')); }
+$paramsPicture = get_option('wp_maintenance_settings_picture');
+
+// Récupère les paramètres sauvegardés (Besoin de récupérer des couleurs)
+if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
+$paramsColors = get_option('wp_maintenance_settings_colors');
 
 ?>
 <style>
@@ -83,15 +86,15 @@ function toggleTable(texte) {
 
                     <h3><?php _e('Choice you picture for header page', 'wp-maintenance'); ?></h3>
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
-                        <input id="settings_image"name="wp_maintenance_settings[image]" value="<?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { echo esc_url($paramMMode['image']); } ?>" type="hidden" />
+                        <label for="wpmpicture[image]" class="wp-maintenance-setting-row-title"><?php _e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
+                        <input id="settings_image"name="wpmpicture[image]" value="<?php if( isset($paramsPicture['image']) && $paramsPicture['image']!='' ) { echo esc_url($paramsPicture['image']); } ?>" type="hidden" />
                         <input id="upload_image" size="65%" name="upload_picture" value="" type="text" /> <a href="#" id="upload_image_button" class="wp-maintenance-button-primary" OnClick="this.blur();"><?php _e('Media Image Library', 'wp-maintenance'); ?></a><br />
                         <span class="description"><?php _e( 'URL path to image to replace default picture. (You can upload your image with the WordPress media uploader)', 'wp-maintenance' ); ?></span><br />
-                        <label for="wp_maintenance_settings[image_width]" class="wp-maintenance-setting-row-title"><?php _e( 'Width:', 'wp-maintenance' ); ?></label> <input type="text" value="<?php if( isset($paramMMode['image_width']) && $paramMMode['image_width']!='' ) { echo esc_html($paramMMode['image_width']); } ?>" size="4"   name="wp_maintenance_settings[image_width]" />px <br />
-                        <label for="wp_maintenance_settings[image_height]" class="wp-maintenance-setting-row-title"><?php _e( 'Height:', 'wp-maintenance' ); ?></label> <input type="text" size="4" value="<?php if( isset($paramMMode['image_height']) && $paramMMode['image_height']!='' ) { echo esc_html($paramMMode['image_height']); } ?>" name="wp_maintenance_settings[image_height]" />px<br />
+                        <label for="wpmpicture[image_width]" class="wp-maintenance-setting-row-title"><?php _e( 'Width:', 'wp-maintenance' ); ?></label> <input type="text" value="<?php if( isset($paramsPicture['image_width']) && $paramsPicture['image_width']!='' ) { echo esc_html($paramsPicture['image_width']); } ?>" size="4"   name="wpmpicture[image_width]" />px <br />
+                        <label for="wpmpicture[image_height]" class="wp-maintenance-setting-row-title"><?php _e( 'Height:', 'wp-maintenance' ); ?></label> <input type="text" size="4" value="<?php if( isset($paramsPicture['image_height']) && $paramsPicture['image_height']!='' ) { echo esc_html($paramsPicture['image_height']); } ?>" name="wpmpicture[image_height]" />px<br />
                         <div class="wp-maintenance-encadre">
-                            <?php if( isset($paramMMode['image']) && $paramMMode['image']!='' ) { ?>
-                            <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo $paramMMode['image']; ?>" width="250" id="image_visuel" style="padding:3px;" /><br /><input type="checkbox" name="remove_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?>
+                            <?php if( isset($paramsPicture['image']) && $paramsPicture['image']!='' ) { ?>
+                            <?php _e('You use this picture:', 'wp-maintenance'); ?><br /> <img src="<?php echo esc_url($paramsPicture['image']); ?>" width="250" id="image_visuel" style="padding:3px;" /><br /><input type="checkbox" name="remove_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?>
                             <?php } ?>
                         </div>
                     </div>
@@ -106,25 +109,25 @@ function toggleTable(texte) {
                     </div>
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e("Disable background or pattern picture", 'wp-maintenance'); ?></span>
-                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="0" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==0) { echo ' checked'; } ?>>
+                            <input type="radio" name="wpmpicture[b_enable_image]" value="0" <?php if( isset($paramsPicture['b_enable_image']) && $paramsPicture['b_enable_image']==0) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                       </label>
                     </p>
 
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate picture background', 'wp-maintenance'); ?></span>
-                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="1" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==1) { echo ' checked'; } ?>>
+                            <input type="radio" name="wpmpicture[b_enable_image]" value="1" <?php if( isset($paramsPicture['b_enable_image']) && $paramsPicture['b_enable_image']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                       </label>
                     </p>
                     <div class="wp-maintenance-setting-row">
-                        <input id="settings_image"name="wp_maintenance_settings[b_image]" value="<?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' ) { echo esc_url($paramMMode['b_image']); } ?>" type="hidden" />
-                        <label for="wp_maintenance_settings[color_txt]" class="wp-maintenance-setting-row-title"><?php _e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
+                        <input id="settings_image"name="wpmpicture[b_image]" value="<?php if( isset($paramsPicture['b_image']) && $paramsPicture['b_image']!='' ) { echo esc_url($paramsPicture['b_image']); } ?>" type="hidden" />
+                        <label class="wp-maintenance-setting-row-title"><?php _e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
                         <input id="upload_b_image" size="65%" name="upload_b_image" value="" type="text" /> <a href="#" id="upload_b_image_button" class="wp-maintenance-button-primary" OnClick="this.blur();"><span> <?php _e('Media Image Library', 'wp-maintenance'); ?> </span></a>
                         
-                        <?php if( isset($paramMMode['b_image']) && $paramMMode['b_image']!='' ) { ?>
+                        <?php if( isset($paramsPicture['b_image']) && $paramsPicture['b_image']!='' ) { ?>
                         <div style="padding-top:1em;text-align:center;"><?php _e('You use this background picture:', 'wp-maintenance'); ?></div>
-                        <div class="wp-maintenance-encadre" style="height:200px;margin-top: 0em;background:url('<?php echo esc_url($paramMMode['b_image']) ?>');top center;background-size: cover;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-position: center;background-color: rgba(0,0,0,<?php echo esc_html($paramMMode['b_opacity_image']); ?>);">
+                        <div class="wp-maintenance-encadre" style="height:200px;margin-top: 0em;background:url('<?php echo esc_url($paramsPicture['b_image']) ?>');top center;background-size: cover;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-position: center;background-color: rgba(0,0,0,<?php echo esc_html($paramsPicture['b_opacity_image']); ?>);">
                             
                             
                         </div><div style="text-align:center;"><label class="wpm-container"><input type="checkbox" name="remove_b_image" value="1" /> <?php _e('Remove', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label></div>
@@ -133,21 +136,21 @@ function toggleTable(texte) {
                     </div>
 
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Background picture options', 'wp-maintenance'); ?></label>
-                        <select name="wp_maintenance_settings[b_repeat_image]" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 25px 7px 10px;height: auto;">
-                            <option value="repeat"<?php if( (isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat') or empty($paramMMode['b_repeat_image']) ) { echo ' selected'; } ?>>repeat</option>
-                            <option value="no-repeat"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='no-repeat') { echo ' selected'; } ?>>no-repeat</option>
-                            <option value="repeat-x"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat-x') { echo ' selected'; } ?>>repeat-x</option>
-                            <option value="repeat-y"<?php if( isset($paramMMode['b_repeat_image']) && $paramMMode['b_repeat_image']=='repeat-y') { echo ' selected'; } ?>>repeat-y</option>
+                        <label for="wpmpicture[image]" class="wp-maintenance-setting-row-title"><?php _e('Background picture options', 'wp-maintenance'); ?></label>
+                        <select name="wpmpicture[b_repeat_image]" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 25px 7px 10px;height: auto;">
+                            <option value="repeat"<?php if( (isset($paramsPicture['b_repeat_image']) && $paramsPicture['b_repeat_image']=='repeat') or empty($paramsPicture['b_repeat_image']) ) { echo ' selected'; } ?>>repeat</option>
+                            <option value="no-repeat"<?php if( isset($paramsPicture['b_repeat_image']) && $paramsPicture['b_repeat_image']=='no-repeat') { echo ' selected'; } ?>>no-repeat</option>
+                            <option value="repeat-x"<?php if( isset($paramsPicture['b_repeat_image']) && $paramsPicture['b_repeat_image']=='repeat-x') { echo ' selected'; } ?>>repeat-x</option>
+                            <option value="repeat-y"<?php if( isset($paramsPicture['b_repeat_image']) && $paramsPicture['b_repeat_image']=='repeat-y') { echo ' selected'; } ?>>repeat-y</option>
                         </select>
                         
-                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Background Opacity', 'wp-maintenance'); ?></label>
-                        <input id="fontSize" name="wp_maintenance_settings[b_opacity_image]" value="<?php if( isset($paramMMode['b_opacity_image']) ) { echo $paramMMode['b_opacity_image']; } else { echo '0.2'; } ?>" size="4" readonly="readonly" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"><br /><br /><div id="opacity_slider" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"></div>
+                        <label for="wpmpicture[image]" class="wp-maintenance-setting-row-title"><?php _e('Background Opacity', 'wp-maintenance'); ?></label>
+                        <input id="fontSize" name="wpmpicture[b_opacity_image]" value="<?php if( isset($paramsPicture['b_opacity_image']) ) { echo $paramsPicture['b_opacity_image']; } else { echo '0.2'; } ?>" size="4" readonly="readonly" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"><br /><br /><div id="opacity_slider" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"></div>
                     </div>
 
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Fix the background picture', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[b_fixed_image]" value="1" <?php if( isset($paramMMode['b_fixed_image']) && $paramMMode['b_fixed_image']==1) { echo ' checked'; } ?>>
+                            <input type="checkbox" name="wpmpicture[b_fixed_image]" value="1" <?php if( isset($paramsPicture['b_fixed_image']) && $paramsPicture['b_fixed_image']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
@@ -163,29 +166,29 @@ function toggleTable(texte) {
 
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, activate pattern background', 'wp-maintenance'); ?></span>
-                            <input type="radio" name="wp_maintenance_settings[b_enable_image]" value="2" <?php if( isset($paramMMode['b_enable_image']) && $paramMMode['b_enable_image']==2) { echo ' checked'; } ?>>
+                            <input type="radio" name="wpmpicture[b_enable_image]" value="2" <?php if( isset($paramsPicture['b_enable_image']) && $paramsPicture['b_enable_image']==2) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                       </label>
                     </p>
 
                     <!-- CHOIX PATTERN -->  
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[image]" class="wp-maintenance-setting-row-title"><?php _e('Choose a pattern', 'wp-maintenance'); ?></label>
+                        <label for="wpmpicture[image]" class="wp-maintenance-setting-row-title"><?php _e('Choose a pattern', 'wp-maintenance'); ?></label>
                         <ul id="pattern">
                             <li>
                                 <div style="width:50px;height:50px;border:1px solid #333;background-color:#ffffff;font-size:0.8em;margin-bottom:5px;"><?php _e('NO PATTERN', 'wp-maintenance'); ?></div>
-                                <label class="wpm-container"><input type="radio" value="0" <?php if( empty($paramMMode['b_pattern']) or $paramMMode['b_pattern']==0) { echo 'checked'; } ?> name="wp_maintenance_settings[b_pattern]" /><span class="wpm-checkmark"></span></label>
+                                <label class="wpm-container"><input type="radio" value="0" <?php if( empty($paramsPicture['b_pattern']) or $paramsPicture['b_pattern']==0) { echo 'checked'; } ?> name="wpmpicture[b_pattern]" /><span class="wpm-checkmark"></span></label>
                                
                             </li>
                             <?php for ($p = 1; $p <= 12; $p++) { ?>
                                 <li>
                                     <div style="width:50px;height:50px;border:2px solid #ECF0F1;background:url('<?php echo esc_url(plugins_url( '../images/pattern'.$p.'.png', __FILE__ )); ?>');margin-bottom:5px;"></div>
-                                    <label for="b_pattern_<?php echo $p; ?>" class="wpm-container"><input type="radio" value="<?php echo $p; ?>" <?php if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']==$p) { echo 'checked'; } ?> id="b_pattern_<?php echo $p; ?>" name="wp_maintenance_settings[b_pattern]" /><span class="wpm-checkmark"></span></label>
+                                    <label for="b_pattern_<?php echo $p; ?>" class="wpm-container"><input type="radio" value="<?php echo $p; ?>" <?php if( isset($paramsPicture['b_pattern']) && $paramsPicture['b_pattern']==$p) { echo 'checked'; } ?> id="b_pattern_<?php echo $p; ?>" name="wpmpicture[b_pattern]" /><span class="wpm-checkmark"></span></label>
                                 </li>
                             <?php } ?>
                         </ul>
-                        <?php if( isset($paramMMode['b_pattern']) && $paramMMode['b_pattern']>0) { ?>
-                            <div class="wp-maintenance-encadre" style="background: url('<?php echo esc_url(plugins_url( '../images/pattern'.$paramMMode['b_pattern'].'.png', __FILE__ )); ?>');<?php if( isset($paramMMode['color_bg']) && $paramMMode['color_bg']!='' ) { echo 'background-color:'.esc_html($paramMMode['color_bg']).';'; } ?>height:160px;">
+                        <?php if( isset($paramsPicture['b_pattern']) && $paramsPicture['b_pattern']>0) { ?>
+                            <div class="wp-maintenance-encadre" style="background: url('<?php echo esc_url(plugins_url( '../images/pattern'.$paramsPicture['b_pattern'].'.png', __FILE__ )); ?>');<?php if( isset($paramsColors['color_bg']) && $paramsColors['color_bg']!='' ) { echo 'background-color:'.esc_html($paramsColors['color_bg']).';'; } ?>height:160px;">
                                 &nbsp;<?php _e('You use this pattern', 'wp-maintenance'); ?>&nbsp;
                             </div>
                       <?php } ?>
@@ -212,7 +215,7 @@ jQuery(document).ready(function() {
         orientation: "horizontal",
         range: false,
         step: 0.1,
-        value: <?php if( isset($paramMMode['b_opacity_image']) ) { echo esc_html($paramMMode['b_opacity_image']); } else { echo '0.2'; } ?>,
+        value: <?php if( isset($paramsPicture['b_opacity_image']) ) { echo esc_html($paramsPicture['b_opacity_image']); } else { echo '0.2'; } ?>,
         animate:"slow",
         slide: function( event, ui ) {
             jQuery( "#fontSize" ).val( ui.value );

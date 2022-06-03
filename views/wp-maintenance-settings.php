@@ -6,20 +6,21 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_settings' && wp_verify_nonce($_POST['security-settings'], 'valid-settings') ) {
 
-    if( empty($_POST["wp_maintenance_settings"]["pageperso"]) ) { $_POST["wp_maintenance_settings"]["pageperso"] = 0; }
-    if( empty($_POST["wp_maintenance_settings"]["dashboard_delete_db"]) ) { $_POST["wp_maintenance_settings"]["dashboard_delete_db"] = 0; }
-    if( empty($_POST["wp_maintenance_settings"]["error_503"]) ) { $_POST["wp_maintenance_settings"]["error_503"] = 0; }
+    if( empty($_POST["wpoptions"]["pageperso"]) ) { $_POST["wpoptions"]["pageperso"] = 0; }
+    if( empty($_POST["wpoptions"]["dashboard_delete_db"]) ) { $_POST["wpoptions"]["dashboard_delete_db"] = 0; }
+    if( empty($_POST["wpoptions"]["error_503"]) ) { $_POST["wpoptions"]["error_503"] = 0; }
 
     update_option('wp_maintenance_limit', sanitize_text_field($_POST["wp_maintenance_limit"]));
     update_option('wp_maintenance_ipaddresses', sanitize_textarea_field($_POST["wp_maintenance_ipaddresses"]));
     
-    $options_saved = wpm_update_settings($_POST["wp_maintenance_settings"]);
-    $messageUpdate = 1;
+    $updateSetting = wpm_update_settings( $_POST["wpoptions"], 'wp_maintenance_settings_options' );
+    if( $updateSetting == true ) { $messageUpdate = 1; }
+
 }
 
 // Récupère les paramètres sauvegardés
-if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-$paramMMode = get_option('wp_maintenance_settings');
+if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+$wpoptions = get_option('wp_maintenance_settings_options');
 
 // Récupère les Rôles et capabilités
 if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
@@ -56,7 +57,7 @@ jQuery(document).ready(function() {
     
     <!-- HEADER -->
     <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
-    <?php if( isset($message) && $message == 1 ) { ?>
+    <?php if( isset($messageUpdate) && $messageUpdate == 1 ) { ?>
         <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
     <?php } ?>
     <!-- END HEADER -->
@@ -76,7 +77,7 @@ jQuery(document).ready(function() {
                     <h3><?php _e('Theme maintenance page', 'wp-maintenance'); ?></h3>
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, I use a theme maintenance page', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[pageperso]" value="1" <?php if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1) { echo ' checked'; } ?>>
+                            <input type="checkbox" name="wpoptions[pageperso]" value="1" <?php if( isset($wpoptions['pageperso']) && $wpoptions['pageperso']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                         
@@ -89,7 +90,7 @@ jQuery(document).ready(function() {
                     <h3><?php _e('Delete custom settings upon plugin deactivation?', 'wp-maintenance'); ?></h3>
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, all custom settings will be deleted from database upon plugin deactivation', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[dashboard_delete_db]" value="1" <?php if( isset($paramMMode['dashboard_delete_db']) && $paramMMode['dashboard_delete_db']==1) { echo ' checked'; } ?>>
+                            <input type="checkbox" name="wpoptions[dashboard_delete_db]" value="1" <?php if( isset($wpoptions['dashboard_delete_db']) && $wpoptions['dashboard_delete_db']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
@@ -98,7 +99,7 @@ jQuery(document).ready(function() {
                     <h3><?php _e('Display code HTTP Error 503?', 'wp-maintenance'); ?></h3>
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, inform visitors and search engines that my site is temporarily unavailable.', 'wp-maintenance'); ?></span>
-                            <input type="checkbox" name="wp_maintenance_settings[error_503]" value="1" <?php if( isset($paramMMode['error_503']) && $paramMMode['error_503']==1) { echo ' checked'; } ?>>
+                            <input type="checkbox" name="wpoptions[error_503]" value="1" <?php if( isset($wpoptions['error_503']) && $wpoptions['error_503']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
@@ -153,8 +154,8 @@ jQuery(document).ready(function() {
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('ID pages autorized', 'wp-maintenance'); ?></h3>
                     </div>
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('Allow the site to display these ID pages. Please, enter the ID pages separate with comma', 'wp-maintenance'); ?></label>
-                        <input name="wp_maintenance_settings[id_pages]" size="80%" class="wp-maintenance-input" value="<?php if( isset($paramMMode['id_pages']) && $paramMMode['id_pages']!='' ) { echo esc_html($paramMMode['id_pages']); } ?>" />
+                        <label for="wpoptions[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('Allow the site to display these ID pages. Please, enter the ID pages separate with comma', 'wp-maintenance'); ?></label>
+                        <input name="wpoptions[id_pages]" size="80%" class="wp-maintenance-input" value="<?php if( isset($wpoptions['id_pages']) && $wpoptions['id_pages']!='' ) { echo esc_html($wpoptions['id_pages']); } ?>" />
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
@@ -167,8 +168,8 @@ jQuery(document).ready(function() {
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Header Code', 'wp-maintenance'); ?></h3>
                     </div>
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[id_pages]" class="wp-maintenance-setting-row-title"><?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS', 'wp-maintenance'); ?></label>
-                        <textarea id="headercode" name="wp_maintenance_settings[headercode]" class="wp-maintenance-input" COLS=50 ROWS=2><?php if( isset($paramMMode['headercode']) && $paramMMode['headercode']!='' ) { echo esc_textarea(stripslashes($paramMMode['headercode'])); }  ?></textarea>
+                        <label for="wpoptions[headercode]" class="wp-maintenance-setting-row-title"><?php _e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS', 'wp-maintenance'); ?></label>
+                        <textarea id="headercode" name="wpoptions[headercode]" class="wp-maintenance-input" COLS=50 ROWS=2><?php if( isset($wpoptions['headercode']) && $wpoptions['headercode']!='' ) { echo esc_textarea(stripslashes($wpoptions['headercode'])); }  ?></textarea>
                     </div>
 
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>

@@ -6,15 +6,14 @@ $messageUpdate = 0;
 /* Update des paramètres */
 if( isset($_POST['action']) && $_POST['action'] == 'update_css' && wp_verify_nonce($_POST['security-css'], 'valid-css') ) {
 
-    update_option('wp_maintenance_style', sanitize_textarea_field(stripslashes($_POST["wp_maintenance_style"])));
+    update_option('wp_maintenance_settings_css', sanitize_textarea_field(stripslashes($_POST["wp_maintenance_settings_css"])));
     $options_saved = true;
-
     $messageUpdate = 1;
 }
 
 /* Si on réinitialise les feuille de styles  */
 if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
-    update_option( 'wp_maintenance_style', wpm_print_style() );
+    update_option( 'wp_maintenance_settings_css', wpm_print_style() );
     //$options_saved = true;
     echo '<div id="message" class="updated fade"><p><strong>'.__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
 }
@@ -30,7 +29,10 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 <div class="wrap">
 
     <!-- HEADER -->
-    <?php echo wpm_get_header( $messageUpdate ) ?>
+    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <?php if( isset($messageUpdate) && $messageUpdate == 1 ) { ?>
+        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+    <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
@@ -48,9 +50,7 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     <!-- PIED DE PAGE  -->
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Edit the CSS sheet of your maintenance page here.', 'wp-maintenance'); ?></h3></div>
                     <h3><?php _e('Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?></h3>
-                    <TEXTAREA NAME="wp_maintenance_style" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:350px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_style')))); ?></TEXTAREA>
-                    <?php //echo wpm_compress(get_option('wp_maintenance_style')); ?>
-                    
+                    <TEXTAREA NAME="wp_maintenance_settings_css" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:350px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_settings_css')))); ?></TEXTAREA>                    
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, reset style sheet', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpm_initcss" value="1">
@@ -64,11 +64,12 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                 <div class="wp-maintenance-module-options-block"> 
                     <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Markers for colors', 'wp-maintenance'); ?></h3></div>
                     <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php _e('Use this code for text color', 'wp-maintenance'); ?>
-                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORBG</label> <?php _e('Use this code for background text color', 'wp-maintenance'); ?>
-                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORCPTBG</label> <?php _e('Use this code for background color countdown', 'wp-maintenance'); ?>
-                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_DATESIZE</label> <?php _e('Use this code for size countdown', 'wp-maintenance'); ?>
-                        <label for="wp_maintenance_settings[color_text_bottom]" class="wp-maintenance-setting-row-title">#_COLORCPT</label> <?php _e('Use this code for countdown color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php _e('Use this code for text color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORBG</label> <?php _e('Use this code for background text color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORCPTBG</label> <?php _e('Use this code for background color countdown', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_DATESIZE</label> <?php _e('Use this code for size countdown', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORCPT</label> <?php _e('Use this code for countdown color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLOR_TXT_BT</label> <?php _e('Use this code for bottom text color', 'wp-maintenance'); ?>
                     </div>
                     
                     <br />                

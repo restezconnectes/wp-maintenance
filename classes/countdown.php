@@ -8,41 +8,48 @@ class WPM_Countdown extends WP_maintenance {
 
     public static function display($date = '') {
 
-        // Récupère les paramètres sauvegardés
-        $paramMMode = wp_maintenance::wpm_get_options();
+        // Récupère les paramètres sauvegardés COUNTDOWN
+        if(get_option('wp_maintenance_settings_countdown')) { extract(get_option('wp_maintenance_settings_countdown')); }
+        $paramsCountdown = get_option('wp_maintenance_settings_countdown');
+
+        // Récupère les paramètres sauvegardés COLORS
+        if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
+        $paramsColors = get_option('wp_maintenance_settings_colors');
+
         // Récupère si le status est actif ou non 
         $statusActive = get_option('wp_maintenance_active');
         $Counter = '';
         
         /*********** AJOUT COMPTEUR SUIVANT LES PARAMETRES *********/
-        if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1 && !empty($date) ) {
+        if( isset($paramsCountdown['active_cpt']) && $paramsCountdown['active_cpt']==1 && !empty($date) ) {
 
-            if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) {
+            if( isset($paramsCountdown['cptdate']) && !empty($paramsCountdown['cptdate']) ) {
 
-                if( !isset($paramMMode['disable']) || $statusActive==0 ) { $paramMMode['disable'] = 0; }
+                if( !isset($paramsCountdown['disable']) || $statusActive==0 ) { $paramsCountdown['disable'] = 0; }
                 
                 $Counter = '
                 <div id="countdown">
                     <script language="JavaScript">
                         TargetDate = "'.$date.'";
-                        BackColor = "'.$paramMMode['color_cpt_bg'].'";
-                        FontSize = "'.$paramMMode['date_cpt_size'].'";
-                        ForeColor = "'.$paramMMode['color_cpt'].'";
-                        Disable = "'.$paramMMode['disable'].'";
+                        BackColor = "'.$paramsColors['color_cpt_bg'].'";
+                        FontSize = "'.$paramsColors['date_cpt_size'].'";
+                        ForeColor = "'.$paramsColors['color_cpt'].'";
+                        Disable = "'.$paramsCountdown['disable'].'";
                         UrlDisable = "'.get_option( 'siteurl').'";
-                        FontFamily = "'.wpm_format_font($paramMMode['font_cpt']).'";
+                        FontFamily = "'.wpm_format_font($paramsColors['font_cpt']).'";
+                        FontTextSize = "'.$paramsColors['cpt_end_size'].'";
                         CountActive = true;
                         CountStepper = -1;
                         LeadingZero = true;
                 ';
                 $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
-                if( isset($paramMMode['active_cpt_s']) && $paramMMode['active_cpt_s']==1 ) {
+                if( isset($paramsCountdown['active_cpt_s']) && $paramsCountdown['active_cpt_s']==1 ) {
                     $Counter .= '<div class="wpm_ctp_sep" style="float:left;">:</div><div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
                 }
                 $Counter .= "';";
-                if( isset($paramMMode['message_cpt_fin']) && $paramMMode['message_cpt_fin']!='' ) {
+                if( isset($paramsCountdown['message_cpt_fin']) && $paramsCountdown['message_cpt_fin']!='' ) {
                     $Counter .= '
-                    FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramMMode['message_cpt_fin']) ) ).'";';
+                    FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramsCountdown['message_cpt_fin']) ) ).'";';
                 } else {
                     $Counter .= '
                     FinishMessage = "&nbsp;";';
@@ -61,31 +68,31 @@ class WPM_Countdown extends WP_maintenance {
     public static function css() {
 
         // Récupère les paramètres sauvegardés
-        $paramMMode = wp_maintenance::wpm_get_options();
+        $paramsCountdown = wp_maintenance::wpm_get_options();
         $wpmStyle = '';
-        if( isset($paramMMode['active_cpt']) && $paramMMode['active_cpt']==1) {
+        if( isset($paramsCountdown['active_cpt']) && $paramsCountdown['active_cpt']==1) {
         $wpmStyle .= '
 #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {}
 .cptR-rec_countdown {';
-if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.$paramMMode['date_cpt_size'].'px;'; }
-if( isset($paramMMode['font_cpt']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramMMode['font_cpt']).', serif;'; }
+if( isset($paramsCountdown['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.$paramsCountdown['date_cpt_size'].'px;'; }
+if( isset($paramsCountdown['font_cpt']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramsCountdown['font_cpt']).', serif;'; }
 $wpmStyle .= '
 }
 
 @media screen and (min-width: 200px) and (max-width: 480px) {
 
     .cptR-rec_countdown {';
-        if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.($paramMMode['date_cpt_size']*0.6).'px;'; }
+        if( isset($paramsCountdown['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.($paramsCountdown['date_cpt_size']*0.6).'px;'; }
     $wpmStyle .= '}
     div.bloc {';
-        if( isset($paramMMode['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.($paramMMode['font_bottom_size']*0.8).'px;'; }
+        if( isset($paramsCountdown['font_bottom_size']) ) { $wpmStyle .= 'font-size: '.($paramsCountdown['font_bottom_size']*0.8).'px;'; }
     $wpmStyle .= '}
     #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds { }
 
 }
 @media (max-width: 640px) {
     .cptR-rec_countdown {';
-        if( isset($paramMMode['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.($paramMMode['date_cpt_size']*0.5).'px;'; }
+        if( isset($paramsCountdown['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.($paramsCountdown['date_cpt_size']*0.5).'px;'; }
     $wpmStyle .= 'text-align:center;}
     #wpm-cpt-day, #wpm-cpt-hours, #wpm-cpt-minutes, #wpm-cpt-seconds {text-align:center;}
 }';

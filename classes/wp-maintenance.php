@@ -32,13 +32,13 @@ class WP_maintenance {
             add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
             add_action( 'admin_bar_menu', array( &$this, 'wpm_add_menu_admin_bar'), 999 );
             add_action( 'admin_footer', array( &$this, 'wpm_print_footer_scripts') );        
-            add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
+            //add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
 
     }
 
     function wpm_theme_add_editor_styles() {
-        add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
+        //add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
     }
     
     /**
@@ -51,105 +51,183 @@ class WP_maintenance {
 
     public static function wpm_dashboard_install() {
         
-        $wpMaintenanceAdminOptions = array(
-            'color_bg' => "#f1f1f1",
-            'color_txt' => '#888888',
-            'color_bg_bottom' => '#333333',
-            'color_text_bottom' => '#FFFFFF',
-            'titre_maintenance' => __('This site is down for maintenance', 'wp-maintenance'),
-            'text_maintenance' => __('Come back quickly!', 'wp-maintenance'),
-            'userlimit' => 'administrator',
-            'image' => plugins_url('../images/default2.png', __FILE__ ),
-            'image_width' => 450,
-            'image_height' => 450,
-            'font_title' => 'PT Sans',
-            'font_title_size' => 40,
-            'font_title_weigth' => 'normal',
-            'font_title_style' => '',
-            'font_text_style' => '',
-            'font_text' => 'Metrophobic',
-            'font_text_size' => 18,
-            'font_text_bottom' => 'PT Sans',
-            'font_text_weigth' => 'normal',
-            'font_bottom_size' => 12,
-            'font_bottom_weigth' => 'normal',
-            'font_bottom_style' => '',
-            'font_cpt' => 'PT Sans',
-            'color_cpt' => '#333333',
-            'enable_demo' => 0,
-            'color_field_text' => '#333333',
-            'color_text_button' => '#ffffff',
-            'color_field_background' => '#F1F1F1',
-            'color_field_border' => '#333333',
-            'color_button_onclick' => '#333333',
-            'color_button_hover' => '#cccccc',
-            'color_button' => '#1e73be',
-            'newletter' => 0,
-            'active_cpt' => 0,
-            'newletter_font_text' => 'PT Sans',
-            'newletter_size' => 18,
-            'newletter_font_style' => '',
-            'newletter_font_weigth' => 'normal',
-            'type_newletter' => 'shortcode',
-            'title_newletter' => '',
-            'code_newletter' => '',
-            'text_bt_maintenance' => '',
-            'add_wplogin' => 0,
-            'b_enable_image' => 0,
-            'b_opacity_image' => '0.2',
-            'disable' => 0,
-            'pageperso' => 0,
-            'date_cpt_size' => 6,
-            'color_bg_header' => '#ffffff',
-            'add_wplogin_title' => '',
-            'headercode' => '',
-            'message_cpt_fin' => '',
-            'b_repeat_image' => '',
-            'color_cpt_bg' => '',
-            'font_end_cpt' => 'PT Sans',
-            'cpt_end_size' => 3,
-            'container_active' => 0,
-            'container_color' => '#ffffff',
-            'container_opacity' => '0.5',
-            'container_width' => 80,
-            'dashboard_delete_db' => 1,
-            'error_503' => 1,
-            'enable_footer' => 0
 
-        );
-        $getMaintenanceSettings = get_option('wp_maintenance_settings');
-        if ( empty($getMaintenanceSettings) ) {
-            foreach ($wpMaintenanceAdminOptions as $key => $option) {
-                $wpMaintenanceAdminOptions[$key] = $option;
-            }
-            add_option('wp_maintenance_settings', $wpMaintenanceAdminOptions);
+        if ( get_option('wp_maintenance_active', false) == false or get_option('wp_maintenance_active')=='' ) {
+            add_option('wp_maintenance_active', 0);
         }
 
-        if(!get_option('wp_maintenance_active')) { add_option('wp_maintenance_active', 0); }
-
-        if(!get_option('wp_maintenance_style') or get_option('wp_maintenance_style')=='') {
+        if ( get_option('wp_maintenance_style', false) == false or get_option('wp_maintenance_style')=='' ) {
             add_option('wp_maintenance_style', wpm_print_style());
         }
 
-        $wpParamSocialOption = array(
+        $wpmAdminOptions = array(            
+            'titre_maintenance' => __('This site is down for maintenance', 'wp-maintenance'),
+            'text_maintenance' => __('Come back quickly!', 'wp-maintenance'),
+            'newletter' => 0,
+            'title_newletter' => '',
+            'code_newletter' => '',
+            'type_newletter' => 'shortcode',
+            'iframe_newletter' => ''
+        );
+        if ( get_option('wp_maintenance_settings', false) == false or get_option('wp_maintenance_settings')=='' ) {
+            foreach ($wpmAdminOptions as $keyAdminOptions => $optionAdminOptions) {
+                $wpmAdminOptions[$keyAdminOptions] = $optionAdminOptions;
+            }
+            add_option('wp_maintenance_settings', $wpmAdminOptions);
+        }
 
+        /* DEFINITION PARAMS COLORS */
+        $wpmSetsColorsOptions = array(
+            'color_bg' => "#f1f1f1",
+            'color_bg_header' => '#ffffff',
+            'color_title' => '#333333',
+            'font_title' => 'Anton',
+            'font_title_size' => '16',
+            'font_title_weigth' => '',
+            'font_title_style' => '',
+            'color_txt' => '#333333',
+            'font_text' => 'Anton',
+            'font_text_size' => '16',
+            'font_text_weigth' => '',
+            'font_text_style' => '',
+            'container_active' => 0,
+            'container_colorcontainer_opacity' => '0.5',
+            'container_width' => '80',
+            'color_cpt' => '#333333',
+            'color_cpt_bg' => '#ffffff',
+            'font_cpt' => 'Pacifico',
+            'date_cpt_size' => '6',
+            'font_end_cpt' => 'Pacifico',
+            'cpt_end_size' => '2',
+            'color_text_bottom' => '#ffffff',
+            'color_bg_bottom' => '#333333',
+            'font_text_bottom' => 'PT+Sans',
+            'font_bottom_size' => '12',
+            'font_bottom_weigth' => '',
+            'font_bottom_style' => '',
+            'newletter' => 0,
+            'newletter_font_text' => 'PT+Sans',
+            'newletter_size' => '14',
+            'newletter_font_weigth' => '',
+            'newletter_font_style' => '',
+            'color_field_text' => '#333333',
+            'color_field_border' => '#333333',
+            'color_field_background' => '#CCCCCC',
+            'color_text_button' => '#ffffff',
+            'color_button' => '#1e73be',
+            'color_button_hover' => '#ffffff',
+            'color_button_onclick' => '#ffffff'
+        );
+
+        if ( get_option('wp_maintenance_settings_colors', false) == false or get_option('wp_maintenance_settings_colors')=='' ) {
+            foreach ($wpmSetsColorsOptions as $keyColorsOptions => $optionColorsOptions) {
+                $wpmSetsColorsOptions[$keyColorsOptions] = $optionColorsOptions;
+            }
+            add_option('wp_maintenance_settings_colors', $wpmSetsColorsOptions);
+        }
+
+        /* DEFINITION PARAMS PICTURE */
+        $wpmSetsPicturesOptions = array(
+
+            'image' => plugin_dir_url( __DIR__ ).'images/default2.png',
+            'image_width' => 450,
+            'image_height' => 450,            
+            'b_enable_image' => 0,
+            'b_image' => '',
+            'b_opacity_image' => '0.2',
+            'b_repeat_image' => 'repeat',
+            'b_fixed_image' => 1,
+            'b_pattern' => 0
+        );
+
+        if ( get_option('wp_maintenance_settings_picture', false) == false or get_option('wp_maintenance_settings_picture')=='' ) {
+            foreach ($wpmSetsPicturesOptions as $keyPicturesOptions => $optionPicturesOptions) {
+                $wpmSetsPicturesOptions[$keyPicturesOptions] = $optionPicturesOptions;
+            }
+            add_option('wp_maintenance_settings_picture', $wpmSetsPicturesOptions);
+        }
+
+        /* DEFINITION PARAMS COUNTDOWN */
+        $wpmSetsCountdownOptions = array(
+            'active_cpt' => 0,
+            'date_cpt_hh' => '',
+            'cptdate' => '',
+            'cpttime' => '',
+            'active_cpt_s' => '',
+            'disable' => '',
+            'message_cpt_fin' => ''
+        );
+        if ( get_option('wp_maintenance_settings_countdown', false) == false or get_option('wp_maintenance_settings_countdown')=='' ) {
+            foreach ($wpmSetsCountdownOptions as $keyCountdownOptions => $optionCountdownOptions) {
+                $wpmSetsCountdownOptions[$keyCountdownOptions] = $optionCountdownOptions;
+            }
+            add_option('wp_maintenance_settings_countdown', $wpmSetsCountdownOptions);
+        }
+
+        /* DEFINITION PARAMS CSS */
+        if ( get_option('wp_maintenance_settings_css', false) == false or get_option('wp_maintenance_settings_css')=='' ) {
+            add_option('wp_maintenance_settings_css', wpm_print_style() );
+        }
+
+        /* DEFINITION PARAMS SEO */
+        $wpmSetsSeoOptions = array(
+            'enable_seo' => 0,
+            'seo_title' => '',
+            'seo_description' => '',
+            'favicon' => ''
+        );
+        if ( get_option('wp_maintenance_settings_seo', false) == false or get_option('wp_maintenance_settings_seo')=='' ) {
+            foreach ($wpmSetsSeoOptions as $keySeoOptions => $optionSeoOptions) {
+                $wpmSetsSeoOptions[$keySeoOptions] = $optionSeoOptions;
+            }
+            add_option('wp_maintenance_settings_seo', $wpmSetsSeoOptions);
+        }
+
+        /* DEFINITION PARAMS SOCIAL NETWORKS */
+        $wpmSocialsNetworksOptions = array(
             'enable' => 0,
-            'texte' => 'Follow me on',
-            'style' => 'style1',
+            'texte' => __('Follow me on', 'wp-maintenance'),
             'size' => 64,
+            'style' => 'style1',
             'position' => 'bottom',
             'align' => 'center',
             'theme' => ''
         );
-
-        $getParamSocialOption = get_option('wp_maintenance_social_options');
-        if ( empty($getParamSocialOption) ) {
-            foreach ($wpParamSocialOption as $key => $option) {
-                $wpParamSocialOption[$key] = $option;
+        if ( get_option('wp_maintenance_settings_socialnetworks', false) == false or get_option('wp_maintenance_settings_socialnetworks')=='' ) {
+            foreach ($wpmSocialsNetworksOptions as $keyNetworksOptions => $optionNetworksOptions) {
+                $wpmSocialsNetworksOptions[$keyNetworksOptions] = $optionNetworksOptions;
             }
-            add_option('wp_maintenance_social_options', $wpParamSocialOption);
+            add_option('wp_maintenance_settings_socialnetworks', $wpmSocialsNetworksOptions);
         }
-        
+
+        /* DEFINITION PARAMS FOOTER */
+        $wpmSetsFootersOptions = array(
+            'enable_footer' => 0,
+            'text_bt_maintenance' => '',
+            'add_wplogin' => 0,
+            'add_wplogin_title' => ''
+        );
+        if ( get_option('wp_maintenance_settings_footer', false) == false or get_option('wp_maintenance_settings_footer')=='' ) {
+            foreach ($wpmSetsFootersOptions as $keyFootersOptions => $optionFootersOptions) {
+                $wpmSetsFootersOptions[$keyFootersOptions] = $optionFootersOptions;
+            }
+            add_option('wp_maintenance_settings_footer', $wpmSetsFootersOptions);
+        }
+
+        /* DEFINITION PARAMS SETTINGS */
+        $wpmSetsOptions = array(
+            'pageperso' => 0,
+            'dashboard_delete_db' => 0,
+            'error_503' => 1,
+            'id_pages' => '',
+            'headercode' => ''
+        );
+        if ( get_option('wp_maintenance_settings_options', false) == false or get_option('wp_maintenance_settings_options')=='' ) {
+            foreach ($wpmSetsOptions as $keySetsOptions => $optionSetsOptions) {
+                $wpmSetsOptions[$keySetsOptions] = $optionSetsOptions;
+            }
+            add_option('wp_maintenance_settings_options', $wpmSetsOptions);
+        }       
 
     }
 
@@ -333,15 +411,6 @@ class WP_maintenance {
         wp_enqueue_script('quicktags');
     }
 
-    public static function wpm_get_options() {
-
-        // Récupère les paramètres sauvegardés
-        if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-        $paramMMode = get_option('wp_maintenance_settings');
-
-        return $paramMMode;
-    }
-
     function wpm_add_admin() {
 
         add_menu_page( 'WP Maintenance Settings', 'WP Maintenance', 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page'), plugins_url( '../images/wpm-menu-icon.png', __FILE__ ) );
@@ -407,8 +476,7 @@ class WP_maintenance {
             wp_enqueue_script('wpm-admin-fontselect');
 
             wp_enqueue_style('admincss');
-            wp_enqueue_style('admincss', plugins_url('../css/wpm-admin.css', __FILE__ ));
-            
+            wp_enqueue_style('admincss', plugins_url('../css/wpm-admin.css', __FILE__ ));           
 
         }
         
@@ -583,13 +651,19 @@ class WP_maintenance {
 
         $paramSocialOption = get_option('wp_maintenance_social_options');
 
+        // Récupère les paramètres sauvegardés Options
+        if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+        $paramsOptions = get_option('wp_maintenance_settings_options');
+
+        // Récupère les paramètres sauvegardés compte à rebours
+        if(get_option('wp_maintenance_settings_countdown')) { extract(get_option('wp_maintenance_settings_countdown')); }
+        $paramsCountdown = get_option('wp_maintenance_settings_countdown');
+
         /* on doit retourner 12/31/2020 5:00 AM */
         $dateNow = strtotime(date("Y-m-d H:i:s")) + 3600 * get_option('gmt_offset');
-        if( get_option('wp_maintenance_version') <= '2.7.0') {
-            $dateFinCpt = strtotime( date($paramMMode['date_cpt_jj'].'-'.$paramMMode['date_cpt_mm'].'-'.$paramMMode['date_cpt_aa'].' '.$paramMMode['date_cpt_hh'].':'.$paramMMode['date_cpt_mn'].':'.$paramMMode['date_cpt_ss']) );
-        } else if( isset($paramMMode['cptdate']) && !empty($paramMMode['cptdate']) ) {
-            $dateFinCpt = strtotime( date( str_replace('/', '-', $paramMMode['cptdate']).' '.$paramMMode['cpttime'].':00') );
-            $dateCpt = date( 'm/d/Y h:i A', strtotime( $paramMMode['cptdate'].' '.$paramMMode['cpttime'] ) );
+        if( isset($paramsCountdown['cptdate']) && !empty($paramsCountdown['cptdate']) ) {
+            $dateFinCpt = strtotime( date( str_replace('/', '-', $paramsCountdown['cptdate']).' '.$paramsCountdown['cpttime'].':00') );
+            $dateCpt = date( 'm/d/Y h:i A', strtotime( $paramsCountdown['cptdate'].' '.$paramsCountdown['cpttime'] ) );
         } else {
             $dateCpt = '';
         }
@@ -605,13 +679,13 @@ class WP_maintenance {
             $urlTpl = '';
         }
 
-        if( isset($paramMMode['pageperso']) && $paramMMode['pageperso']==1 && $urlTpl !== '' ) {
+        if( isset($paramsOptions['pageperso']) && $paramsOptions['pageperso']==1 && $urlTpl !== '' ) {
             include_once( $urlTpl );
             die();
         }  
         
         /* Si on désactive le mode maintenance en fin de compte à rebours */
-        if( ( isset($paramMMode['disable']) && $paramMMode['disable']==1 ) && $this->wpm_check_active() == 1 ) {
+        if( ( isset($paramsCountdown['disable']) && $paramsCountdown['disable']==1 ) && $this->wpm_check_active() == 1 ) {
 
             if( $dateNow > $dateFinCpt ) {
                 $ChangeStatus = wpm_change_active();
@@ -621,8 +695,8 @@ class WP_maintenance {
 
         $statusPageActive = 1;
         /*Désactive le mode maintenance pour les PAGE ID définies */
-        if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
-            $listPageId = explode(',', $paramMMode['id_pages']);
+        if( isset($paramsOptions['id_pages']) && !empty($paramsOptions['id_pages']) ) {
+            $listPageId = explode(',', $paramsOptions['id_pages']);
             foreach($listPageId as $keyPageId => $valPageId) {
                 if( isset($post->ID) && trim($valPageId) == $post->ID ) {
                     $statusPageActive = 0;
@@ -653,7 +727,7 @@ class WP_maintenance {
         nocache_headers();
         if ($statusPageActive == 1) {
 
-            if( isset($paramMMode['error_503']) && $paramMMode['error_503']== 1 ) {
+            if( isset($paramsOptions['error_503']) && $paramsOptions['error_503']== 1 ) {
                 header('HTTP/1.1 503 Service Temporarily Unavailable');
                 header('Status: 503 Service Temporarily Unavailable');
                 header('Retry-After: 86400'); // retry in a day
