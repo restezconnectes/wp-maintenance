@@ -38,7 +38,7 @@ class WP_maintenance {
     }
 
     function wpm_theme_add_editor_styles() {
-        //add_editor_style( plugins_url('../css/custom-editor-style.css', __FILE__ ) );
+        //add_editor_style( WPM_URL.'css/custom-editor-style.css' );
     }
     
     /**
@@ -200,6 +200,31 @@ class WP_maintenance {
             add_option('wp_maintenance_settings_socialnetworks', $wpmSocialsNetworksOptions);
         }
 
+        /* DEFINITION PARAMS LIST SOCIAL NETWORKS */
+        $wpmListSocialsNetworksOptions = array(
+            'facebook' => '',
+            'twitter' => '',
+            'linkedin' => '', 
+            'flickr' => '', 
+            'youtube' => '', 
+            'pinterest' => '', 
+            'vimeo' => '', 
+            'instagram' => '', 
+            'about_me' => '', 
+            'soundcloud' => '', 
+            'skype' => '', 
+            'tumblr' => '', 
+            'blogger' => '', 
+            'paypal' => '', 
+            'email' => '',
+        );
+        if ( get_option('wp_maintenance_list_socialnetworks', false) == false or get_option('wp_maintenance_list_socialnetworks')=='' ) {
+            foreach ($wpmListSocialsNetworksOptions as $keyListNetworksOptions => $optionListNetworksOptions) {
+                $wpmListSocialsNetworksOptions[$keyListNetworksOptions] = $optionListNetworksOptions;
+            }
+            add_option('wp_maintenance_list_socialnetworks', $wpmListSocialsNetworksOptions);
+        }
+
         /* DEFINITION PARAMS FOOTER */
         $wpmSetsFootersOptions = array(
             'enable_footer' => 0,
@@ -242,11 +267,14 @@ class WP_maintenance {
 
             delete_option('wp_maintenance_settings');
             delete_option('wp_maintenance_version');
-            delete_option('wp_maintenance_style');
-            delete_option('wp_maintenance_limit');            
-            delete_option('wp_maintenance_social');
+            delete_option('wp_maintenance_settings_colors');
+            delete_option('wp_maintenance_settings_countdown');
+            delete_option('wp_maintenance_settings_seo');
+            delete_option('wp_maintenance_settings_socialnetworks');
+            delete_option('wp_maintenance_settings_footer');
+            delete_option('wp_maintenance_settings_options');
+            delete_option('wp_maintenance_limit'); 
             delete_option('wp_maintenance_social_options');
-            delete_option('wp_maintenance_social');
             delete_option('wp_maintenance_ipaddresses');
             
         }
@@ -288,7 +316,7 @@ class WP_maintenance {
 <style>#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }</style>        
         ';
         if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
-            //echo '<link rel="stylesheet" type="text/css" media="all" href="' .plugins_url('../css/wpm-admin.css', __FILE__ ).'">';
+            //echo '<link rel="stylesheet" type="text/css" media="all" href="' .WPM_URL.'css/wpm-admin.css'.'">';
 
         } else {
             echo '
@@ -413,7 +441,7 @@ class WP_maintenance {
 
     function wpm_add_admin() {
 
-        add_menu_page( 'WP Maintenance Settings', 'WP Maintenance', 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page'), plugins_url( '../images/wpm-menu-icon.png', __FILE__ ) );
+        add_menu_page( 'WP Maintenance Settings', 'WP Maintenance', 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page'),  WPM_URL.'images/wpm-menu-icon.png' );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('General', 'wp-maintenance'), __('General', 'wp-maintenance'), 'manage_options', 'wp-maintenance', array( $this, 'wpm_dashboard_page') );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('Colors & Fonts', 'wp-maintenance'), __('Colors & Fonts', 'wp-maintenance'), 'manage_options', 'wp-maintenance-colors', array( $this, 'wpm_colors_page') );
         add_submenu_page( 'wp-maintenance', 'WP Maintenance > '.__('Pictures', 'wp-maintenance'), __('Pictures', 'wp-maintenance'), 'manage_options', 'wp-maintenance-picture', array( $this, 'wpm_picture_page') );
@@ -432,24 +460,24 @@ class WP_maintenance {
             wp_enqueue_script('media-upload');
             wp_enqueue_script('thickbox');
 
-            wp_register_script('wpm-my-upload', plugins_url('../js/wpm-script.js', __FILE__ ), array('jquery','media-upload','thickbox'));
+            wp_register_script('wpm-my-upload', WPM_URL.'js/wpm-script.js', array('jquery','media-upload','thickbox'));
             wp_enqueue_script('wpm-my-upload');
 
-            wp_enqueue_style('jquery-defaut-style', plugins_url('../js/lib/themes/default.css', __FILE__ ));
-            wp_enqueue_style('jquery-date-style', plugins_url('../js/lib/themes/default.date.css', __FILE__ ));
-            wp_enqueue_style('jquery-time-style', plugins_url('../js/lib/themes/default.time.css', __FILE__ ));
-            wp_enqueue_style('jquery-fontselect-style', plugins_url('../js/fontselect/fontselect.css', __FILE__ ));
+            wp_enqueue_style('jquery-defaut-style', WPM_URL.'js/lib/themes/default.css');
+            wp_enqueue_style('jquery-date-style', WPM_URL.'js/lib/themes/default.date.css');
+            wp_enqueue_style('jquery-time-style', WPM_URL.'js/lib/themes/default.time.css');
+            wp_enqueue_style('jquery-fontselect-style', WPM_URL.'js/fontselect/fontselect.css');
 
             wp_enqueue_style( 'wp-color-picker' );
-            wp_enqueue_script( 'my-script-handle', plugins_url('../js/wpm-color-options.js', __FILE__ ), array( 'wp-color-picker' ), false, true );
+            wp_enqueue_script( 'my-script-handle', WPM_URL.'js/wpm-color-options.js', array( 'wp-color-picker' ), false, true );
 
             wp_enqueue_style('thickbox');
             
             /* Image picker */
             wp_enqueue_style('imagepicker');
-            wp_enqueue_style('imagepicker', plugins_url('../css/image-picker.css', __FILE__ ));
+            wp_enqueue_style('imagepicker', WPM_URL.'css/image-picker.css');
             
-            wp_register_script('imagepickerjs', plugins_url('../js/image-picker.min.js', __FILE__ ), 'jquery', WPM_VERSION);
+            wp_register_script('imagepickerjs', WPM_URL.'js/image-picker.min.js', 'jquery', WPM_VERSION);
             wp_enqueue_script('imagepickerjs');
 
             $wpm_settings['codeEditor'] = wp_enqueue_code_editor(array('type' => 'text/css'));
@@ -458,10 +486,10 @@ class WP_maintenance {
             wp_enqueue_script('wp-theme-plugin-editor');
             wp_enqueue_style('wp-codemirror');
 
-            wp_register_script('wpm_sticky', plugins_url('../js/jquery.sticky.js', __FILE__ ), 'jquery', WPM_VERSION);
+            wp_register_script('wpm_sticky', WPM_URL.'js/jquery.sticky.js', 'jquery', WPM_VERSION);
             wp_enqueue_script('wpm_sticky');
             
-            wp_enqueue_script( 'emosm-leafletprovidersjs', plugins_url('../js/jquery.sortable.js', __FILE__ ), 'jquery', WPM_VERSION);
+            wp_enqueue_script( 'emosm-leafletprovidersjs', WPM_URL.'js/jquery.sortable.js', 'jquery', WPM_VERSION);
 
             // If you're not including an image upload then you can leave this function call out
             wp_enqueue_media();
@@ -472,11 +500,11 @@ class WP_maintenance {
               'title'  => __( 'Choose Image', 'wp-maintenance' ),
             ) );
 
-            wp_register_script('wpm-admin-fontselect', plugins_url('../js/fontselect/jquery.fontselect.min.js', __FILE__ ) );
+            wp_register_script('wpm-admin-fontselect', WPM_URL.'js/fontselect/jquery.fontselect.min.js' );
             wp_enqueue_script('wpm-admin-fontselect');
 
             wp_enqueue_style('admincss');
-            wp_enqueue_style('admincss', plugins_url('../css/wpm-admin.css', __FILE__ ));           
+            wp_enqueue_style('admincss', WPM_URL.'css/wpm-admin.css');           
 
         }
         
@@ -564,13 +592,13 @@ class WP_maintenance {
     function wpm_print_footer_scripts() {
 
        if (isset($_GET['page']) && strpos($_GET['page'], 'wp-maintenance') !==false) {
-            wp_register_script('wpm-picker', plugins_url('../js/lib/picker.js', __FILE__ ) );
+            wp_register_script('wpm-picker', WPM_URL.'js/lib/picker.js' );
             wp_enqueue_script('wpm-picker');
-            wp_register_script('wpm-datepicker', plugins_url('../js/lib/picker.date.js', __FILE__ ) );
+            wp_register_script('wpm-datepicker', WPM_URL.'js/lib/picker.date.js' );
             wp_enqueue_script('wpm-datepicker');
-            wp_register_script('wpm-timepicker', plugins_url('../js/lib/picker.time.js', __FILE__ ) );
+            wp_register_script('wpm-timepicker', WPM_URL.'js/lib/picker.time.js' );
             wp_enqueue_script('wpm-timepicker');
-            wp_register_script('wpm-legacy', plugins_url('../js/lib/legacy.js', __FILE__ ) );
+            wp_register_script('wpm-legacy', WPM_URL.'js/lib/legacy.js' );
             wp_enqueue_script('wpm-legacy');
         }
     }

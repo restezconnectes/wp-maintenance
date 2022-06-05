@@ -13,18 +13,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
     }
     if( empty($_POST["wpso"]["enable"]) ) { $_POST["wpso"]["enable"] = 0; }
 
-    $listSocial = sanitize_text_field($_POST["wp_maintenance_list_socialnetworks"]);
-    $listInsertSocial = array();
-    foreach($listSocial as $title => $value ) {
-        $find_social_url = strpos($value, $title);
-        if ($find_social_url === false) {
-
-        } else {
-            $listInsertSocial[$title] = strip_tags( stripslashes( esc_url_raw($value) ) );
-        }
-    }
     $updateSetting = wpm_update_settings( $_POST["wp_maintenance_list_socialnetworks"], 'wp_maintenance_list_socialnetworks', 3 );
-    //update_option('wp_maintenance_list_socialnetworks', $listInsertSocial);
     $updateSetting = wpm_update_settings( $_POST["wpso"], 'wp_maintenance_settings_socialnetworks' );
     if( $updateSetting == true ) { $messageUpdate = 1; }
 
@@ -93,23 +82,32 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
                         <label class="wp-maintenance-setting-row-title"><?php _e('Drad and drop the lines to put in the order you want', 'wp-maintenance'); ?></label>
                         <ul class="sortable">
                         <?php 
-                                $wpmTabSocial = array('facebook', 'twitter', 'linkedin', 'flickr', 'youtube', 'pinterest', 'vimeo', 'instagram', 'about_me', 'soundcloud', 'skype', 'tumblr', 'blogger', 'paypal');
+
                                 if( isset($paramSocialOption['style']) ) {
                                     $styleIcons = $paramSocialOption['style'];
                                 } else {
                                     $styleIcons = 'style1';
                                 }
-                            
-                                foreach ($wpmTabSocial as &$iconSocial) {
-                                    
+
+                                foreach($paramSocial as $nameSocial => $valueSocial) {
+
                                     $linkIcon = WPM_ICONS_URL.'not-found.png';
-                                    if( file_exists(WPM_DIR.'socialicons/'.$styleIcons.'/32/'.$iconSocial.'.png') ) {
-                                        $linkIcon = WPM_ICONS_URL.''.$styleIcons.'/32/'.$iconSocial.'.png';
+                                    if( file_exists(WPM_DIR.'socialicons/'.$styleIcons.'/32/'.$nameSocial.'.png') ) {
+                                        $linkIcon = WPM_ICONS_URL.''.$styleIcons.'/32/'.$nameSocial.'.png';
                                     }
                                 
                                     $entryValue = '';
-                                    if( isset($paramSocial[$iconSocial]) ) { $entryValue = esc_url($paramSocial[$iconSocial]); }
-                                    echo '<li><span>::</span><img src="'.esc_url($linkIcon).'" valign="middle" hspace="3" name="'.$iconSocial.'.png" title="'.$iconSocial.'.png"/>'.ucfirst($iconSocial).' <input type="text" size="50" name="wp_maintenance_list_socialnetworks['.$iconSocial.']" value="'.$entryValue.'" onclick="select()" ><br />';
+                                    if( isset($paramSocial[$nameSocial]) ) { 
+                                        if( $nameSocial == 'email' && ( isset($paramSocial['email']) && $paramSocial['email'] != '') ) { 
+                                            $entryValue = esc_html($paramSocial[$nameSocial]); 
+                                        } else {
+                                            $entryValue = esc_url($paramSocial[$nameSocial]);
+                                        }
+                                    }
+
+                                    //echo ''.$nameSocial.' => '.$valueSocial.'<br />';
+                                    echo '<li><span>::</span><img src="'.esc_url($linkIcon).'" valign="middle" hspace="3" name="'.esc_html($nameSocial).'.png" title="'.esc_html($nameSocial).'.png"/>'.ucfirst($nameSocial).' <input type="text" size="50" name="wp_maintenance_list_socialnetworks['.esc_html($nameSocial).']" value="'.$entryValue.'" onclick="select()" ><br />';
+
                                 }
 
                         ?>

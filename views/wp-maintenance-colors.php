@@ -290,7 +290,7 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                     ?>
                     <!-- COULEUR WYJIYA -->
                     <div class="wp-maintenance-setting-row">
-                        <label for="wpmcolors[font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
+                        <label for="wpmcolors[newletter_font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
                         <table cellspacing="10">
                             <tr>
                                 <td valign="middle"style="text-align:left;">
@@ -348,6 +348,19 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                             
                         } else {
                             _e('Enable Mailpoet or MailChimp extensions to customize the forms', 'wp-maintenance'); 
+                            
+                            
+                            echo '<input name="wpmcolors[color_field_text]" type="hidden" value="#333333" />';
+                            echo '<input name="wpmcolors[color_field_border]" type="hidden" value="#333333" />';
+                            echo '<input name="wpmcolors[color_field_background]" type="hidden" value="#cccccc" />';
+                            echo '<input name="wpmcolors[newletter_font_text]" type="hidden" value="PT+Sans" />';
+                            echo '<input name="wpmcolors[newletter_size]" type="hidden" value="14" />';
+                            echo '<input name="wpmcolors[newletter_font_weigth]" type="hidden" value="" />';
+                            echo '<input name="wpmcolors[newletter_font_style]" type="hidden" value="" />';
+                            echo '<input name="wpmcolors[color_text_button]" type="hidden" value="#ffffff" />';
+                            echo '<input name="wpmcolors[color_button]" type="hidden" value="#1e73be" />';
+                            echo '<input name="wpmcolors[color_button_hover]" type="hidden" value="#ffffff" />';
+                            echo '<input name="wpmcolors[color_button_onclick]" type="hidden" value="#ffffff" />';
                         
                         }
                         }

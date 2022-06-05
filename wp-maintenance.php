@@ -31,7 +31,7 @@ defined( 'ABSPATH' )
 	or die( 'No direct load ! ' );
 
 define( 'WPM_DIR', plugin_dir_path( __FILE__ ) );
-define( 'WPM_URL', plugin_dir_url( __FILE__ ) );
+define( 'WPM_URL', plugins_url('/', __FILE__) );
 define( 'WPM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'WPM_PLUGIN_URL', plugins_url().'/'.strtolower('wp-maintenance').'/');
 define( 'WPM_ICONS_URL', plugins_url().'/'.strtolower('wp-maintenance').'/socialicons/');

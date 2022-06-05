@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2022-06-03 10:24+0200\n"
+"POT-Creation-Date: 2022-06-05 17:13+0200\n"
 "PO-Revision-Date: 2015-03-19 11:19+0100\n"
 "Last-Translator: Florent Maillefaud <contact@restezconnectes.fr>\n"
 "Language-Team: Florent Maillefaud <contact@restezconnectes.fr>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: classes/countdown.php:44
+#: classes/countdown.php:45
 msgid "Days"
 msgstr ""
 
-#: classes/countdown.php:44
+#: classes/countdown.php:45
 msgid "Hours"
 msgstr ""
 
-#: classes/countdown.php:44
+#: classes/countdown.php:45
 msgid "Minutes"
 msgstr ""
 
-#: classes/countdown.php:46
+#: classes/countdown.php:47
 msgid "Seconds"
 msgstr ""
 
@@ -41,153 +41,157 @@ msgstr ""
 msgid "Come back quickly!"
 msgstr ""
 
-#: classes/wp-maintenance.php:189 views/wp-maintenance-socialnetworks.php:89
+#: classes/wp-maintenance.php:189 views/wp-maintenance-socialnetworks.php:78
 msgid "Follow me on"
 msgstr ""
 
-#: classes/wp-maintenance.php:259 classes/wp-maintenance.php:273
-#: classes/wp-maintenance.php:395 classes/wp-maintenance.php:425
-#: includes/functions.php:89
+#: classes/wp-maintenance.php:262 classes/wp-maintenance.php:276
+#: classes/wp-maintenance.php:398 classes/wp-maintenance.php:428
+#: includes/functions.php:93
 msgid "Settings"
 msgstr ""
 
-#: classes/wp-maintenance.php:262
+#: classes/wp-maintenance.php:265
 msgid "Uninstall"
 msgstr ""
 
-#: classes/wp-maintenance.php:302 includes/functions.php:115
+#: classes/wp-maintenance.php:305 includes/functions.php:119
 msgid "WP Maintenance"
 msgstr ""
 
-#: classes/wp-maintenance.php:325
+#: classes/wp-maintenance.php:328
 msgid "Colors"
 msgstr ""
 
-#: classes/wp-maintenance.php:335 classes/wp-maintenance.php:419
-#: includes/functions.php:53
+#: classes/wp-maintenance.php:338 classes/wp-maintenance.php:422
+#: includes/functions.php:57
 msgid "Pictures"
 msgstr ""
 
-#: classes/wp-maintenance.php:345 includes/functions.php:59
+#: classes/wp-maintenance.php:348 includes/functions.php:63
 msgid "Countdown"
 msgstr ""
 
-#: classes/wp-maintenance.php:355 includes/functions.php:65
+#: classes/wp-maintenance.php:358 includes/functions.php:69
 msgid "CSS"
 msgstr ""
 
-#: classes/wp-maintenance.php:365 classes/wp-maintenance.php:424
-#: includes/functions.php:83
+#: classes/wp-maintenance.php:368 classes/wp-maintenance.php:427
+#: includes/functions.php:87
 msgid "Footer"
 msgstr ""
 
-#: classes/wp-maintenance.php:375 classes/wp-maintenance.php:422
-#: includes/functions.php:71
+#: classes/wp-maintenance.php:378 classes/wp-maintenance.php:425
+#: includes/functions.php:75
 msgid "SEO"
 msgstr ""
 
-#: classes/wp-maintenance.php:385 classes/wp-maintenance.php:423
-#: includes/functions.php:77
+#: classes/wp-maintenance.php:388 classes/wp-maintenance.php:426
+#: includes/functions.php:81
 msgid "Social Networks"
 msgstr ""
 
-#: classes/wp-maintenance.php:417
+#: classes/wp-maintenance.php:420
 msgid "General"
 msgstr ""
 
-#: classes/wp-maintenance.php:418
+#: classes/wp-maintenance.php:421
 msgid "Colors & Fonts"
 msgstr ""
 
-#: classes/wp-maintenance.php:420
+#: classes/wp-maintenance.php:423
 msgid "CountDown"
 msgstr ""
 
-#: classes/wp-maintenance.php:421
+#: classes/wp-maintenance.php:424
 msgid "CSS Style"
 msgstr ""
 
-#: classes/wp-maintenance.php:471
+#: classes/wp-maintenance.php:474
 msgid "Choose This Image"
 msgstr ""
 
-#: classes/wp-maintenance.php:472
+#: classes/wp-maintenance.php:475
 msgid "Choose Image"
 msgstr ""
 
-#: classes/wp-maintenance.php:489 classes/wp-maintenance.php:497
-#: classes/wp-maintenance.php:505 classes/wp-maintenance.php:514
-#: classes/wp-maintenance.php:523 classes/wp-maintenance.php:532
-#: classes/wp-maintenance.php:541 classes/wp-maintenance.php:550
-#: classes/wp-maintenance.php:559
+#: classes/wp-maintenance.php:492 classes/wp-maintenance.php:500
+#: classes/wp-maintenance.php:508 classes/wp-maintenance.php:517
+#: classes/wp-maintenance.php:526 classes/wp-maintenance.php:535
+#: classes/wp-maintenance.php:544 classes/wp-maintenance.php:553
+#: classes/wp-maintenance.php:562
 msgid "You do not have sufficient privileges to access this page."
 msgstr ""
 
-#: includes/functions.php:41 themes/default/functions.php:61
+#: includes/functions.php:45 themes/default/functions.php:61
 msgid "Dashboard"
 msgstr ""
 
-#: includes/functions.php:42
+#: includes/functions.php:46
 msgid "Here, the beginning..."
 msgstr ""
 
-#: includes/functions.php:47
+#: includes/functions.php:51
 msgid "Colors and Fonts"
 msgstr ""
 
-#: includes/functions.php:48
+#: includes/functions.php:52
 msgid "Have a creative mind"
 msgstr ""
 
-#: includes/functions.php:54
+#: includes/functions.php:58
 msgid "Are we playing with the images?"
 msgstr ""
 
-#: includes/functions.php:60
+#: includes/functions.php:64
 msgid "Stop the time... or not!"
 msgstr ""
 
-#: includes/functions.php:66
+#: includes/functions.php:70
 msgid "Customize the style sheet"
 msgstr ""
 
-#: includes/functions.php:72
+#: includes/functions.php:76
 msgid "Keep your site optimized"
 msgstr ""
 
-#: includes/functions.php:78
+#: includes/functions.php:82
 msgid "Adding social networks icons"
 msgstr ""
 
-#: includes/functions.php:84
+#: includes/functions.php:88
 msgid "Here, we are talking about the footer"
 msgstr ""
 
-#: includes/functions.php:90
+#: includes/functions.php:94
 msgid "A few additional options"
 msgstr ""
 
-#: includes/functions.php:105
+#: includes/functions.php:109
 msgid "Preview page"
 msgstr ""
 
-#: includes/functions.php:115
+#: includes/functions.php:119
 msgid "is brought to you by"
 msgstr ""
 
-#: includes/functions.php:115
+#: includes/functions.php:119
 msgid "If you found this plugin useful"
 msgstr ""
 
-#: includes/functions.php:115
+#: includes/functions.php:119
 msgid "give it 5 &#9733; on WordPress.org"
+msgstr ""
+
+#: includes/shortcodes.php:40
+msgid "Send me a"
 msgstr ""
 
 #: views/wp-maintenance-colors.php:39 views/wp-maintenance-countdown.php:25
 #: views/wp-maintenance-css.php:32 views/wp-maintenance-dashboard.php:29
 #: views/wp-maintenance-footer.php:25 views/wp-maintenance-picture.php:64
 #: views/wp-maintenance-seo.php:24 views/wp-maintenance-settings.php:59
-#: views/wp-maintenance-socialnetworks.php:49
+#: views/wp-maintenance-socialnetworks.php:38
 msgid "WP Maintenance - Settings"
 msgstr ""
 
@@ -195,7 +199,7 @@ msgstr ""
 #: views/wp-maintenance-css.php:34 views/wp-maintenance-dashboard.php:31
 #: views/wp-maintenance-footer.php:27 views/wp-maintenance-picture.php:66
 #: views/wp-maintenance-seo.php:26 views/wp-maintenance-settings.php:61
-#: views/wp-maintenance-socialnetworks.php:51
+#: views/wp-maintenance-socialnetworks.php:40
 msgid "Options saved."
 msgstr ""
 
@@ -225,10 +229,10 @@ msgstr ""
 #: views/wp-maintenance-settings.php:106 views/wp-maintenance-settings.php:133
 #: views/wp-maintenance-settings.php:147 views/wp-maintenance-settings.php:161
 #: views/wp-maintenance-settings.php:175
-#: views/wp-maintenance-socialnetworks.php:79
-#: views/wp-maintenance-socialnetworks.php:118
-#: views/wp-maintenance-socialnetworks.php:181
-#: views/wp-maintenance-socialnetworks.php:194
+#: views/wp-maintenance-socialnetworks.php:68
+#: views/wp-maintenance-socialnetworks.php:135
+#: views/wp-maintenance-socialnetworks.php:198
+#: views/wp-maintenance-socialnetworks.php:211
 msgid "Save"
 msgstr ""
 
@@ -700,7 +704,7 @@ msgid "Height:"
 msgstr ""
 
 #: views/wp-maintenance-picture.php:97
-#: views/wp-maintenance-socialnetworks.php:176
+#: views/wp-maintenance-socialnetworks.php:193
 msgid "You use this picture:"
 msgstr ""
 
@@ -860,80 +864,80 @@ msgid ""
 "additional scripts such as CSS or JS"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:69
+#: views/wp-maintenance-socialnetworks.php:58
 msgid "Enable social networks"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:73
+#: views/wp-maintenance-socialnetworks.php:62
 msgid "Yes, enable social networks options"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:84
+#: views/wp-maintenance-socialnetworks.php:73
 msgid "List of Social networks"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:88
+#: views/wp-maintenance-socialnetworks.php:77
 msgid "Enter text for the title icons"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:93
+#: views/wp-maintenance-socialnetworks.php:82
 msgid "Drad and drop the lines to put in the order you want"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:123
+#: views/wp-maintenance-socialnetworks.php:140
 msgid "Social Networks Style"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:126
+#: views/wp-maintenance-socialnetworks.php:143
 msgid "Choose icons size"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:139
+#: views/wp-maintenance-socialnetworks.php:156
 msgid "Choose icons style"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:155
+#: views/wp-maintenance-socialnetworks.php:172
 msgid "Position"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:157
+#: views/wp-maintenance-socialnetworks.php:174
 msgid "Top"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:158
+#: views/wp-maintenance-socialnetworks.php:175
 msgid "Bottom"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:163
+#: views/wp-maintenance-socialnetworks.php:180
 msgid "Align"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:165
+#: views/wp-maintenance-socialnetworks.php:182
 msgid "Left"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:166
+#: views/wp-maintenance-socialnetworks.php:183
 msgid "Center"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:167
+#: views/wp-maintenance-socialnetworks.php:184
 msgid "Right"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:172
+#: views/wp-maintenance-socialnetworks.php:189
 msgid "You have your own icons? Enter the folder name of your theme here"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:174
+#: views/wp-maintenance-socialnetworks.php:191
 msgid ""
 "In your icon's folder child theme, you must have the same names like mine, "
 "let's mouse over list icons for display picture's name. For example: "
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:186
+#: views/wp-maintenance-socialnetworks.php:203
 msgid "Reset Social Networks Icons Options"
 msgstr ""
 
-#: views/wp-maintenance-socialnetworks.php:189
+#: views/wp-maintenance-socialnetworks.php:206
 msgid "Yes, reset Social Networks Icons?"
 msgstr ""

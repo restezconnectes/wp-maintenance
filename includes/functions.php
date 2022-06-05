@@ -11,7 +11,11 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
         $newTabSettings = array();
         foreach($tabSettings as $nameSettings => $valueSettings ) {
             if( $type == 3 ) {
-                $newTabSettings[$nameSettings] = strip_tags( stripslashes( esc_url_raw($valueSettings) ) );
+                if( $nameSettings == 'email') {
+                    $newTabSettings[$nameSettings] = sanitize_email($valueSettings);
+                } else {
+                    $newTabSettings[$nameSettings] = strip_tags( stripslashes( esc_url_raw($valueSettings) ) );
+                }
             } else {
                 $newTabSettings[$nameSettings] = sanitize_textarea_field($valueSettings);
             }
@@ -287,7 +291,7 @@ function wpm_compress($buffer) {
     $o = get_option('wp_maintenance_settings_colors');
     
     $variables_css = array(
-        "#_COLORTXT" => esc_html($o['color_field_text']),
+        "#_COLORTXT" => esc_html($o['color_txt']),
 		"#_COLORBG" => esc_html($o['color_field_background']),
 		"#_COLORBORDER" => esc_html($o['color_field_border']),
 		"#_COLORBUTTON" => esc_html($o['color_button']),

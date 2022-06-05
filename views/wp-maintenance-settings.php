@@ -124,7 +124,7 @@ jQuery(document).ready(function() {
                             
                     ?>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php echo esc_html($name); ?></span>
-                            <input type="checkbox" class="switch-field" name="wp_maintenance_limit[<?php echo $role; ?>]" value="<?php echo $role; ?>"<?php echo $limitCheck; ?> />
+                            <input type="checkbox" class="switch-field" name="wp_maintenance_limit[<?php echo esc_html($role); ?>]" value="<?php echo esc_html($role); ?>"<?php echo $limitCheck; ?> />
                             <span class="wp-maintenance-checkmark"></span>
                         </label><br />
                         

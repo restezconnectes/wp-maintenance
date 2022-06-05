@@ -35,7 +35,14 @@ function wpm_social_shortcode( $atts ) {
          $contentSocial .= '<div id="wpm-social-footer" class="wpm_social"><ul class="wpm_horizontal">';
             foreach($paramList as $socialName=>$socialUrl) {
                 if($socialUrl!='') {
-                    $contentSocial .= '<li><a href="'.esc_url($socialUrl).'" target="_blank"><img src="'.esc_url($srcIcon.$socialName).'.png" alt="'.esc_html($paramSocial['texte']).' '.ucfirst(esc_html($socialName)).'" '.$iconSize.' title="'.esc_html($paramSocial['texte']).' '.ucfirst(esc_html($socialName)).'" /></a></li>';
+                    if( $socialName == 'email' ){
+                        $socialUrl = 'mailto:'.esc_html($socialUrl);
+                        $texte = __('Send me a', 'wp-maintenance');
+                    } else {
+                        $socialUrl = esc_url($socialUrl);
+                        $texte = esc_html($paramSocial['texte']);
+                    }
+                    $contentSocial .= '<li><a href="'.$socialUrl.'" target="_blank"><img src="'.esc_url($srcIcon.$socialName).'.png" alt="'.$texte.' '.ucfirst(esc_html($socialName)).'" '.$iconSize.' title="'.$texte.' '.ucfirst(esc_html($socialName)).'" /></a></li>';
                 }
             }
          $contentSocial .='</ul></div>';
