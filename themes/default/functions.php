@@ -54,6 +54,10 @@ function wpm_footer_text() {
 
 	if( isset($o['enable_footer']) && $o['enable_footer'] == 1 ) {
 
+		$output .= '<div class="footer-basic">
+	<footer>
+		<p class="copyright">';
+
 		if( isset($o['text_bt_maintenance']) && $o['text_bt_maintenance']!='' ) {
 			$output .= nl2br(stripslashes($o['text_bt_maintenance']));
 		}
@@ -61,6 +65,10 @@ function wpm_footer_text() {
 			$output .= '<br /><br /><a href="'.get_admin_url().'">'.str_replace('#DASHBOARD', ' '.__('Dashboard', 'wp-maintenance'), esc_html($o['add_wplogin_title'])).'</a>';
 
 		}
+
+		$output .= '</p>
+		</footer>
+	</div>';
 
 	}
 

@@ -145,7 +145,7 @@ function toggleTable(texte) {
                         </select>
                         
                         <label for="wpmpicture[image]" class="wp-maintenance-setting-row-title"><?php _e('Background Opacity', 'wp-maintenance'); ?></label>
-                        <input id="fontSize" name="wpmpicture[b_opacity_image]" value="<?php if( isset($paramsPicture['b_opacity_image']) ) { echo $paramsPicture['b_opacity_image']; } else { echo '0.2'; } ?>" size="4" readonly="readonly" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"><br /><br /><div id="opacity_slider" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"></div>
+                        <input id="fontSize" name="wpmpicture[b_opacity_image]" value="<?php if( isset($paramsPicture['b_opacity_image']) ) { echo esc_html($paramsPicture['b_opacity_image']); } else { echo '0.2'; } ?>" size="4" readonly="readonly" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"><br /><br /><div id="opacity_slider" style="border: 2px solid #ECF0F1;font-size: 13px;padding: 7px 10px;height: auto;"></div>
                     </div>
 
                     <p>
@@ -183,7 +183,7 @@ function toggleTable(texte) {
                             <?php for ($p = 1; $p <= 12; $p++) { ?>
                                 <li>
                                     <div style="width:50px;height:50px;border:2px solid #ECF0F1;background:url('<?php echo esc_url(plugins_url( '../images/pattern'.$p.'.png', __FILE__ )); ?>');margin-bottom:5px;"></div>
-                                    <label for="b_pattern_<?php echo $p; ?>" class="wpm-container"><input type="radio" value="<?php echo $p; ?>" <?php if( isset($paramsPicture['b_pattern']) && $paramsPicture['b_pattern']==$p) { echo 'checked'; } ?> id="b_pattern_<?php echo $p; ?>" name="wpmpicture[b_pattern]" /><span class="wpm-checkmark"></span></label>
+                                    <label for="b_pattern_<?php echo $p; ?>" class="wpm-container"><input type="radio" value="<?php echo esc_html($p); ?>" <?php if( isset($paramsPicture['b_pattern']) && $paramsPicture['b_pattern']==$p) { echo 'checked'; } ?> id="b_pattern_<?php echo esc_html($p); ?>" name="wpmpicture[b_pattern]" /><span class="wpm-checkmark"></span></label>
                                 </li>
                             <?php } ?>
                         </ul>

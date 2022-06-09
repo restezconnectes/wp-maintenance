@@ -66,12 +66,6 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                                 $paramsCountdown['cptdate'] = date('d').'/'.date('m').'/'.date('Y');
                             }
 
-                            if( isset($paramsCountdown['date_cpt_hh']) && empty($paramsCountdown['cpttime']) ) {
-                                $paramsCountdown['cpttime'] = $paramsCountdown['date_cpt_hh'].':'.$paramsCountdown['date_cpt_mn'];
-                            } else if ( empty($paramsCountdown['cpttime']) ) {
-                                $paramsCountdown['cpttime'] = date( 'H:i', (time()+3600) );                                    
-                            }
-
                             if( isset($paramsCountdown['cptdate']) && !empty($paramsCountdown['cptdate']) ) { 
                                 $startDate = $paramsCountdown['cptdate']; 
                             }
@@ -88,7 +82,7 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                                 //$startHour = $newMin[0].':'.ceil($newMin[1]/5)*5;
                             }                                
                         ?>
-                        <img src="<?php echo plugins_url('../images/schedule_clock.png', __FILE__ ); ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wpmcountdown[cptdate]" type="text" autofocuss data-value="<?php echo $startDate; ?>"> <?php _e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wpmcountdown[cpttime]" value="<?php echo $startHour; ?>" size="6" autofocuss>                                
+                        <img src="<?php echo plugins_url('../images/schedule_clock.png', __FILE__ ); ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wpmcountdown[cptdate]" type="text" autofocuss data-value="<?php echo esc_html($startDate); ?>"> <?php _e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wpmcountdown[cpttime]" value="<?php echo esc_html($startHour); ?>" size="6" autofocuss>                                
                         <div id="wpmdatecontainer"></div>
                     </div>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>

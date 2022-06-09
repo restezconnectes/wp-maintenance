@@ -30,11 +30,7 @@
 			<p>{BottomSocialIcon}</p>	
 		</main>
 		
-		<div class="footer-basic">
-			<footer>
-				<p class="copyright">{FooterText}</p>
-			</footer>
-    	</div>
+		{FooterText}
   	</body>
 </html>
 <?php die(); ?>

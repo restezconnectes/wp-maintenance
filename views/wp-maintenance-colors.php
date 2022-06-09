@@ -88,9 +88,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                       <table cellspacing="10">
                             <tr>
                                 <td valign="middle"style="text-align:left;">
-                                    <input name="wpmcolors[font_title]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_title']) && $paramsColors['font_title']!='' ) { echo str_replace(' ', '+', $paramsColors['font_title']); } else { echo 'Anton'; } ?>" />
+                                    <input name="wpmcolors[font_title]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_title']) && $paramsColors['font_title']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_title'])); } else { echo 'Anton'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" name="wpmcolors[font_title_size]" value="<?php if( isset($paramsColors['font_title_size']) && $paramsColors['font_title_size']!='' ) { echo stripslashes($paramsColors['font_title_size']); } else { echo '16'; } ?>" />px</td>
+                                <td><input type="text" size="3" name="wpmcolors[font_title_size]" value="<?php if( isset($paramsColors['font_title_size']) && $paramsColors['font_title_size']!='' ) { echo esc_html(stripslashes($paramsColors['font_title_size'])); } else { echo '16'; } ?>" />px</td>
                             </tr>
                             <tr>
                                 <td>
@@ -130,9 +130,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                         <table cellspacing="10">
                             <tr>
                               <td valign="middle"style="text-align:left;">
-                                <input name="wpmcolors[font_text]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text']) && $paramsColors['font_text']!='' ) { echo str_replace(' ', '+', $paramsColors['font_text']); } else { echo 'Anton'; } ?>" />
+                                <input name="wpmcolors[font_text]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text']) && $paramsColors['font_text']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_text'])); } else { echo 'Anton'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" name="wpmcolors[font_text_size]" value="<?php if( isset($paramsColors['font_text_size']) && $paramsColors['font_text_size']!='' ) { echo stripslashes($paramsColors['font_text_size']); } else { echo '16'; } ?>" />px</td>
+                                <td><input type="text" size="3" name="wpmcolors[font_text_size]" value="<?php if( isset($paramsColors['font_text_size']) && $paramsColors['font_text_size']!='' ) { echo esc_html(stripslashes($paramsColors['font_text_size'])); } else { echo '16'; } ?>" />px</td>
                             </tr>
                             <tr>
                                 <td>
@@ -207,9 +207,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                         <table cellspacing="10">
                             <tr>
                                 <td valign="middle"style="text-align:left;">
-                                <input name="wpmcolors[font_cpt]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_cpt']) &&  $paramsColors['font_cpt']!='' ) { echo str_replace(' ', '+', $paramsColors['font_cpt']); } else { echo 'Pacifico'; } ?>" />
+                                <input name="wpmcolors[font_cpt]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_cpt']) &&  $paramsColors['font_cpt']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_cpt'])); } else { echo 'Pacifico'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" id="date_cpt_size" name="wpmcolors[date_cpt_size]" value="<?php if( isset($paramsColors['date_cpt_size']) && $paramsColors['date_cpt_size']!='' ) { echo trim($paramsColors['date_cpt_size']); } else { echo '6'; } ?>" />vw</td>
+                                <td><input type="text" size="3" id="date_cpt_size" name="wpmcolors[date_cpt_size]" value="<?php if( isset($paramsColors['date_cpt_size']) && $paramsColors['date_cpt_size']!='' ) { echo esc_html(trim($paramsColors['date_cpt_size'])); } else { echo '6'; } ?>" />vw</td>
                             </tr>                
                         </table>                 
                     </div>
@@ -219,9 +219,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                         <table cellspacing="10">
                             <tr>
                                 <td valign="middle"style="text-align:left;">
-                                <input name="wpmcolors[font_end_cpt]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_end_cpt']) &&  $paramsColors['font_end_cpt']!='' ) { echo str_replace(' ', '+', $paramsColors['font_end_cpt']); } else { echo 'Pacifico'; } ?>" />
+                                <input name="wpmcolors[font_end_cpt]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_end_cpt']) &&  $paramsColors['font_end_cpt']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_end_cpt'])); } else { echo 'Pacifico'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" id="date_cpt_size" name="wpmcolors[cpt_end_size]" value="<?php if( isset($paramsColors['cpt_end_size']) && $paramsColors['cpt_end_size']!='' ) { echo trim($paramsColors['cpt_end_size']); } else { echo '2'; } ?>" />vw</td>
+                                <td><input type="text" size="3" id="date_cpt_size" name="wpmcolors[cpt_end_size]" value="<?php if( isset($paramsColors['cpt_end_size']) && $paramsColors['cpt_end_size']!='' ) { echo esc_html(trim($paramsColors['cpt_end_size'])); } else { echo '2'; } ?>" />vw</td>
                             </tr>                
                         </table>                 
                     </div>
@@ -251,9 +251,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                         <table cellspacing="10">
                             <tr>
                               <td valign="middle"style="text-align:left;">
-                              <input name="wpmcolors[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text_bottom']) && $paramsColors['font_text_bottom']!='' ) { echo str_replace(' ', '+', $paramsColors['font_text_bottom']); } else { echo 'PT+Sans'; } ?>" />
+                              <input name="wpmcolors[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text_bottom']) && $paramsColors['font_text_bottom']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_text_bottom'])); } else { echo 'PT+Sans'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" name="wpmcolors[font_bottom_size]" value="<?php if( isset($paramsColors['font_bottom_size']) && $paramsColors['font_bottom_size']!='' ) { echo stripslashes($paramsColors['font_bottom_size']); } else { echo '12'; } ?>" />px</td>
+                                <td><input type="text" size="3" name="wpmcolors[font_bottom_size]" value="<?php if( isset($paramsColors['font_bottom_size']) && $paramsColors['font_bottom_size']!='' ) { echo esc_html(stripslashes($paramsColors['font_bottom_size'])); } else { echo '12'; } ?>" />px</td>
                             </tr>
                             <tr>
                                 <td>
@@ -294,9 +294,9 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                         <table cellspacing="10">
                             <tr>
                                 <td valign="middle"style="text-align:left;">
-                                    <input name="wpmcolors[newletter_font_text]" class="selectfont" type="text" value="<?php if( isset($paramsColors['newletter_font_text']) && $paramsColors['newletter_font_text']!='' ) { echo str_replace(' ', '+', $paramsColors['newletter_font_text']); } else { echo 'PT+Sans'; } ?>" />
+                                    <input name="wpmcolors[newletter_font_text]" class="selectfont" type="text" value="<?php if( isset($paramsColors['newletter_font_text']) && $paramsColors['newletter_font_text']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['newletter_font_text'])); } else { echo 'PT+Sans'; } ?>" />
                                 </td>
-                                <td><input type="text" size="3" name="wpmcolors[newletter_size]" value="<?php if( isset($paramsColors['newletter_size']) && $paramsColors['newletter_size']!='') { echo stripslashes($paramsColors['newletter_size']); } else { echo '14'; } ?>" />px</td>
+                                <td><input type="text" size="3" name="wpmcolors[newletter_size]" value="<?php if( isset($paramsColors['newletter_size']) && $paramsColors['newletter_size']!='') { echo esc_html($paramsColors['newletter_size']); } else { echo '14'; } ?>" />px</td>
                             </tr>
                             <tr>
                                 <td>

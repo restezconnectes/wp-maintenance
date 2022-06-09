@@ -127,7 +127,7 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
                             $wpm_tabIcon = array(32, 64, 128, 256, 512);
                             foreach($wpm_tabIcon as $wpm_icon) {
                                 if($paramSocialOption['size']==$wpm_icon) { $selected = ' selected'; } else { $selected = ''; }
-                                echo '<option value="'.esc_html($wpm_icon).'" '.$selected.'>'.$wpm_icon.'</option>';
+                                echo '<option value="'.esc_html($wpm_icon).'" '.$selected.'>'.esc_html($wpm_icon).'</option>';
                             }
                         ?>
                         </select>
@@ -139,11 +139,11 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
                             <?php
                                 //if( empty($paramSocialOption['style']) ) { $paramSocialOption['style'] == 'style1'; }
                                 for ($ico = 1; $ico <= 6; $ico++) {                                
-                                    if( isset($paramSocialOption['style']) && $paramSocialOption['style'] == 'style'.$ico ) { $selected = ' checked'; } else { $selected = ''; } 
+                                    if( isset($paramSocialOption['style']) && $paramSocialOption['style'] == 'style'.esc_html($ico) ) { $selected = ' checked'; } else { $selected = ''; } 
                             ?>
                                 <li>
-                                    <div style="width:64px;height:64px;border:2px solid #ECF0F1;background:url('<?php echo WPM_ICONS_URL.'style'.$ico.'/64/facebook.png'; ?>');margin-bottom:5px;"></div>
-                                    <label for="style<?php echo $ico; ?>" class="wpm-container" style="padding-left: 24px!important;margin-right: 0!important;"><input type="radio" value="style<?php echo $ico; ?>" <?php echo $selected; ?> name="wpso[style]" id="style<?php echo $ico; ?>" /><span class="wpm-checkmark"></span></label>
+                                    <div style="width:64px;height:64px;border:2px solid #ECF0F1;background:url('<?php echo WPM_ICONS_URL.'style'.esc_html($ico).'/64/facebook.png'; ?>');margin-bottom:5px;"></div>
+                                    <label for="style<?php echo esc_html($ico); ?>" class="wpm-container" style="padding-left: 24px!important;margin-right: 0!important;"><input type="radio" value="style<?php echo esc_html($ico); ?>" <?php echo esc_html($selected); ?> name="wpso[style]" id="style<?php echo esc_html($ico); ?>" /><span class="wpm-checkmark"></span></label>
                                 </li>
                             <?php } ?>
                         </ul>
