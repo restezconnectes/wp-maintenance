@@ -616,16 +616,29 @@ class WP_maintenance {
         $paramIpAddress = get_option('wp_maintenance_ipaddresses');
 
         /* Désactive le mode maintenance pour les IP définies */
-        if( isset($paramIpAddress) ) {
-            $lienIpAddress = explode("\r\n", $paramIpAddress);
-            $ip_autorized = array();
-            foreach($lienIpAddress as $ipAutorized) {
-                if( $ipAutorized!='' ) {
-                    array_push( $ip_autorized, $ipAutorized);
+        if(isset($paramIpAddress)) {
+
+            if( WPM_VERSION <= '6.0.9') {
+
+                $ip_autorized = array();
+                $lienIpAddress = explode("\r\n", $paramIpAddress);
+                foreach($lienIpAddress as $ipAutorized) {
+                    if($ipAutorized!='') {
+                        array_push($ip_autorized, $ipAutorized);
+                    }
                 }
-            }          
-            if ( array_search(wpm_get_ip(), $ip_autorized) !== FALSE ) {
-                $statusActive = 0;
+                if(array_search(wpm_get_ip(), $ip_autorized)!== FALSE) {
+                    $statusActive = 0;
+                }
+
+            } else {
+
+                foreach($paramIpAddress as $ipAutorized) {
+                    //error_log(wpm_get_ip().' == '.$ipAutorized);
+                    if($ipAutorized!='' && wpm_get_ip() == $ipAutorized) {    
+                        $statusActive = 0;
+                    }
+                }
             }
             
         }
@@ -636,6 +649,7 @@ class WP_maintenance {
 
         if( isset($paramLimit) && !empty($paramLimit) ) {
             foreach($paramLimit as $limitrole) {
+
                 if( is_user_logged_in() ) {
                     $user_id = get_current_user_id(); 
                     $user_info = get_userdata($user_id);

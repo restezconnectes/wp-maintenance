@@ -329,11 +329,11 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                                 <td>
                                 <td style="vertical-align:top;">                       
                                     <label for="wpmcolors[color_button]" class="wp-maintenance-setting-row-title"><?php _e('Button color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_button']) && $paramsColors['color_button']!='' ) { echo esc_html($paramsColors['color_button']); } else { echo '#1e73be'; } ?>" name="wpmcolors[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
+                                    <input type="text" value="<?php if(isset($paramsColors['color_button']) && $paramsColors['color_button']!='') { echo esc_html($paramsColors['color_button']); } else { echo '#1e73be'; } ?>" name="wpmcolors[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
                                     <label for="wpmcolors[color_button_hover]" class="wp-maintenance-setting-row-title"><?php _e('Button color hover', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_button_hover']) && $paramsColors['color_button_hover']!='' ) { echo esc_html($paramsColors['color_button_hover']); } else { echo '#ffffff'; }  ?>" name="wpmcolors[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
+                                    <input type="text" value="<?php if(isset($paramsColors['color_button_hover']) && $paramsColors['color_button_hover']!='') { echo esc_html($paramsColors['color_button_hover']); } else { echo '#ffffff'; }  ?>" name="wpmcolors[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
                                     <label for="wpmcolors[color_button_onclick]" class="wp-maintenance-setting-row-title"><?php _e('Button color onclick', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_button_onclick']) && $paramsColors['color_button_onclick']!=''  ) { echo esc_html($paramsColors['color_button_onclick']); } else { echo '#ffffff'; } ?>" name="wpmcolors[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
+                                    <input type="text" value="<?php if(isset($paramsColors['color_button_onclick']) && $paramsColors['color_button_onclick']!='' ) { echo esc_html($paramsColors['color_button_onclick']); } else { echo '#ffffff'; } ?>" name="wpmcolors[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
                                 </td>
                             </tr>
                         </table>
@@ -343,7 +343,7 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
                     
                     <?php
                             } else {
-                                printf( __('Enable %s to customize the forms', 'wp-maintenance'), '<a href="'.admin_url().'?page=wp-maintenance#newsletter">'.__('newsletter option', 'wp-maintenance').'</a>' ); 
+                                printf(__('Enable %s to customize the forms', 'wp-maintenance'), '<a href="'.admin_url().'?page=wp-maintenance#newsletter">'.__('newsletter option', 'wp-maintenance').'</a>'); 
                             }
                             
                         } else {
