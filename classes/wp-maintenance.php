@@ -31,7 +31,9 @@ class WP_maintenance {
             add_filter( 'plugin_action_links_wp-maintenance/wp-maintenance.php', array( &$this, 'wpm_plugin_action_links'), 10, 3 );
             add_action( 'admin_head', array( &$this, 'wpm_admin_head') );
             add_action( 'admin_bar_menu', array( &$this, 'wpm_add_menu_admin_bar'), 999 );
-            add_action( 'admin_footer', array( &$this, 'wpm_print_footer_scripts') );        
+            add_action( 'admin_footer', array( &$this, 'wpm_print_footer_scripts') );
+            add_action( 'admin_init', array( &$this, 'wpm_process_settings_import') );
+            add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );     
             //add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
 
@@ -56,8 +58,8 @@ class WP_maintenance {
             add_option('wp_maintenance_active', 0);
         }
 
-        if ( get_option('wp_maintenance_style', false) == false or get_option('wp_maintenance_style')=='' ) {
-            add_option('wp_maintenance_style', wpm_print_style());
+        if ( get_option('wp_maintenance_settings_css', false) == false or get_option('wp_maintenance_settings_css')=='' ) {
+            add_option('wp_maintenance_settings_css', wpm_print_style());
         }
 
         $wpmAdminOptions = array(            
@@ -603,6 +605,85 @@ class WP_maintenance {
         }
     }
 
+    /**
+     * Process a settings export that generates a .json file of the erident settings
+     */
+    function wpm_process_settings_export() {
+
+        if(empty($_POST['wpm_action']) || 'export_settings'!=$_POST['wpm_action'])
+            return;
+
+        if(!wp_verify_nonce($_POST['wpm_export_nonce'], 'wpm_export_nonce'))
+            return;
+
+        if(!current_user_can('manage_options'))
+            return;
+
+        $settingsJson = array(           
+            'active' => get_option('wp_maintenance_active'),
+            'settings' => get_option('wp_maintenance_settings'),
+            'settings_colors' => get_option('wp_maintenance_settings_colors'),
+            'settings_countdown' => get_option('wp_maintenance_settings_countdown'),
+            'settings_seo' => get_option('wp_maintenance_settings_seo'),
+            'settings_socialnetworks' => get_option('wp_maintenance_settings_socialnetworks'),
+            'settings_footer' => get_option('wp_maintenance_settings_footer'),
+            'settings_options' => get_option('wp_maintenance_settings_options'),
+            'limit' => get_option('wp_maintenance_limit'),
+            'social_options' => get_option('wp_maintenance_social_options'),
+            'actipaddressesive' => get_option('wp_maintenance_ipaddresses')
+        );
+        
+        ignore_user_abort(true);
+
+        nocache_headers();
+        header('Content-Type: application/json; charset=utf-8');
+        header('Content-Disposition: attachment; filename=wp-maintenance-'.parse_url(get_site_url(), PHP_URL_HOST).'-'.date('m-d-Y').'.json');
+        header("Expires: 0");
+
+        echo json_encode($settingsJson);
+        exit;
+    }
+
+
+    /**
+     * Process a settings import from a json file
+     */
+    function wpm_process_settings_import() {
+
+        if(empty($_POST['wpm_action']) || 'import_settings'!=$_POST['wpm_action'])
+            return;
+
+        if(!wp_verify_nonce( $_POST['wpm_import_nonce'], 'wpm_import_nonce'))
+            return;
+
+        if(!current_user_can('manage_options'))
+            return;
+
+        $extensionExploded = explode('.', esc_url($_FILES['wpm_import_file']['name']));
+        $extension = strtolower(end($extensionExploded));
+
+        if($extension!='json') {
+            wp_die(__('Please upload a valid .json file'));
+        }
+
+        $import_file = $_FILES['wpm_import_file']['tmp_name'];
+
+        if(empty($import_file)) {
+            wp_die( __( 'Please upload a file to import', 'wp-maintenance' ) );
+        }
+
+        // Retrieve the settings from the file and convert the json object to an array.
+        $settings = (array) json_decode(file_get_contents($import_file), true);
+
+        foreach($settings as $name=>$value) {
+            $updateSetting = wpm_update_settings($value, 'wp_maintenance_'.$name);
+            //update_option('wp_maintenance_'.$name, $value);
+        }
+
+        echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
+
+    }
+
     /* Check le Mode Maintenance si on doit l'activer ou non */
     function wpm_check_active() {
 
@@ -616,7 +697,7 @@ class WP_maintenance {
         $paramIpAddress = get_option('wp_maintenance_ipaddresses');
 
         /* Désactive le mode maintenance pour les IP définies */
-        if(isset($paramIpAddress)) {
+        if(isset($paramIpAddress) && $paramIpAddress!='') {
 
             if( WPM_VERSION <= '6.0.9') {
 

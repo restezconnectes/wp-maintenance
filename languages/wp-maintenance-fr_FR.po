@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Maintenance\n"
-"POT-Creation-Date: 2022-06-05 17:13+0200\n"
-"PO-Revision-Date: 2022-06-05 17:13+0200\n"
+"POT-Creation-Date: 2022-06-25 15:55+0200\n"
+"PO-Revision-Date: 2022-06-25 15:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: wp-maintenance.php\n"
@@ -49,87 +49,87 @@ msgstr "Nous revenons rapidement !"
 msgid "Follow me on"
 msgstr "Suivez-moi sur"
 
-#: classes/wp-maintenance.php:262 classes/wp-maintenance.php:276
-#: classes/wp-maintenance.php:398 classes/wp-maintenance.php:428
+#: classes/wp-maintenance.php:287 classes/wp-maintenance.php:301
+#: classes/wp-maintenance.php:423 classes/wp-maintenance.php:453
 #: includes/functions.php:93
 msgid "Settings"
 msgstr "Réglages"
 
-#: classes/wp-maintenance.php:265
+#: classes/wp-maintenance.php:290
 msgid "Uninstall"
 msgstr "Désinstaller"
 
 #. Plugin Name of the plugin/theme
-#: classes/wp-maintenance.php:305 includes/functions.php:119
+#: classes/wp-maintenance.php:330 includes/functions.php:119
 msgid "WP Maintenance"
 msgstr "WP Maintenance"
 
-#: classes/wp-maintenance.php:328
+#: classes/wp-maintenance.php:353
 msgid "Colors"
 msgstr "Couleurs"
 
-#: classes/wp-maintenance.php:338 classes/wp-maintenance.php:422
+#: classes/wp-maintenance.php:363 classes/wp-maintenance.php:447
 #: includes/functions.php:57
 msgid "Pictures"
 msgstr "Images"
 
-#: classes/wp-maintenance.php:348 includes/functions.php:63
+#: classes/wp-maintenance.php:373 includes/functions.php:63
 msgid "Countdown"
 msgstr "Compte à rebours"
 
-#: classes/wp-maintenance.php:358 includes/functions.php:69
+#: classes/wp-maintenance.php:383 includes/functions.php:69
 msgid "CSS"
 msgstr "CSS"
 
-#: classes/wp-maintenance.php:368 classes/wp-maintenance.php:427
+#: classes/wp-maintenance.php:393 classes/wp-maintenance.php:452
 #: includes/functions.php:87
 msgid "Footer"
 msgstr "Pied de page"
 
-#: classes/wp-maintenance.php:378 classes/wp-maintenance.php:425
+#: classes/wp-maintenance.php:403 classes/wp-maintenance.php:450
 #: includes/functions.php:75
 msgid "SEO"
 msgstr "SEO"
 
-#: classes/wp-maintenance.php:388 classes/wp-maintenance.php:426
+#: classes/wp-maintenance.php:413 classes/wp-maintenance.php:451
 #: includes/functions.php:81
 msgid "Social Networks"
 msgstr "Réseaux sociaux"
 
-#: classes/wp-maintenance.php:420
+#: classes/wp-maintenance.php:445
 msgid "General"
 msgstr "Général"
 
-#: classes/wp-maintenance.php:421
+#: classes/wp-maintenance.php:446
 msgid "Colors & Fonts"
 msgstr "Couleurs & Polices"
 
-#: classes/wp-maintenance.php:423
+#: classes/wp-maintenance.php:448
 msgid "CountDown"
 msgstr "Compte à rebours"
 
-#: classes/wp-maintenance.php:424
+#: classes/wp-maintenance.php:449
 msgid "CSS Style"
 msgstr "Style CSS"
 
-#: classes/wp-maintenance.php:474
+#: classes/wp-maintenance.php:499
 msgid "Choose This Image"
 msgstr "Choisir cette image"
 
-#: classes/wp-maintenance.php:475
+#: classes/wp-maintenance.php:500
 msgid "Choose Image"
 msgstr "Choisir une image"
 
-#: classes/wp-maintenance.php:492 classes/wp-maintenance.php:500
-#: classes/wp-maintenance.php:508 classes/wp-maintenance.php:517
-#: classes/wp-maintenance.php:526 classes/wp-maintenance.php:535
-#: classes/wp-maintenance.php:544 classes/wp-maintenance.php:553
-#: classes/wp-maintenance.php:562
+#: classes/wp-maintenance.php:517 classes/wp-maintenance.php:525
+#: classes/wp-maintenance.php:533 classes/wp-maintenance.php:542
+#: classes/wp-maintenance.php:551 classes/wp-maintenance.php:560
+#: classes/wp-maintenance.php:569 classes/wp-maintenance.php:578
+#: classes/wp-maintenance.php:587
 msgid "You do not have sufficient privileges to access this page."
 msgstr ""
 "Vous n'avez pas les autorisations suffisantes pour accéder à cette page."
 
-#: includes/functions.php:45 themes/default/functions.php:61
+#: includes/functions.php:45 themes/default/functions.php:65
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -225,7 +225,7 @@ msgstr "Couleur d’en-tête"
 #: views/wp-maintenance-colors.php:152 views/wp-maintenance-colors.php:181
 #: views/wp-maintenance-colors.php:228 views/wp-maintenance-colors.php:273
 #: views/wp-maintenance-colors.php:342 views/wp-maintenance-countdown.php:51
-#: views/wp-maintenance-countdown.php:94 views/wp-maintenance-countdown.php:137
+#: views/wp-maintenance-countdown.php:88 views/wp-maintenance-countdown.php:131
 #: views/wp-maintenance-css.php:61 views/wp-maintenance-dashboard.php:56
 #: views/wp-maintenance-dashboard.php:81 views/wp-maintenance-dashboard.php:109
 #: views/wp-maintenance-footer.php:75 views/wp-maintenance-footer.php:98
@@ -233,12 +233,12 @@ msgstr "Couleur d’en-tête"
 #: views/wp-maintenance-picture.php:198 views/wp-maintenance-seo.php:55
 #: views/wp-maintenance-seo.php:69 views/wp-maintenance-seo.php:88
 #: views/wp-maintenance-settings.php:106 views/wp-maintenance-settings.php:133
-#: views/wp-maintenance-settings.php:147 views/wp-maintenance-settings.php:161
-#: views/wp-maintenance-settings.php:175
+#: views/wp-maintenance-settings.php:168 views/wp-maintenance-settings.php:182
+#: views/wp-maintenance-settings.php:196
 #: views/wp-maintenance-socialnetworks.php:68
-#: views/wp-maintenance-socialnetworks.php:135
-#: views/wp-maintenance-socialnetworks.php:198
-#: views/wp-maintenance-socialnetworks.php:211
+#: views/wp-maintenance-socialnetworks.php:116
+#: views/wp-maintenance-socialnetworks.php:179
+#: views/wp-maintenance-socialnetworks.php:192
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -419,136 +419,136 @@ msgstr "Date / heure du lancement"
 msgid "Select the launch date/time"
 msgstr "Sélectionner une date et heure de lancement"
 
-#: views/wp-maintenance-countdown.php:91
+#: views/wp-maintenance-countdown.php:85
 msgid "at"
 msgstr "à"
 
-#: views/wp-maintenance-countdown.php:99
+#: views/wp-maintenance-countdown.php:93
 msgid "Others Settings"
 msgstr "Autres paramètres"
 
-#: views/wp-maintenance-countdown.php:102
+#: views/wp-maintenance-countdown.php:96
 msgid "Enable seconds ?"
 msgstr "Afficher les secondes ?"
 
-#: views/wp-maintenance-countdown.php:105
+#: views/wp-maintenance-countdown.php:99
 msgid "Yes, enable seconds"
 msgstr "Oui, activer les secondes"
 
-#: views/wp-maintenance-countdown.php:110
+#: views/wp-maintenance-countdown.php:104
 msgid "Disable maintenance mode at the end of the countdown?"
 msgstr "Désactiver le mode maintenance à la fin du compte à rebours ?"
 
-#: views/wp-maintenance-countdown.php:112
+#: views/wp-maintenance-countdown.php:106
 msgid "Yes, disable maintenance mode at the end of countdown"
 msgstr "Oui, désactiver le mode maintenance à la fin du compte à rebours"
 
-#: views/wp-maintenance-countdown.php:117
+#: views/wp-maintenance-countdown.php:111
 msgid "End message after end countdown"
 msgstr "Message de fin après le compte à rebours"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "January"
 msgstr "Janvier"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "February"
 msgstr "Février"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "March"
 msgstr "Mars"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "April"
 msgstr "Avril"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "May"
 msgstr "Mai"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "June"
 msgstr "Juin"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "July"
 msgstr "Juillet"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "August"
 msgstr "Août"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "September"
 msgstr "Septembre"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "October"
 msgstr "Octobre"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "November"
 msgstr "Novembre"
 
-#: views/wp-maintenance-countdown.php:159
+#: views/wp-maintenance-countdown.php:153
 msgid "December"
 msgstr "Décembre"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Sunday"
 msgstr "Dimanche"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Monday"
 msgstr "Lundi"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Tuesday"
 msgstr "Mardi"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Wednesday"
 msgstr "Mercredi"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Thurday"
 msgstr "Jeudi"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Friday"
 msgstr "Vendredi"
 
-#: views/wp-maintenance-countdown.php:161
+#: views/wp-maintenance-countdown.php:155
 msgid "Saturday"
 msgstr "Samedi"
 
-#: views/wp-maintenance-countdown.php:162
+#: views/wp-maintenance-countdown.php:156
 msgid "Today"
 msgstr "Aujourd'hui"
 
-#: views/wp-maintenance-countdown.php:163
+#: views/wp-maintenance-countdown.php:157
 msgid "Delete"
 msgstr "Supprimer"
 
-#: views/wp-maintenance-countdown.php:164
-#: views/wp-maintenance-countdown.php:183
+#: views/wp-maintenance-countdown.php:158
+#: views/wp-maintenance-countdown.php:177
 msgid "Close"
 msgstr "Fermer"
 
-#: views/wp-maintenance-countdown.php:167
+#: views/wp-maintenance-countdown.php:161
 msgid "Next month"
 msgstr "Mois suivant"
 
-#: views/wp-maintenance-countdown.php:168
+#: views/wp-maintenance-countdown.php:162
 msgid "Previous month"
 msgstr "Mois précédent"
 
-#: views/wp-maintenance-countdown.php:169
+#: views/wp-maintenance-countdown.php:163
 msgid "Select a month"
 msgstr "Sélectionner un mois"
 
-#: views/wp-maintenance-countdown.php:170
+#: views/wp-maintenance-countdown.php:164
 msgid "Select a year"
 msgstr "Sélectionner une année"
 
@@ -717,7 +717,7 @@ msgid "Height:"
 msgstr "Hauteur :"
 
 #: views/wp-maintenance-picture.php:97
-#: views/wp-maintenance-socialnetworks.php:193
+#: views/wp-maintenance-socialnetworks.php:174
 msgid "You use this picture:"
 msgstr "Image actuelle :"
 
@@ -869,11 +869,16 @@ msgstr ""
 "Autoriser l'affichage du site à ces adresses IP. Merci d'entrer 1 adresse IP "
 "par ligne"
 
-#: views/wp-maintenance-settings.php:154
+#: views/wp-maintenance-settings.php:151 views/wp-maintenance-settings.php:160
+#: views/wp-maintenance-settings.php:165
+msgid "Enter one IP addresses here"
+msgstr "Entrez une adresse IP ici"
+
+#: views/wp-maintenance-settings.php:175
 msgid "ID pages autorized"
 msgstr "ID de pages autorisées"
 
-#: views/wp-maintenance-settings.php:157
+#: views/wp-maintenance-settings.php:178
 msgid ""
 "Allow the site to display these ID pages. Please, enter the ID pages "
 "separate with comma"
@@ -881,11 +886,11 @@ msgstr ""
 "Autoriser le site à afficher des pages d'ID. Merci d'entrer les ID de pages "
 "séparées par une virgule"
 
-#: views/wp-maintenance-settings.php:168
+#: views/wp-maintenance-settings.php:189
 msgid "Header Code"
 msgstr "Code pour l’entête"
 
-#: views/wp-maintenance-settings.php:171
+#: views/wp-maintenance-settings.php:192
 msgid ""
 "The following code will add to the <head> tag. Useful if you need to add "
 "additional scripts such as CSS or JS"
@@ -914,52 +919,52 @@ msgid "Drad and drop the lines to put in the order you want"
 msgstr ""
 "Cliquez et glisser les lignes pour mettre dans l'ordre que vous souhaitez"
 
-#: views/wp-maintenance-socialnetworks.php:140
+#: views/wp-maintenance-socialnetworks.php:121
 msgid "Social Networks Style"
 msgstr "Style pour les réseaux sociaux"
 
-#: views/wp-maintenance-socialnetworks.php:143
+#: views/wp-maintenance-socialnetworks.php:124
 msgid "Choose icons size"
 msgstr "Choisissez la taille des icônes"
 
-#: views/wp-maintenance-socialnetworks.php:156
+#: views/wp-maintenance-socialnetworks.php:137
 msgid "Choose icons style"
 msgstr "Choisissez le style des icônes"
 
-#: views/wp-maintenance-socialnetworks.php:172
+#: views/wp-maintenance-socialnetworks.php:153
 msgid "Position"
 msgstr "Position"
 
-#: views/wp-maintenance-socialnetworks.php:174
+#: views/wp-maintenance-socialnetworks.php:155
 msgid "Top"
 msgstr "Haut"
 
-#: views/wp-maintenance-socialnetworks.php:175
+#: views/wp-maintenance-socialnetworks.php:156
 msgid "Bottom"
 msgstr "Bas"
 
-#: views/wp-maintenance-socialnetworks.php:180
+#: views/wp-maintenance-socialnetworks.php:161
 msgid "Align"
 msgstr "Alignement"
 
-#: views/wp-maintenance-socialnetworks.php:182
+#: views/wp-maintenance-socialnetworks.php:163
 msgid "Left"
 msgstr "Gauche"
 
-#: views/wp-maintenance-socialnetworks.php:183
+#: views/wp-maintenance-socialnetworks.php:164
 msgid "Center"
 msgstr "Centre"
 
-#: views/wp-maintenance-socialnetworks.php:184
+#: views/wp-maintenance-socialnetworks.php:165
 msgid "Right"
 msgstr "Droite"
 
-#: views/wp-maintenance-socialnetworks.php:189
+#: views/wp-maintenance-socialnetworks.php:170
 msgid "You have your own icons? Enter the folder name of your theme here"
 msgstr ""
 "Vous avez vos propres icônes ? Entrez le nom du dossier de votre thème ici"
 
-#: views/wp-maintenance-socialnetworks.php:191
+#: views/wp-maintenance-socialnetworks.php:172
 msgid ""
 "In your icon's folder child theme, you must have the same names like mine, "
 "let's mouse over list icons for display picture's name. For example: "
@@ -968,11 +973,11 @@ msgstr ""
 "noms que les miens, passez la souris sur la liste des icônes pour afficher "
 "le nom de l’image. Par exemple: "
 
-#: views/wp-maintenance-socialnetworks.php:203
+#: views/wp-maintenance-socialnetworks.php:184
 msgid "Reset Social Networks Icons Options"
 msgstr "Réinitialiser les paramètres des icônes des réseaux sociaux"
 
-#: views/wp-maintenance-socialnetworks.php:206
+#: views/wp-maintenance-socialnetworks.php:187
 msgid "Yes, reset Social Networks Icons?"
 msgstr "Oui, réinitialiser les icônes des réseaux sociaux?"
 

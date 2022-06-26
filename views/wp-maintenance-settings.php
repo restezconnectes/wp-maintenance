@@ -142,22 +142,23 @@ jQuery(document).ready(function() {
                     <div class="wp-maintenance-setting-row">
                         <label for="wp_maintenance_ipaddresses" class="wp-maintenance-setting-row-title"><?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line', 'wp-maintenance'); ?></label>
                         <?php
-                            if( WPM_VERSION <= '6.0.9') {
+                            if(isset($paramIpAddress) && $paramIpAddress!='' ) { 
 
-                                if(isset($paramIpAddress) && $paramIpAddress!='' ) { 
+                                if( WPM_VERSION <= '6.0.9') {
+
                                     $lienIpAddress = explode("\r\n", $paramIpAddress);
                                     foreach($lienIpAddress as $ipAutorized) {
                                         if($ipAutorized!='') { 
                                             echo '<input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder="'.__('Enter one IP addresses here', 'wp-maintenance').'" class="wp-maintenance-input" value="'.esc_html($ipAutorized).'"><br />';
                                         }
                                     }
-                                }
 
-                            } else {
+                                } else {
 
-                                foreach($paramIpAddress as $ipAutorized) {
-                                    if($ipAutorized!='') { 
-                                        echo '<input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder="'.__('Enter one IP addresses here', 'wp-maintenance').'" class="wp-maintenance-input" value="'.esc_html($ipAutorized).'"><br />';
+                                    foreach($paramIpAddress as $ipAutorized) {
+                                        if($ipAutorized!='') { 
+                                            echo '<input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder="'.__('Enter one IP addresses here', 'wp-maintenance').'" class="wp-maintenance-input" value="'.esc_html($ipAutorized).'"><br />';
+                                        }
                                     }
                                 }
                             }
@@ -197,6 +198,30 @@ jQuery(document).ready(function() {
                 </form>
             </div>
             
+            <div class="wp-maintenance-module-options-block">
+                <div class="wp-maintenance-settings-section-header">
+                    <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Export / Import Settings', 'wp-maintenance'); ?></h3>
+                </div>
+                <div class="wp-maintenance-setting-row">
+                    <label class="wp-maintenance-setting-row-title"><?php _e('Export Settings', 'wp-maintenance'); ?></label>
+                    <form method="post">
+                        <input type="hidden" name="wpm_action" value="export_settings" />
+                        <?php wp_nonce_field( 'wpm_export_nonce', 'wpm_export_nonce' ); ?>
+                        <?php submit_button( __( 'Export', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?>
+                    </form>
+                </div>
+                
+                <div class="wp-maintenance-setting-row">
+                    <label class="wp-maintenance-setting-row-title"><?php _e('Import the plugin settings from a .json file. This file can be obtained by exporting the settings on another site using the form above', 'wp-maintenance'); ?></label>
+                    <form method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="wpm_action" value="import_settings" />
+                        <input type="file" name="wpm_import_file"/>                            
+                        <?php wp_nonce_field( 'wpm_import_nonce', 'wpm_import_nonce' ); ?><p>
+                        <?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?></p>
+                    </form>
+                </div>
+            </div>
+
          </div>
     </div>    
     
