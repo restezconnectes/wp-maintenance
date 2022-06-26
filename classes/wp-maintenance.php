@@ -674,13 +674,16 @@ class WP_maintenance {
 
         // Retrieve the settings from the file and convert the json object to an array.
         $settings = (array) json_decode(file_get_contents($import_file), true);
-
-        foreach($settings as $name=>$value) {
-            $updateSetting = wpm_update_settings($value, 'wp_maintenance_'.$name);
-            //update_option('wp_maintenance_'.$name, $value);
+        if(isset($settings)) {
+            foreach($settings as $name=>$value) {
+                if($name=='active') {
+                    update_option('wp_maintenance_active', sanitize_text_field($value));
+                } else {
+                    $updateSetting = wpm_update_settings($value, 'wp_maintenance_'.$name);
+                }
+            }
+            echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
         }
-
-        echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
 
     }
 
