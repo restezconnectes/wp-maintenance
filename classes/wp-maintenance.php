@@ -630,7 +630,7 @@ class WP_maintenance {
             'settings_options' => get_option('wp_maintenance_settings_options'),
             'limit' => get_option('wp_maintenance_limit'),
             'social_options' => get_option('wp_maintenance_social_options'),
-            'actipaddressesive' => get_option('wp_maintenance_ipaddresses')
+            'ipaddresses' => get_option('wp_maintenance_ipaddresses')
         );
         
         ignore_user_abort(true);
