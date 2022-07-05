@@ -16,7 +16,7 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
                 $newTabSettings[$nameSettings] = sanitize_url($valueSettings);
             } elseif(filter_var($valueSettings, FILTER_VALIDATE_EMAIL)) {
                 $newTabSettings[$nameSettings] = sanitize_email($valueSettings);
-            } elseif($nameSettings == 'headercode' || $nameSettings == 'headercode') {
+            } elseif($nameSettings == 'headercode' || $nameSettings == 'text_bt_maintenance' || $nameSettings == 'text_maintenance') {
                 $arr = wpm_autorizeHtml();
                 $newTabSettings[$nameSettings] = wp_kses($valueSettings, $arr);
             } else {
