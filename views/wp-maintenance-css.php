@@ -112,7 +112,18 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     </div>
     <script>
         jQuery(document).ready(function($) {
-        wp.codeEditor.initialize($('#wpmaintenancestyle'), cm_settings);
+            //wp.codeEditor.initialize($('#wpmaintenancestyle'), cm_settings);
+            var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
+            editorSettings.codemirror = _.extend(
+                {},
+                editorSettings.codemirror,
+                {
+                    indentUnit: 2,
+                    tabSize: 2,
+                    mode: 'css',
+                }
+            );
+            var editor = wp.codeEditor.initialize( $('#wpmaintenancestyle'), editorSettings );
         });
     </script> 
     

@@ -230,6 +230,17 @@ jQuery(document).ready(function() {
 </div>
 <script>
     jQuery(document).ready(function($) {
-        wp.codeEditor.initialize($('#headercode'), cm_settings);
+        //wp.codeEditor.initialize($('#headercode'), cm_settings);
+        var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
+        editorSettings.codemirror = _.extend(
+            {},
+            editorSettings.codemirror,
+            {
+                indentUnit: 2,
+                tabSize: 2,
+                mode: 'javascript',
+            }
+        );
+        var editor = wp.codeEditor.initialize( $('#headercode'), editorSettings );
     });
 </script>

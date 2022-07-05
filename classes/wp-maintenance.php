@@ -700,7 +700,7 @@ class WP_maintenance {
         $paramIpAddress = get_option('wp_maintenance_ipaddresses');
 
         /* Désactive le mode maintenance pour les IP définies */
-        if(isset($paramIpAddress) && $paramIpAddress!='') {
+        if(isset($paramIpAddress) && $paramIpAddress!='' && is_array($paramIpAddress)) {
 
             if( WPM_VERSION <= '6.0.9') {
 
@@ -716,7 +716,6 @@ class WP_maintenance {
                 }
 
             } else {
-
                 foreach($paramIpAddress as $ipAutorized) {
                     //error_log(wpm_get_ip().' == '.$ipAutorized);
                     if($ipAutorized!='' && wpm_get_ip() == $ipAutorized) {    
@@ -731,7 +730,7 @@ class WP_maintenance {
         if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
         $paramLimit = get_option('wp_maintenance_limit');
 
-        if( isset($paramLimit) && !empty($paramLimit) ) {
+        if(isset($paramLimit) && !empty($paramLimit) && is_array($paramLimit)) {
             foreach($paramLimit as $limitrole) {
 
                 if( is_user_logged_in() ) {

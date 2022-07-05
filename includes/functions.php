@@ -5,28 +5,108 @@ defined( 'ABSPATH' )
 
 function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
 
-    if( empty($nameOption) || $nameOption =='' ) { return false; }
+    if(empty($nameOption) || $nameOption=='') { return false; }
 
-    if( isset($tabSettings) && is_array($tabSettings) ) {
+    if(isset($tabSettings) && is_array($tabSettings)) {
         $newTabSettings = array();
-        foreach($tabSettings as $nameSettings => $valueSettings ) {
-            if( $type == 3 ) {
-                if( $nameSettings == 'email') {
-                    $newTabSettings[$nameSettings] = sanitize_email($valueSettings);
-                } else {
-                    $newTabSettings[$nameSettings] = strip_tags( stripslashes( esc_url_raw($valueSettings) ) );
-                }
+        foreach($tabSettings as $nameSettings => $valueSettings) {
+            if($type==3) {
+                $newTabSettings[$nameSettings] = strip_tags(stripslashes(esc_url_raw($valueSettings)));
+            } elseif(filter_var($valueSettings, FILTER_VALIDATE_URL)) {
+                $newTabSettings[$nameSettings] = sanitize_url($valueSettings);
+            } elseif(filter_var($valueSettings, FILTER_VALIDATE_EMAIL)) {
+                $newTabSettings[$nameSettings] = sanitize_email($valueSettings);
+            } elseif($nameSettings == 'headercode' || $nameSettings == 'headercode') {
+                $arr = wpm_autorizeHtml();
+                $newTabSettings[$nameSettings] = wp_kses($valueSettings, $arr);
             } else {
                 $newTabSettings[$nameSettings] = sanitize_textarea_field($valueSettings);
             }
         }
-        update_option($nameOption, $newTabSettings );
+        update_option($nameOption, $newTabSettings);
 
         return true;
     } else {
         return false;
     }
     
+}
+
+function wpm_autorizeHtml() {
+
+    return array(
+        'a' => array(
+            'href' => array(),
+            'title' => array()
+            ),
+        'br' => array(),
+        'p' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'h1' => array(),
+        'h2' => array(), 
+        'h3' => array(), 
+        'h4' => array(),
+        'h5' => array(), 
+        'h6' => array(),             
+        'em' => array(),
+        'i' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'font-awesome-icon' => array(
+            'icon' => array(),
+            'class' => array()
+            ),
+        'strong' => array(),
+        'img' => array(
+            'src' => array(),
+            'title' => array(),
+            'width' => array(),
+            'height' => array(),
+            'style' => array(),
+            'class' => array()
+            ),
+        'div' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'span' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'table' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'td' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'tr' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'th' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'tbody' => array(
+            'style' => array(),
+            'class' => array()
+            ),
+        'thead' => array(
+            'style' => array(),
+            'class' => array()
+        ),
+        'script' => array(
+            'type' => array(),
+            'data-rocket-type' => array()
+        ),
+        'style' => array(),
+        );
+
 }
 
 function wpm_get_nav2() {
