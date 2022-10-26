@@ -405,9 +405,14 @@ function wpm_fonts($font, $name='') {
 
     if( isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1 ) {
 
+        if( empty($font) || $font == '' ) { $font = 'verdana'; }
+        
         // Liste des fonts par default
         $arrayFont = array(
             'arial' => array('Arial (sans-serif)' => 'Arial, sans-serif'),
+            'arial-black' => array('Arial Black' => 'Arial Black'),
+            'arial-narrow' => array('Arial narrow' => 'Arial narrow'),
+            'arial-rounded' => array('Arial Rounded MT Bold' => 'Arial Rounded MT Bold'),
             'verdana' => array('Verdana (sans-serif)' => 'Verdana, sans-serif'),
             'tahoma' => array('Tahoma (sans-serif)' => 'Tahoma, sans-serif'),
             'trebuchet' => array('Trebuchet MS (sans-serif)' => 'Trebuchet MS, sans-serif'),

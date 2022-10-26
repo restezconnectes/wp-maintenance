@@ -16,6 +16,10 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_colors' && wp_verify_
 if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
 $paramsColors = get_option('wp_maintenance_settings_colors');
 
+// Récupère les paramètres sauvegardés
+if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+$wpoptions = get_option('wp_maintenance_settings_options');
+
 ?>
 <script type="text/javascript">
     jQuery(document).ready(function() {
