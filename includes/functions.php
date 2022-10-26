@@ -406,14 +406,23 @@ function wpm_fonts($font, $name='') {
     if( isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1 ) {
 
         if( empty($font) || $font == '' ) { $font = 'verdana'; }
-        
+
         // Liste des fonts par default
         $arrayFont = array(
             'arial' => array('Arial (sans-serif)' => 'Arial, sans-serif'),
-            'arial-black' => array('Arial Black' => 'Arial Black'),
-            'arial-narrow' => array('Arial narrow' => 'Arial narrow'),
-            'arial-rounded' => array('Arial Rounded MT Bold' => 'Arial Rounded MT Bold'),
+            'arial-black' => array('Arial Black (sans-serif)' => 'Arial Black'),
+            'arial-narrow' => array('Arial narrow (sans-serif)' => 'Arial narrow'),
+            'arial-rounded' => array('Arial Rounded MT Bold (sans-serif)' => 'Arial Rounded MT Bold'),
+            'helvetica' => array('Helvetica (sans-serif)' => 'Helvetica'),
             'verdana' => array('Verdana (sans-serif)' => 'Verdana, sans-serif'),
+            'Calibri' => array('Verdana (sans-serif)' => 'Verdana, sans-serif'),
+            'noto' => array('Noto (sans-serif)' => 'Noto'),
+            'lucida-sans' => array('Lucida Sans (sans-serif)' => 'Lucida Sans'),
+            'gill-sans' => array('Gill Sans (sans-serif)' => 'Gill Sans'),
+            'century-gothic' => array('Century Gothic (sans-serif)' => 'Century Gothic'),
+            'Candara' => array('Candara (sans-serif)' => 'Candara'),
+            'futara' => array('Futara (sans-serif)' => 'Futara'),
+            'franklin-gothic-medium' => array('Franklin Gothic Medium (sans-serif)' => 'Franklin Gothic Medium'),
             'tahoma' => array('Tahoma (sans-serif)' => 'Tahoma, sans-serif'),
             'trebuchet' => array('Trebuchet MS (sans-serif)' => 'Trebuchet MS, sans-serif'),
             'geneva' => array('Geneva (sans-serif)' => 'Geneva, sans-serif'),
@@ -422,9 +431,65 @@ function wpm_fonts($font, $name='') {
             'garamond' => array('Garamond (serif)' => 'Garamond, serif'),
             'courrier' => array('Courier New (monospace)' => 'Courier New, Courier, monospace'),
             'brush' => array('Brush Script MT (cursive)' => 'Brush Script MT, cursive'),
-            'copperplate' => array('Copperplate, Papyrus, fantasy' => 'Copperplate, Papyrus, fantasy')
+            'copperplate' => array('Copperplate, Papyrus, fantasy' => 'Copperplate, Papyrus, fantasy'),
+            'segoe-ui' => array('Segoe UI (sans-serif)' => 'Segoe UI'),
+            'optima' => array('Optima (sans-serif)' => 'Optima'),
+            'avanta-garde' => array('Avanta Garde (sans-serif)' => 'Avanta Garde'),
+            'bug-caslon' => array('Big Caslon (serif)' => 'Big Caslon'),
+            'bodoni-mt' => array('Bodoni MT (serif)' => 'Bodoni MT'),
+            'book-antiqua' => array('Book Antiqua (serif)' => 'Book Antiqua'),
+            'bookman' => array('Bookman (serif)' => 'Bookman'),
+            'new-century-schoolbook' => array('New Century Schoolbook (serif)' => 'New Century Schoolbook'),
+            'calisto-mt' => array('Calisto MT (serif)' => 'Calisto MT'),
+            'cambria' => array('Cambria (serif)' => 'Cambria'),
+            'didot' => array('Didot (serif)' => 'Didot'),
+            'garamond' => array('Garamond (serif)' => 'Garamond'),
+            'goudy-old-style' => array('Goudy Old Style (serif)' => 'Goudy Old Style'),
+            'hoefler-text' => array('Hoefler Text (serif)' => 'Hoefler Text'),
+            'lucida-bright' => array('Lucida Bright (serif)' => 'Lucida Bright'),
+            'palatino' => array('Palatino (serif)' => 'Palatino'),
+            'perpetua' => array('Perpetua (serif)' => 'Perpetua'),
+            'rockwell' => array('Rockwell (serif)' => 'Rockwell'),
+            'rockwell-extra-bold' => array('Rockwell Extra Bold (serif)' => 'Rockwell Extra Bold'),
+            'baskerville' => array('Baskerville (serif)' => 'Baskerville'),
+            'consolas' => array('Consolas (monospace)' => 'Consolas'),
+            'courier-new' => array('Courier New (monospace)' => 'Courier New'),
+            'lucida-console' => array('Lucida Console (monospace)' => 'Lucida Console'),
+            'lucidatypewriter' => array('Lucidatypewriter (monospace)' => 'Lucidatypewriter'),
+            'lucida-sans-typewriter' => array('Lucida Sans Typewriter (monospace)' => 'Lucida Sans Typewriter'),
+            'monaco' => array('Monaco (monospace)' => 'Monaco'),
+            'andale-mono' => array('Andale Mono (monospace)' => 'Andale Mono'),
+            'comic-sans' => array('Comic Sans (cursive)' => 'Comic Sans'),
+            'comic-sans-ms' => array('Comic Sans MS (cursive)' => 'Comic Sans MS'),
+            'apple-chancery' => array('Apple Chancery (cursive)' => 'Apple Chancery'),
+            'zapf-chancery' => array('Zapf Chancery (cursive)' => 'Zapf Chancery'),
+            'bradley-hand' => array('Bradley Hand (cursive)' => 'Bradley Hand'),
+            'brush-script-std' => array('Brush Script Std (cursive)' => 'Brush Script Std'),
+            'snell-roundhan' => array('Snell Roundhan (cursive)' => 'Snell Roundhan'),
+            'urw-chancery' => array('URW Chancery (cursive)' => 'URW Chancery'),
+            'coronet-script' => array('Coronet script (cursive)' => 'Coronet script'),
+            'florence' => array('Florence (cursive)' => 'Florence'),
+            'parkavenue' => array('Parkavenue (cursive)' => 'Parkavenue'),
+            'impact' => array('Impact (fantasy)' => 'Impact'),
+            'brushstroke' => array('Brushstroke (fantasy)' => 'Brushstroke'),
+            'luminari' => array('Luminari (fantasy)' => 'Luminari'),
+            'chalkduster' => array('Chalkduster (fantasy)' => 'Chalkduster'),
+            'jazz-let' => array('Jazz LET (fantasy)' => 'Jazz LET'),
+            'blippo' => array('Blippo (fantasy)' => 'Blippo'),
+            'stencil-std' => array('Stencil Std (fantasy)' => 'Stencil Std'),
+            'marker-felt' => array('Marker Felt (fantasy)' => 'Marker Felt'),
+            'trattatello' => array('Trattatello (fantasy)' => 'Trattatello'),
+            'arnoldboecklin' => array('Arnoldboecklin (fantasy)' => 'Arnoldboecklin'),
+            'oldtown' => array('Oldtown (fantasy)' => 'Oldtown'),
+            'papyrus' => array('Papyrus (fantasy)' => 'papyrus'),
+            'ink-free' => array('Ink Free (fantasy)' => 'Ink Free'),
+            'lucida-handwriting' => array('Lucida Handwriting (fantasy)' => 'Lucida Handwriting'),
+            'segoe-print' => array('Segoe Print (fantasy)' => 'Segoe Print'),
+            'segoe-script' => array('Segoe Script (fantasy)' => 'Segoe Script'),
+            'webdings' => array('Webdings (fantasy)' => 'Webdings'),
+            'wingdings' => array('Wingdings (fantasy)' => 'Wingdings')            
         );
-
+        ksort($arrayFont);
         // Si il y a un nom pour le select
         if( isset($name) && $name!='') {
 
@@ -433,7 +498,7 @@ function wpm_fonts($font, $name='') {
                 $select = '';
                 foreach($valueFont as $printFont => $printValueFont) {
                     if( $nameFont ==  $font) { $select = 'selected'; }
-                    $selectFont .= '<option value="'.$nameFont.'" '.$select.'>'.$printFont.'</option>';
+                    $selectFont .= '<option value="'.$nameFont.'" '.$select.' style="font-family:'.$nameFont.'!important;color:#333333!important;">'.$printFont.'</option>';
                 }
             }
             $selectFont .= '</select>';
