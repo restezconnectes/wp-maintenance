@@ -96,13 +96,20 @@ function wpm_head() {
     if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
     $o = get_option('wp_maintenance_settings_colors');
     
+    // Récupère les paramètres sauvegardés
+    if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+    $wpoptions = get_option('wp_maintenance_settings_options');
 
-    $output = "<!-- Add Google Fonts -->\n";
-    $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $o['font_title']).'|'.str_replace(' ', '+', $o['font_text']).'|'.str_replace(' ', '+', $o['font_text_bottom']).'|'.str_replace(' ', '+', $o['font_cpt']);
-    if(isset($o['newletter_font_text']) && $o['newletter_font_text'] != '') {
-      $output .= '|'.str_replace(' ', '+', $o['newletter_font_text']);    
+    if(isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1) {
+        $output = '';
+    } else {
+        $output = "<!-- Add Google Fonts -->\n";
+        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $o['font_title']).'|'.str_replace(' ', '+', $o['font_text']).'|'.str_replace(' ', '+', $o['font_text_bottom']).'|'.str_replace(' ', '+', $o['font_cpt']);
+        if(isset($o['newletter_font_text']) && $o['newletter_font_text'] != '') {
+        $output .= '|'.str_replace(' ', '+', $o['newletter_font_text']);    
+        }
+        $output .= '">';
     }
-    $output .= '">';
     return $output;
 }
 
@@ -232,10 +239,10 @@ function wpm_customcss() {
    if(isset($colors['newletter_size']) ) { $addStyleGeneral .= 'font-size:'.esc_html($colors['newletter_size']).'px;'; } 
    if(isset($colors['newletter_font_style']) ) { $addStyleGeneral .= 'font-style:'.esc_html($colors['newletter_font_style']).';'; } 
    if(isset($colors['newletter_font_weigth']) ) { $addStyleGeneral .= 'font-weight:'.esc_html($colors['newletter_font_weigth']).';'; } 
-   if(isset($colors['newletter_font_text']) ) { $addStyleGeneral .= 'font-family:'.wpm_format_font($colors['newletter_font_text']).', serif;'; } 
+   if(isset($colors['newletter_font_text']) ) { $addStyleGeneral .= 'font-family:'.wpm_format_font(wpm_fonts($colors['newletter_font_text'])).';'; } 
     $addStyleGeneral .= '}
     h3 {';
-   if(isset($colors['font_title']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font($colors['font_title']).', serif;'; }
+   if(isset($colors['font_title']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font(wpm_fonts($colors['font_title'])).';'; }
    if(isset($colors['font_title_size']) ) { $addStyleGeneral .= 'font-size: '.esc_html($colors['font_title_size']).'px;'; }
    if(isset($colors['font_title_style']) ) { $addStyleGeneral .= 'font-style: '.esc_html($colors['font_title_style']).';'; }
    if(isset($colors['font_title_weigth']) ) { $addStyleGeneral .= 'font-weight: '.esc_html($colors['font_title_weigth']).';'; }
@@ -243,7 +250,7 @@ function wpm_customcss() {
     $addStyleGeneral .= 'line-height: 100%;text-align:center;margin:0.5em auto;
     }
     p {';
-   if(isset($colors['font_text']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font($colors['font_text']).', serif;'; }
+   if(isset($colors['font_text']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font(wpm_fonts($colors['font_text'])).';'; }
    if(isset($colors['font_text_size']) ) { $addStyleGeneral .= 'font-size: '.esc_html($colors['font_text_size']).'px;'; }
    if(isset($colors['font_text_style']) ) { $addStyleGeneral .= 'font-style: '.esc_html($colors['font_text_style']).';'; }
    if(isset($colors['font_text_weigth']) ) { $addStyleGeneral .= 'font-weight: '.esc_html($colors['font_text_weigth']).';'; }
@@ -251,7 +258,7 @@ function wpm_customcss() {
     $addStyleGeneral .= 'line-height: 100%;text-align:center;margin:0.5em auto;padding-left:2%;padding-right:2%;
     }
     footer  {';
-   if(isset($colors['font_text_bottom']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font($colors['font_text_bottom']).', serif;'; }
+   if(isset($colors['font_text_bottom']) ) { $addStyleGeneral .= 'font-family: '.wpm_format_font(wpm_fonts($colors['font_text_bottom'])).';'; }
    if(isset($colors['font_bottom_style']) ) { $addStyleGeneral .= 'font-style: '.esc_html($colors['font_bottom_style']).';'; }
    if(isset($colors['font_bottom_size']) ) { $addStyleGeneral .= 'font-size: '.esc_html($colors['font_bottom_size']).'px;'; }
    if(isset($colors['font_bottom_weigth']) ) { $addStyleGeneral .= 'font-weight: '.esc_html($colors['font_bottom_weigth']).';'; }

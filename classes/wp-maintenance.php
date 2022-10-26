@@ -118,7 +118,8 @@ class WP_maintenance {
             'color_text_button' => '#ffffff',
             'color_button' => '#1e73be',
             'color_button_hover' => '#ffffff',
-            'color_button_onclick' => '#ffffff'
+            'color_button_onclick' => '#ffffff',
+            'remove_googlefonts' => 0,
         );
 
         if ( get_option('wp_maintenance_settings_colors', false) == false or get_option('wp_maintenance_settings_colors')=='' ) {
@@ -613,7 +614,7 @@ class WP_maintenance {
         if(empty($_POST['wpm_action']) || 'export_settings'!=$_POST['wpm_action'])
             return;
 
-        if(!wp_verify_nonce($_POST['wpm_export_nonce'], 'wpm_export_nonce'))
+        if(!wp_verify_nonce($_POST['wpm_export_nonce'], 'go_export_nonce'))
             return;
 
         if(!current_user_can('manage_options'))
@@ -624,6 +625,7 @@ class WP_maintenance {
             'settings' => get_option('wp_maintenance_settings'),
             'settings_colors' => get_option('wp_maintenance_settings_colors'),
             'settings_countdown' => get_option('wp_maintenance_settings_countdown'),
+            'settings_picture' => get_option('wp_maintenance_settings_picture'),
             'settings_seo' => get_option('wp_maintenance_settings_seo'),
             'settings_socialnetworks' => get_option('wp_maintenance_settings_socialnetworks'),
             'settings_footer' => get_option('wp_maintenance_settings_footer'),
@@ -653,7 +655,7 @@ class WP_maintenance {
         if(empty($_POST['wpm_action']) || 'import_settings'!=$_POST['wpm_action'])
             return;
 
-        if(!wp_verify_nonce( $_POST['wpm_import_nonce'], 'wpm_import_nonce'))
+        if(!wp_verify_nonce( $_POST['wpm_import_nonce'], 'go_import_nonce'))
             return;
 
         if(!current_user_can('manage_options'))
@@ -673,15 +675,18 @@ class WP_maintenance {
         }
 
         // Retrieve the settings from the file and convert the json object to an array.
-        $settings = (array) json_decode(file_get_contents($import_file), true);
-        if(isset($settings)) {
-            foreach($settings as $name=>$value) {
-                if($name=='active') {
-                    update_option('wp_maintenance_active', sanitize_text_field($value));
+        $importTabSettings = (array) json_decode(file_get_contents($import_file), true);
+        if( isset($importTabSettings) ) {
+
+            foreach($importTabSettings as $tabName=>$tabValue) {
+
+                if($tabName=='active') {
+                    update_option('wp_maintenance_active', sanitize_text_field($tabValue));
                 } else {
-                    $updateSetting = wpm_update_settings($value, 'wp_maintenance_'.$name);
+                    $updateSetting = wpm_update_settings($tabValue, 'wp_maintenance_'.$tabName);
                 }
             }
+
             echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
         }
 
@@ -740,6 +745,7 @@ class WP_maintenance {
                     if( $limitrole == $user_role ) {
                         $statusActive = 0;
                     }
+                    //error_log('limit: '.$limitrole.' - role: '.$user_role);
                 }
             }
         }

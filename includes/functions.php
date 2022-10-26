@@ -397,6 +397,65 @@ function wpm_compress($buffer) {
     return $buffer;
 }
 
+function wpm_fonts($font, $name='') {
+
+    // Récupère les paramètres sauvegardés
+    if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+    $wpoptions = get_option('wp_maintenance_settings_options');
+
+    if( isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1 ) {
+
+        // Liste des fonts par default
+        $arrayFont = array(
+            'arial' => array('Arial (sans-serif)' => 'Arial, sans-serif'),
+            'verdana' => array('Verdana (sans-serif)' => 'Verdana, sans-serif'),
+            'tahoma' => array('Tahoma (sans-serif)' => 'Tahoma, sans-serif'),
+            'trebuchet' => array('Trebuchet MS (sans-serif)' => 'Trebuchet MS, sans-serif'),
+            'geneva' => array('Geneva (sans-serif)' => 'Geneva, sans-serif'),
+            'times' => array('Times New Roman (serif)' => 'Times New Roman, Times, serif'),
+            'georgia' => array('Georgia (serif)' => 'Georgia, serif'),
+            'garamond' => array('Garamond (serif)' => 'Garamond, serif'),
+            'courrier' => array('Courier New (monospace)' => 'Courier New, Courier, monospace'),
+            'brush' => array('Brush Script MT (cursive)' => 'Brush Script MT, cursive'),
+            'copperplate' => array('Copperplate, Papyrus, fantasy' => 'Copperplate, Papyrus, fantasy')
+        );
+
+        // Si il y a un nom pour le select
+        if( isset($name) && $name!='') {
+
+            $selectFont = '<select class="wp-maintenance-select" name="wpmcolors['.$name.']">';
+            foreach($arrayFont as $nameFont => $valueFont) {
+                $select = '';
+                foreach($valueFont as $printFont => $printValueFont) {
+                    if( $nameFont ==  $font) { $select = 'selected'; }
+                    $selectFont .= '<option value="'.$nameFont.'" '.$select.'>'.$printFont.'</option>';
+                }
+            }
+            $selectFont .= '</select>';
+
+        } else {
+
+            if( empty($font) || $font == '' ) { $font = 'verdana'; }
+            // Si pas de nom on retourne la value de la font
+            foreach($arrayFont[$font] as $printFont => $printValueFont) {
+                $selectFont = $printValueFont;
+            }
+
+        }
+
+        return $selectFont; 
+        
+    } else {
+
+        return $font;
+
+    }
+
+    
+
+
+}
+
 /* Feuille de style par défault */
 function wpm_print_style() {
     

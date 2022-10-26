@@ -103,6 +103,15 @@ jQuery(document).ready(function() {
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
+
+                    <!-- Remove Google Font -->
+                    <h3><?php _e('Remove Google Fonts', 'wp-maintenance'); ?></h3>
+                    <p>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, remove Google Font option.', 'wp-maintenance'); ?></span>
+                            <input type="checkbox" name="wpoptions[remove_googlefonts]" value="1" <?php if(isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1) { echo ' checked'; } ?>>
+                            <span class="wp-maintenance-checkmark"></span>
+                        </label>
+                    </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
 
@@ -206,7 +215,7 @@ jQuery(document).ready(function() {
                     <label class="wp-maintenance-setting-row-title"><?php _e('Export Settings', 'wp-maintenance'); ?></label>
                     <form method="post">
                         <input type="hidden" name="wpm_action" value="export_settings" />
-                        <?php wp_nonce_field( 'wpm_export_nonce', 'wpm_export_nonce' ); ?>
+                        <?php wp_nonce_field( 'go_export_nonce', 'wpm_export_nonce' ); ?>
                         <?php submit_button( __( 'Export', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?>
                     </form>
                 </div>
@@ -216,7 +225,7 @@ jQuery(document).ready(function() {
                     <form method="post" enctype="multipart/form-data">
                         <input type="hidden" name="wpm_action" value="import_settings" />
                         <input type="file" name="wpm_import_file"/>                            
-                        <?php wp_nonce_field( 'wpm_import_nonce', 'wpm_import_nonce' ); ?><p>
+                        <?php wp_nonce_field( 'go_import_nonce', 'wpm_import_nonce' ); ?><p>
                         <?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?></p>
                     </form>
                 </div>
