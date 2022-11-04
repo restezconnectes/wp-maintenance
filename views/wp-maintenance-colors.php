@@ -105,12 +105,12 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                             <tr>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('bold', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_title_weigth]" value="bold" <?php if( isset($paramsColors['font_title_weigth']) && $paramsColors['font_title_weigth']=='bold') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_title_weigth]" value="bold" <?php if( isset($paramsColors['font_title_weigth']) && $paramsColors['font_title_weigth']=='bold') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                 </td>
                                 <td>
                                 <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Italic', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_title_style]" value="italic" <?php if( isset($paramsColors['font_title_style']) && $paramsColors['font_title_style']=='italic') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_title_style]" value="italic" <?php if( isset($paramsColors['font_title_style']) && $paramsColors['font_title_style']=='italic') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                     
                                 </td>
@@ -151,12 +151,12 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                             <tr>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('bold', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_text_weigth]" value="bold" <?php if( isset($paramsColors['font_text_weigth']) && $paramsColors['font_text_weigth']=='bold') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_text_weigth]" value="bold" <?php if( isset($paramsColors['font_text_weigth']) && $paramsColors['font_text_weigth']=='bold') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                 </td>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Italic', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_text_style]" value="italic" <?php if( isset($paramsColors['font_text_style']) && $paramsColors['font_text_style']=='italic') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_text_style]" value="italic" <?php if( isset($paramsColors['font_text_style']) && $paramsColors['font_text_style']=='italic') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                     
                                 </td>
@@ -286,12 +286,12 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                             <tr>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('bold', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_bottom_weigth]" value="bold" <?php if( isset($paramsColors['font_bottom_weigth']) && $paramsColors['font_bottom_weigth']=='bold') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_bottom_weigth]" value="bold" <?php if( isset($paramsColors['font_bottom_weigth']) && $paramsColors['font_bottom_weigth']=='bold') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                 </td>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Italic', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[font_bottom_style]" value="italic" <?php if( isset($paramsColors['font_bottom_style']) && $paramsColors['font_bottom_style']=='italic') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[font_bottom_style]" value="italic" <?php if( isset($paramsColors['font_bottom_style']) && $paramsColors['font_bottom_style']=='italic') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                     
                                 </td>
@@ -333,12 +333,12 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                             <tr>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('bold', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[newletter_font_weigth]" value="bold" <?php if( isset($paramsColors['newletter_font_weigth']) && $paramsColors['newletter_font_weigth']=='bold') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[newletter_font_weigth]" value="bold" <?php if( isset($paramsColors['newletter_font_weigth']) && $paramsColors['newletter_font_weigth']=='bold') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                 </td>
                                 <td>
                                     <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Italic', 'wp-maintenance'); ?></span>
-                                    <input type="radio" name="wpmcolors[newletter_font_style]" value="italic" <?php if( isset($paramsColors['newletter_font_style']) && $paramsColors['newletter_font_style']=='italic') { echo ' checked'; } ?>>
+                                    <input type="checkbox" name="wpmcolors[newletter_font_style]" value="italic" <?php if( isset($paramsColors['newletter_font_style']) && $paramsColors['newletter_font_style']=='italic') { echo ' checked'; } ?>>
                                     <span class="wp-maintenance-checkmark"></span></label>
                                     
                                 </td>
