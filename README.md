@@ -15,7 +15,6 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Insert for shorcode (Newletter or Contact form)
 - Enable "503 Service temporarily unavailable"
 - Choose access by Roles and Capabilities
-- Choose access by IP address
 - Choose access by ID Pages
 
 wp-maintenance.pot file available
@@ -47,6 +46,9 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 ## Changelog
+
+### 6.1.4
+* Remove IP address option for security
 
 ### 6.1.3 =
 * Bug checkbox fixed

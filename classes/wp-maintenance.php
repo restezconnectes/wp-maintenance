@@ -103,12 +103,12 @@ class WP_maintenance {
             'cpt_end_size' => '2',
             'color_text_bottom' => '#ffffff',
             'color_bg_bottom' => '#333333',
-            'font_text_bottom' => 'PT+Sans',
+            'font_text_bottom' => 'Helvetica',
             'font_bottom_size' => '12',
             'font_bottom_weigth' => '',
             'font_bottom_style' => '',
             'newletter' => 0,
-            'newletter_font_text' => 'PT+Sans',
+            'newletter_font_text' => 'Helvetica',
             'newletter_size' => '14',
             'newletter_font_weigth' => '',
             'newletter_font_style' => '',
@@ -278,7 +278,6 @@ class WP_maintenance {
             delete_option('wp_maintenance_settings_options');
             delete_option('wp_maintenance_limit'); 
             delete_option('wp_maintenance_social_options');
-            delete_option('wp_maintenance_ipaddresses');
             
         }
 
@@ -631,8 +630,7 @@ class WP_maintenance {
             'settings_footer' => get_option('wp_maintenance_settings_footer'),
             'settings_options' => get_option('wp_maintenance_settings_options'),
             'limit' => get_option('wp_maintenance_limit'),
-            'social_options' => get_option('wp_maintenance_social_options'),
-            'ipaddresses' => get_option('wp_maintenance_ipaddresses')
+            'social_options' => get_option('wp_maintenance_social_options')
         );
         
         ignore_user_abort(true);
@@ -701,36 +699,6 @@ class WP_maintenance {
         /* Récupère le status */
         $statusActive = get_option('wp_maintenance_active');
 
-        // Récupère les ip autorisee
-        $paramIpAddress = get_option('wp_maintenance_ipaddresses');
-
-        /* Désactive le mode maintenance pour les IP définies */
-        if(isset($paramIpAddress) && $paramIpAddress!='' && is_array($paramIpAddress)) {
-
-            if( WPM_VERSION <= '6.0.9') {
-
-                $ip_autorized = array();
-                $lienIpAddress = explode("\r\n", $paramIpAddress);
-                foreach($lienIpAddress as $ipAutorized) {
-                    if($ipAutorized!='') {
-                        array_push($ip_autorized, $ipAutorized);
-                    }
-                }
-                if(array_search(wpm_get_ip(), $ip_autorized)!== FALSE) {
-                    $statusActive = 0;
-                }
-
-            } else {
-                foreach($paramIpAddress as $ipAutorized) {
-                    //error_log(wpm_get_ip().' == '.$ipAutorized);
-                    if($ipAutorized!='' && wpm_get_ip() == $ipAutorized) {    
-                        $statusActive = 0;
-                    }
-                }
-            }
-            
-        }
-
         /* Désactive le mode maintenance pour les Roles définis */
         if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
         $paramLimit = get_option('wp_maintenance_limit');
@@ -745,7 +713,6 @@ class WP_maintenance {
                     if( $limitrole == $user_role ) {
                         $statusActive = 0;
                     }
-                    //error_log('limit: '.$limitrole.' - role: '.$user_role);
                 }
             }
         }

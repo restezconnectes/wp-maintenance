@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 6.1
-Stable tag: 6.1.3
+Tested up to: 6.3
+Stable tag: 6.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,8 +70,12 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Changelog ==
 
+= 6.1.4 =
+* Remove IP address option for security
+
 = 6.1.3 =
 * Bug checkbox fixed
+* Bug Social Networks
 
 = 6.1.2 =
 * Adding remove Google Fonts option

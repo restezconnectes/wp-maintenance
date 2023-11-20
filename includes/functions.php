@@ -12,10 +12,11 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
         foreach($tabSettings as $nameSettings => $valueSettings) {
             if($type==3) {
                 $newTabSettings[$nameSettings] = strip_tags(stripslashes(esc_url_raw($valueSettings)));
+            } 
+            if(filter_var($valueSettings, FILTER_VALIDATE_EMAIL)) {
+                $newTabSettings[$nameSettings] = sanitize_email($valueSettings);            
             } elseif(filter_var($valueSettings, FILTER_VALIDATE_URL)) {
                 $newTabSettings[$nameSettings] = sanitize_url($valueSettings);
-            } elseif(filter_var($valueSettings, FILTER_VALIDATE_EMAIL)) {
-                $newTabSettings[$nameSettings] = sanitize_email($valueSettings);
             } elseif($nameSettings == 'headercode' || $nameSettings == 'text_bt_maintenance' || $nameSettings == 'text_maintenance') {
                 $arr = wpm_autorizeHtml();
                 $newTabSettings[$nameSettings] = wp_kses($valueSettings, $arr);
@@ -487,7 +488,7 @@ function wpm_fonts($font, $name='') {
             'segoe-print' => array('Segoe Print (fantasy)' => 'Segoe Print'),
             'segoe-script' => array('Segoe Script (fantasy)' => 'Segoe Script'),
             'webdings' => array('Webdings (fantasy)' => 'Webdings'),
-            'wingdings' => array('Wingdings (fantasy)' => 'Wingdings')            
+            'wingdings' => array('Wingdings (fantasy)' => 'Wingdings')
         );
         ksort($arrayFont);
         // Si il y a un nom pour le select

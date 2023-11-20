@@ -11,7 +11,6 @@ if(isset($_POST['action']) && $_POST['action'] == 'update_settings' && wp_verify
     if(empty($_POST["wpoptions"]["error_503"]) ) { $_POST["wpoptions"]["error_503"] = 0; }
    
     $updateLimitSettings = wpm_update_settings($_POST["wp_maintenance_limit"], 'wp_maintenance_limit');
-    $updateIpAdressSettings = wpm_update_settings($_POST["wp_maintenance_ipaddresses"], 'wp_maintenance_ipaddresses');
     
     $updateSetting = wpm_update_settings($_POST["wpoptions"], 'wp_maintenance_settings_options');
     if($updateSetting == true ) { $messageUpdate = 1; }
@@ -25,9 +24,6 @@ $wpoptions = get_option('wp_maintenance_settings_options');
 // Récupère les Rôles et capabilités
 if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
 $paramLimit = get_option('wp_maintenance_limit');
-
-// Récupère les ip autorisee
-$paramIpAddress = get_option('wp_maintenance_ipaddresses');
 
 ?>
 <script type="text/javascript">
@@ -139,42 +135,6 @@ jQuery(document).ready(function() {
                         
                     <?php } }//end foreach ?>
                     </p>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
-                </div>
-
-                <!-- IP addresses autorized -->
-                <div class="wp-maintenance-module-options-block">
-                    
-                    <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('IP autorized', 'wp-maintenance'); ?></h3>
-                    </div>
-                    <div class="wp-maintenance-setting-row">
-                        <label for="wp_maintenance_ipaddresses" class="wp-maintenance-setting-row-title"><?php _e('Allow the site to display these IP addresses. Please, enter one IP address by line', 'wp-maintenance'); ?></label>
-                        <?php
-                            if(isset($paramIpAddress) && $paramIpAddress!='' ) { 
-
-                                if( WPM_VERSION <= '6.0.9') {
-
-                                    $lienIpAddress = explode("\r\n", $paramIpAddress);
-                                    foreach($lienIpAddress as $ipAutorized) {
-                                        if($ipAutorized!='') { 
-                                            echo '<input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder="'.__('Enter one IP addresses here', 'wp-maintenance').'" class="wp-maintenance-input" value="'.esc_html($ipAutorized).'"><br />';
-                                        }
-                                    }
-
-                                } else {
-
-                                    foreach($paramIpAddress as $ipAutorized) {
-                                        if($ipAutorized!='') { 
-                                            echo '<input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder="'.__('Enter one IP addresses here', 'wp-maintenance').'" class="wp-maintenance-input" value="'.esc_html($ipAutorized).'"><br />';
-                                        }
-                                    }
-                                }
-                            }
-                        ?>
-                        <input type="text" name="wp_maintenance_ipaddresses[]" size="80%" placeholder='<?php _e('Enter one IP addresses here', 'wp-maintenance'); ?>' class="wp-maintenance-input" value="">
-                    </div>
-
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
 
