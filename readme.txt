@@ -25,6 +25,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Enable "503 Service temporarily unavailable"
 - Choose access by Roles and Capabilities
 - Choose access by ID Pages
+- Choose access by IP addresses
 
 wp-maintenance.pot file available
 
