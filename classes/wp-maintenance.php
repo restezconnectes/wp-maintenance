@@ -278,7 +278,7 @@ class WP_maintenance {
             delete_option('wp_maintenance_settings_options');
             delete_option('wp_maintenance_limit'); 
             delete_option('wp_maintenance_social_options');
-            
+            delete_option('wp_maintenance_ipaddresses');
         }
 
     }
@@ -630,7 +630,8 @@ class WP_maintenance {
             'settings_footer' => get_option('wp_maintenance_settings_footer'),
             'settings_options' => get_option('wp_maintenance_settings_options'),
             'limit' => get_option('wp_maintenance_limit'),
-            'social_options' => get_option('wp_maintenance_social_options')
+            'social_options' => get_option('wp_maintenance_social_options'),
+            'ipaddresses' => get_option('wp_maintenance_ipaddresses')
         );
         
         ignore_user_abort(true);
@@ -694,10 +695,23 @@ class WP_maintenance {
     function wpm_check_active() {
 
         if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-        $paramMMode = get_option('wp_maintenance_settings');
 
         /* Récupère le status */
         $statusActive = get_option('wp_maintenance_active');
+
+        // Récupère les ip autorisee
+        $paramIpAddress = get_option('wp_maintenance_ipaddresses');
+
+        /* Désactive le mode maintenance pour les IP définies */
+        if(isset($paramIpAddress) && $paramIpAddress!='' && is_array($paramIpAddress)) {
+
+            foreach($paramIpAddress as $ipAutorized) {
+                if($ipAutorized!='' && wpm_get_ip() == $ipAutorized) {    
+                    $statusActive = 0;
+                }
+            }
+            
+        }
 
         /* Désactive le mode maintenance pour les Roles définis */
         if(get_option('wp_maintenance_limit')) { extract(get_option('wp_maintenance_limit')); }
@@ -716,16 +730,6 @@ class WP_maintenance {
                 }
             }
         }
-
-        /* Désactive le mode maintenance pour les PAGE ID définies */
-        /*if( isset($paramMMode['id_pages']) && !empty($paramMMode['id_pages']) ) {
-            $listPageId = explode(',', $paramMMode['id_pages']);
-            foreach($listPageId as $keyPageId => $valPageId) {
-                if( $valPageId == get_the_ID() ) {
-                    $statusActive = 0;
-                }
-            }
-        }*/
   
         /* On désactive le mode maintenance pour les admins */
         if( current_user_can('administrator') == true ) {

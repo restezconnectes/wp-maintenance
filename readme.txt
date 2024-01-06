@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 6.3
-Stable tag: 6.1.4
+Tested up to: 6.4
+Stable tag: 6.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,7 +24,6 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 - Insert for shorcode (Newletter or Contact form)
 - Enable "503 Service temporarily unavailable"
 - Choose access by Roles and Capabilities
-- Choose access by IP address
 - Choose access by ID Pages
 
 wp-maintenance.pot file available
@@ -69,6 +68,10 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Changelog ==
+
+= 6.1.5 =
+* Reintroducing IP address option. Tested and sanitize IP addresses
+* ID pages option. Tested ID pages if exist and sanitize it 
 
 = 6.1.4 =
 * Remove IP address option for security

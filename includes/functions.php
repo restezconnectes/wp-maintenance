@@ -13,6 +13,11 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
             if($type==3) {
                 $newTabSettings[$nameSettings] = strip_tags(stripslashes(esc_url_raw($valueSettings)));
             } 
+            if($nameOption == 'wp_maintenance_ipaddresses') {
+                if( rest_is_ip_address($valueSettings)!=false){
+                    $newTabSettings[] = sanitize_text_field($valueSettings);
+                }
+            }
             if(filter_var($valueSettings, FILTER_VALIDATE_EMAIL)) {
                 $newTabSettings[$nameSettings] = sanitize_email($valueSettings);            
             } elseif(filter_var($valueSettings, FILTER_VALIDATE_URL)) {
@@ -20,6 +25,17 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
             } elseif($nameSettings == 'headercode' || $nameSettings == 'text_bt_maintenance' || $nameSettings == 'text_maintenance') {
                 $arr = wpm_autorizeHtml();
                 $newTabSettings[$nameSettings] = wp_kses($valueSettings, $arr);
+            } elseif($nameSettings == 'id_pages') {
+                $idPages = explode(',', $valueSettings);
+                $nb=count($idPages);
+                $getValueIdPages = '';
+                for($i=0;$i<$nb;$i++) {
+                    $getPage = get_post($idPages[$i]);
+                    if( isset($getPage->ID) ) {
+                        $getValueIdPages .= $idPages[$i].',';
+                    }
+                }
+                $newTabSettings[$nameSettings] = sanitize_text_field(substr($getValueIdPages, 0, -1));
             } else {
                 $newTabSettings[$nameSettings] = sanitize_textarea_field($valueSettings);
             }
