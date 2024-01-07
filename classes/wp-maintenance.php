@@ -36,7 +36,8 @@ class WP_maintenance {
             add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );     
             //add_action( 'after_setup_theme', array( &$this, 'wpm_theme_add_editor_styles') );
         }
-
+        // disabled XMLRPC
+        add_filter('xmlrpc_enabled', '__return_false');
     }
 
     function wpm_theme_add_editor_styles() {

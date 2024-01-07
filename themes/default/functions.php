@@ -104,11 +104,14 @@ function wpm_head() {
         $output = '';
     } else {
         $output = "<!-- Add Google Fonts -->\n";
-        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.str_replace(' ', '+', $o['font_title']).'|'.str_replace(' ', '+', $o['font_text']).'|'.str_replace(' ', '+', $o['font_text_bottom']).'|'.str_replace(' ', '+', $o['font_cpt']);
-        if(isset($o['newletter_font_text']) && $o['newletter_font_text'] != '') {
-        $output .= '|'.str_replace(' ', '+', $o['newletter_font_text']);    
+        $arrayfonts = array($o['font_title'], $o['font_text'], $o['font_text_bottom'], $o['font_cpt'], $o['newletter_font_text'], $o['newletter_font_text']);
+        $uniqueArrayfonts = array_unique($arrayfonts);        
+        $addFont = '';
+        foreach ($uniqueArrayfonts as $keyFont => $valFont) {
+            $valFont = str_replace(' ', '+', $valFont);
+            $addFont .= $valFont.'|';
         }
-        $output .= '">';
+        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.substr($addFont, 0,-1).'">';
     }
     return $output;
 }
