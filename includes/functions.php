@@ -546,7 +546,7 @@ function wpm_fonts($font, $name='') {
 /* Feuille de style par défault */
 function wpm_print_style() {
     
-    return '#logo {text-align: center;max-width: 100%;height: auto;text-align: center;}
+    return '#logo {text-align: center; max-width: 100%; height: auto;}
 
 a:link {color: #_COLORTXT;text-decoration: none;}
 a:visited {color: #_COLORTXT;text-decoration: none;}
