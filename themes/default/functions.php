@@ -141,7 +141,7 @@ function wpm_logo() {
     if ( !empty( $o['image'] ) ) {
        if(empty($o['image_width']) ) { $o['image_width'] = 450; }
        if(empty($o['image_height']) ) { $o['image_height'] = 450; }
-        $output .= "<div id='logo'><img id='wpm-image' src='".esc_url($o['image'])."' width='".$o['image_width']."px' height='".$o['image_height']."px' alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' style='width:".$o['image_width']."px;height:".$o['image_height']."px;'></div>";
+        $output .= "<div id='logo'><img id='wpm-image' src='".esc_url($o['image'])."' width='".$o['image_width']."px' height='".$o['image_height']."px' alt='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."' title='".get_bloginfo( 'name', 'display' )." ".get_bloginfo( 'description', 'display' )."'></div>";
     }
 
     return  $output;
