@@ -112,7 +112,17 @@ jQuery(document).ready(function() {
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
+
+                    <!-- Remove Admin BAR -->
+                    <h3><?php _e('Display in Admin bar?', 'wp-maintenance'); ?></h3>
+                    <p>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, remove display in admin bar.', 'wp-maintenance'); ?></span>
+                            <input type="checkbox" name="wpoptions[remove_adminbar]" value="1" <?php if(isset($wpoptions['remove_adminbar']) && $wpoptions['remove_adminbar']==1) { echo ' checked'; } ?>>
+                            <span class="wp-maintenance-checkmark"></span>
+                        </label>
+                    </p>
                     <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+
                 </div>
 
                 <!-- Roles and Capabilities -->

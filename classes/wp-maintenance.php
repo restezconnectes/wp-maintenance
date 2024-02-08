@@ -312,8 +312,6 @@ class WP_maintenance {
     /* Ajout feuille CSS pour l'admin barre */
     function wpm_admin_head() {
 
-        global $current_user;
-        global $_wp_admin_css_colors;
         // Add Style for all admin
         echo '
 <style>#wpadminbar .wpmbackground-on > .ab-item{ color:#fff;background-color: #f44; }#wpadminbar .wpmbackground-on .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }#wpadminbar .wpmbackground-on:hover > .ab-item{ background-color: #a30 !important;color:#fff !important; }#wpadminbar .wpmbackground-off > .ab-item{ color:#fff; }#wpadminbar .wpmbackground-off .ab-icon:before { content: "\f107";top: 2px;color:#fff !important; }</style>        
@@ -326,6 +324,7 @@ class WP_maintenance {
 <style>#maintenance-on{background:#0ed74c;border-radius:50%;width:14px;height:14px;float: left;margin-right: 5px;margin-top: 9px;}#maintenance-off{background:#d70e25;border-radius:50%;width:14px;height:14px;float: left;margin-right: 5px;margin-top: 9px;}</style>';
         }
     }
+
     /* Ajout Notification admin barre */
     function wpm_add_menu_admin_bar( $wp_admin_bar ) {
 
@@ -333,104 +332,113 @@ class WP_maintenance {
         $textAdmin = '<span class="ab-icon"></span> '.__('WP Maintenance', 'wp-maintenance');
         $classAdminBar = 'off';
         
-        if( isset($checkActive) && !is_network_admin() ) {
-            
-            if( $checkActive==1 ) {
-                $classAdminBar = 'on';
+        // Récupère les paramètres sauvegardés
+        if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
+        $wpoptions = get_option('wp_maintenance_settings_options');
+        $remove_adminbar = 0;
+        if( isset($wpoptions['remove_adminbar']) && $wpoptions['remove_adminbar']==1) {
+            $remove_adminbar = 1; // If remove bar option is active
+        }
+
+        if( $remove_adminbar == 0 ) {
+
+            if( isset($checkActive) && !is_network_admin() ) {
+                
+                if( $checkActive==1 ) {
+                    $classAdminBar = 'on';
+                }
+                $args = array(
+                    'id'     => 'wpm-info', // id of the existing child node (New > Post)
+                    'title'  => $textAdmin, // alter the title of existing node
+                    'href' => 'admin.php?page=wp-maintenance', // Lien du menu
+                    'parent' => 'top-secondary', // set parent to false to make it a top level (parent) node
+                    'meta' => array(
+                        'class' => 'wpmbackground-'.$classAdminBar
+                    )
+                );
+                $wp_admin_bar->add_node( $args );
+                
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-colors',
+                    'title'  => __('Colors', 'wp-maintenance'),
+                    'href'   => admin_url().'admin.php?page=wp-maintenance-colors',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );
+                
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-picture',
+                    'title'  => __('Pictures', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-picture',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );
+                
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-countdown',
+                    'title'  => __('Countdown', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-countdown',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );  
+                
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-css',
+                    'title'  => __('CSS', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-css',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );
+                
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-footer',
+                    'title'  => __('Footer', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-footer',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );  
+
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-seo',
+                    'title'  => __('SEO', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-seo',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );  
+
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-socialnetworks',
+                    'title'  => __('Social Networks', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-socialnetworks',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );  
+
+                // add a child item to our parent item 
+                $args = array(
+                    'parent' => 'wpm-info',
+                    'id'     => 'wp-maintenance-settings',
+                    'title'  => __('Settings', 'wp-maintenance'),
+                    'href'   =>  admin_url().'admin.php?page=wp-maintenance-settings',
+                    'meta'   => false        
+                );
+                $wp_admin_bar->add_node( $args );  
+                
             }
-            $args = array(
-                'id'     => 'wpm-info', // id of the existing child node (New > Post)
-                'title'  => $textAdmin, // alter the title of existing node
-                'href' => 'admin.php?page=wp-maintenance', // Lien du menu
-                'parent' => 'top-secondary', // set parent to false to make it a top level (parent) node
-                'meta' => array(
-                    'class' => 'wpmbackground-'.$classAdminBar
-                )
-            );
-            $wp_admin_bar->add_node( $args );
-            
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-colors',
-                'title'  => __('Colors', 'wp-maintenance'),
-                'href'   => admin_url().'admin.php?page=wp-maintenance-colors',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );
-             
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-picture',
-                'title'  => __('Pictures', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-picture',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );
-            
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-countdown',
-                'title'  => __('Countdown', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-countdown',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );  
-            
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-css',
-                'title'  => __('CSS', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-css',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );
-            
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-footer',
-                'title'  => __('Footer', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-footer',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );  
-
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-seo',
-                'title'  => __('SEO', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-seo',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );  
-
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-socialnetworks',
-                'title'  => __('Social Networks', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-socialnetworks',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );  
-
-            // add a child item to our parent item 
-            $args = array(
-                'parent' => 'wpm-info',
-                'id'     => 'wp-maintenance-settings',
-                'title'  => __('Settings', 'wp-maintenance'),
-                'href'   =>  admin_url().'admin.php?page=wp-maintenance-settings',
-                'meta'   => false        
-            );
-            $wp_admin_bar->add_node( $args );  
-
-            
-            
         }
     }
 

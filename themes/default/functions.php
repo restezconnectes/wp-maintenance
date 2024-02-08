@@ -109,9 +109,9 @@ function wpm_head() {
         $addFont = '';
         foreach ($uniqueArrayfonts as $keyFont => $valFont) {
             $valFont = str_replace(' ', '+', $valFont);
-            $addFont .= $valFont.'|';
+            $addFont .= '&family='.$valFont.'';
         }
-        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.substr($addFont, 0,-1).'">';
+        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'.substr($addFont, 0,-1).'">';
     }
     return $output;
 }
