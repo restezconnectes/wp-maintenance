@@ -4,7 +4,7 @@ Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 6.4
-Stable tag: 6.1.8
+Stable tag: 6.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,11 +70,9 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 == Changelog ==
 
-= 6.1.8 =
-* Disable REST API if not logged
-
 = 6.1.7 =
 * Adding for disabled for display admin bar option
+* Disable REST API if not logged
 
 = 6.1.6 =
 * Optimized function for Google Fonts in stylesheet

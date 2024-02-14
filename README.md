@@ -20,7 +20,7 @@ The WP Maintenance plugin allows you to put your website on the waiting time for
 
 wp-maintenance.pot file available
 
-Current Version:  6.1.8
+Current Version:  6.1.7
 
 ## Frequently Asked Questions
 
@@ -48,11 +48,9 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 ## Changelog
 
-## 6.1.8
-* Disable REST API if not logged
-
 ### 6.1.7
 * Adding for disabled for display admin bar option
+* Disable REST API if not logged
 
 ### 6.1.6
 * Optimized function for Google Fonts in stylesheet
