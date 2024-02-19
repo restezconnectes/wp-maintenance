@@ -4,7 +4,7 @@ Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 6.4
-Stable tag: 6.1.7
+Stable tag: 6.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,9 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Changelog ==
+
+= 6.1.8 =
+* Bug fixed for Disable REST API if not logged and maintenance no actived
 
 = 6.1.7 =
 * Adding for disabled for display admin bar option

@@ -39,6 +39,7 @@ class WP_maintenance {
         // disabled XMLRPC
         add_filter('xmlrpc_enabled', '__return_false');
         /** Disable REST API **/
+        $checkActive = get_option('wp_maintenance_active');
         add_filter( 'rest_authentication_errors', function( $result ) {
             // If a previous authentication check was applied,
             // pass that result along without modification.
@@ -48,7 +49,7 @@ class WP_maintenance {
         
             // No authentication has been performed yet.
             // Return an error if user is not logged in.
-            if ( ! is_user_logged_in() ) {
+            if ( ! is_user_logged_in() && (isset($checkActive) && $checkActive == 1) ) {
                 return new WP_Error(
                     'rest_not_logged_in',
                     __( 'You are not currently logged in.' ),
