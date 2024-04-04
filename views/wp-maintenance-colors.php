@@ -20,6 +20,10 @@ $paramsColors = get_option('wp_maintenance_settings_colors');
 if(get_option('wp_maintenance_settings_options')) { extract(get_option('wp_maintenance_settings_options')); }
 $wpoptions = get_option('wp_maintenance_settings_options');
 
+// Récupère les paramètres sauvegardés
+if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
+$paramsSettings = get_option('wp_maintenance_settings');
+
 ?>
 <script type="text/javascript">
     jQuery(document).ready(function() {
@@ -28,6 +32,7 @@ $wpoptions = get_option('wp_maintenance_settings_options');
         jQuery('#select_font_text_cpt').fontselect();
         jQuery('#select_font_text_bottom').fontselect();
         jQuery('#select_font_text_newletter').fontselect();
+        jQuery('#select_newletter_font_text').fontselect();
     });
 
     jQuery(document).ready(function() {
@@ -278,7 +283,7 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                                     <?php if(isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1) { ?>
                                         <?php echo wpm_fonts($paramsColors['font_text_bottom'], 'font_text_bottom'); ?>
                                     <?php } else { ?>
-                                        <input name="wpmcolors[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text_bottom']) && $paramsColors['font_text_bottom']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_text_bottom'])); } else { echo 'helvetica'; } ?>" />
+                                        <input name="wpmcolors[font_text_bottom]" class="selectfont" type="text" value="<?php if( isset($paramsColors['font_text_bottom']) && $paramsColors['font_text_bottom']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['font_text_bottom'])); } else { echo 'Open Sans'; } ?>" />
                                     <?php } ?>
                                 </td>
                                 <td><input type="text" size="3" name="wpmcolors[font_bottom_size]" value="<?php if( isset($paramsColors['font_bottom_size']) && $paramsColors['font_bottom_size']!='' ) { echo esc_html(stripslashes($paramsColors['font_bottom_size'])); } else { echo '12'; } ?>" />px</td>
@@ -303,101 +308,6 @@ $wpoptions = get_option('wp_maintenance_settings_options');
                     
                 </div>
 
-                <div class="wp-maintenance-module-options-block">
-                    <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Form color settings', 'wp-maintenance'); ?></h3>
-                    </div>
-                    <h3><?php _e('Choice form colors', 'wp-maintenance'); ?></h3>
-                    <?php 
-                    
-                        if( is_admin() ) {
-                        if ( is_plugin_active( 'wysija-newsletters/index.php' ) || is_plugin_active( 'mailpoet/mailpoet.php' ) || is_plugin_active( 'mailchimp-for-wp/mailchimp-for-wp.php' ) ) {
-                            
-                            if ( isset($paramsColors['newletter']) && $paramsColors['newletter']==1 ) {
-                            //if( isset($paramsColors['code_newletter']) && (strpos($paramsColors['code_newletter'], 'wysija_form')!=false || strpos($paramsColors['code_newletter'], 'mc4wp_form')!=false ) && (
-                    ?>
-                    <!-- COULEUR WYJIYA -->
-                    <div class="wp-maintenance-setting-row">
-                        <label for="wpmcolors[newletter_font_text]" class="wp-maintenance-setting-row-title"><?php _e('Choose Size and Style', 'wp-maintenance'); ?></label>
-                        <table cellspacing="10">
-                            <tr>
-                                <td valign="middle"style="text-align:left;">
-                                    <?php if(isset($wpoptions['remove_googlefonts']) && $wpoptions['remove_googlefonts']==1) { ?>
-                                        <?php echo wpm_fonts($paramsColors['newletter_font_text'], 'newletter_font_text'); ?>
-                                    <?php } else { ?>
-                                        <input name="wpmcolors[newletter_font_text]" class="selectfont" type="text" value="<?php if( isset($paramsColors['newletter_font_text']) && $paramsColors['newletter_font_text']!='' ) { echo esc_html(str_replace(' ', '+', $paramsColors['newletter_font_text'])); } else { echo 'helvetica'; } ?>" />
-                                    <?php } ?>
-                                </td>
-                                <td><input type="text" size="3" name="wpmcolors[newletter_size]" value="<?php if( isset($paramsColors['newletter_size']) && $paramsColors['newletter_size']!='') { echo esc_html($paramsColors['newletter_size']); } else { echo '14'; } ?>" />px</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('bold', 'wp-maintenance'); ?></span>
-                                    <input type="checkbox" name="wpmcolors[newletter_font_weigth]" value="bold" <?php if( isset($paramsColors['newletter_font_weigth']) && $paramsColors['newletter_font_weigth']=='bold') { echo ' checked'; } ?>>
-                                    <span class="wp-maintenance-checkmark"></span></label>
-                                </td>
-                                <td>
-                                    <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Italic', 'wp-maintenance'); ?></span>
-                                    <input type="checkbox" name="wpmcolors[newletter_font_style]" value="italic" <?php if( isset($paramsColors['newletter_font_style']) && $paramsColors['newletter_font_style']=='italic') { echo ' checked'; } ?>>
-                                    <span class="wp-maintenance-checkmark"></span></label>
-                                    
-                                </td>
-                            </tr>                            
-                        </table>                 
-                    </div>
-                    <div class="wp-maintenance-setting-row">
-                        
-                        <table width="80%">
-                            <tr>
-                                <td width="40%">
-                                    <label for="wpmcolors[color_field_text]" class="wp-maintenance-setting-row-title"><?php _e('Field text color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_field_text']) && $paramsColors['color_field_text']!='' ) { echo esc_html($paramsColors['color_field_text']); } else { echo '#333333'; } ?>" name="wpmcolors[color_field_text]" class="wpm-color-field" data-default-color="#333333" /><br />
-                                    <label for="wpmcolors[color_field_border]" class="wp-maintenance-setting-row-title"><?php _e('Field border color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_field_border']) && $paramsColors['color_field_border']!='' ) { echo esc_html($paramsColors['color_field_border']); } else { echo '#333333'; } ?>" name="wpmcolors[color_field_border]" class="wpm-color-field" data-default-color="#333333" /><br />
-                                    <label for="wpmcolors[color_field_background]" class="wp-maintenance-setting-row-title"><?php _e('Field background color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_field_background']) && $paramsColors['color_field_background']!='' ) { echo esc_html($paramsColors['color_field_background']); } else { echo '#cccccc'; } ?>" name="wpmcolors[color_field_background]" class="wpm-color-field" data-default-color="#cccccc" />
-                                    <label for="wpmcolors[color_text_button]" class="wp-maintenance-setting-row-title"><?php _e('Button text color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if( isset($paramsColors['color_text_button']) && $paramsColors['color_text_button']!='' ) { echo esc_html($paramsColors['color_text_button']); } else { echo '#ffffff'; } ?>" name="wpmcolors[color_text_button]" class="wpm-color-field" data-default-color="#ffffff" />
-                                <td>
-                                <td style="vertical-align:top;">                       
-                                    <label for="wpmcolors[color_button]" class="wp-maintenance-setting-row-title"><?php _e('Button color', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if(isset($paramsColors['color_button']) && $paramsColors['color_button']!='') { echo esc_html($paramsColors['color_button']); } else { echo '#1e73be'; } ?>" name="wpmcolors[color_button]" class="wpm-color-field" data-default-color="#1e73be" />
-                                    <label for="wpmcolors[color_button_hover]" class="wp-maintenance-setting-row-title"><?php _e('Button color hover', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if(isset($paramsColors['color_button_hover']) && $paramsColors['color_button_hover']!='') { echo esc_html($paramsColors['color_button_hover']); } else { echo '#ffffff'; }  ?>" name="wpmcolors[color_button_hover]" class="wpm-color-field" data-default-color="#ffffff" /><br />
-                                    <label for="wpmcolors[color_button_onclick]" class="wp-maintenance-setting-row-title"><?php _e('Button color onclick', 'wp-maintenance'); ?></label>
-                                    <input type="text" value="<?php if(isset($paramsColors['color_button_onclick']) && $paramsColors['color_button_onclick']!='' ) { echo esc_html($paramsColors['color_button_onclick']); } else { echo '#ffffff'; } ?>" name="wpmcolors[color_button_onclick]" class="wpm-color-field" data-default-color="#ffffff" />
-                                </td>
-                            </tr>
-                        </table>
-                        
-                    </div>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
-                    
-                    <?php
-                            } else {
-                                printf(__('Enable %s to customize the forms', 'wp-maintenance'), '<a href="'.admin_url().'?page=wp-maintenance#newsletter">'.__('newsletter option', 'wp-maintenance').'</a>'); 
-                            }
-                            
-                        } else {
-                            _e('Enable Mailpoet or MailChimp extensions to customize the forms', 'wp-maintenance'); 
-                            
-                            
-                            echo '<input name="wpmcolors[color_field_text]" type="hidden" value="#333333" />';
-                            echo '<input name="wpmcolors[color_field_border]" type="hidden" value="#333333" />';
-                            echo '<input name="wpmcolors[color_field_background]" type="hidden" value="#cccccc" />';
-                            echo '<input name="wpmcolors[newletter_font_text]" type="hidden" value="helvetica" />';
-                            echo '<input name="wpmcolors[newletter_size]" type="hidden" value="14" />';
-                            echo '<input name="wpmcolors[newletter_font_weigth]" type="hidden" value="" />';
-                            echo '<input name="wpmcolors[newletter_font_style]" type="hidden" value="" />';
-                            echo '<input name="wpmcolors[color_text_button]" type="hidden" value="#ffffff" />';
-                            echo '<input name="wpmcolors[color_button]" type="hidden" value="#1e73be" />';
-                            echo '<input name="wpmcolors[color_button_hover]" type="hidden" value="#ffffff" />';
-                            echo '<input name="wpmcolors[color_button_onclick]" type="hidden" value="#ffffff" />';
-                        
-                        }
-                        }
-                    ?>
-                </div>
             </form>
         </div>
     </div>

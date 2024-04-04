@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="{Url}themes/default/css/knacss.css" media="all">
   <link rel="stylesheet" href="{Url}themes/default/css/styles.css" media="all">
   {CustomCSS}
-  {AddStyleWysija}
   {HeaderCode}
   </head>
   <body>

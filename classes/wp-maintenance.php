@@ -884,7 +884,6 @@ class WP_maintenance {
                 "{TopSocialIcon}" => wpm_social_position("top"),
                 "{BottomSocialIcon}" => wpm_social_position("bottom"),
                 "{FooterText}" => wpm_footer_text(),
-                "{AddStyleWysija}" => sanitize_text_field(wpm_stylenewsletter()),
                 "{Newsletter}" => wpm_newsletter(),
                 "{Counter}" => WPM_Countdown::display($dateCpt),
                 "{Url}" => WPM_PLUGIN_URL

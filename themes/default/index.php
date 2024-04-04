@@ -25,7 +25,6 @@
             @media (min-width:1100px) {body {font-size:1.5rem;}}
         </style>
         {CustomCSS}
-        {AddStyleWysija}
         <!--[if lt IE 7]>
         <style type="text/css">
             #wrapper { height:100%; }

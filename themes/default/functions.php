@@ -196,6 +196,7 @@ function wpm_customcss() {
     );
     $remplaceStyle = str_replace(array_keys($styleRemplacements), array_values($styleRemplacements), get_option('wp_maintenance_settings_css'));
     $output .= wpm_compress($remplaceStyle);
+    
 
     /* Si on a activé un motif */
    if(isset($picture['b_enable_image']) && $picture['b_enable_image'] == 2 ) {
@@ -296,7 +297,7 @@ function wpm_customcss() {
     }';
 
     $output .= wpm_compress($addStyleGeneral);
-    $output .= ob_get_clean();
+    ob_get_clean();
 
     $output .= '</style>'."\n";
 
@@ -337,54 +338,6 @@ function wpm_social_position($position = '') {
     return $output;
 }
 
-
-function wpm_stylenewsletter() {
-
-    // Récupère les paramètres sauvegardés
-    if(get_option('wp_maintenance_settings')) { extract(get_option('wp_maintenance_settings')); }
-    $o = get_option('wp_maintenance_settings');
-
-    // Récupère les paramètres sauvegardés des couleurs
-    if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
-    $colors = get_option('wp_maintenance_settings_colors');
-
-
-    $output = '';
-
-   if(empty($colors['color_field_text']) ) { $colors['color_field_text'] = '#333333'; }
-   if(empty($colors['color_text_button']) ) { $colors['color_text_button']= '#ffffff'; }
-   if(empty($colors['color_field_background']) ) { $colors['color_field_background']= '#F1F1F1'; }
-   if(empty($colors['color_field_border']) ) { $colors['color_field_border']= '#333333'; }
-   if(empty($colors['color_button_onclick']) ) { $colors['color_button_onclick']= '#333333'; }
-   if(empty($colors['color_button_hover']) ) { $colors['color_button_hover']= '#cccccc'; }
-   if(empty($colors['color_button']) ) { $colors['color_button']= '#1e73be'; }
-
-    $wysijaRemplacements = array (
-        "#_COLORTXT" => esc_html($colors['color_field_text']),
-        "#_COLORBG" => esc_html($colors['color_field_background']),
-        "#_COLORBORDER" => esc_html($colors['color_field_border']),
-        "#_COLORBUTTON" => esc_html($colors['color_button']),
-        "#_COLORTEXTBUTTON" => esc_html($colors['color_text_button']),
-        "#_COLOR_BTN_HOVER" => esc_html($colors['color_button_hover']),
-        "#_COLOR_BTN_CLICK" => esc_html($colors['color_button_onclick'])
-    );
-
-   if(isset($o['code_newletter']) && $o['code_newletter']!='' && strpos($o['code_newletter'], 'wysija_form') == 1 ) {
-
-        $output = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_wysija_style() );
-
-    } elseif(isset($o['code_newletter']) && strpos($o['code_newletter'], 'mc4wp_form') == 1 ) {
-
-        $output = str_replace(array_keys($wysijaRemplacements), array_values($wysijaRemplacements), wpm_mc4wp_style() );
-
-    }
-
-   if(isset($output) && $output!='' ) {
-        return '<style type="text/css">'.wpm_compress(sanitize_text_field($output)).'</style>';
-    } else {
-        return;
-    }
-}
 
 function wpm_newsletter() {
 
