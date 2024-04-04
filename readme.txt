@@ -3,8 +3,8 @@ Contributors: Florent73
 Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
-Tested up to: 6.4
-Stable tag: 6.1.8
+Tested up to: 6.5
+Stable tag: 6.1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,15 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Changelog ==
+
+= 6.1.9.2 =
+* Fixed bug Google Fonts
+
+= 6.1.9.1 =
+* Fixed bug Roles and Capabilities
+
+= 6.1.9 =
+* Fixed security issue
 
 = 6.1.8 =
 * Bug fixed for Disable REST API if not logged and maintenance no actived

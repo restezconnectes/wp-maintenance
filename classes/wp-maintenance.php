@@ -756,8 +756,7 @@ class WP_maintenance {
                 if( is_user_logged_in() ) {
                     $user_id = get_current_user_id(); 
                     $user_info = get_userdata($user_id);
-                    $user_role = implode(', ', $user_info->roles);
-                    if( $limitrole == $user_role ) {
+                    if( in_array($limitrole, $user_info->roles)) {
                         $statusActive = 0;
                     }
                 }

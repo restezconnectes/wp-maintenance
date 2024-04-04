@@ -198,9 +198,9 @@ function wpm_get_nav2() {
       <ul>';
     foreach( $tabOptions as $page=>$values) {
         
-        if (isset($_GET['page']) && $_GET['page']!=$page ) { $active = ''; } else { $active = 'active'; }
+        if (isset($_GET['page']) && $_GET['page']!=$page ) { $active = ''; $classOnglet = 'width: 5%;'; } else { $active = 'color:#fff!important;'; $classOnglet = 'width: 5%;background-color: #848838!important;border: 1px solid #848838 !important;'; }
         
-        $getDashicons .= '<li><a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="'.$active.' module-'.$page.'" onFocus="this.blur()"><span class="dashicons '.$tabOptions[$page]['dashicons'].'"></span><br />'.$tabOptions[$page]['text'].'</a></li>';
+        $getDashicons .= '<li style="'.$classOnglet.'"><a href="'.admin_url().'admin.php?page='.$page.'" alt="'.$tabOptions[$page]['text'].'" title="'.$tabOptions[$page]['text'].'" class="module-'.$page.'" onFocus="this.blur()" style="'.$active.'"><span class="dashicons '.$tabOptions[$page]['dashicons'].'"></span><br />'.$tabOptions[$page]['text'].'</a></li>';
         
     }
     $getDashicons .= '<a href="'.site_url().'/?wpmpreview=true" target="_blank" alt="'.__('Preview page', 'wp-maintenance').'" title="'.__('Preview page', 'wp-maintenance').'" class="wpmadashicons" onFocus="this.blur()" style="color:#23282d;text-decoration:none;"><div style="background:#D6D5AA;color:#23282d;padding:1em 1em;margin: 1em 1em;text-align:center;"><span class="dashicons dashicons-external" style="font-size:20px;" ></span> '.__('Preview page', 'wp-maintenance').'</div></a>';
@@ -238,10 +238,6 @@ function wpm_get_ip() {
 	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
 		return esc_html($_SERVER['HTTP_CLIENT_IP']);
 	}
-	// IP derrière un proxy
-	elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		return esc_html($_SERVER['HTTP_X_FORWARDED_FOR']);
-	}
 	// Sinon : IP normale
 	else {
 		return (isset($_SERVER['REMOTE_ADDR']) ? esc_html($_SERVER['REMOTE_ADDR']) : '');
@@ -267,72 +263,17 @@ function wpm_array_value_count($array) {
     return $count;
 } 
 
-function wpm_getFontsTab() {
-    return array("Abel", "Abril Fatface", "Aclonica", "Acme", "Actor", "Adamina", "Advent Pro",
-			"Aguafina Script", "Aladin", "Aldrich", "Alegreya", "Alegreya SC", "Alex Brush", "Alfa Slab One", "Alice",
-			"Alike", "Alike Angular", "Allan", "Allerta", "Allerta Stencil", "Allura", "Almendra", "Almendra SC", "Amaranth",
-			"Amatic SC", "Amethysta", "Andada", "Andika", "Angkor", "Annie Use Your Telescope", "Anonymous Pro", "Antic",
-			"Antic Didone", "Antic Slab", "Anton", "Arapey", "Arbutus", "Architects Daughter", "Arimo", "Arizonia", "Armata",
-			"Artifika", "Arvo", "Asap", "Asset", "Astloch", "Asul", "Atomic Age", "Aubrey", "Audiowide", "Average",
-			"Averia Gruesa Libre", "Averia Libre", "Averia Sans Libre", "Averia Serif Libre", "Bad Script", "Balthazar",
-			"Bangers", "Basic", "Battambang", "Baumans", "Bayon", "Belgrano", "Belleza", "Bentham", "Berkshire Swash",
-			"Bevan", "Bigshot One", "Bilbo", "Bilbo Swash Caps", "Bitter", "Black Ops One", "Bokor", "Bonbon", "Boogaloo",
-			"Bowlby One", "Bowlby One SC", "Brawler", "Bree Serif", "Bubblegum Sans", "Buda", "Buenard", "Butcherman",
-			"Butterfly Kids", "Cabin", "Cabin Condensed", "Cabin Sketch", "Caesar Dressing", "Cagliostro", "Calligraffitti",
-			"Cambo", "Candal", "Cantarell", "Cantata One", "Cardo", "Carme", "Carter One", "Caudex", "Cedarville Cursive",
-			"Ceviche One", "Changa One", "Chango", "Chau Philomene One", "Chelsea Market", "Chenla", "Cherry Cream Soda",
-			"Chewy", "Chicle", "Chivo", "Coda", "Coda Caption", "Codystar", "Comfortaa", "Coming Soon", "Concert One",
-			"Condiment", "Content", "Contrail One", "Convergence", "Cookie", "Copse", "Corben", "Cousine", "Coustard",
-			"Covered By Your Grace", "Crafty Girls", "Creepster", "Crete Round", "Crimson Text", "Crushed", "Cuprum", "Cutive",
-			"Damion", "Dancing Script", "Dangrek", "Dawning of a New Day", "Days One", "Delius", "Delius Swash Caps", 
-			"Delius Unicase", "Della Respira", "Devonshire", "Didact Gothic", "Diplomata", "Diplomata SC", "Doppio One", 
-			"Dorsa", "Dosis", "Dr Sugiyama", "Droid Sans", "Droid Sans Mono", "Droid Serif", "Duru Sans", "Dynalight",
-			"EB Garamond", "Eater", "Economica", "Electrolize", "Emblema One", "Emilys Candy", "Engagement", "Enriqueta",
-			"Erica One", "Esteban", "Euphoria Script", "Ewert", "Exo", "Expletus Sans", "Fanwood Text", "Fascinate", "Fascinate Inline",
-			"Federant", "Federo", "Felipa", "Fjord One", "Flamenco", "Flavors", "Fondamento", "Fontdiner Swanky", "Forum",
-			"Francois One", "Fredericka the Great", "Fredoka One", "Freehand", "Fresca", "Frijole", "Fugaz One", "GFS Didot",
-			"GFS Neohellenic", "Galdeano", "Gentium Basic", "Gentium Book Basic", "Geo", "Geostar", "Geostar Fill", "Germania One",
-			"Give You Glory", "Glass Antiqua", "Glegoo", "Gloria Hallelujah", "Goblin One", "Gochi Hand", "Gorditas",
-			"Goudy Bookletter 1911", "Graduate", "Gravitas One", "Great Vibes", "Gruppo", "Gudea", "Habibi", "Hammersmith One",
-			"Handlee", "Hanuman", "Happy Monkey", "Henny Penny", "Herr Von Muellerhoff", "Holtwood One SC", "Homemade Apple",
-			"Homenaje", "IM Fell DW Pica", "IM Fell DW Pica SC", "IM Fell Double Pica", "IM Fell Double Pica SC",
-			"IM Fell English", "IM Fell English SC", "IM Fell French Canon", "IM Fell French Canon SC", "IM Fell Great Primer",
-			"IM Fell Great Primer SC", "Iceberg", "Iceland", "Imprima", "Inconsolata", "Inder", "Indie Flower", "Inika",
-			"Irish Grover", "Istok Web", "Italiana", "Italianno", "Jim Nightshade", "Jockey One", "Jolly Lodger", "Josefin Sans",
-			"Josefin Slab", "Judson", "Julee", "Junge", "Jura", "Just Another Hand", "Just Me Again Down Here", "Kameron",
-			"Karla", "Kaushan Script", "Kelly Slab", "Kenia", "Khmer", "Knewave", "Kotta One", "Koulen", "Kranky", "Kreon",
-			"Kristi", "Krona One", "La Belle Aurore", "Lancelot", "Lato", "League Script", "Leckerli One", "Ledger", "Lekton",
-			"Lemon", "Lilita One", "Limelight", "Linden Hill", "Lobster", "Lobster Two", "Londrina Outline", "Londrina Shadow",
-			"Londrina Sketch", "Londrina Solid", "Lora", "Love Ya Like A Sister", "Loved by the King", "Lovers Quarrel",
-			"Luckiest Guy", "Lusitana", "Lustria", "Macondo", "Macondo Swash Caps", "Magra", "Maiden Orange", "Mako", "Marck Script",
-			"Marko One", "Marmelad", "Marvel", "Mate", "Mate SC", "Maven Pro", "Meddon", "MedievalSharp", "Medula One", "Merriweather",
-			"Metal", "Metamorphous", "Michroma", "Miltonian", "Miltonian Tattoo", "Miniver", "Miss Fajardose", "Modern Antiqua",
-			"Molengo", "Monofett", "Monoton", "Monsieur La Doulaise", "Montaga", "Montez", "Montserrat", "Moul", "Moulpali",
-			"Mountains of Christmas", "Mr Bedfort", "Mr Dafoe", "Mr De Haviland", "Mrs Saint Delafield", "Mrs Sheppards",
-			"Muli", "Mystery Quest", "Neucha", "Neuton", "News Cycle", "Niconne", "Nixie One", "Nobile", "Nokora", "Norican",
-			"Nosifer", "Nothing You Could Do", "Noticia Text", "Nova Cut", "Nova Flat", "Nova Mono", "Nova Oval", "Nova Round",
-			"Nova Script", "Nova Slim", "Nova Square", "Numans", "Nunito", "Odor Mean Chey", "Old Standard TT", "Oldenburg",
-			"Oleo Script", "Open Sans", "Open Sans Condensed", "Orbitron", "Original Surfer", "Oswald", "Over the Rainbow",
-			"Overlock", "Overlock SC", "Ovo", "Oxygen", "PT Mono", "PT Sans", "PT Sans Caption", "PT Sans Narrow", "PT Serif",
-			"PT Serif Caption", "Pacifico", "Parisienne", "Passero One", "Passion One", "Patrick Hand", "Patua One", "Paytone One",
-			"Permanent Marker", "Petrona", "Philosopher", "Piedra", "Pinyon Script", "Plaster", "Play", "Playball", "Playfair Display",
-			"Podkova", "Poiret One", "Poller One", "Poly", "Pompiere", "Pontano Sans", "Port Lligat Sans", "Port Lligat Slab",
-			"Prata", "Preahvihear", "Press Start 2P", "Princess Sofia", "Prociono", "Prosto One", "Puritan", "Quantico",
-			"Quattrocento", "Quattrocento Sans", "Questrial", "Quicksand", "Qwigley", "Radley", "Raleway", "Rammetto One",
-			"Rancho", "Rationale", "Redressed", "Reenie Beanie", "Revalia", "Ribeye", "Ribeye Marrow", "Righteous", "Rochester",
-			"Rock Salt", "Rokkitt", "Ropa Sans", "Rosario", "Rosarivo", "Rouge Script", "Ruda", "Ruge Boogie", "Ruluko",
-			"Ruslan Display", "Russo One", "Ruthie", "Sail", "Salsa", "Sancreek", "Sansita One", "Sarina", "Satisfy", "Schoolbell",
-			"Seaweed Script", "Sevillana", "Shadows Into Light", "Shadows Into Light Two", "Shanti", "Share", "Shojumaru",
-			"Short Stack", "Siemreap", "Sigmar One", "Signika", "Signika Negative", "Simonetta", "Sirin Stencil", "Six Caps",
-			"Slackey", "Smokum", "Smythe", "Sniglet", "Snippet", "Sofia", "Sonsie One", "Sorts Mill Goudy", "Special Elite",
-			"Spicy Rice", "Spinnaker", "Spirax", "Squada One", "Stardos Stencil", "Stint Ultra Condensed", "Stint Ultra Expanded",
-			"Stoke", "Sue Ellen Francisco", "Sunshiney", "Supermercado One", "Suwannaphum", "Swanky and Moo Moo", "Syncopate",
-			"Tangerine", "Taprom", "Telex", "Tenor Sans", "The Girl Next Door", "Tienne", "Tinos", "Titan One", "Trade Winds",
-			"Trocchi", "Trochut", "Trykker", "Tulpen One", "Ubuntu", "Ubuntu Condensed", "Ubuntu Mono", "Ultra", "Uncial Antiqua",
-			"UnifrakturCook", "UnifrakturMaguntia", "Unkempt", "Unlock", "Unna", "VT323", "Varela", "Varela Round", "Vast Shadow",
-			"Vibur", "Vidaloka", "Viga", "Voces", "Volkhov", "Vollkorn", "Voltaire", "Waiting for the Sunrise", "Wallpoet",
-			"Walter Turncoat", "Wellfleet", "Wire One", "Yanone Kaffeesatz", "Yellowtail", "Yeseva One", "Yesteryear", "Zeyada"
-		);
+function wpm_getFontsTab($font = '') {
+
+    $listGoogleFonts = array(
+        "Aclonica" => "sans-serif", "Allan" => "serif", "Annie Use Your Telescope" => "cursive", "Anonymous Pro" => "monospace", "Allerta Stencil" => "sans-serif", "Allerta" => "sans-serif", "Amaranth" => "sans-serif", "Anton" => "sans-serif", "Architects Daughter" => "cursive", "Arimo" => "sans-serif", "Artifika" => "serif", "Arvo" => "serif", "Asset" => "serif", "Astloch" => "system-ui", "Bangers" => "Bangers", "Barrio" => "system-ui", "Bentham" => "serif", "Bevan" => "Bevan", "Bigshot One" => "serif", "Bowlby One" => "sans-serif", "Bowlby One SC" => "sans-serif", "Brawler" => "serif", "Buda" => "serif", "Cabin" => "sans-serif", "Calligraffitti" => "cursive", "Candal" => "sans-serif", "Cantarell" => "sans-serif", "Cardo" => "serif", "Carter One" => "system-ui", "Caudex" => "serif", "Cedarville Cursive" => "cursive", "Cherry Cream Soda" => "system-ui", "Chewy" => "system-ui", "Coda" => "system-ui", "Coming Soon" => "cursive", "Copse" => "serif", "Corben" => "serif", "Cousine" => "monospace", "Covered By Your Grace" => "cursive", "Crafty Girls" => "cursive", "Crimson Text" => "serif", "Crushed" => "sans-serif", "Cuprum" => "sans-serif", "Damion" => "cursive", "Dancing Script" => "cursive", "Dawning of a New Day" => "cursive", "Didact Gothic" => "sans-serif", "EB Garamond" => "serif", "Expletus Sans" => "sans-serif", "Fontdiner Swanky" => "serif", "Forum" => "serif", "Francois One" => "sans-serif", "Geo" => "sans-serif", "Give You Glory" => "cursive", "Goblin One" => "serif", "Goudy Bookletter 1911" => "serif", "Gravitas One" => "serif", "Gruppo" => "sans-serif", "Hammersmith One" => "sans-serif", "Holtwood One SC" => "serif", "Homemade Apple" => "cursive", "Inconsolata" => "monospace", "Indie Flower" => "cursive", "IM Fell DW Pica" => "serif", "IM Fell DW Pica SC" => "serif", "IM Fell Double Pica" => "serif", "IM Fell Double Pica SC" => "serif", "IM Fell English" => "serif", "IM Fell English SC" => "serif", "IM Fell French Canon" => "serif", "IM Fell French Canon SC" => "serif", "IM Fell Great Primer" => "serif", "IM Fell Great Primer SC" => "serif", "Irish Grover" => "system-ui", "Istok Web" => "sans-serif", "Josefin Sans" => "sans-serif", "Josefin Slab" => "serif", "Judson" => "serif", "Jura" => "sans-serif", "Just Another Hand" => "cursive", "Just Me Again Down Here" => "cursive", "Kameron" => "serif", "Kenia" => "sans-serif", "Kranky" => "serif", "Kreon" => "serif", "Kristi" => "cursive", "La Belle Aurore" => "cursive", "Lato" => "sans-serif", "League Script" => "cursive", "Lekton" => "sans-serif", "Life Savers" => "serif", "Limelight" => "sans-serif", "Lobster" => "sans-serif", "Lobster Two" => "sans-serif", "Lora" => "serif", "Love Ya Like A Sister" => "serif", "Loved by the King" => "cursive", "Luckiest Guy" => "cursive", "Maiden Orange" => "serif", "Mako" => "sans-serif", "Maven Pro" => "sans-serif", "Meddon" => "cursive", "MedievalSharp" => "cursive", "Megrim" => "system-ui", "Merriweather" => "serif", "Metrophobic" => "sans-serif", "Michroma" => "sans-serif", "Miltonian Tattoo" => "serif", "Miltonian" => "serif", "Modern Antiqua" => "serif", "Monofett" => "monospace", "Molengo" => "sans-serif", "Mountains of Christmas" => "serif", "Muli" => "sans-serif", "Neucha" => "cursive", "Neuton" => "serif", "News Cycle" => "sans-serif", "Nixie One" => "system-ui", "Nobile" => "sans-serif", "Nova Cut" => "system-ui", "Nova Flat" => "system-ui", "Nova Mono" => "monospace", "Nova Oval" => "system-ui", "Nova Round" => "system-ui", "Nova Script" => "system-ui", "Nova Slim" => "system-ui", "Nova Square" => "sans-serif", "Nunito" => "sans-serif", "Old Standard TT" => "serif", "Open Sans" => "sans-serif", "Orbitron" => "sans-serif", "Oswald" => "sans-serif", "Over the Rainbow" => "cursive", "Reenie Beanie" => "cursive", "Pacifico" => "cursive", "Patrick Hand" => "cursive", "Paytone One" => "sans-serif", "Permanent Marker" => "cursive", "Philosopher" => "sans-serif", "Play" => "sans-serif", "Playfair Display" => "serif", "Podkova" => "serif", "PT Sans" => "sans-serif", "PT Sans Narrow" => "sans-serif", "PT Sans Narrow:regular,bold" => "sans-serif", "PT Serif" => "serif", "PT Serif Caption" => "serif", "Puritan" => "sans-serif", "Quattrocento" => "serif", "Quattrocento Sans" => "sans-serif", "Radley" => "serif", "Raleway" => "sans-serif", "Ravi Prakash" => "sans-serif", "Redressed" => "cursive", "Roboto" => "sans-serif", "Roboto Condensed" => "sans-serif", "Roboto Mono" => "monospace", "Roboto Slab" => "serif", "Rock Salt" => "cursive", "Rokkitt" => "serif", "Ruslan Display" => "sans-serif", "Schoolbell" => "cursive", "Shadows Into Light" => "cursive", "Shanti" => "sans-serif", "Sigmar One" => "sans-serif", "Six Caps" => "sans-serif", "Slackey" => "sans-serif", "Smythe" => "system-ui", "Sniglet" => "system-ui", "Special Elite" => "system-ui", "Stardos Stencil" => "system-ui", "Sue Ellen Francisco" => "cursive", "Sunshiney" => "cursive", "Swanky and Moo Moo" => "cursive", "Syncopate" => "sans-serif", "Tangerine" => "cursive", "Tenor Sans" => "sans-serif", "The Girl Next Door" => "cursive", "Tinos" => "serif", "Ubuntu" => "sans-serif", "Ultra" => "serif", "Unkempt" => "cursive", "UnifrakturCook:bold" => "cursive", "UnifrakturMaguntia" => "cursive", "Varela" => "sans-serif", "Varela Round" => "sans-serif", "Vibur" => "cursive", "Vollkorn" => "serif", "VT323" => "monospace", "Waiting for the Sunrise" => "cursive", "Wallpoet" => "sans-serif", "Walter Turncoat" => "cursive", "Wire One" => "sans-serif", "Yanone Kaffeesatz" => "sans-serif", "Yeseva One" => "serif", "Zeyada" => "cursive"
+    );
+
+    if( isset($font) && $font !='') {
+        return $listGoogleFonts[$font];
+    } else {
+        return $listGoogleFonts;
+    }
 }
 
 /**
@@ -367,18 +308,30 @@ function wpm_getFontsList($name = "", $value = "") {
     $fonts = wpm_getFontsTab();
     if($value == '') { $value = 'Acme'; }
     $tab_fonts = "<select name='".$name."'>";
-    foreach($fonts as &$namefont) {
+    foreach($fonts as $namefont => $type) {
         $addOption = '';
         if($value == $namefont) { $addOption = 'selected'; }
-        $tab_fonts .= '<option value="'.$namefont.'" '.$addOption.' style="font-family: '.$namefont.'">'.$namefont.'</option>';
+        $tab_fonts .= '<option value="'.$namefont.'" '.$addOption.' style="font-family: "'.$namefont.'", '.$type.';">'.$namefont.'</option>';
     }
     $tab_fonts .= "</select>";
 
     return $tab_fonts;
 }
 /* Formatte la police sélectionnée */
-function wpm_format_font($font) {
-    return str_replace('+', ' ', $font);
+function wpm_format_font($font, $displayStyle = 1) {
+    $listFonts = wpm_getFontsTab();
+    $font = str_replace('+', ' ', $font);
+    $styleFont = '';
+    if( isset($listFonts[$font]) && $listFonts[$font]!='' ) {  
+        $styleFont = $listFonts[$font];
+        if( isset($displayStyle) && $displayStyle == 1 ) {
+            $font = '"'.$font.'", '.$styleFont;
+        } else {
+            $font = $font.', '.$styleFont;
+        }
+    }
+
+    return $font;
 }
 
 function wpm_compress($buffer) {

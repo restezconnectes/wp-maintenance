@@ -104,14 +104,24 @@ function wpm_head() {
         $output = '';
     } else {
         $output = "<!-- Add Google Fonts -->\n";
+        /*$output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';*/
         $arrayfonts = array($o['font_title'], $o['font_text'], $o['font_text_bottom'], $o['font_cpt'], $o['newletter_font_text'], $o['newletter_font_text']);
         $uniqueArrayfonts = array_unique($arrayfonts);        
         $addFont = '';
         foreach ($uniqueArrayfonts as $keyFont => $valFont) {
-            $valFont = str_replace(' ', '+', $valFont);
-            $addFont .= '&family='.$valFont.'';
+
+            $listFonts = wpm_getFontsTab();
+            $searchFont = str_replace('+', ' ', $valFont);
+            if ( array_key_exists($searchFont, $listFonts) ) {
+                $valFont = str_replace(' ', '+', $valFont);
+                $addFont .= 'family='.$valFont.'&';
+            }
         }
-        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'.substr($addFont, 0,-1).'">';
+        //$output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'.substr($addFont, 0,-1).'&display=swap">';
+        $output .= '<style>
+        @import url(\'https://fonts.googleapis.com/css2?'.substr($addFont, 0,-1).'&display=swap\');
+        </style>';
     }
     return $output;
 }

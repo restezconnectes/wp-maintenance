@@ -36,7 +36,7 @@ class WPM_Countdown extends WP_maintenance {
                         ForeColor = "'.$paramsColors['color_cpt'].'";
                         Disable = "'.$paramsCountdown['disable'].'";
                         UrlDisable = "'.get_option( 'siteurl').'";
-                        FontFamily = "'.wpm_format_font($paramsColors['font_cpt']).'";
+                        FontFamily = "'.wpm_format_font($paramsColors['font_cpt'], 0).'";
                         FontTextSize = "'.$paramsColors['cpt_end_size'].'";
                         CountActive = true;
                         CountStepper = -1;
@@ -49,7 +49,7 @@ class WPM_Countdown extends WP_maintenance {
                 $Counter .= "';";
                 if( isset($paramsCountdown['message_cpt_fin']) && $paramsCountdown['message_cpt_fin']!='' ) {
                     $Counter .= '
-                    FinishMessage = "'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramsCountdown['message_cpt_fin']) ) ).'";';
+                    FinishMessage = "<span style=\"font-style: normal;font-size:'.$paramsColors['cpt_end_size'].'vw;text-transform: none;font-family:'.str_replace('"',"'", wpm_format_font($paramsColors['font_end_cpt'])).'!important;\">'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramsCountdown['message_cpt_fin']) ) ).'</span>";';
                 } else {
                     $Counter .= '
                     FinishMessage = "&nbsp;";';
@@ -67,8 +67,14 @@ class WPM_Countdown extends WP_maintenance {
 
     public static function css() {
 
-        // Récupère les paramètres sauvegardés
-        $paramsCountdown = wp_maintenance::wpm_get_options();
+        // Récupère les paramètres sauvegardés COLORS
+        if(get_option('wp_maintenance_settings_colors')) { extract(get_option('wp_maintenance_settings_colors')); }
+        $paramsColors = get_option('wp_maintenance_settings_colors');
+
+        // Récupère les paramètres sauvegardés COUNTDOWN
+        if(get_option('wp_maintenance_settings_countdown')) { extract(get_option('wp_maintenance_settings_countdown')); }
+        $paramsCountdown = get_option('wp_maintenance_settings_countdown');
+
         $wpmStyle = '';
         if( isset($paramsCountdown['active_cpt']) && $paramsCountdown['active_cpt']==1) {
         $wpmStyle .= '
@@ -78,6 +84,7 @@ if( isset($paramsCountdown['date_cpt_size']) ) { $wpmStyle .= 'font-size:'.$para
 if( isset($paramsCountdown['font_cpt']) ) { $wpmStyle .= 'font-family: '.wpm_format_font($paramsCountdown['font_cpt']).', serif;'; }
 $wpmStyle .= '
 }
+#cntdwn {font-size:'.$paramsColors['cpt_end_size'].'vw;}
 
 @media screen and (min-width: 200px) and (max-width: 480px) {
 
