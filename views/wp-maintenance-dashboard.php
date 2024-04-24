@@ -26,15 +26,15 @@ $statusActive = get_option('wp_maintenance_active');
 <div class="wrap">
 
     <!-- HEADER -->
-    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <h2 class="headerpage"><?php esc_html_e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php echo esc_html(WPM_VERSION); ?></sup></h2>
     <?php if( isset($message) && $message == 1 ) { ?>
-        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+        <div id="message" class="updated fade"><p><strong><?php esc_html_e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
     <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav2(); ?>
+    <?php echo wp_kses(wpm_get_nav2(), wpm_autorizeHtml()); ?>
 
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
 
@@ -45,20 +45,20 @@ $statusActive = get_option('wp_maintenance_active');
                 <!-- ACTIVER WP MAINTENANCE -->
                 <div class="wp-maintenance-module-options-block">
                 
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php _e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php esc_html_e('Activate maintenance mode', 'wp-maintenance'); ?></h3></div>
                     
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable maintenance mode', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable maintenance mode', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wp_maintenance_active" value="1" <?php if( isset($statusActive) && $statusActive==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
 
                 </div>
                 <!-- TITRE ET TEXTE  -->
                 <div class="wp-maintenance-module-options-block">
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php _e('Title and text', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" ><?php esc_html_e('Title and text', 'wp-maintenance'); ?></h3></div>
                     <input type="text" size="80%" class="wp-maintenance-input" name="wpsettings[titre_maintenance]" value="<?php if( isset($paramsSettings['titre_maintenance']) && $paramsSettings['titre_maintenance']!='' ) { echo esc_html(stripslashes($paramsSettings['titre_maintenance'])); } ?>" /><br />
                     <?php 
                         $settingsTextmaintenance =   array(
@@ -78,35 +78,35 @@ $statusActive = get_option('wp_maintenance_active');
                     if( isset($paramsSettings['text_maintenance']) && $paramsSettings['text_maintenance']!='' ) { $textWpm = stripslashes($paramsSettings['text_maintenance']); }
                     ?>
                     <?php wp_editor( nl2br($textWpm), 'wpm-textmaintenance', $settingsTextmaintenance ); ?>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
 
                 </div>
                 
                 <!-- Encart Newletter -->
                 <div class="wp-maintenance-module-options-block">
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title"><?php _e('Activate newsletter block', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title"><?php esc_html_e('Activate newsletter block', 'wp-maintenance'); ?></h3></div>
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable newsletter block', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable newsletter block', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpsettings[newletter]" value="1" <?php if( isset($paramsSettings['newletter']) && $paramsSettings['newletter']==1 ) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
 
                     <div class="wp-maintenance-setting-row">
-                        <label for="wpsettings[title_newletter]" class="wp-maintenance-setting-row-title"><?php _e('Enter title for the newletter block', 'wp-maintenance'); ?></label>
+                        <label for="wpsettings[title_newletter]" class="wp-maintenance-setting-row-title"><?php esc_html_e('Enter title for the newletter block', 'wp-maintenance'); ?></label>
                         <input type="text" name="wpsettings[title_newletter]" class="wp-maintenance-input" size="60%" value="<?php if( isset($paramsSettings['title_newletter']) && $paramsSettings['title_newletter']!='' ) { echo esc_html(stripslashes(trim($paramsSettings['title_newletter']))); } ?>" />
                     </div>
 
                     <div class="wp-maintenance-setting-row">
-                        <label for="wpsettings[type-newletter]" class="wp-maintenance-setting-row-title"><?php _e('Type of the newletter block', 'wp-maintenance'); ?></label>
-                        <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" size="60%" value="shortcode" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='shortcode' ) { echo 'checked'; } if( empty($paramsSettings['type_newletter']) ) { echo 'checked'; } ?>  /><?php _e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
+                        <label for="wpsettings[type-newletter]" class="wp-maintenance-setting-row-title"><?php esc_html_e('Type of the newletter block', 'wp-maintenance'); ?></label>
+                        <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" size="60%" value="shortcode" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='shortcode' ) { echo 'checked'; } if( empty($paramsSettings['type_newletter']) ) { echo 'checked'; } ?>  /><?php esc_html_e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
                         <input type="text" name="wpsettings[code_newletter]" size="60%" class="wp-maintenance-input" value='<?php if( isset($paramsSettings['code_newletter']) && $paramsSettings['code_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramsSettings['code_newletter']))); } ?>' onclick="select()" /><br /><br />
-                        <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" value="iframe" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='iframe' ) { echo 'checked'; } ?>/> <?php _e('Or enter your newletter iframe code here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
+                        <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" value="iframe" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='iframe' ) { echo 'checked'; } ?>/> <?php esc_html_e('Or enter your newletter iframe code here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
                         <textarea id="iframe_newletter" cols="60" rows="10" class="wp-maintenance-input" name="wpsettings[iframe_newletter]"><?php if( isset($paramsSettings['iframe_newletter']) && $paramsSettings['iframe_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramsSettings['iframe_newletter']))); } ?></textarea> 
                     </div>
                     
 
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
 
                 </div>
             </form>
@@ -114,7 +114,7 @@ $statusActive = get_option('wp_maintenance_active');
 
     </div>
    
-    <?php echo wpm_footer(); ?>
+    <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
 
 </div>
 <script type="text/javascript">

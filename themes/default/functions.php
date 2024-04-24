@@ -106,7 +106,7 @@ function wpm_head() {
         $output = "<!-- Add Google Fonts -->\n";
         /*$output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';*/
-        $arrayfonts = array($o['font_title'], $o['font_text'], $o['font_text_bottom'], $o['font_cpt'], $o['newletter_font_text'], $o['newletter_font_text']);
+        $arrayfonts = array($o['font_title'], $o['font_text'], $o['font_text_bottom'], $o['font_cpt']);
         $uniqueArrayfonts = array_unique($arrayfonts);        
         $addFont = '';
         foreach ($uniqueArrayfonts as $keyFont => $valFont) {

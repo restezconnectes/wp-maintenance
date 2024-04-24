@@ -15,7 +15,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_css' && wp_verify_non
 if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
     update_option( 'wp_maintenance_settings_css', wpm_print_style() );
     //$options_saved = true;
-    echo '<div id="message" class="updated fade"><p><strong>'.__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
+    echo '<div id="message" class="updated fade"><p><strong>'.esc_html__('The Style Sheet has been reset!', 'wp-maintenance').'</strong></p></div>';
 }
 
 ?>
@@ -29,15 +29,15 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
 <div class="wrap">
 
     <!-- HEADER -->
-    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <h2 class="headerpage"><?php esc_html_e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php echo esc_html(WPM_VERSION); ?></sup></h2>
     <?php if( isset($messageUpdate) && $messageUpdate == 1 ) { ?>
-        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+        <div id="message" class="updated fade"><p><strong><?php esc_html_e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
     <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav2(); ?>
+    <?php echo wp_kses(wpm_get_nav2(), wpm_autorizeHtml()); ?>
  
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
 
@@ -48,33 +48,33 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                 <div class="wp-maintenance-module-options-block">                
 
                     <!-- PIED DE PAGE  -->
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Edit the CSS sheet of your maintenance page here.', 'wp-maintenance'); ?></h3></div>
-                    <h3><?php _e('Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?></h3>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Edit the CSS sheet of your maintenance page here.', 'wp-maintenance'); ?></h3></div>
+                    <h3><?php esc_html_e('Click "Reset" and "Save" to retrieve the default style sheet.', 'wp-maintenance'); ?></h3>
                     <TEXTAREA NAME="wp_maintenance_settings_css" id="wpmaintenancestyle" COLS=70 ROWS=24 style="height:350px;"><?php echo esc_textarea(stripslashes(trim(get_option('wp_maintenance_settings_css')))); ?></TEXTAREA>                    
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, reset style sheet', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, reset style sheet', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpm_initcss" value="1">
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
 
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
 
                 <div class="wp-maintenance-module-options-block"> 
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Markers for colors', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Markers for colors', 'wp-maintenance'); ?></h3></div>
                     <div class="wp-maintenance-setting-row">
-                        <label class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php _e('Use this code for text color', 'wp-maintenance'); ?>
-                        <label class="wp-maintenance-setting-row-title">#_COLORBG</label> <?php _e('Use this code for background text color', 'wp-maintenance'); ?>
-                        <label class="wp-maintenance-setting-row-title">#_COLORCPTBG</label> <?php _e('Use this code for background color countdown', 'wp-maintenance'); ?>
-                        <label class="wp-maintenance-setting-row-title">#_DATESIZE</label> <?php _e('Use this code for size countdown', 'wp-maintenance'); ?>
-                        <label class="wp-maintenance-setting-row-title">#_COLORCPT</label> <?php _e('Use this code for countdown color', 'wp-maintenance'); ?>
-                        <label class="wp-maintenance-setting-row-title">#_COLOR_TXT_BT</label> <?php _e('Use this code for bottom text color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORTXT</label> <?php esc_html_e('Use this code for text color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORBG</label> <?php esc_html_e('Use this code for background text color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORCPTBG</label> <?php esc_html_e('Use this code for background color countdown', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_DATESIZE</label> <?php esc_html_e('Use this code for size countdown', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLORCPT</label> <?php esc_html_e('Use this code for countdown color', 'wp-maintenance'); ?>
+                        <label class="wp-maintenance-setting-row-title">#_COLOR_TXT_BT</label> <?php esc_html_e('Use this code for bottom text color', 'wp-maintenance'); ?>
                     </div>
                     
                     <br />                
-                    <a href="" onclick="AfficherCacher('divcss'); return false" ><?php _e('Need CSS code for MailPoet plugin?', 'wp-maintenance'); ?></a>
-                    <div id="divcss" style="display:none;"><i><?php _e('Click for select all', 'wp-maintenance'); ?></i><br />
+                    <a href="" onclick="AfficherCacher('divcss'); return false" ><?php esc_html_e('Need CSS code for MailPoet plugin?', 'wp-maintenance'); ?></a>
+                    <div id="divcss" style="display:none;"><i><?php esc_html_e('Click for select all', 'wp-maintenance'); ?></i><br />
                         <textarea id="css-mailpoet" onclick="select()" rows="15" cols="50%">
 .abs-req { display: none; }
 .widget_wysija_cont .wysija-submit { }
@@ -88,8 +88,8 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
                     </textarea>
                 </div>
                 <br />
-                <a href="" onclick="AfficherCacher('divcss2'); return false" ><?php _e('Need CSS code for MailChimp plugin?', 'wp-maintenance'); ?></a>
-                <div id="divcss2" style="display:none;"><i><?php _e('Click for select all', 'wp-maintenance'); ?></i><br />
+                <a href="" onclick="AfficherCacher('divcss2'); return false" ><?php esc_html_e('Need CSS code for MailChimp plugin?', 'wp-maintenance'); ?></a>
+                <div id="divcss2" style="display:none;"><i><?php esc_html_e('Click for select all', 'wp-maintenance'); ?></i><br />
                     <textarea id="css-mailchimp" onclick="select()" rows="15" cols="50%">
 .mc4wp-form {  } /* the form element */
 .mc4wp-form p { } /* form paragraphs */
@@ -127,6 +127,6 @@ if( isset($_POST['wpm_initcss']) && $_POST['wpm_initcss']==1) {
         });
     </script> 
     
-    <?php echo wpm_footer(); ?>
+    <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
     
 </div>

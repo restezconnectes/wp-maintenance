@@ -21,15 +21,15 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
 <div class="wrap">
     
     <!-- HEADER -->
-    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <h2 class="headerpage"><?php esc_html_e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php echo esc_html(WPM_VERSION); ?></sup></h2>
     <?php if( isset($message) && $message == 1 ) { ?>
-        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+        <div id="message" class="updated fade"><p><strong><?php esc_html_e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
     <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav2(); ?>
+    <?php echo wp_kses(wpm_get_nav2(), wpm_autorizeHtml()); ?>
         
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
 
@@ -40,29 +40,29 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                 <!-- ACTIVER COMPTEUR -->
                 <div class="wp-maintenance-module-options-block">
 
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Enable a countdown', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Enable a countdown', 'wp-maintenance'); ?></h3></div>
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable a countdown', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable a countdown', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpmcountdown[active_cpt]" value="1" <?php if( isset($paramsCountdown['active_cpt']) && $paramsCountdown['active_cpt']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
                 
                 <div class="wp-maintenance-module-options-block">
                     <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Date/time Launch', 'wp-maintenance'); ?></h3>
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Date/time Launch', 'wp-maintenance'); ?></h3>
                     </div>
         
-                    <h3><?php _e('Select the launch date/time', 'wp-maintenance'); ?></h3>
+                    <h3><?php esc_html_e('Select the launch date/time', 'wp-maintenance'); ?></h3>
 
                     <div class="wp-maintenance-setting-row">
                         <?php 
 
                             // Old version compte à rebours
                             if ( empty($paramsCountdown['cptdate']) ) {
-                                $paramsCountdown['cptdate'] = date('d').'/'.date('m').'/'.date('Y');
+                                $paramsCountdown['cptdate'] = gmdate('d').'/'.gmdate('m').'/'.gmdate('Y');
                             }
 
                             if( isset($paramsCountdown['cptdate']) && !empty($paramsCountdown['cptdate']) ) { 
@@ -73,7 +73,7 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                             }
 
                             if( (isset($paramsCountdown['active_cpt']) && $paramsCountdown['active_cpt']==0) || empty($paramsCountdown['active_cpt']) ) {
-                                $startDate = date_i18n( date("Y").'/'.date("m").'/'.date("d") );
+                                $startDate = date_i18n( gmdate("Y").'/'.gmdate("m").'/'.gmdate("d") );
                                 $timeFormats = array_unique( apply_filters( 'time_formats', array( 'H:i' ) ) );
                                 foreach ( $timeFormats as $format ) {
                                     $startHour = date_i18n( $format );
@@ -83,33 +83,33 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                             }
                              
                         ?>
-                        <img src="<?php echo plugins_url('../images/schedule_clock.png', __FILE__ ); ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wpmcountdown[cptdate]" type="text" autofocuss data-value="<?php echo esc_html($startDate); ?>"> <?php _e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wpmcountdown[cpttime]" value="<?php echo esc_html($startHour); ?>" size="6" autofocuss>                                
+                        <img src="<?php echo esc_url(plugins_url('../images/schedule_clock.png', __FILE__ )); ?>" class="datepicker" width="48" height="48" style="vertical-align: middle;margin-right:5px;">&nbsp;<input id="cptdate" class="datepicker" name="wpmcountdown[cptdate]" type="text" autofocuss data-value="<?php echo esc_html($startDate); ?>"> <?php esc_html_e('at', 'wp-maintenance'); ?> <input id="cpttime" class="timepicker" type="time" name="wpmcountdown[cpttime]" value="<?php echo esc_html($startHour); ?>" size="6" autofocuss>                                
                         <div id="wpmdatecontainer"></div>
                     </div>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
                 <div class="wp-maintenance-module-options-block">
 
                     <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Others Settings', 'wp-maintenance'); ?></h3>
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Others Settings', 'wp-maintenance'); ?></h3>
                     </div>
 
-                    <h3><?php _e('Enable seconds ?', 'wp-maintenance'); ?></h3>
+                    <h3><?php esc_html_e('Enable seconds ?', 'wp-maintenance'); ?></h3>
 
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable seconds', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable seconds', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpmcountdown[active_cpt_s]" value="1" <?php if( isset($paramsCountdown['active_cpt_s']) && $paramsCountdown['active_cpt_s']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
-                    <h3><?php _e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?></h3>
+                    <h3><?php esc_html_e('Disable maintenance mode at the end of the countdown?', 'wp-maintenance'); ?></h3>
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, disable maintenance mode at the end of countdown', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, disable maintenance mode at the end of countdown', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpmcountdown[disable]" value="1" <?php if( isset($paramsCountdown['disable']) && $paramsCountdown['disable']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
-                    <h3><?php _e('End message after end countdown', 'wp-maintenance'); ?></h3>           
+                    <h3><?php esc_html_e('End message after end countdown', 'wp-maintenance'); ?></h3>           
                     <?php 
                         $settingsCountdown =   array(
                             'wpautop' => true, // use wpautop?
@@ -129,7 +129,7 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                     ?>
                     <?php wp_editor( nl2br($textCpt_fin), 'message_cpt_fin', $settingsCountdown ); ?>
 
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
 
                 </div>
             </form>
@@ -137,7 +137,7 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
 
     </div>
 
-    <?php echo wpm_footer(); ?>
+    <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
     
 </div>
 <script type="text/javascript">                                    
@@ -150,19 +150,19 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
             closeOnSelect: true,
             closeOnClear: false,
             firstDay: 1,
-            min: new Date(<?php echo date('Y').','.(date('m')-1).','.date('d'); ?>),
-            monthsFull: [ '<?php _e('January', 'wp-maintenance'); ?>', '<?php _e('February', 'wp-maintenance'); ?>', '<?php _e('March', 'wp-maintenance'); ?>', '<?php _e('April', 'wp-maintenance'); ?>', '<?php _e('May', 'wp-maintenance'); ?>', '<?php _e('June', 'wp-maintenance'); ?>', '<?php _e('July', 'wp-maintenance'); ?>', '<?php _e('August', 'wp-maintenance'); ?>', '<?php _e('September', 'wp-maintenance'); ?>', '<?php _e('October', 'wp-maintenance'); ?>', '<?php _e('November', 'wp-maintenance'); ?>', '<?php _e('December', 'wp-maintenance'); ?>' ],
+            min: new Date(<?php echo esc_html(gmdate('Y').','.(gmdate('m')-1).','.gmdate('d')); ?>),
+            monthsFull: [ '<?php esc_html_e('January', 'wp-maintenance'); ?>', '<?php esc_html_e('February', 'wp-maintenance'); ?>', '<?php esc_html_e('March', 'wp-maintenance'); ?>', '<?php esc_html_e('April', 'wp-maintenance'); ?>', '<?php esc_html_e('May', 'wp-maintenance'); ?>', '<?php esc_html_e('June', 'wp-maintenance'); ?>', '<?php esc_html_e('July', 'wp-maintenance'); ?>', '<?php esc_html_e('August', 'wp-maintenance'); ?>', '<?php esc_html_e('September', 'wp-maintenance'); ?>', '<?php esc_html_e('October', 'wp-maintenance'); ?>', '<?php esc_html_e('November', 'wp-maintenance'); ?>', '<?php esc_html_e('December', 'wp-maintenance'); ?>' ],
             monthsShort: [ 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec' ],
-            weekdaysShort: [ '<?php _e('Sunday', 'wp-maintenance'); ?>', '<?php _e('Monday', 'wp-maintenance'); ?>', '<?php _e('Tuesday', 'wp-maintenance'); ?>', '<?php _e('Wednesday', 'wp-maintenance'); ?>', '<?php _e('Thurday', 'wp-maintenance'); ?>', '<?php _e('Friday', 'wp-maintenance'); ?>', '<?php _e('Saturday', 'wp-maintenance'); ?>' ],
-            today: "<?php _e('Today', 'wp-maintenance'); ?>",
-            clear: '<?php _e('Delete', 'wp-maintenance'); ?>',
-            close: '<?php _e('Close', 'wp-maintenance'); ?>',
+            weekdaysShort: [ '<?php esc_html_e('Sunday', 'wp-maintenance'); ?>', '<?php esc_html_e('Monday', 'wp-maintenance'); ?>', '<?php esc_html_e('Tuesday', 'wp-maintenance'); ?>', '<?php esc_html_e('Wednesday', 'wp-maintenance'); ?>', '<?php esc_html_e('Thurday', 'wp-maintenance'); ?>', '<?php esc_html_e('Friday', 'wp-maintenance'); ?>', '<?php esc_html_e('Saturday', 'wp-maintenance'); ?>' ],
+            today: "<?php esc_html_e('Today', 'wp-maintenance'); ?>",
+            clear: '<?php esc_html_e('Delete', 'wp-maintenance'); ?>',
+            close: '<?php esc_html_e('Close', 'wp-maintenance'); ?>',
 
             // Accessibility labels
-            labelMonthNext: '<?php _e('Next month', 'wp-maintenance'); ?>',
-            labelMonthPrev: '<?php _e('Previous month', 'wp-maintenance'); ?>',
-            labelMonthSelect: '<?php _e('Select a month', 'wp-maintenance'); ?>',
-            labelYearSelect: '<?php _e('Select a year', 'wp-maintenance'); ?>',
+            labelMonthNext: '<?php esc_html_e('Next month', 'wp-maintenance'); ?>',
+            labelMonthPrev: '<?php esc_html_e('Previous month', 'wp-maintenance'); ?>',
+            labelMonthSelect: '<?php esc_html_e('Select a month', 'wp-maintenance'); ?>',
+            labelYearSelect: '<?php esc_html_e('Select a year', 'wp-maintenance'); ?>',
 
             selectMonths: true,
             selectYears: true,
@@ -175,7 +175,7 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
 
         var $input = jQuery( '.timepicker' ).pickatime({
             //container: '#wpmtimecontainer',
-            clear: '<?php _e('Close', 'wp-maintenance'); ?>',
+            clear: '<?php esc_html_e('Close', 'wp-maintenance'); ?>',
             interval: 5,
             editable: undefined,
             format: 'HH:i', // retour ce format dans le input

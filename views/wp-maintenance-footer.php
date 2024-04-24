@@ -22,15 +22,15 @@ $paramsFooter = get_option('wp_maintenance_settings_footer');
 <div class="wrap">
 
     <!-- HEADER -->
-    <h2 class="headerpage"><?php _e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php _e(WPM_VERSION); ?></sup></h2>
+    <h2 class="headerpage"><?php esc_html_e('WP Maintenance - Settings', 'wp-maintenance'); ?> <sup>v.<?php echo esc_html(WPM_VERSION); ?></sup></h2>
     <?php if( isset($messageUpdate) && $messageUpdate == 1 ) { ?>
-        <div id="message" class="updated fade"><p><strong><?php _e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
+        <div id="message" class="updated fade"><p><strong><?php esc_html_e('Options saved.', 'wp-maintenance'); ?></strong></p></div>
     <?php } ?>
     <!-- END HEADER -->
 
     <div class="wp-maintenance-wrapper">
 
-        <?php echo wpm_get_nav2(); ?>
+        <?php echo wp_kses(wpm_get_nav2(), wpm_autorizeHtml()); ?>
         
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
 
@@ -42,18 +42,18 @@ $paramsFooter = get_option('wp_maintenance_settings_footer');
                 <div class="wp-maintenance-module-options-block">
                 
                     <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Enable Footer?', 'wp-maintenance'); ?></h3>
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Enable Footer?', 'wp-maintenance'); ?></h3>
                     </div>
 
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, enable footer', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable footer', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpfooter[enable_footer]" value="1" <?php if( isset($paramsFooter['enable_footer']) && $paramsFooter['enable_footer']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
 
                     <!-- PIED DE PAGE  -->
-                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Text in the footer', 'wp-maintenance'); ?></h3></div>
+                    <div class="wp-maintenance-settings-section-header"><h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Text in the footer', 'wp-maintenance'); ?></h3></div>
                     <?php 
                         $settingsTextmaintenance =   array(
                             'wpautop' => true, // use wpautop?
@@ -72,35 +72,37 @@ $paramsFooter = get_option('wp_maintenance_settings_footer');
                     if( isset($paramsFooter['text_bt_maintenance']) && $paramsFooter['text_bt_maintenance']!='' ) { $textBt = stripslashes($paramsFooter['text_bt_maintenance']); } 
                     ?>
                     <?php wp_editor( nl2br($textBt), 'wpm-textbtmaintenance', $settingsTextmaintenance ); ?>
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
                 </div>
                 
                 <!-- LINK TO LOGIN -->
                 <div class="wp-maintenance-module-options-block">
                     
                     <div class="wp-maintenance-settings-section-header">
-                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php _e('Add a link to dashboard in the footer?', 'wp-maintenance'); ?></h3>
+                        <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Add a link to dashboard in the footer?', 'wp-maintenance'); ?></h3>
                     </div>
 
                     <p>
-                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php _e('Yes, show text and link to go to the dashboard', 'wp-maintenance'); ?></span>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, show text and link to go to the dashboard', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpfooter[add_wplogin]" value="1" <?php if( isset($paramsFooter['add_wplogin']) && $paramsFooter['add_wplogin'] == 1 ) { echo ' checked'; }?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>
 
                     <div class="wp-maintenance-setting-row">
-                        <label for="wpfooter[add_wplogin_title]" class="wp-maintenance-setting-row-title"><?php _e('Enter your text and #DASHBOARD shortcode', 'wp-maintenance'); ?></label>
+                        <label for="wpfooter[add_wplogin_title]" class="wp-maintenance-setting-row-title"><?php esc_html_e('Enter your text and #DASHBOARD shortcode', 'wp-maintenance'); ?></label>
                         <input type="text" name="wpfooter[add_wplogin_title]" class="wp-maintenance-input" size="60%" value="<?php if( isset($paramsFooter['add_wplogin_title']) && $paramsFooter['add_wplogin_title']!='' ) { echo esc_html(stripslashes(trim($paramsFooter['add_wplogin_title']))); } ?>" /><br />
-                    <small><?php _e('Eg: connect to #DASHBOARD here!', 'wp-maintenance'); ?> <?php _e('(#DASHBOARD will be replaced with the link to the dashboard and the word "Dashboard")', 'wp-maintenance'); ?></small>
+                    <small><?php esc_html_e('Eg: connect to #DASHBOARD here!', 'wp-maintenance'); ?> <?php esc_html_e('(#DASHBOARD will be replaced with the link to the dashboard and the word "Dashboard")', 'wp-maintenance'); ?></small>
                     </div>
                         
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php _e('Save', 'wp-maintenance'); ?></button></p>
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
 
                 </div>
             </form>
         </div>
 
     </div>
+    
+    <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
 
 </div>
