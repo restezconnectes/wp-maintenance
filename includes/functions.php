@@ -286,14 +286,7 @@ function wpm_get_roles() {
 /* Retourne la vraie adresse IP */
 function wpm_get_ip() {
 
-	// IP si internet partagé
-	if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-		return esc_html($_SERVER['HTTP_CLIENT_IP']);
-	}
-	// Sinon : IP normale
-	else {
-		return (isset($_SERVER['REMOTE_ADDR']) ? esc_html($_SERVER['REMOTE_ADDR']) : '');
-	}
+	return (isset($_SERVER['REMOTE_ADDR']) ? esc_html($_SERVER['REMOTE_ADDR']) : '');
 
 }
 
