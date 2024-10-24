@@ -35,10 +35,14 @@ class WP_maintenance {
             add_action( 'admin_init', array( &$this, 'wpm_process_settings_import') );
             add_action( 'admin_init', array( &$this, 'wpm_process_settings_export') );     
         }
-        // disabled XMLRPC
-        add_filter('xmlrpc_enabled', '__return_false');
-        /** Disable REST API **/
         $checkActive = get_option('wp_maintenance_active');
+
+        // disabled XMLRPC
+        if( isset($checkActive) && $checkActive == 1 ) {
+            add_filter('xmlrpc_enabled', '__return_false');
+        }
+
+        /** Disable REST API **/
         add_filter( 'rest_authentication_errors', function( $result ) {
             // If a previous authentication check was applied,
             // pass that result along without modification.
