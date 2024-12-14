@@ -42,11 +42,15 @@ class WPM_Countdown extends WP_maintenance {
                         CountStepper = -1;
                         LeadingZero = true;
                 ';
+                if( isset($paramsCountdown['hidden']) && $paramsCountdown['hidden']==1 ) {
+                $Counter .= "DisplayFormat = '';";
+                } else {
                 $Counter .= "   DisplayFormat = '<div id=\"wpm-cpt-day\">%%D%%<br /><span id=\"wpm-cpt-days-span\">".__('Days', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-hours\">%%H%%<br /><span id=\"wpm-cpt-hours-span\">".__('Hours', 'wp-maintenance')."</span></div><div class=\"wpm_ctp_sep\" style=\"float:left;\">:</div><div id=\"wpm-cpt-minutes\">%%M%%<br /><span id=\"wpm-cpt-minutes-span\">".__('Minutes', 'wp-maintenance')."</span></div>";
                 if( isset($paramsCountdown['active_cpt_s']) && $paramsCountdown['active_cpt_s']==1 ) {
                     $Counter .= '<div class="wpm_ctp_sep" style="float:left;">:</div><div id="wpm-cpt-seconds">%%S%%<br /><span id="wpm-cpt-seconds-span">'.__('Seconds', 'wp-maintenance').'</span></div>';
                 }
                 $Counter .= "';";
+                }
                 if( isset($paramsCountdown['message_cpt_fin']) && $paramsCountdown['message_cpt_fin']!='' ) {
                     $Counter .= '
                     FinishMessage = "<span style=\"font-style: normal;font-size:'.$paramsColors['cpt_end_size'].'vw;text-transform: none;font-family:'.str_replace('"',"'", wpm_format_font($paramsColors['font_end_cpt'])).'!important;\">'.trim( stripslashes( preg_replace("/(\r\n|\n|\r)/", "", $paramsCountdown['message_cpt_fin']) ) ).'</span>";';
@@ -57,7 +61,7 @@ class WPM_Countdown extends WP_maintenance {
                 $Counter .= '
                     </script>';
                 $Counter .= '
-                <script language="JavaScript" src="'.plugins_url( '../js/wpm-cpt-script.js', __FILE__ ).'"></script>
+                <script language="JavaScript" src="'.WPM_URL.'js/wpm-cpt-script.js'.'"></script>
                 </div>';
             }
         }

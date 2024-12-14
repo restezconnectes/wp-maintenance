@@ -95,10 +95,16 @@ $paramsCountdown = get_option('wp_maintenance_settings_countdown');
                     </div>
 
                     <h3><?php esc_html_e('Enable seconds ?', 'wp-maintenance'); ?></h3>
-
                     <p>
                         <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, enable seconds', 'wp-maintenance'); ?></span>
                             <input type="checkbox" name="wpmcountdown[active_cpt_s]" value="1" <?php if( isset($paramsCountdown['active_cpt_s']) && $paramsCountdown['active_cpt_s']==1) { echo ' checked'; } ?>>
+                            <span class="wp-maintenance-checkmark"></span>
+                        </label>
+                    </p>
+                    <h3><?php esc_html_e('Hidden countdown?', 'wp-maintenance'); ?></h3>
+                    <p>
+                        <label class="wp-maintenance-container"><span class="wp-maintenance-label-text"><?php esc_html_e('Yes, hidden countdown', 'wp-maintenance'); ?></span>
+                            <input type="checkbox" name="wpmcountdown[hidden]" value="1" <?php if( isset($paramsCountdown['hidden']) && $paramsCountdown['hidden']==1) { echo ' checked'; } ?>>
                             <span class="wp-maintenance-checkmark"></span>
                         </label>
                     </p>

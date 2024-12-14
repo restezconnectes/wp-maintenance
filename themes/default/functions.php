@@ -135,7 +135,8 @@ function wpm_text() {
     $output = '';
 
     if(!empty($o['text_maintenance']) ) {
-        $output = nl2br(stripslashes($o['text_maintenance']));
+        $text = nl2br(stripslashes($o['text_maintenance']));
+        $output = wp_kses(trim($text), wpm_autorizeHtml());
     }
     return $output;
 }
