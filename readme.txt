@@ -4,7 +4,7 @@ Donate link: https://paypal.me/restezconnectes/20/
 Tags: Maintenance, Construction, Launch, Coming soon
 Requires at least: 3.0
 Tested up to: 6.7
-Stable tag: 6.1.9.4
+Stable tag: 6.1.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -69,6 +69,13 @@ Yes. Thank you for submitting your changes to update the plugin.
 You can translate WP Maintenance on [__translate.wordpress.org__](https://translate.wordpress.org/projects/wp-plugins/wp-maintenance).
 
 == Changelog ==
+
+= 6.1.9.6 =
+* Fixed bug pattern
+
+= 6.1.9.5 =
+* Bug fixed sortable socials networks
+* Adding Tiktok icon
 
 = 6.1.9.4 =
 * Adding hidden countdown option

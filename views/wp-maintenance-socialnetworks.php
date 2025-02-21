@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 $messageUpdate = 0;
 
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-socialn'], 'valid-socialn') ) {
+if( isset($_POST['action']) && $_POST['action'] == 'socialnetworks' && wp_verify_nonce($_POST['security-socialn'], 'valid-socialn') ) {
    
     if( isset($_POST["wpso"]['reset']) && $_POST["wpso"]['reset'] ==1 ) {
         unset($_POST["wp_maintenance_list_socialnetworks"]);
@@ -23,13 +23,26 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_
 $paramSocial = get_option('wp_maintenance_list_socialnetworks');
 if(get_option('wp_maintenance_settings_socialnetworks')) { extract(get_option('wp_maintenance_settings_socialnetworks')); }
 $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
-
+if( array_key_exists('tiktok', $paramSocial) ) {
+    
+} else {
+    $paramSocial = array_merge($paramSocial, array('tiktok' => ''));
+}
 ?>
+<script>
+  jQuery( function() {
+    jQuery( "#sortable" ).sortable({
+        cursor: "move",
+        placeholder: "highlight",
+    });
+  } );
+</script>
 <style>
     .sortable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-    .sortable li { padding: 0.4em; height: 40px;cursor: pointer; cursor: move;  }
-    .sortable li span { font-size: 15px;margin-right: 0.8em;cursor: move; }
-    .sortable li:hover { background-color: #d2d2d2; }
+    .sortable li { padding: 0.4em; height: 40px;cursor: move;height: 25px;  }
+    .sortable li span { font-size: 15px;margin-right: 0.8em;cursor: move;height: 25px; }
+    .sortable li:hover { background-color: #d2d2d2;height: 25px; }
+    .highlight {border: 1px solid #848838;font-weight: bold;font-size: 45px;background-color: #848838;height: 25px;}
     .CodeMirror {border: 1px solid #eee;height: auto;}
 </style>
 <div class="wrap">
@@ -48,7 +61,7 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
 
             <form method="post" action="" id="valide_settings" name="valide_settings">
-                <input type="hidden" name="action" value="update_footer" />
+                <input type="hidden" name="action" value="update_socialnetworks" />
                 <?php wp_nonce_field('valid-socialn', 'security-socialn'); ?>
                 
                 <!-- LINK TO LOGIN -->
@@ -80,7 +93,7 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
 
                     <div class="wp-maintenance-setting-row">
                         <label class="wp-maintenance-setting-row-title"><?php esc_html_e('Drad and drop the lines to put in the order you want', 'wp-maintenance'); ?></label>
-                        <ul class="sortable">
+                        <ul id="sortable">
                         <?php 
 
                                 if( isset($paramSocialOption['style']) ) {
@@ -106,7 +119,7 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
                                     }
 
                                     //echo ''.$nameSocial.' => '.$valueSocial.'<br />';
-                                    echo '<li><span>::</span><img src="'.esc_url($linkIcon).'" valign="middle" hspace="3" name="'.esc_html($nameSocial).'.png" title="'.esc_html($nameSocial).'.png"/>'.esc_html(ucfirst($nameSocial)).' <input type="text" size="50" name="wp_maintenance_list_socialnetworks['.esc_html($nameSocial).']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
+                                    echo '<li><span style="font-size: large;font-weight: bold;padding: 0.5em;">::</span><img src="'.esc_url($linkIcon).'" valign="middle" hspace="3" name="'.esc_html($nameSocial).'.png" title="'.esc_html($nameSocial).'.png"/>'.esc_html(ucfirst($nameSocial)).' <input type="text" size="50" name="wp_maintenance_list_socialnetworks['.esc_html($nameSocial).']" value="'.esc_url($entryValue).'" onclick="select()" ><br />';
 
                                 }
 
@@ -200,4 +213,3 @@ $paramSocialOption = get_option('wp_maintenance_settings_socialnetworks');
     <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
     
 </div>
-<script> jQuery('.sortable').sortable(); </script>
