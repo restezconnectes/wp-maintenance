@@ -72,6 +72,8 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 = 6.1.9.6 =
 * Fixed bug pattern
+* Fixed bug Header Code
+* Fixed bug Import Settings
 
 = 6.1.9.5 =
 * Bug fixed sortable socials networks

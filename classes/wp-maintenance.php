@@ -270,7 +270,8 @@ class WP_maintenance {
             'dashboard_delete_db' => 0,
             'error_503' => 1,
             'id_pages' => '',
-            'headercode' => ''
+            'headercode' => '',
+            'headercodecss' => ''
         );
         if ( get_option('wp_maintenance_settings_options', false) == false or get_option('wp_maintenance_settings_options')=='' ) {
             foreach ($wpmSetsOptions as $keySetsOptions => $optionSetsOptions) {
@@ -688,7 +689,7 @@ class WP_maintenance {
         if(!current_user_can('manage_options'))
             return;
 
-        $extension = strtolower(pathinfo($_FILES['wpm_import_nonce']['name'], PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($_FILES['wpm_import_file']['name'], PATHINFO_EXTENSION));
         if($extension != 'json') {
             wp_die( esc_html__( 'Please upload a valid .json file', 'send-pdf-for-contact-form-7' ) );
         }

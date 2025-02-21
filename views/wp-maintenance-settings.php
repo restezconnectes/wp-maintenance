@@ -197,7 +197,7 @@ jQuery(document).ready(function() {
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Header Code', 'wp-maintenance'); ?></h3>
                     </div>
                     <div class="wp-maintenance-setting-row">
-                        <label for="wpoptions[headercode]" class="wp-maintenance-setting-row-title"><?php esc_html_e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as CSS or JS', 'wp-maintenance'); ?></label>
+                        <label for="wpoptions[headercode]" class="wp-maintenance-setting-row-title"><?php esc_html_e('The following code will add to the <head> tag. Useful if you need to add additional scripts such as JS', 'wp-maintenance'); ?></label>
                         <textarea id="headercode" name="wpoptions[headercode]" class="wp-maintenance-input" COLS=50 ROWS=2><?php if(isset($wpoptions['headercode']) && $wpoptions['headercode']!='' ) { echo esc_textarea(stripslashes($wpoptions['headercode'])); }  ?></textarea>
                     </div>
 
@@ -237,7 +237,6 @@ jQuery(document).ready(function() {
 </div>
 <script>
     jQuery(document).ready(function($) {
-        //wp.codeEditor.initialize($('#headercode'), cm_settings);
         var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
         editorSettings.codemirror = _.extend(
             {},
@@ -245,7 +244,11 @@ jQuery(document).ready(function() {
             {
                 indentUnit: 2,
                 tabSize: 2,
-                mode: 'javascript',
+                mode: "htmlmixed",
+                htmlMode: true,
+                lineNumbers: true,
+                matchBrackets: true,
+                smartIndent: true,
             }
         );
         var editor = wp.codeEditor.initialize( $('#headercode'), editorSettings );

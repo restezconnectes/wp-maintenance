@@ -82,7 +82,9 @@ function wpm_autorizeHtml() {
             'target' => array(),
             'alt' => array(),
             'onFocus' => array(),
-            'style' => array()
+            'style' => array(),
+            'id'    => array(),
+            'name' => array()
             ),
         'br' => array(),
         'p' => array(
