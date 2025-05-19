@@ -5,8 +5,8 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 $messageUpdate = 0;
 
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'socialnetworks' && wp_verify_nonce($_POST['security-socialn'], 'valid-socialn') ) {
-   
+if( isset($_POST['action']) && $_POST['action'] == 'update_socialnetworks' && wp_verify_nonce($_POST['security-socialn'], 'valid-socialn') ) {
+
     if( isset($_POST["wpso"]['reset']) && $_POST["wpso"]['reset'] ==1 ) {
         unset($_POST["wp_maintenance_list_socialnetworks"]);
         $_POST["wp_maintenance_list_socialnetworks"] = '';

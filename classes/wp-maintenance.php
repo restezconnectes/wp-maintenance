@@ -297,6 +297,7 @@ class WP_maintenance {
             delete_option('wp_maintenance_settings_countdown');
             delete_option('wp_maintenance_settings_seo');
             delete_option('wp_maintenance_settings_socialnetworks');
+            delete_option('wp_maintenance_list_socialnetworks');
             delete_option('wp_maintenance_settings_footer');
             delete_option('wp_maintenance_settings_options');
             delete_option('wp_maintenance_limit'); 
@@ -648,6 +649,7 @@ class WP_maintenance {
             'settings_picture' => get_option('wp_maintenance_settings_picture'),
             'settings_seo' => get_option('wp_maintenance_settings_seo'),
             'settings_socialnetworks' => get_option('wp_maintenance_settings_socialnetworks'),
+            'list_socialnetworks' => get_option('wp_maintenance_list_socialnetworks'),
             'settings_footer' => get_option('wp_maintenance_settings_footer'),
             'settings_options' => get_option('wp_maintenance_settings_options'),
             'limit' => get_option('wp_maintenance_limit'),
@@ -689,9 +691,24 @@ class WP_maintenance {
         if(!current_user_can('manage_options'))
             return;
 
+        // Vérification de la taille maximale (2MB)
+        $max_size = 2 * 1024 * 1024;
+        if ($_FILES['wpm_import_file']['size'] > $max_size) {
+            wp_die(esc_html__('Le fichier est trop volumineux. Taille maximale autorisée : 2MB', 'wp-maintenance'));
+        }
+
         $extension = strtolower(pathinfo($_FILES['wpm_import_file']['name'], PATHINFO_EXTENSION));
         if($extension != 'json') {
             wp_die( esc_html__( 'Please upload a valid .json file', 'send-pdf-for-contact-form-7' ) );
+        }
+
+        // Vérification du type MIME
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime_type = finfo_file($finfo, $_FILES['wpm_import_file']['tmp_name']);
+        finfo_close($finfo);
+
+        if ($mime_type !== 'application/json') {
+            wp_die(esc_html__('Type de fichier non autorisé. Seuls les fichiers JSON sont acceptés.', 'wp-maintenance'));
         }
 
         $import_file = $_FILES['wpm_import_file']['tmp_name'];
@@ -701,7 +718,7 @@ class WP_maintenance {
 
         $import = ! empty( $_FILES['wpm_import_file'] ) && is_array( $_FILES['wpm_import_file'] ) && isset( $_FILES['wpm_import_file']['type'], $_FILES['wpm_import_file']['name'] ) ? $_FILES['wpm_import_file'] : array();
 
-        $_post_action    = $_POST['action'];
+        $_post_action    = isset($_POST['wpm_action']) ? $_POST['wpm_action'] : '';
         $_POST['action'] = 'wp_handle_sideload';
         $file            = wp_handle_sideload( $import, array( 'mimes' => array( 'json' => 'application/json' ) ) );
         $_POST['action'] = $_post_action;
@@ -710,23 +727,45 @@ class WP_maintenance {
         }
         $filesystem      = wpm_get_filesystem();
         $settings        = $filesystem->get_contents( $file['file'] );
-	    $settings        = maybe_unserialize( $settings );
 
-        // Retrieve the settings from the file and convert the json object to an array.
-        $importTabSettings = (array) json_decode($settings, true);
+        // Vérification que le contenu est un JSON valide
+        $importTabSettings = json_decode($settings, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            wp_die(esc_html__('Le fichier JSON est invalide.', 'wp-maintenance'));
+        }
+
+        // Liste des options autorisées
+        $allowedOptions = [
+            'active',
+            'settings',
+            'settings_colors',
+            'settings_countdown',
+            'settings_picture',
+            'settings_seo',
+            'settings_socialnetworks',
+            'list_socialnetworks',
+            'settings_footer',
+            'settings_options',
+            'limit',
+            'social_options',
+            'ipaddresses'
+        ];
+
         if( isset($importTabSettings) ) {
+            foreach($importTabSettings as $tabName => $tabValue) {
+                // Vérification que l'option est autorisée
+                if (!in_array($tabName, $allowedOptions)) {
+                    continue;
+                }
 
-            foreach($importTabSettings as $tabName=>$tabValue) {
-
-                if($tabName=='active') {
+                if($tabName == 'active') {
                     update_option('wp_maintenance_active', sanitize_text_field($tabValue));
                 } else {
                     $updateSetting = wpm_update_settings($tabValue, 'wp_maintenance_'.$tabName);
-                    echo '<div id="message" class="updated fade"><p><strong>'.esc_html__('New settings imported successfully!', 'wp-maintenance').' - '.esc_html($tabName).'</strong></p></div>';
                 }
             }
 
-            //echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
+            echo '<div id="message" class="updated fade"><p><strong>'.__('New settings imported successfully!', 'wp-maintenance').'</strong></p></div>';
         }
 
     }

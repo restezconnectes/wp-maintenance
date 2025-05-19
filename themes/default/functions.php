@@ -104,8 +104,8 @@ function wpm_head() {
         $output = '';
     } else {
         $output = "<!-- Add Google Fonts -->\n";
-        /*$output .= '<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';*/
+        $output .= '<link rel="preconnect" href="https://fonts.googleapis.com">';
+        $output .= '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
         $arrayfonts = array($o['font_title'], $o['font_text'], $o['font_text_bottom'], $o['font_cpt']);
         $uniqueArrayfonts = array_unique($arrayfonts);        
         $addFont = '';
@@ -115,13 +115,13 @@ function wpm_head() {
             $searchFont = str_replace('+', ' ', $valFont);
             if ( array_key_exists($searchFont, $listFonts) ) {
                 $valFont = str_replace(' ', '+', $valFont);
-                $addFont .= 'family='.$valFont.'&';
+                $addFont .= $valFont.'|';
             }
         }
-        //$output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?'.substr($addFont, 0,-1).'&display=swap">';
-        $output .= '<style>
-        @import url(\'https://fonts.googleapis.com/css2?'.substr($addFont, 0,-1).'&display=swap\');
-        </style>';
+        /*$output .= '<style>
+        @import url(\'https://fonts.googleapis.com/css?'.substr($addFont, 0,-1).'\');
+        </style>';*/
+        $output .= '<link rel="stylesheet" href="https://fonts.googleapis.com/css?family='.substr($addFont, 0, -1).'&display=swap">';
     }
     return $output;
 }
@@ -329,7 +329,7 @@ function wpm_social_position($position = '') {
     $o = get_option('wp_maintenance_settings_socialnetworks');
 
     $output = '';
-   if(isset($o['enable']) && $o['enable'] == 1 ) { 
+    if(isset($o['enable']) && $o['enable'] == 1 ) { 
 
        if(isset($o['position']) && $o['position']=='top' && isset($position) && $position=='top' ) {
             $output = '<header id="header" role="banner" class="pam">'.do_shortcode('[wpm_social]').'</header>';

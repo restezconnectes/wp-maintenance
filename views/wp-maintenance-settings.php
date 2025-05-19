@@ -220,11 +220,11 @@ jQuery(document).ready(function() {
                 
                 <div class="wp-maintenance-setting-row">
                     <label class="wp-maintenance-setting-row-title"><?php esc_html_e('Import the plugin settings from a .json file. This file can be obtained by exporting the settings on another site using the form above', 'wp-maintenance'); ?></label>
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" id="import-form">
                         <input type="hidden" name="wpm_action" value="import_settings" />
-                        <input type="file" name="wpm_import_file"/>                            
-                        <?php wp_nonce_field( 'go_import_nonce', 'wpm_import_nonce' ); ?><p>
-                        <?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false ); ?></p>
+                        <input type="file" name="wpm_import_file" id="wpm_import_file" onchange="validateImportForm()"/>                            
+                        <?php wp_nonce_field( 'go_import_nonce', 'wpm_import_nonce' ); ?>
+                        <p><?php submit_button( __( 'Import', 'wp-maintenance' ), 'wp-maintenance-button wp-maintenance-button-secondary', 'submit', false, array('id' => 'import-submit', 'disabled' => 'disabled') ); ?></p>
                     </form>
                 </div>
             </div>
@@ -253,4 +253,16 @@ jQuery(document).ready(function() {
         );
         var editor = wp.codeEditor.initialize( $('#headercode'), editorSettings );
     });
+</script>
+<script type="text/javascript">
+function validateImportForm() {
+    var fileInput = document.getElementById('wpm_import_file');
+    var submitButton = document.getElementById('import-submit');
+    
+    if (fileInput.files.length > 0) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+}
 </script>

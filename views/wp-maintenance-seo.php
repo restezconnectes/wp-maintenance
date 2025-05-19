@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( 'Not allowed' );
 
 $messageUpdate = 0;
 /* Update des paramètres */
-if( isset($_POST['action']) && $_POST['action'] == 'update_footer' && wp_verify_nonce($_POST['security-footer'], 'valid-footer') ) {
+if( isset($_POST['action']) && $_POST['action'] == 'update_settings' && wp_verify_nonce($_POST['security-settings'], 'valid-settings') ) {
    
     if( empty($_POST["wpmseo"]["enable_seo"]) ) { $_POST["wpmseo"]["enable_seo"] = 0; }
 
@@ -34,8 +34,8 @@ $paramSeo= get_option('wp_maintenance_settings_seo');
         <div class="wp-maintenance-tab-content wp-maintenance-tab-content-welcome" id="wp-maintenance-tab-content">
             
             <form method="post" action="" id="valide_settings" name="valide_settings">
-                <input type="hidden" name="action" value="update_footer" />
-                <?php wp_nonce_field('valid-footer', 'security-footer'); ?>
+                <input type="hidden" name="action" value="update_settings" />
+                <?php wp_nonce_field('valid-settings', 'security-settings'); ?>
 
                 <!-- ENABLE SEO -->
                 <div class="wp-maintenance-module-options-block">
@@ -77,7 +77,8 @@ $paramSeo= get_option('wp_maintenance_settings_seo');
                     <div class="wp-maintenance-setting-row">
                         <label for="wpmseo[seo_description]" class="wp-maintenance-setting-row-title"><?php esc_html_e('Enter a URL or upload an image', 'wp-maintenance'); ?></label>
                         <input id="upload_favicon" size="65%" name="wpmseo[favicon]" value="<?php if( isset($paramSeo['favicon']) && $paramSeo['favicon']!='' ) { echo esc_url($paramSeo['favicon']); } ?>" type="text" /> <a href="#" id="upload_favicon_button" class="button button-primary" style="padding-top: 0.1em;padding-bottom: 0.1em;margin-top: 1px;" OnClick="this.blur();"><span> <?php esc_html_e('Media Image Library', 'wp-maintenance'); ?> </span></a><br />
-                        <small><?php esc_html_e('Favicons are displayed in a browser tab. Need Help <a href="https://realfavicongenerator.net/" target="_blank">creating a favicon</a>?', 'wp-maintenance'); ?></small>
+                        <small><?php echo sprintf(
+    esc_html__( 'Favicons are displayed in a browser tab. Need Help %s', 'wp-maintenance' ), '<a href="https://realfavicongenerator.net/" target="_blank">' . esc_html__( 'creating a favicon', 'textdomain' ) . '</a>'); ?></small>
                         <?php if( isset($paramSeo['favicon']) && $paramSeo['favicon']!='' ) { ?>
                             <div class="wp-maintenance-encadre">
                                 <?php esc_html_e('You use this favicon:', 'wp-maintenance'); ?><br />
