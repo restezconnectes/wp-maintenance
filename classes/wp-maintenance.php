@@ -813,8 +813,8 @@ class WP_maintenance {
         if( current_user_can('administrator') == true ) {
             $statusActive = 0;
         }
-        /* Mode Preview */
-        if( isset($_GET['wpmpreview']) && $_GET['wpmpreview']=='true' ) {// phpcs:ignore
+        /* Mode Preview - SÉCURISÉ : Seulement pour les administrateurs */
+        if( isset($_GET['wpmpreview']) && $_GET['wpmpreview']=='true' && current_user_can('manage_options') ) {// phpcs:ignore
             $statusActive = 1;
         }
 
@@ -859,9 +859,22 @@ class WP_maintenance {
             $urlTpl = '';
         }
 
+        // SÉCURITÉ : Validation supplémentaire du chemin de template
         if( isset($paramsOptions['pageperso']) && $paramsOptions['pageperso']==1 && $urlTpl !== '' ) {
-            include_once( $urlTpl );
-            die();
+            // Vérification que le fichier est bien dans un répertoire de thème autorisé
+            $allowed_dirs = [get_stylesheet_directory(), get_template_directory()];
+            $is_safe = false;
+            foreach($allowed_dirs as $allowed_dir) {
+                if (strpos(realpath($urlTpl), realpath($allowed_dir)) === 0) {
+                    $is_safe = true;
+                    break;
+                }
+            }
+            
+            if ($is_safe && is_readable($urlTpl)) {
+                include_once( $urlTpl );
+                die();
+            }
         }  
         
         /* Si on désactive le mode maintenance en fin de compte à rebours */

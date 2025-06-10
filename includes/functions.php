@@ -36,6 +36,39 @@ function wpm_update_settings($tabSettings, $nameOption = '', $type = 1) {
                     }
                 }
                 $newTabSettings[$nameSettings] = sanitize_text_field(substr($getValueIdPages, 0, -1));
+            } elseif($nameSettings == 'image_width' || $nameSettings == 'image_height') {
+                // Validation spécifique pour les dimensions d'image (doit être numérique)
+                $numericValue = intval($valueSettings);
+                if ($numericValue > 0 && $numericValue <= 5000) {
+                    $newTabSettings[$nameSettings] = $numericValue;
+                } else {
+                    // Valeur par défaut si invalide
+                    $newTabSettings[$nameSettings] = ($nameSettings == 'image_width') ? 450 : 450;
+                }
+            } elseif($nameSettings == 'b_pattern') {
+                // Validation spécifique pour les patterns (doit être numérique entre 0 et 12)
+                $numericValue = intval($valueSettings);
+                if ($numericValue >= 0 && $numericValue <= 12) {
+                    $newTabSettings[$nameSettings] = $numericValue;
+                } else {
+                    $newTabSettings[$nameSettings] = 0;
+                }
+            } elseif(strpos($nameSettings, 'color_') === 0) {
+                // Validation des codes couleur hexadécimaux
+                if (preg_match('/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $valueSettings)) {
+                    $newTabSettings[$nameSettings] = sanitize_text_field($valueSettings);
+                } else {
+                    // Valeur par défaut si couleur invalide
+                    $newTabSettings[$nameSettings] = '#ffffff';
+                }
+            } elseif($nameSettings == 'b_repeat_image') {
+                // Validation des valeurs CSS background-repeat
+                $allowed_repeats = array('repeat', 'no-repeat', 'repeat-x', 'repeat-y');
+                if (in_array($valueSettings, $allowed_repeats)) {
+                    $newTabSettings[$nameSettings] = sanitize_text_field($valueSettings);
+                } else {
+                    $newTabSettings[$nameSettings] = 'repeat';
+                }
             } else {
                 $newTabSettings[$nameSettings] = sanitize_textarea_field($valueSettings);
             }

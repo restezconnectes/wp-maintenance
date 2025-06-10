@@ -72,6 +72,7 @@ You can translate WP Maintenance on [__translate.wordpress.org__](https://transl
 
 = 6.1.9.9 =
 * Fixed security problem: integrate import/export option
+* Fixed security & vulnerability XSS problems
 
 = 6.1.9.8 =
 * Fixed security problem: remove import/export option

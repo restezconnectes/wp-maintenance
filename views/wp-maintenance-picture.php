@@ -25,7 +25,7 @@ if( isset($_POST['action']) && $_POST['action'] == 'update_pictures' && wp_verif
         $_POST["wpmpicture"]["b_image"] = '';
         $_POST["wpmpicture"]["b_enable_image"] = 0;
     }
-   
+
     if( empty($_POST["wpmpicture"]["b_enable_image"]) ) { $_POST["wpmpicture"]["b_enable_image"] = 0; }
     if( empty($_POST["wpmpicture"]["b_fixed_image"]) ) { $_POST["wpmpicture"]["b_fixed_image"] = 0; }
     
@@ -90,7 +90,7 @@ function toggleTable(texte) {
                         <input id="settings_image"name="wpmpicture[image]" value="<?php if( isset($paramsPicture['image']) && $paramsPicture['image']!='' ) { echo esc_url($paramsPicture['image']); } ?>" type="hidden" />
                         <input id="upload_image" size="65%" name="upload_picture" value="" type="text" /> <a href="#" id="upload_image_button" class="wp-maintenance-button-primary" OnClick="this.blur();"><?php esc_html_e('Media Image Library', 'wp-maintenance'); ?></a><br />
                         <span class="description"><?php esc_html_e( 'URL path to image to replace default picture. (You can upload your image with the WordPress media uploader)', 'wp-maintenance' ); ?></span><br />
-                        <label for="wpmpicture[image_width]" class="wp-maintenance-setting-row-title"><?php esc_html_e( 'Width:', 'wp-maintenance' ); ?></label> <input type="text" value="<?php if( isset($paramsPicture['image_width']) && $paramsPicture['image_width']!='' ) { echo esc_html($paramsPicture['image_width']); } ?>" size="4"   name="wpmpicture[image_width]" />px <br />
+                        <label for="wpmpicture[image_width]" class="wp-maintenance-setting-row-title"><?php esc_html_e( 'Width:', 'wp-maintenance' ); ?></label> <input type="text" value="<?php if( isset($paramsPicture['image_width']) && $paramsPicture['image_width']!='' ) { echo esc_html($paramsPicture['image_width']); } ?>" size="4" name="wpmpicture[image_width]" />px <br />
                         <label for="wpmpicture[image_height]" class="wp-maintenance-setting-row-title"><?php esc_html_e( 'Height:', 'wp-maintenance' ); ?></label> <input type="text" size="4" value="<?php if( isset($paramsPicture['image_height']) && $paramsPicture['image_height']!='' ) { echo esc_html($paramsPicture['image_height']); } ?>" name="wpmpicture[image_height]" />px<br />
                         <div class="wp-maintenance-encadre">
                             <?php if( isset($paramsPicture['image']) && $paramsPicture['image']!='' ) { ?>
