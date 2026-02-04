@@ -90,7 +90,13 @@ class WP_maintenance {
             'title_newletter' => '',
             'code_newletter' => '',
             'type_newletter' => 'shortcode',
-            'iframe_newletter' => ''
+            'iframe_newletter' => '',
+            'iframe_newletter_width' => '540',
+            'iframe_newletter_height' => '305',
+            'iframe_newletter_src' => '',
+            'iframe_newletter_frameborder' => '0',
+            'iframe_newletter_scrolling' => 'auto',
+            'iframe_newletter_style' => ''
         );
         if ( get_option('wp_maintenance_settings', false) == false or get_option('wp_maintenance_settings')=='' ) {
             foreach ($wpmAdminOptions as $keyAdminOptions => $optionAdminOptions) {

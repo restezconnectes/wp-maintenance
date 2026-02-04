@@ -22,7 +22,13 @@ $paramsSettings = get_option('wp_maintenance_settings');
 $statusActive = get_option('wp_maintenance_active');
 
 ?>
-
+<style>
+    .CodeMirror {
+      border: 1px solid #eee;
+      height: 50px;
+    }
+    
+</style>
 <div class="wrap">
 
     <!-- HEADER -->
@@ -102,7 +108,26 @@ $statusActive = get_option('wp_maintenance_active');
                         <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" size="60%" value="shortcode" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='shortcode' ) { echo 'checked'; } if( empty($paramsSettings['type_newletter']) ) { echo 'checked'; } ?>  /><?php esc_html_e('Enter your newletter shortcode here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
                         <input type="text" name="wpsettings[code_newletter]" size="60%" class="wp-maintenance-input" value='<?php if( isset($paramsSettings['code_newletter']) && $paramsSettings['code_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramsSettings['code_newletter']))); } ?>' onclick="select()" /><br /><br />
                         <label class="wpm-container"><input type="radio" name="wpsettings[type_newletter]" value="iframe" <?php if( isset($paramsSettings['type_newletter']) && $paramsSettings['type_newletter']=='iframe' ) { echo 'checked'; } ?>/> <?php esc_html_e('Or enter your newletter iframe code here:', 'wp-maintenance'); ?><span class="wpm-checkmark"></span></label><br /><br />
-                        <textarea id="iframe_newletter" cols="60" rows="10" class="wp-maintenance-input" name="wpsettings[iframe_newletter]"><?php if( isset($paramsSettings['iframe_newletter']) && $paramsSettings['iframe_newletter']!='' ) { echo esc_attr(stripslashes(trim($paramsSettings['iframe_newletter']))); } ?></textarea> 
+                        <?php esc_html_e('Iframe Width', 'wp-maintenance'); ?><br />
+                        <input type="text" size="10" class="wp-maintenance-input" name="wpsettings[iframe_newletter_width]" value="<?php if( isset($paramsSettings['iframe_newletter_width']) && $paramsSettings['iframe_newletter_width']!='' ) { echo esc_html(stripslashes($paramsSettings['iframe_newletter_width'])); } else { echo "540"; } ?>" /><br />
+                        <?php esc_html_e('Iframe Height', 'wp-maintenance'); ?><br />
+                        <input type="text" size="10" class="wp-maintenance-input" name="wpsettings[iframe_newletter_height]" value="<?php if( isset($paramsSettings['iframe_newletter_height']) && $paramsSettings['iframe_newletter_height']!='' ) { echo esc_html(stripslashes($paramsSettings['iframe_newletter_height'])); } else { echo "305"; } ?>" /><br />
+                        <?php esc_html_e('Iframe Source', 'wp-maintenance'); ?><br />
+                        <input type="text" size="80%" class="wp-maintenance-input" name="wpsettings[iframe_newletter_src]" value="<?php if( isset($paramsSettings['iframe_newletter_src']) && $paramsSettings['iframe_newletter_src']!='' ) { echo esc_url(stripslashes($paramsSettings['iframe_newletter_src'])); } ?>" /><br />
+                        <?php esc_html_e('Iframe FrameBorder', 'wp-maintenance'); ?><br />
+                        <select name="wpsettings[iframe_newletter_frameborder]" class="wp-maintenance-input">
+                            <option value="0" <?php if( isset($paramsSettings['iframe_newletter_frameborder']) && $paramsSettings['iframe_newletter_frameborder']=='0' ) { echo 'selected'; } ?>>0</option>
+                            <option value="1" <?php if( isset($paramsSettings['iframe_newletter_frameborder']) && $paramsSettings['iframe_newletter_frameborder']=='1' ) { echo 'selected'; } ?>>1</option>
+                        </select><br />
+                        <?php esc_html_e('Iframe Scrolling', 'wp-maintenance'); ?><br />
+                        <select name="wpsettings[iframe_newletter_scrolling]" class="wp-maintenance-input">
+                            <option value="auto" <?php if( isset($paramsSettings['iframe_newletter_scrolling']) && $paramsSettings['iframe_newletter_scrolling']=='auto' ) { echo 'selected'; } ?>>Auto</option>
+                            <option value="yes" <?php if( isset($paramsSettings['iframe_newletter_scrolling']) && $paramsSettings['iframe_newletter_scrolling']=='yes' ) { echo 'selected'; } ?>>Yes</option>
+                            <option value="no" <?php if( isset($paramsSettings['iframe_newletter_scrolling']) && $paramsSettings['iframe_newletter_scrolling']=='no' ) { echo 'selected'; } ?>>No</option>
+                        </select><br />
+                        <?php esc_html_e('Iframe Style', 'wp-maintenance'); ?><br />
+                        <TEXTAREA NAME="wpsettings[iframe_newletter_style]" id="iframenewletterstyle" COLS=5 ROWS=4 style="height:50px;"><?php if( isset($paramsSettings['iframe_newletter_style']) ) { echo esc_textarea(stripslashes(trim($paramsSettings['iframe_newletter_style']))); } else { echo esc_textarea("display: block;margin-left: auto;margin-right: auto;max-width: 100%;"); } ?></TEXTAREA><br />
+                        
                     </div>
                     
 
@@ -119,8 +144,23 @@ $statusActive = get_option('wp_maintenance_active');
 </div>
 <script type="text/javascript">
 
-    jQuery("select.image-picker").imagepicker({
+    /*jQuery("select.image-picker").imagepicker({
       hide_select:  false,
+    });*/
+
+    jQuery(document).ready(function($) {
+        //wp.codeEditor.initialize($('#wpmaintenancestyle'), cm_settings);
+        var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
+        editorSettings.codemirror = _.extend(
+            {},
+            editorSettings.codemirror,
+            {
+                indentUnit: 2,
+                tabSize: 2,
+                mode: 'txt',
+            }
+        );
+        var editor = wp.codeEditor.initialize( $('#iframenewletterstyle'), editorSettings );
     });
 
 </script>

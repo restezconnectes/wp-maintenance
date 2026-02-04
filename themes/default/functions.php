@@ -217,7 +217,7 @@ function wpm_customcss() {
             // SÉCURITÉ : Validation que b_pattern est bien numérique
             $pattern_value = intval($picture['b_pattern']);
             if ($pattern_value > 0 && $pattern_value <= 12) {
-                $pattern_url = get_template_directory_uri().'/'.get_option('template').'/assets/images/pattern/pattern'.$pattern_value.'.png';
+                $pattern_url = WPM_PLUGIN_URL.'/images/pattern'.$pattern_value.'.png';
                 $addStyleGeneral .= 'background-image: url('.esc_url($pattern_url).');';
             }
         }
@@ -369,11 +369,14 @@ function wpm_newsletter() {
 
    if(isset($o['newletter']) && $o['newletter']==1 ) {
 
-        $output = '<div class="wpm_newletter">';
+       $output = '<div class="wpm_newletter">';
        if(isset($o['title_newletter']) && $o['title_newletter']!='') {
             $output .= '<div>'.sanitize_text_field(stripslashes($o['title_newletter'])).'</div>';
         }
-       if(isset($o['type_newletter']) && isset($o['iframe_newletter']) && $o['iframe_newletter']!='' && $o['type_newletter']=='iframe' ) {
+
+        if( isset($o['type_newletter']) && $o['type_newletter']=='iframe' && ( isset($o['iframe_newletter_src']) && $o['iframe_newletter_src']!='') ) {
+
+        $o['iframe_newletter'] = '<iframe width="'.esc_attr($o['iframe_newletter_width']).'" height="'.esc_attr($o['iframe_newletter_height']).'" src="'.esc_url($o['iframe_newletter_src']).'" frameborder="'.esc_attr($o['iframe_newletter_frameborder']).'" scrolling="'.esc_attr($o['iframe_newletter_scrolling']).'" allowfullscreen style="'.esc_html($o['iframe_newletter_style']).'"></iframe>';
             // SÉCURITÉ : Filtrage strict du contenu iframe pour éviter XSS
             $allowed_iframe = array(
                 'iframe' => array(

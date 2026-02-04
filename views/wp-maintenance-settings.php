@@ -191,7 +191,7 @@ jQuery(document).ready(function() {
                 </div>
 
                 <!-- Header Code -->
-                <div class="wp-maintenance-module-options-block">
+                <!--<div class="wp-maintenance-module-options-block">
                     
                     <div class="wp-maintenance-settings-section-header">
                         <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Header Code', 'wp-maintenance'); ?></h3>
@@ -201,10 +201,12 @@ jQuery(document).ready(function() {
                         <textarea id="headercode" name="wpoptions[headercode]" class="wp-maintenance-input" COLS=50 ROWS=2><?php if(isset($wpoptions['headercode']) && $wpoptions['headercode']!='' ) { echo esc_textarea(stripslashes($wpoptions['headercode'])); }  ?></textarea>
                     </div>
 
-                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>
-                </form>
-            </div>
-            
+                    <p class="submit"><button type="submit" name="footer_submit" id="footer_submit" class="wp-maintenance-button wp-maintenance-button-primary"><?php esc_html_e('Save', 'wp-maintenance'); ?></button></p>-->
+                
+                </div>
+            </form>
+
+            <!-- EXPORT / IMPORT SETTINGS -->
             <div class="wp-maintenance-module-options-block">
                 <div class="wp-maintenance-settings-section-header">
                     <h3 class="wp-maintenance-settings-section-title" id="module-import_export"><?php esc_html_e('Export / Import Settings', 'wp-maintenance'); ?></h3>
@@ -229,14 +231,14 @@ jQuery(document).ready(function() {
                 </div>
             </div>
 
-         </div>
+        </div>
     </div>    
     
     <?php echo wp_kses(wpm_footer(), wpm_autorizeHtml()); ?>
     
 </div>
 <script>
-    jQuery(document).ready(function($) {
+    /*jQuery(document).ready(function($) {
         var editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
         editorSettings.codemirror = _.extend(
             {},
@@ -252,7 +254,7 @@ jQuery(document).ready(function() {
             }
         );
         var editor = wp.codeEditor.initialize( $('#headercode'), editorSettings );
-    });
+    });*/
 </script>
 <script type="text/javascript">
 function validateImportForm() {
